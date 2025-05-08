@@ -16,5 +16,7 @@ public class App {
         window.setVisible(true);
         
         gamePanel.startGameThread(); // Start the game thread after the window is visible
+            
+    
     }
 }
