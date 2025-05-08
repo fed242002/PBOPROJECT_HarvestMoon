@@ -17,7 +17,7 @@ public class Tile {
             this.collision = collision;
             
         } catch (Exception e) {
-            System.out.println("error di Tile()"); // Print an error message if there is an exception
+            System.out.println("error di Tile("+path+")"); // Print an error message if there is an exception
             e.printStackTrace();
         }
     }

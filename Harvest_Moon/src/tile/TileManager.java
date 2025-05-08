@@ -28,7 +28,7 @@ public class TileManager {
         tile.clear();
 
         tile.add(new Tile("/Assets/grass.png", false));
-        tile.add(new Tile("/Assets/brick.png", false));
+        tile.add(new Tile("/Assets/brick.jpg", false));
         
     }
 
