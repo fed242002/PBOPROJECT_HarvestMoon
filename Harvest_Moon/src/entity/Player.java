@@ -4,14 +4,74 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints.Key;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
 import Main.GamePanel;
 import Main.KeyHandler;
+import animation.Animation;
 
 public class Player extends Entity{
     
+    //ini buat sprite animation -> info2
+    String body = "black";
+    String eye = "blue";
+    String outfit = "blue";
+    String hair = "baldBlondeAsh";
+    Animation walk;
+    Animation idle;
+    ArrayList<Animation> animationList = new ArrayList<>(); //0: walk, 1:idle
+    public int currentAnimationIndex=1;
+
+
+    public void setAnimation(String animation){
+        if(animation.equalsIgnoreCase("walk")){
+            if(this.currentAnimationIndex != 0){
+                currentAnimationIndex = 0;
+                //reset animation
+                spriteCounter = 0;
+                spriteCounter = 0;
+            }
+        }
+        if(animation.equalsIgnoreCase("idle")){
+            if(this.currentAnimationIndex != 1){
+                currentAnimationIndex = 1;
+                //reset animation
+                spriteCounter = 0;
+                spriteCounter = 0;
+            }
+        }
+
+
+    }
+
+
+    public void changePath(String bagian, String nama){
+
+        if(bagian.equalsIgnoreCase("Body")){
+            this.body = nama;
+        }
+        if(bagian.equalsIgnoreCase("eye")){
+            this.eye = eye;
+        }
+        if(bagian.equalsIgnoreCase("outfit")){
+            this.outfit = outfit;
+        }
+        if(bagian.equalsIgnoreCase("hair")){
+            this.hair = hair;
+        }
+
+
+        for(Animation x: animationList){
+            x.setPath(getPath()); 
+        }
+    }
+
+    public String getPath(){
+        return body+"-"+eye+"-"+outfit+"-"+hair+"-";
+    }
+
     GamePanel gp;
     KeyHandler keyH; // KeyHandler object to handle key events
     
@@ -19,7 +79,11 @@ public class Player extends Entity{
         this.gp = gp; // Assign the GamePanel object to the instance variable
         this.keyH = keyH; // Assign the KeyHandler object to the instance variable
         setDefaultValues();
-        getPlayerImage();
+        //getPlayerImage(); -> di class walk
+        walk = new Animation(6, "/Assets/player/WALK/" + getPath());
+        animationList.add(walk);
+        idle = new Animation(6, "/Assets/player/IDLE/" + getPath());
+        animationList.add(idle);
     }
 
     public void setDefaultValues() {
@@ -29,28 +93,12 @@ public class Player extends Entity{
         direction = "down"; // Set the default direction of the player
     }
 
-    public void getPlayerImage() {
-        try {
-            
-            for(int i = 0; i < 8; i++) {
-                up[i] = ImageIO.read(getClass().getResourceAsStream("/Assets/player/up" + i + ".png")); // Load the up images
-                down[i] = ImageIO.read(getClass().getResourceAsStream("/Assets/player/down" + i + ".png")); // Load the down images
-                left[i] = ImageIO.read(getClass().getResourceAsStream("/Assets/player/left" + i + ".png")); // Load the left images
-                right[i] = ImageIO.read(getClass().getResourceAsStream("/Assets/player/right" + i + ".png")); // Load the right images
-            }
-
-
-        } catch (Exception e) {
-            System.out.println("error di getPlayerImage()"); // Print an error message if there is an exception
-            e.printStackTrace(); 
-        }
-
-    }
 
     public void update(){
-
         // cek kalo lagi jalan ga
         if(keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true || keyH.rightPressed == true) {
+            setAnimation("walk"); //set current animation jadi walking
+
                     if(keyH.upPressed == true) {
                         direction = "up";
                         y -= speed; // Move the player up
@@ -61,28 +109,33 @@ public class Player extends Entity{
                     }
                     else if(keyH.leftPressed == true) {
                         direction = "left";
-                        x -= speed; // Move the player left
+                        x -= speed; // Move the pldddddayer left
                     }
                     else if(keyH.rightPressed == true) {
                         direction = "right";
                         x += speed; // Move the player right
                     }
             
-                    spriteCounter++;
-                    if(spriteCounter > 12)
-                    {
-                        spriteNum++; 
                     
-                        if(spriteNum > 7) // If the sprite number exceeds the number of images, reset it to 0
-                            spriteNum = 0; // Reset the sprite number to 0
-                        
-                            spriteCounter = 0; // Reset the sprite counter to 0
-                    }
-            
-        }
-        else{
-            //ini buat idle animation
-        }
+                }
+                else{
+                    //ini buat idle animation
+                    setAnimation("idle");
+                    
+                }
+                
+                spriteCounter++;
+                if(spriteCounter > 10)
+                {
+                    spriteNum++; 
+                
+                    if(spriteNum > animationList.get(currentAnimationIndex).spriteTotal-1) // If the sprite number exceeds the number of images
+                        spriteNum = 0; // Reset the sprite number to 0
+                    
+                    spriteCounter = 0; // Reset the sprite counter to 0
+                }
+                
+
 
     }
 
@@ -90,22 +143,24 @@ public class Player extends Entity{
 
         BufferedImage image = null; 
 
+
         switch(direction) {
             case "up":
-                image = up[spriteNum]; // Get the up image
+                    image = animationList.get(currentAnimationIndex).up[spriteNum]; // Get the idle up image
                 break;
             case "down":
-                image = down[spriteNum]; // Get the down image
+                    image = animationList.get(currentAnimationIndex).down[spriteNum]; // Get the idle up image
                 break;
             case "left":
-                image = left[spriteNum]; // Get the left image
+                    image = animationList.get(currentAnimationIndex).left[spriteNum]; // Get the idle up image
                 break;
             case "right":
-                image = right[spriteNum]; // Get the right image
+                    image = animationList.get(currentAnimationIndex).right[spriteNum]; // Get the idle up image
                 break;
-        }
 
-        g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null); // Draw the player image at the specified position and size
+}
+
+        g2.drawImage(image, x, y, gp.playerSizeX , gp.playerSizeY, null); // Draw the player image at the specified position and size
 
     }
 

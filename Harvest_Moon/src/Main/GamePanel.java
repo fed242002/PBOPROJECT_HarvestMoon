@@ -14,14 +14,18 @@ import java.awt.Color;
 
 public class GamePanel extends JPanel implements Runnable{
     
-    final int originalTileSize = 16; // 16x16 tile
-    final int scale = 3; // Scale the tile size by 3x
+    final int originalTileSize = 48; // 16x16 tile
+    final int scale = 1; // Scale the tile size by 3x
     
     public final int tileSize = originalTileSize * scale; // 48x48 tile size (ini size yang bakal muncul di screen)
     public final int maxScreenCol = 16; // 16 tiles in a row
     public final int maxScreenRow = 12; // 12 tiles in a column
     public final int screenWidth = tileSize * maxScreenCol; // 768 pixels
     public final int screenHeight = tileSize * maxScreenRow; // 576 pixels
+
+    public int playerSizeX=tileSize; 
+    public int playerSizeY=tileSize*2; // tinggi player
+
 
     //FPS
     int FPS = 60; // Frames per second
