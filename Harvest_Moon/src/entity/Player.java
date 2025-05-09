@@ -26,24 +26,20 @@ public class Player extends Entity{
 
 
     public void setAnimation(String animation){
-        if(animation.equalsIgnoreCase("walk")){
-            if(this.currentAnimationIndex != 0){
-                currentAnimationIndex = 0;
-                //reset animation
-                spriteCounter = 0;
-                spriteCounter = 0;
-            }
-        }
-        if(animation.equalsIgnoreCase("idle")){
-            if(this.currentAnimationIndex != 1){
-                currentAnimationIndex = 1;
-                //reset animation
-                spriteCounter = 0;
-                spriteCounter = 0;
-            }
-        }
 
-
+        int i=0;
+        for(Animation x: animationList){
+            if(animation.equalsIgnoreCase(x.name)){
+                if(this.currentAnimationIndex != i){
+                    currentAnimationIndex = i;
+                    //reset animation
+                    spriteCounter = 0;
+                    spriteCounter = 0;
+                }
+                break;
+            }
+            i++;
+        }
     }
 
 
@@ -79,10 +75,9 @@ public class Player extends Entity{
         this.gp = gp; // Assign the GamePanel object to the instance variable
         this.keyH = keyH; // Assign the KeyHandler object to the instance variable
         setDefaultValues();
-        //getPlayerImage(); -> di class walk
-        walk = new Animation(6, "/Assets/player/WALK/" + getPath());
+        walk = new Animation("walk",6, "/Assets/player/WALK/" + getPath());
         animationList.add(walk);
-        idle = new Animation(6, "/Assets/player/IDLE/" + getPath());
+        idle = new Animation("idle",6, "/Assets/player/IDLE/" + getPath());
         animationList.add(idle);
     }
 

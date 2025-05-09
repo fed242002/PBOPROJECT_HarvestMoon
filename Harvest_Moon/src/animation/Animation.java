@@ -11,9 +11,11 @@ public class Animation {
     public BufferedImage left[];
     public BufferedImage right[];
     public String path;
+    public String name;
 
 
-        public Animation(int spriteTotal, String path) {
+        public Animation(String name,int spriteTotal, String path) {
+        this.name = name;
         this.spriteTotal = spriteTotal;
         this.path = path;
         up = new BufferedImage[spriteTotal];
