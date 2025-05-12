@@ -18,9 +18,10 @@ public class TileManager {
     public TileManager(GamePanel gp) {
         this.gp = gp; 
         
-        mapTileNum = new int[gp.maxScreenCol][gp.maxScreenRow]; // Initialize the mapTileNum array with the maximum screen columns and rows
+        mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow]; // Initialize the mapTileNum array with the maximum screen columns and rows
 
         getTileImage(); 
+        
 
     }
 
@@ -41,15 +42,15 @@ public class TileManager {
             int col = 0;
             int row = 0;
 
-            while(col < gp.maxScreenCol && row < gp.maxScreenRow) { // Loop through the columns and rows of the map
+            while(col < gp.maxWorldCol && row < gp.maxWorldRow) { // Loop through the columns and rows of the map
                 String line = br.readLine(); // Read a line from the file
-                while(col < gp.maxScreenCol) { // Loop through the columns of the map
+                while(col < gp.maxWorldCol) { // Loop through the columns of the map
                     String numbers[] = line.split(" "); // Split the line into numbers
                     int num = Integer.parseInt(numbers[col]); // Parse the number from the string
                     mapTileNum[col][row] = num; // Assign the number to the mapTileNum array
                     col++; // Move to the next column
                 }
-                if(col == gp.maxScreenCol) { // If the end of the row is reached
+                if(col == gp.maxWorldCol) { // If the end of the row is reached
                     col = 0; // Reset the column to 0
                     row++; // Move to the next row
                 }

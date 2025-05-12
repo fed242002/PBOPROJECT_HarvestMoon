@@ -13,6 +13,10 @@ import Main.KeyHandler;
 import animation.Animation;
 
 public class Player extends Entity{
+
+    public final int screenX; // X position on the screen
+    public final int screenY; // Y position on the screen
+    
     
     //ini buat sprite animation -> info2
     String body = "black";
@@ -24,6 +28,18 @@ public class Player extends Entity{
     ArrayList<Animation> animationList = new ArrayList<>(); //0: walk, 1:idle
     public int currentAnimationIndex=1;
 
+    public Player(GamePanel gp, KeyHandler keyH) {
+        this.gp = gp; // Assign the GamePanel object to the instance variable
+        this.keyH = keyH; // Assign the KeyHandler object to the instance variable
+        screenX = gp.screenWidth / 2 - (gp.tileSize / 2); // Center the player on the screen
+        screenY = gp.screenHeight / 2 - (gp.tileSize / 2); // Center the player on the screen
+
+        setDefaultValues();
+        walk = new Animation("walk",6, "/Assets/player/WALK/" + getPath());
+        animationList.add(walk);
+        idle = new Animation("idle",6, "/Assets/player/IDLE/" + getPath());
+        animationList.add(idle);
+    }
 
     public void setAnimation(String animation){
 
@@ -41,7 +57,7 @@ public class Player extends Entity{
             i++;
         }
     }
-
+    
 
     public void changePath(String bagian, String nama){
 
@@ -71,19 +87,10 @@ public class Player extends Entity{
     GamePanel gp;
     KeyHandler keyH; // KeyHandler object to handle key events
     
-    public Player(GamePanel gp, KeyHandler keyH) {
-        this.gp = gp; // Assign the GamePanel object to the instance variable
-        this.keyH = keyH; // Assign the KeyHandler object to the instance variable
-        setDefaultValues();
-        walk = new Animation("walk",6, "/Assets/player/WALK/" + getPath());
-        animationList.add(walk);
-        idle = new Animation("idle",6, "/Assets/player/IDLE/" + getPath());
-        animationList.add(idle);
-    }
 
     public void setDefaultValues() {
-        x = 100; // Set the default x position of the player
-        y = 100; // Set the default y position of the player
+        worldX = 100; // Set the default x position of the player
+        worldY = 100; // Set the default y position of the player
         speed = 4; // Set the default speed of the player
         direction = "down"; // Set the default direction of the player
     }
@@ -96,19 +103,19 @@ public class Player extends Entity{
 
                     if(keyH.upPressed == true) {
                         direction = "up";
-                        y -= speed; // Move the player up
+                        worldY -= speed; // Move the player up
                     }
                     else if(keyH.downPressed == true) {
                         direction = "down";
-                        y += speed; // Move the player down
+                        worldY += speed; // Move the player down
                     }
                     else if(keyH.leftPressed == true) {
                         direction = "left";
-                        x -= speed; // Move the pldddddayer left
+                        worldX -= speed; // Move the pldddddayer left
                     }
                     else if(keyH.rightPressed == true) {
                         direction = "right";
-                        x += speed; // Move the player right
+                        worldX += speed; // Move the player right
                     }
             
                     
@@ -155,7 +162,7 @@ public class Player extends Entity{
 
 }
 
-        g2.drawImage(image, x, y, gp.playerSizeX , gp.playerSizeY, null); // Draw the player image at the specified position and size
+        g2.drawImage(image, screenX, screenY, gp.playerSizeX , gp.playerSizeY, null); // Draw the player image at the specified position and size
 
     }
 

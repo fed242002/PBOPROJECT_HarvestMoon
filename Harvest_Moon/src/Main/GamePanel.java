@@ -26,6 +26,12 @@ public class GamePanel extends JPanel implements Runnable{
     public int playerSizeX=tileSize; 
     public int playerSizeY=tileSize*2; // tinggi player
 
+    //world settings
+    public final int maxWorldCol = 50; // 50 tiles in a row
+    public final int maxWorldRow = 50; // 50 tiles in a column
+    public final int worldWidth = tileSize * maxWorldCol;
+    public final int worldHeight = tileSize * maxWorldRow; 
+
 
     //FPS
     int FPS = 60; // Frames per second
