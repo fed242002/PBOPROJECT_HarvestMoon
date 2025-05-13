@@ -68,24 +68,33 @@ public class TileManager {
 
 
     public void draw(Graphics2D g2){
-        int col = 0;
-        int row = 0;
-        int x = 0;
-        int y = 0;
 
-        while(col<gp.maxScreenCol && row<gp.maxScreenRow){
+        int worldCol = 0;
+        int worldRow = 0;
+
+
+        while(worldCol<gp.maxWorldCol && worldRow<gp.maxWorldRow){
           
-            int tileNum = mapTileNum[col][row]; // Get the tile number from the mapTileNum array
+            int tileNum = mapTileNum[worldCol][worldRow]; // Get the tile number from the mapTileNum array
 
-            g2.drawImage(tile.get(tileNum).image, x, y, gp.tileSize, gp.tileSize,null);
-            col++;
-            x += gp.tileSize; // Move to the right by one tile size
+            int worldX = worldCol * gp.tileSize; // Calculate the world X position
+            int worldY = worldRow * gp.tileSize; // Calculate the world Y position
+            int screenX = worldX - gp.player.worldX + gp.player.screenX; // Calculate the screen X position
+            int screenY = worldY - gp.player.worldY + gp.player.screenY; // Calculate the screen Y position
+
+            if(worldX + gp.tileSize > gp.player.worldX - gp.player.screenX && // If the tile is within the screen bounds
+               worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
+               worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
+               worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) 
+               { 
+                    g2.drawImage(tile.get(tileNum).image, screenX, screenY, gp.tileSize, gp.tileSize,null);
+               }
+
+            worldCol++;
             
-            if(col == gp.maxScreenCol){ // If the end of the row is reached
-                col = 0; // Reset the column to 0
-                x = 0; // Reset the x position to 0
-                row++; // Move to the next row
-                y += gp.tileSize; // Move down by one tile size
+            if(worldCol == gp.maxWorldCol){ // If the end of the row is reached
+                worldCol = 0; // Reset the column to 0
+                worldRow++; // Move to the next row
             }
         }
 

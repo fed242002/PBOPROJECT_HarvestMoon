@@ -39,7 +39,7 @@ public class GamePanel extends JPanel implements Runnable{
     TileManager tileM = new TileManager(this); // Create a new TileManager object
     KeyHandler keyH = new KeyHandler(); // Create a new KeyHandler object
     Thread gameThread; // Thread for the game loop
-    Player player = new Player(this, keyH); // Create a new Player object
+    public Player player = new Player(this, keyH); // Create a new Player object
 
     public GamePanel(){
 
