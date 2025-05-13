@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.RenderingHints.Key;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -33,8 +34,19 @@ public class Player extends Entity{
         this.keyH = keyH; // Assign the KeyHandler object to the instance variable
         screenX = gp.screenWidth / 2 - (gp.tileSize / 2); // Center the player on the screen
         screenY = gp.screenHeight / 2 - (gp.tileSize / 2); // Center the player on the screen
+        
+        solidArea = new Rectangle(); // Set the size of the solid area for collision detection
+        
+        solidArea.x = 8;
+        solidArea.y = 16;
+        solidArea.width = 32;
+        solidArea.height = 32;
+
+
 
         setDefaultValues();
+
+        //declare animation
         walk = new Animation("walk",6, "/Assets/player/WALK/" + getPath());
         animationList.add(walk);
         idle = new Animation("idle",6, "/Assets/player/IDLE/" + getPath());
@@ -103,19 +115,38 @@ public class Player extends Entity{
 
                     if(keyH.upPressed == true) {
                         direction = "up";
-                        worldY -= speed; // Move the player up
                     }
                     else if(keyH.downPressed == true) {
                         direction = "down";
-                        worldY += speed; // Move the player down
                     }
                     else if(keyH.leftPressed == true) {
                         direction = "left";
-                        worldX -= speed; // Move the pldddddayer left
                     }
                     else if(keyH.rightPressed == true) {
                         direction = "right";
-                        worldX += speed; // Move the player right
+                    }
+                    
+                    //check tile collision
+                    collisionOn = false;
+                    gp.cChecker.checkTile(this);
+                    
+                    //kalo collision -> false bisa dijalani
+                    if(collisionOn == false){
+                        switch (direction) {
+                            case "up":
+                                worldY -= speed; // Move the player up
+                                break;
+                            case "down":
+                                worldY += speed; // Move the player down
+                                break;
+                            case "left":
+                                worldX -= speed; // Move the pldddddayer left
+                                break;
+                            case "right":
+                                worldX += speed; // Move the player right
+                                break;
+                    
+                        }
                     }
             
                     

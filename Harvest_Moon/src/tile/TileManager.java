@@ -12,8 +12,8 @@ import Main.GamePanel;
 
 public class TileManager {
     GamePanel gp;
-    ArrayList<Tile> tile = new ArrayList<>(); 
-    int mapTileNum[][];
+    public ArrayList<Tile> tile = new ArrayList<>(); 
+    public int mapTileNum[][];
 
     public TileManager(GamePanel gp) {
         this.gp = gp; 
@@ -21,7 +21,7 @@ public class TileManager {
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow]; // Initialize the mapTileNum array with the maximum screen columns and rows
 
         getTileImage(); 
-        
+        loadMap();
 
     }
 
@@ -29,14 +29,14 @@ public class TileManager {
         tile.clear();
 
         tile.add(new Tile("/Assets/grass.png", false));
-        tile.add(new Tile("/Assets/brick.jpg", false));
+        tile.add(new Tile("/Assets/brick.jpg", true));
         
     }
 
     public void loadMap(){
 
         try {
-            InputStream is = getClass().getResourceAsStream("/Assets/map.txt"); // Load the map file
+            InputStream is = getClass().getResourceAsStream("/Assets/map01.txt"); // Load the map file
             BufferedReader br = new BufferedReader(new InputStreamReader(is)); // Create a BufferedReader to read the file
 
             int col = 0;
