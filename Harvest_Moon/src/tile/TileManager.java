@@ -2,6 +2,7 @@ package tile;
 
 import java.awt.Graphics2D;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -11,6 +12,8 @@ import Main.GamePanel;
 public class TileManager {
     GamePanel gp;
     public ArrayList<Tile> tile = new ArrayList<>(); 
+    public ArrayList<String> fileNames = new ArrayList<>(); 
+    public ArrayList<String> collisionStatus = new ArrayList<>(); 
     public int mapTileNum[][];
 
     public TileManager(GamePanel gp) {
@@ -18,28 +21,61 @@ public class TileManager {
         
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow]; // Initialize the mapTileNum array with the maximum screen columns and rows
 
-        getTileImage(); 
-        loadMap();
+        loadTileData("/Assets/map/mapHouseTileDataWithFence_Overlay.txt"); // Load tile data from the specified file
 
-        for(int i=0; i<gp.maxWorldRow; i++){
-            for(int j=0; j<gp.maxWorldCol; j++){
-                System.out.print(mapTileNum[j][i] + " "); // Print the tile numbers to the console
+        loadMap("/Assets/map/mapHouseMapWithFence_Overlay.txt");
+    }
+    
+
+    public void loadTileData(String dataPath){
+        // clear previous data
+        fileNames.clear();
+        collisionStatus.clear();
+
+        InputStream is = getClass().getResourceAsStream(dataPath);
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+        String line;
+
+        try {
+            while((line = br.readLine()) != null) {
+                fileNames.add(line); 
+                collisionStatus.add(br.readLine()); 
             }
+        } catch (IOException e) {
+            System.out.println("Error loading tile data: " + e.getMessage());
         }
+
+        getTileImage(); 
 
     }
 
     public void getTileImage(){
         tile.clear();
 
-        tile.add(new Tile("/Assets/grass.png", false));
-        tile.add(new Tile("/Assets/brick.jpg", true));
+        for(int i = 0; i < fileNames.size(); i++){
+            String fileName = "/Assets/tile/"+fileNames.get(i);
+            boolean collision;
+
+            if(collisionStatus.get(i).equalsIgnoreCase("true")){
+                collision = true; 
+            } else {
+                collision = false; 
+            }
+
+            Tile t = new Tile(fileName, collision);
+            tile.add(t); 
+        }
+
+
+        // tile.add(new Tile("/Assets/grass.png", false));
+        // tile.add(new Tile("/Assets/brick.jpg", true));
         
     }
 
-    public void loadMap(){
+    public void loadMap(String mapPath){
         try {
-            InputStream is = getClass().getResourceAsStream("/Assets/map01.txt");
+            InputStream is = getClass().getResourceAsStream(mapPath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             
             int row = 0;
