@@ -4,8 +4,6 @@ import java.awt.Graphics2D;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
-import java.nio.Buffer;
 import java.util.ArrayList;
 
 import Main.GamePanel;
@@ -23,6 +21,12 @@ public class TileManager {
         getTileImage(); 
         loadMap();
 
+        for(int i=0; i<gp.maxWorldRow; i++){
+            for(int j=0; j<gp.maxWorldCol; j++){
+                System.out.print(mapTileNum[j][i] + " "); // Print the tile numbers to the console
+            }
+        }
+
     }
 
     public void getTileImage(){
@@ -34,38 +38,42 @@ public class TileManager {
     }
 
     public void loadMap(){
-
         try {
-            InputStream is = getClass().getResourceAsStream("/Assets/map01.txt"); // Load the map file
-            BufferedReader br = new BufferedReader(new InputStreamReader(is)); // Create a BufferedReader to read the file
-
-            int col = 0;
+            InputStream is = getClass().getResourceAsStream("/Assets/map01.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            
             int row = 0;
-
-            while(col < gp.maxWorldCol && row < gp.maxWorldRow) { // Loop through the columns and rows of the map
-                String line = br.readLine(); // Read a line from the file
-                while(col < gp.maxWorldCol) { // Loop through the columns of the map
-                    String numbers[] = line.split(" "); // Split the line into numbers
-                    int num = Integer.parseInt(numbers[col]); // Parse the number from the string
-                    mapTileNum[col][row] = num; // Assign the number to the mapTileNum array
-                    col++; // Move to the next column
+            
+            while(row < gp.maxWorldRow) { // Process one row at a time
+                String line = br.readLine();
+                if(line == null) {
+                    // Reached end of file before filling the map
+                    System.out.println("Warning: Map file has fewer rows than expected");
+                    break;
                 }
-                if(col == gp.maxWorldCol) { // If the end of the row is reached
-                    col = 0; // Reset the column to 0
-                    row++; // Move to the next row
+                
+                String[] numbers = line.split(" ");
+                
+                if(numbers.length < gp.maxWorldCol) {
+                    System.out.println("Warning: Row " + row + " has fewer columns than expected");
                 }
+                
+                // Process each number in the current row
+                for(int col = 0; col < gp.maxWorldCol && col < numbers.length; col++) {
+                    int num = Integer.parseInt(numbers[col]);
+                    mapTileNum[col][row] = num;
+                }
+                
+                row++;
             }
+            
             br.close();
-
+            
         } catch (Exception e) {
-            System.out.println("error di loadMap()"); // Print an error message if there is an exception
+            System.out.println("Error in loadMap(): " + e.getMessage());
             e.printStackTrace();
         }
-
     }
-
-
-
 
     public void draw(Graphics2D g2){
 
@@ -86,9 +94,9 @@ public class TileManager {
                worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) 
-               { 
-                    g2.drawImage(tile.get(tileNum).image, screenX, screenY, gp.tileSize, gp.tileSize,null);
-               }
+            { 
+                g2.drawImage(tile.get(tileNum).image, screenX, screenY, gp.tileSize, gp.tileSize,null);
+            }
 
             worldCol++;
             

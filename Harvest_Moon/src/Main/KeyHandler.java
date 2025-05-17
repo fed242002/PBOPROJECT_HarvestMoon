@@ -10,7 +10,12 @@ public class KeyHandler implements KeyListener{
     int downKey = KeyEvent.VK_S;
     int leftKey = KeyEvent.VK_A;
     int rightKey = KeyEvent.VK_D;
+    GamePanel gp;
 
+    // Update constructor to accept GamePanel
+    public KeyHandler(GamePanel gp) {
+        this.gp = gp;
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -33,6 +38,11 @@ public class KeyHandler implements KeyListener{
         if(code == rightKey) {
             rightPressed = true;
         }
+
+        // Add debug hitbox toggle when F3 is pressed
+        if(code == KeyEvent.VK_F3) {
+            gp.showDebugHitboxes = !gp.showDebugHitboxes;
+        }
         
     }
 
@@ -53,8 +63,6 @@ public class KeyHandler implements KeyListener{
         if(code == rightKey) {
             rightPressed = false;
         }
-
-
 
     }
     

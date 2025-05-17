@@ -37,10 +37,10 @@ public class Player extends Entity{
         
         solidArea = new Rectangle(); // Set the size of the solid area for collision detection
         
-        solidArea.x = 8;
-        solidArea.y = 16;
+        solidArea.x = 10;
+        solidArea.y = 80;
         solidArea.width = 32;
-        solidArea.height = 32;
+        solidArea.height = 15;
 
 
 
@@ -101,8 +101,8 @@ public class Player extends Entity{
     
 
     public void setDefaultValues() {
-        worldX = 100; // Set the default x position of the player
-        worldY = 100; // Set the default y position of the player
+        worldX = gp.tileSize * 23 ; // Set the default x position of the player
+        worldY = gp.tileSize * 21; // Set the default y position of the player
         speed = 4; // Set the default speed of the player
         direction = "down"; // Set the default direction of the player
     }

@@ -3,6 +3,8 @@ package Main;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JPanel;
 
@@ -12,7 +14,7 @@ import tile.TileManager;
 import java.awt.Color;
 
 
-public class GamePanel extends JPanel implements Runnable{
+public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     
     final int originalTileSize = 48; // 16x16 tile
     final int scale = 1; // Scale the tile size by 3x
@@ -37,10 +39,15 @@ public class GamePanel extends JPanel implements Runnable{
     int FPS = 60; // Frames per second
 
     TileManager tileM = new TileManager(this); // Create a new TileManager object
-    KeyHandler keyH = new KeyHandler(); // Create a new KeyHandler object
+    KeyHandler keyH = new KeyHandler(this); // Create a new KeyHandler object
     Thread gameThread; // Thread for the game loop
     public CollisionChecker cChecker = new CollisionChecker(this);
     public Player player = new Player(this, keyH); // Create a new Player object
+
+    private int mouseX = -1;
+    private int mouseY = -1;
+
+    public boolean showDebugHitboxes = false; // Toggle for showing hitboxes
 
     public GamePanel(){
 
@@ -49,8 +56,7 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true); // Double buffering to reduce flickering
         this.addKeyListener(keyH); 
         this.setFocusable(true); // Make the panel focusable to receive key events;
-
-
+        this.addMouseMotionListener(this);
     }
 
     public void startGameThread(){
@@ -98,6 +104,19 @@ public class GamePanel extends JPanel implements Runnable{
         player.update();
     }
 
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        mouseX = e.getX();
+        mouseY = e.getY();
+        repaint();
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        // Not used, but required by interface
+    }
+
+    @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g); 
 
@@ -105,10 +124,19 @@ public class GamePanel extends JPanel implements Runnable{
 
         tileM.draw(g2); // Draw the tiles
         player.draw(g2); // Draw the player
+        
+        // Draw mouse coordinates
+        if(mouseX >= 0 && mouseY >= 0) {
+            g2.setColor(Color.WHITE);
+            g2.drawString("Mouse X: " + mouseX + " Y: " + mouseY, 10, 20);
+        }
+
+        // Add hitbox drawing at the end (on top of everything else)
+        if(showDebugHitboxes) {
+            cChecker.drawHitboxes(g2);
+        }
 
         g2.dispose(); // Dispose of the graphics object to free up resources
-
-
     }
 
 
