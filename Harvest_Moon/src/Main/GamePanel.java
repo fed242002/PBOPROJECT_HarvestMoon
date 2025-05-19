@@ -5,10 +5,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
 import entity.Player;
+import object.OBJ_Papan;
+import object.SuperObject;
 import tile.TileManager;
 
 import java.awt.Color;
@@ -42,7 +46,10 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     KeyHandler keyH = new KeyHandler(this); // Create a new KeyHandler object
     Thread gameThread; // Thread for the game loop
     public CollisionChecker cChecker = new CollisionChecker(this);
+    public AssetSetter aSetter = new AssetSetter(this); // Create a new AssetSetter object
     public Player player = new Player(this, keyH); // Create a new Player object
+    public ArrayList<SuperObject> obj = new ArrayList<>(); // List of objects in the game
+
 
     private int mouseX = -1;
     private int mouseY = -1;
@@ -57,6 +64,10 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         this.addKeyListener(keyH); 
         this.setFocusable(true); // Make the panel focusable to receive key events;
         this.addMouseMotionListener(this);
+    }
+
+    public void setupGame(){
+        aSetter.setObject(); 
     }
 
     public void startGameThread(){
@@ -119,11 +130,26 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g); 
-
         Graphics2D g2 = (Graphics2D) g; 
 
-        tileM.draw(g2); // Draw the tiles
-        player.draw(g2); // Draw the player
+
+        //tile
+        tileM.draw(g2); 
+
+        
+        //object
+        for (SuperObject obj : this.obj) {
+            if (obj != null) {
+                obj.draw(g2, this);
+            }
+            else {
+                System.out.println("obj is null");
+            }
+        }
+
+        //player
+        player.draw(g2); 
+
         
         // Draw mouse coordinates
         if(mouseX >= 0 && mouseY >= 0) {

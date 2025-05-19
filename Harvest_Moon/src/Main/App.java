@@ -17,6 +17,8 @@ public class App {
         window.setLocationRelativeTo(null);
         window.setVisible(true);
         
+
+        gamePanel.setupGame(); 
         gamePanel.startGameThread(); // Start the game thread after the window is visible
             
     
