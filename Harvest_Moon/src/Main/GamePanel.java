@@ -44,14 +44,21 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
 
     
+    // system
     TileManager tileM = new TileManager(this); // Create a new TileManager object
     KeyHandler keyH = new KeyHandler(this); // Create a new KeyHandler object
-    Thread gameThread; // Thread for the game loop
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this); // Create a new AssetSetter object
+    public SFX sfx = new SFX(); 
+    public MasterMusic masterMusic = new MasterMusic();
+    Thread gameThread; // Thread for the game loop
+
+    //entity and object
     public Player player = new Player(this, keyH); // Create a new Player object
     public ArrayList<SuperObject> obj = new ArrayList<>(); // List of objects in the game
 
+    //UI
+    public UI ui = new UI(this); // Create a new UI object
 
     private int mouseX = -1;
     private int mouseY = -1;
@@ -152,6 +159,9 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         //player
         player.draw(g2); 
 
+        //ui
+        ui.draw(g2); // Draw the UI
+
         
         // Draw mouse coordinates
         if(mouseX >= 0 && mouseY >= 0) {
@@ -167,5 +177,21 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         g2.dispose(); // Dispose of the graphics object to free up resources
     }
 
+
+    public void playMusic(Sound sound,int i){
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+
+    public void stopMusic(Sound sound){
+        if(sound.clip != null) // Check if the clip is not null
+            sound.stop();
+    }
+
+    public void playSFX(Sound sound,int i){
+        sound.setFile(i);
+        sound.play();
+    }
 
 }

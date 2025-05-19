@@ -19,6 +19,9 @@ public class SuperObject {
     int width=48, height=48; 
     GamePanel gp;
 
+    public SuperObject(GamePanel gp) {
+        this.gp = gp; // Initialize the GamePanel instance
+    }
 
     public void interact(){
         // ini buat interaksi per obj

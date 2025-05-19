@@ -21,9 +21,9 @@ public class TileManager {
         
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow]; // Initialize the mapTileNum array with the maximum screen columns and rows
 
-        loadTileData("/Assets/map/mapHouseTileData.txt"); // Load tile data from the specified file
+        loadTileData("/assets/map/mapHouseTileData.txt"); // Load tile data from the specified file
 
-        loadMap("/Assets/map/mapHouseMap.txt");
+        loadMap("/assets/map/mapHouseMap.txt");
     }
     
 
@@ -54,7 +54,7 @@ public class TileManager {
         tile.clear();
 
         for(int i = 0; i < fileNames.size(); i++){
-            String fileName = "/Assets/tile/"+fileNames.get(i);
+            String fileName = "/assets/tile/"+fileNames.get(i);
             boolean collision;
 
             if(collisionStatus.get(i).equalsIgnoreCase("true")){

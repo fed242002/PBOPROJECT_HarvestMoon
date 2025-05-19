@@ -13,9 +13,22 @@ public class Animation {
     public String path;
     public String name;
     public int currentSprite=0;
-
+    public int soundFX = -1;
 
         public Animation(String name,int spriteTotal, String path) {
+        this.name = name;
+        this.spriteTotal = spriteTotal;
+        this.path = path;
+        up = new BufferedImage[spriteTotal];
+        down = new BufferedImage[spriteTotal];
+        left = new BufferedImage[spriteTotal];
+        right = new BufferedImage[spriteTotal];
+
+        setSprite();
+        }
+
+        public Animation(String name,int spriteTotal, String path, int soundFX) {
+        this.soundFX = soundFX;
         this.name = name;
         this.spriteTotal = spriteTotal;
         this.path = path;

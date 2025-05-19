@@ -50,22 +50,29 @@ public class Player extends Entity{
         setDefaultValues();
 
         //declare animation
-        walk = new Animation("walk",6, "/Assets/player/WALK/" + getPath());
+        walk = new Animation("walk",6, "/assets/player/WALK/" + getPath(), 0);
         animationList.add(walk);
-        idle = new Animation("idle",6, "/Assets/player/IDLE/" + getPath());
+        idle = new Animation("idle",6, "/assets/player/IDLE/" + getPath());
         animationList.add(idle);
     }
 
     public void setAnimation(String animation){
-
+        
         int i=0;
         for(Animation x: animationList){
             if(animation.equalsIgnoreCase(x.name)){
                 if(this.currentAnimationIndex != i){
+                    gp.stopMusic(gp.sfx);
+                    //set animation
                     currentAnimationIndex = i;
                     //reset animation
                     spriteCounter = 0;
                     spriteCounter = 0;
+                    //play sfx
+                    if(x.soundFX != -1){
+                        gp.playMusic(gp.sfx ,x.soundFX);
+                    }
+
                 }
                 break;
             }

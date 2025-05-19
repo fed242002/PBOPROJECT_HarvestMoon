@@ -5,9 +5,12 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
+import Main.GamePanel;
+
 public class OBJ_Papan extends SuperObject {
     
-    public OBJ_Papan(int x, int y) {
+    public OBJ_Papan(GamePanel gp,int x, int y) {
+        super(gp); 
         name = "Key";
         path = "/Assets/tile/tile1012.png";
         collision = false;
@@ -29,6 +32,7 @@ public class OBJ_Papan extends SuperObject {
     @Override
     public void interact() {
         System.out.println("Interacting with " + name);
+        gp.ui.showMessage("You found a " + name + "!");
     }
 
 

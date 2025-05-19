@@ -17,3 +17,10 @@
 
 -> nambain 1 di around map buat collision
 
+
+
+-> SOUND EFFECT
+    sementara semua animasi ada soundFX (int) buat inndex sound
+    -> list untuk sfx
+        - 0 -> walking in grass
+    -> list master Music
