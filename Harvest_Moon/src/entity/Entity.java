@@ -12,6 +12,9 @@ public class Entity {
     public int spriteNum = 1; // Sprite number for animation
 
     public Rectangle solidArea; // Rectangle for collision detection
+
+
+    public int solidAreaDefaultX, solidAreaDefaultY; // Default position of the solid area
     public boolean collisionOn = false; // Flag for collision detection
     
 }

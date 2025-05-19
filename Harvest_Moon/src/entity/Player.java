@@ -17,7 +17,7 @@ public class Player extends Entity{
 
     public final int screenX; // X position on the screen
     public final int screenY; // Y position on the screen
-    
+    int hasKey = 0;
     
     //ini buat sprite animation -> info2
     String body = "black";
@@ -41,6 +41,9 @@ public class Player extends Entity{
         solidArea.y = 80;
         solidArea.width = 32;
         solidArea.height = 15;
+
+        solidAreaDefaultX = solidArea.x; 
+        solidAreaDefaultY = solidArea.y; 
 
 
 
@@ -129,7 +132,11 @@ public class Player extends Entity{
                     //check tile collision
                     collisionOn = false;
                     gp.cChecker.checkTile(this);
-                    
+
+                    //check object collision
+                    int objIndex = gp.cChecker.checkObject(this, true);
+                    pickUpObject(objIndex);
+
                     //kalo collision -> false bisa dijalani
                     if(collisionOn == false){
                         switch (direction) {
@@ -170,6 +177,13 @@ public class Player extends Entity{
                 
 
 
+    }
+
+    public void pickUpObject(int i){
+        //pick up object
+        if(i != 999){
+            gp.obj.get(i).interact(); // Call the interact method of the object
+        }
     }
 
     public void draw(Graphics2D g2){

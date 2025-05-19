@@ -6,10 +6,6 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener{
 
     public boolean upPressed, downPressed, leftPressed, rightPressed;
-    int upKey = KeyEvent.VK_W;
-    int downKey = KeyEvent.VK_S;
-    int leftKey = KeyEvent.VK_A;
-    int rightKey = KeyEvent.VK_D;
     GamePanel gp;
 
     // Update constructor to accept GamePanel
@@ -26,21 +22,21 @@ public class KeyHandler implements KeyListener{
 
         int code = e.getKeyCode();
 
-        if(code == upKey) {
+        if(code == KeyBind.upKey) {
             upPressed = true;
         }
-        if(code == downKey) {
+        if(code == KeyBind.downKey) {
             downPressed = true;
         }
-        if(code == leftKey) {
+        if(code == KeyBind.leftKey) {
             leftPressed = true;
         }
-        if(code == rightKey) {
+        if(code == KeyBind.rightKey) {
             rightPressed = true;
         }
 
         // Add debug hitbox toggle when F3 is pressed
-        if(code == KeyEvent.VK_F3) {
+        if(code == KeyBind.hitbox) {
             gp.showDebugHitboxes = !gp.showDebugHitboxes;
         }
         
@@ -51,16 +47,16 @@ public class KeyHandler implements KeyListener{
 
         int code = e.getKeyCode();
 
-        if(code == upKey) {
+        if(code == KeyBind.upKey) {
             upPressed = false;
         }
-        if(code == downKey) {
+        if(code == KeyBind.downKey) {
             downPressed = false;
         }
-        if(code == leftKey) {
+        if(code == KeyBind.leftKey) {
             leftPressed = false;
         }
-        if(code == rightKey) {
+        if(code == KeyBind.rightKey) {
             rightPressed = false;
         }
 

@@ -21,9 +21,9 @@ public class TileManager {
         
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow]; // Initialize the mapTileNum array with the maximum screen columns and rows
 
-        loadTileData("/Assets/map/mapHouseTileDataWithFence_Overlay.txt"); // Load tile data from the specified file
+        loadTileData("/Assets/map/mapHouseTileData.txt"); // Load tile data from the specified file
 
-        loadMap("/Assets/map/mapHouseMapWithFence_Overlay.txt");
+        loadMap("/Assets/map/mapHouseMap.txt");
     }
     
 

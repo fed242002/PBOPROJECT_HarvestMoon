@@ -42,6 +42,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     //FPS
     int FPS = 60; // Frames per second
 
+
+    
     TileManager tileM = new TileManager(this); // Create a new TileManager object
     KeyHandler keyH = new KeyHandler(this); // Create a new KeyHandler object
     Thread gameThread; // Thread for the game loop

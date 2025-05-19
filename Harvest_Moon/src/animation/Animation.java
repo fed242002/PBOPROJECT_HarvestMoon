@@ -12,6 +12,7 @@ public class Animation {
     public BufferedImage right[];
     public String path;
     public String name;
+    public int currentSprite=0;
 
 
         public Animation(String name,int spriteTotal, String path) {
@@ -52,4 +53,27 @@ public class Animation {
     }
 
 
+
+    public BufferedImage CurrentImage(String direction) {
+        BufferedImage image = null;
+        switch (direction) {
+            case "up":
+                image = up[currentSprite];
+                break;
+            case "down":
+                image = down[currentSprite];
+                break;
+            case "left":
+                image = left[currentSprite];
+                break;
+            case "right":
+                image = right[currentSprite];
+                break;
+        }
+        return image;
+    }
+
+    public void resetAnimation() {
+        currentSprite = 0;
+    }
 }

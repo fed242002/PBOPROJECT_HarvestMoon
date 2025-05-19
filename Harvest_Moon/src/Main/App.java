@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 //tes
 public class App {
     public static void main(String[] args) throws Exception {
-        JFrame window = new JFrame("Harvest Moon");
+        JFrame window = new JFrame("nanem Bulan");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
 
