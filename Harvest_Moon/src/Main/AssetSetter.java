@@ -10,7 +10,7 @@ public class AssetSetter {
     }
 
     public void setObject() {
-        gp.obj.add(new OBJ_Papan(2 * gp.tileSize, 2 * gp.tileSize));
+        gp.obj.add(new OBJ_Papan(12 * gp.tileSize, 12 * gp.tileSize));
 
 
         // Add more objects as needed

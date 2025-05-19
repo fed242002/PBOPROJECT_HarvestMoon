@@ -9,12 +9,12 @@ public class OBJ_Papan extends SuperObject {
     
     public OBJ_Papan(int x, int y) {
         name = "Key";
-        path = "/Assets/tile/tile1041.png";
+        path = "/Assets/Tileset_Barn_1.png";
         collision = false;
         worldX = x;
         worldY = y;
-        width = 48;
-        height = 48 * 2;
+        width = 48*10;
+        height = 48 * 10;
 
         try {
             image = ImageIO.read(getClass().getResourceAsStream(path));

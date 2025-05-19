@@ -14,3 +14,6 @@
     1 : Idle
 
 
+
+-> nambain 1 di around map buat collision
+
