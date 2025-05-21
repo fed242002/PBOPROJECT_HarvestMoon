@@ -24,12 +24,9 @@ public class Player extends Entity{
     String eye = "blue";
     String outfit = "blue";
     String hair = "baldBlondeAsh";
-    Animation walk;
-    Animation idle;
-    ArrayList<Animation> animationList = new ArrayList<>(); //0: walk, 1:idle
-    public int currentAnimationIndex=1;
 
     public Player(GamePanel gp, KeyHandler keyH) {
+        super(gp);
         this.gp = gp; // Assign the GamePanel object to the instance variable
         this.keyH = keyH; // Assign the KeyHandler object to the instance variable
         screenX = gp.screenWidth / 2 - (gp.tileSize / 2); // Center the player on the screen
@@ -56,29 +53,6 @@ public class Player extends Entity{
         animationList.add(idle);
     }
 
-    public void setAnimation(String animation){
-        
-        int i=0;
-        for(Animation x: animationList){
-            if(animation.equalsIgnoreCase(x.name)){
-                if(this.currentAnimationIndex != i){
-                    gp.stopMusic(gp.sfx);
-                    //set animation
-                    currentAnimationIndex = i;
-                    //reset animation
-                    spriteCounter = 0;
-                    spriteCounter = 0;
-                    //play sfx
-                    if(x.soundFX != -1){
-                        gp.playMusic(gp.sfx ,x.soundFX);
-                    }
-
-                }
-                break;
-            }
-            i++;
-        }
-    }
     
 
     public void changePath(String bagian, String nama){
@@ -106,7 +80,6 @@ public class Player extends Entity{
         return body+"-"+eye+"-"+outfit+"-"+hair+"-";
     }
 
-    GamePanel gp;
     KeyHandler keyH; // KeyHandler object to handle key events
     
 
@@ -143,6 +116,10 @@ public class Player extends Entity{
                     //check object collision
                     int objIndex = gp.cChecker.checkObject(this, true);
                     pickUpObject(objIndex);
+
+                    //check npc collision
+                    int npcIndex = gp.cChecker.checkEntity(this, gp.npcs);
+                    interactNPC(npcIndex);
 
                     //kalo collision -> false bisa dijalani
                     if(collisionOn == false){
@@ -189,6 +166,13 @@ public class Player extends Entity{
     public void pickUpObject(int i){
         if(i != 999){
             gp.obj.get(i).interact(); // Call the interact method of the object
+        }
+    }
+
+    public void interactNPC(int i){
+        if(i != 999){
+            System.out.println("you meet " + gp.npcs.get(i).name); // Print the name of the NPC
+            // gp.npcs.get(i).interact(); // Call the setAction method of the NPC
         }
     }
 

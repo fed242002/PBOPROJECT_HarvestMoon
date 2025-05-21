@@ -1,5 +1,6 @@
 package Main;
 
+import entity.Npc;
 import object.OBJ_Papan;
 
 public class AssetSetter {
@@ -15,5 +16,11 @@ public class AssetSetter {
 
         // Add more objects as needed
     }
-    
+
+
+    public void setNPC(){
+        gp.npcs.add(new Npc(gp, "Eddy", 21 * gp.tileSize, 21 * gp.tileSize));
+
+    }
+
 }

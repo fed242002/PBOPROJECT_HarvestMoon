@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import entity.Entity;
+import entity.Npc;
 import entity.Player;
 import object.OBJ_Papan;
 import object.SuperObject;
@@ -56,6 +58,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     //entity and object
     public Player player = new Player(this, keyH); // Create a new Player object
     public ArrayList<SuperObject> obj = new ArrayList<>(); // List of objects in the game
+    public ArrayList<Entity> npcs = new ArrayList<>(); // List of NPCs in the game
+
 
     //Game state
     public int gameState; 
@@ -84,6 +88,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
     public void setupGame(){
         aSetter.setObject(); 
+        aSetter.setNPC(); 
         gameState = playState; // Set the game state to play
     }
 
@@ -131,6 +136,13 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
         if(gameState == playState) { // If the game is being played
             player.update(); // Update the player
+
+            for(Entity npc : npcs) { // Update all NPCs
+                if(npc != null) {
+                    npc.update();
+                }
+            }
+
         }
         
         if(gameState == pauseState) { // If the game is paused
@@ -173,6 +185,16 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
             }
             else {
                 System.out.println("obj is null");
+            }
+        }
+
+        //NPC
+        for (Entity npc : npcs) {
+           if(npc!= null){
+                npc.draw(g2); 
+            }
+            else {
+                System.out.println("npc is null");
             }
         }
 
