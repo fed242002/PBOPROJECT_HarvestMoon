@@ -62,6 +62,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
     private int mouseX = -1;
     private int mouseY = -1;
+    private int mouseWorldX = -1;  // Add this for world X coordinate
+    private int mouseWorldY = -1;  // Add this for world Y coordinate
 
     public boolean showDebugHitboxes = false; // Toggle for showing hitboxes
 
@@ -128,6 +130,11 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public void mouseMoved(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
+        
+        // Calculate world coordinates based on player position and screen coordinates
+        mouseWorldX = mouseX - player.screenX + player.worldX;
+        mouseWorldY = mouseY - player.screenY + player.worldY;
+        
         repaint();
     }
 
@@ -163,14 +170,17 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         ui.draw(g2); // Draw the UI
 
         
-        // Draw mouse coordinates
-        if(mouseX >= 0 && mouseY >= 0) {
-            g2.setColor(Color.WHITE);
-            g2.drawString("Mouse X: " + mouseX + " Y: " + mouseY, 10, 20);
-        }
-
+        
         // Add hitbox drawing at the end (on top of everything else)
         if(showDebugHitboxes) {
+            // Draw mouse coordinates
+            if(mouseX >= 0 && mouseY >= 0) {
+                g2.setColor(Color.WHITE);
+                g2.drawString("Screen X: " + mouseX + " Y: " + mouseY, 10, 20);
+                g2.drawString("World X: " + mouseWorldX + " Y: " + mouseWorldY, 10, 40);
+                // Optional: Add tile coordinates
+                g2.drawString("Tile Col: " + (mouseWorldX / tileSize) + " Row: " + (mouseWorldY / tileSize), 10, 60);
+            }
             cChecker.drawHitboxes(g2);
         }
 

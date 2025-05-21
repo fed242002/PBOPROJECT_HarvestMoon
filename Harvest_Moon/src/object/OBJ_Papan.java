@@ -32,7 +32,7 @@ public class OBJ_Papan extends SuperObject {
     @Override
     public void interact() {
         System.out.println("Interacting with " + name);
-        gp.ui.showMessage("You found a " + name + "!");
+        // gp.ui.showMessage("You found a " + name + "!");
     }
 
 
