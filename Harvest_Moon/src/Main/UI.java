@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 
 public class UI {
  
+    Graphics2D g2;
     GamePanel gp;
     Font arial_40;
     BufferedImage image;
@@ -25,22 +26,54 @@ public class UI {
     }
 
     public void draw(Graphics2D g2){
-        // g2.setFont(arial_40);
+        this.g2 = g2;
+
+        g2.setFont(arial_40);
         g2.setColor(Color.WHITE);
-        // g2.drawImage(image,gp.tileSize/2, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
-        // g2.drawString("Halo bang", 74, 50);
 
-
-        //message 
-        if(messageOn){
-            g2.setFont(g2.getFont().deriveFont(30F));
-            g2.drawString(message, gp.tileSize/2, gp.tileSize/2);
-            messageCounter++;
-
-            if(messageCounter > 120){
-                messageCounter = 0;
-                messageOn = false;
-            }
+        if(gp.gameState == gp.playState){
+            //do play State
         }
+
+        if(gp.gameState == gp.pauseState){
+            drawPauseScreen();
+        }
+
+
+
+
+        // g2.setFont(arial_40);
+        // g2.setColor(Color.WHITE);
+        // // g2.drawImage(image,gp.tileSize/2, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
+        // // g2.drawString("Halo bang", 74, 50);
+
+
+
+        // //message 
+        // if(messageOn){
+        //     g2.setFont(g2.getFont().deriveFont(30F));
+        //     g2.drawString(message, gp.tileSize/2, gp.tileSize/2);
+        //     messageCounter++;
+
+        //     if(messageCounter > 120){
+        //         messageCounter = 0;
+        //         messageOn = false;
+        //     }
+        // }
+    }
+
+    public void drawPauseScreen(){
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 80F));
+            String text = "PAUSED";
+            int x = getXforCenteredText(text);
+            int y = gp.screenHeight / 2;
+
+            g2.drawString(text, x, y);
+    }
+
+    public int getXforCenteredText(String text){
+            int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+            int x = gp.screenWidth / 2 - length / 2; 
+            return x;
     }
 }

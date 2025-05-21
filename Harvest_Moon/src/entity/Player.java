@@ -187,7 +187,6 @@ public class Player extends Entity{
     }
 
     public void pickUpObject(int i){
-        //pick up object
         if(i != 999){
             gp.obj.get(i).interact(); // Call the interact method of the object
         }

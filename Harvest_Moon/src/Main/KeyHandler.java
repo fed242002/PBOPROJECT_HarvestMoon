@@ -39,6 +39,14 @@ public class KeyHandler implements KeyListener{
         if(code == KeyBind.hitbox) {
             gp.showDebugHitboxes = !gp.showDebugHitboxes;
         }
+        if(code == KeyBind.pauseKey) {
+            if(gp.gameState == gp.playState){ //kalo play ke pause
+                gp.gameState = gp.pauseState;
+            }
+            else if(gp.gameState == gp.pauseState){ //kalo pause ke play
+                gp.gameState = gp.playState;
+            }
+        }
         
     }
 

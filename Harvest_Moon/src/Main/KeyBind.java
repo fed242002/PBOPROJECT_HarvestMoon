@@ -11,4 +11,7 @@ public class KeyBind {
 
     //hitbox key
     public static int hitbox = KeyEvent.VK_F3;
+
+    //pause key
+    public static int pauseKey = KeyEvent.VK_ESCAPE;
 }

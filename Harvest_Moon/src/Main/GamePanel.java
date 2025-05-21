@@ -57,6 +57,11 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public Player player = new Player(this, keyH); // Create a new Player object
     public ArrayList<SuperObject> obj = new ArrayList<>(); // List of objects in the game
 
+    //Game state
+    public int gameState; 
+    public final int playState = 1; // Game is being played
+    public final int pauseState = 2; // Game is paused
+
     //UI
     public UI ui = new UI(this); // Create a new UI object
 
@@ -79,6 +84,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
     public void setupGame(){
         aSetter.setObject(); 
+        gameState = playState; // Set the game state to play
     }
 
     public void startGameThread(){
@@ -123,7 +129,14 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
     public void update(){
 
-        player.update();
+        if(gameState == playState) { // If the game is being played
+            player.update(); // Update the player
+        }
+        
+        if(gameState == pauseState) { // If the game is paused
+            // Handle pause state updates here if needed
+        }
+        
     }
 
     @Override
