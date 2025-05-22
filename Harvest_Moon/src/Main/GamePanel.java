@@ -65,6 +65,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public int gameState; 
     public final int playState = 1; // Game is being played
     public final int pauseState = 2; // Game is paused
+    public final int dialogueState = 3; // Dialog is being shown
 
     //UI
     public UI ui = new UI(this); // Create a new UI object

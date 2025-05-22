@@ -20,12 +20,9 @@ public class Entity {
     public int spriteNum = 1; // Sprite number for animation
     public int currentAnimationIndex=0;
     public int actionLockCounter = 0;
+    public Rectangle solidArea; // Rectangle for collision detection
 
     String path;
-
-    public Rectangle solidArea = new Rectangle(0,0,48,48); // Rectangle for collision detection
-
-
     public int solidAreaDefaultX, solidAreaDefaultY; // Default position of the solid area
     public boolean collisionOn = false; // Flag for collision detection
 
@@ -39,6 +36,14 @@ public class Entity {
 
     public Entity(GamePanel gp) {
         this.gp = gp;
+
+
+        solidArea = new Rectangle(); // Set the size of the solid area for collision detection
+        
+        solidArea.x = 0;
+        solidArea.y = 0; // Adjust based on your NPC sprites
+        solidArea.width = 48;
+        solidArea.height = 48;
     }
 
     public void draw(Graphics2D g2) {
@@ -68,13 +73,18 @@ public class Entity {
                 break;
 
             }
-
-            // g2.setColor(Color.RED);
-            // g2.fillRect(screenX, screenY, gp.playerSizeX, gp.playerSizeY);
-            g2.drawImage(image, screenX, screenY, gp.playerSizeX, gp.playerSizeY,null);
+            
+            if(gp.showDebugHitboxes) {
+                // Draw the solid area for debugging
+                g2.setColor(Color.RED);
+                g2.fillRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
             }
+            g2.drawImage(image, screenX, screenY, gp.playerSizeX, gp.playerSizeY,null);
+            
 
-    }
+            }
+        }
+    
 
     public void setAction() {} //npc action
 

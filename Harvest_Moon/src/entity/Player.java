@@ -171,7 +171,8 @@ public class Player extends Entity{
 
     public void interactNPC(int i){
         if(i != 999){
-            System.out.println("you meet " + gp.npcs.get(i).name); // Print the name of the NPC
+            setAnimation("idle");
+            gp.gameState = gp.dialogueState; // Set the game state to dialogue
             // gp.npcs.get(i).interact(); // Call the setAction method of the NPC
         }
     }

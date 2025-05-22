@@ -1,5 +1,6 @@
 package Main;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -39,6 +40,10 @@ public class UI {
             drawPauseScreen();
         }
 
+        if(gp.gameState == gp.dialogueState){
+            drawDialogueScreen();
+        }
+
 
 
 
@@ -75,5 +80,24 @@ public class UI {
             int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
             int x = gp.screenWidth / 2 - length / 2; 
             return x;
+    }
+
+    public void drawDialogueScreen(){
+        // window
+        int x = gp.tileSize * 2;
+        int y = gp.tileSize / 2;
+        int width = gp.screenWidth - (gp.tileSize * 4);
+        int height = gp.tileSize * 4;
+
+        drawSubWindow(x, y, width, height);
+    }
+
+    public void drawSubWindow(int x, int y, int width, int height){
+        g2.setColor(new Color(0,0,0, 200));
+        g2.fillRoundRect(x, y, width, height,35,35);
+
+        g2.setColor(Color.WHITE);
+        g2.setStroke(new BasicStroke(5));
+        g2.drawRoundRect(x+5, y+5, width-10, height-10,25,25);
     }
 }
