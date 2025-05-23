@@ -19,7 +19,7 @@ public class AssetSetter {
 
 
     public void setNPC(){
-        gp.npcs.add(new Npc(gp, "Eddy", 21 * gp.tileSize, 21 * gp.tileSize));
+        gp.npcs.add(new Npc(gp, "Eddy", 21 * gp.tileSize, 23 * gp.tileSize));
 
     }
 

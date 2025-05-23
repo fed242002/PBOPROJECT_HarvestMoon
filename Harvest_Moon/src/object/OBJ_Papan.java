@@ -20,11 +20,12 @@ public class OBJ_Papan extends SuperObject {
         height = 48 * 10;
 
         this.solidArea.y = height / 2;
-        this.solidArea.x = width / 2;
+        this.solidArea.x = 0;
         this.solidArea.width = width;
         this.solidArea.height = height/2;
-        System.out.println("TEST");
         
+        this.solidAreaDefaultX = this.solidArea.x;
+        this.solidAreaDefaultY = this.solidArea.y;
 
         try {
             image = ImageIO.read(getClass().getResourceAsStream(path));

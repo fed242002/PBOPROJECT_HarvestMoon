@@ -23,7 +23,7 @@ public class Entity {
     public Rectangle solidArea; // Rectangle for collision detection
 
     String path;
-    public int solidAreaDefaultX, solidAreaDefaultY; // Default position of the solid area
+    public int solidAreaDefaultX=0, solidAreaDefaultY=0; // Default position of the solid area
     public boolean collisionOn = false; // Flag for collision detection
 
 
@@ -44,6 +44,10 @@ public class Entity {
         solidArea.y = 0; // Adjust based on your NPC sprites
         solidArea.width = 48;
         solidArea.height = 48;
+
+        this.solidAreaDefaultX = this.solidArea.x;
+        this.solidAreaDefaultY = this.solidArea.y;
+
     }
 
     public void draw(Graphics2D g2) {

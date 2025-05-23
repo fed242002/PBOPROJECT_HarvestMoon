@@ -13,6 +13,7 @@ public class Npc extends Entity {
         this.gp = gp;
         this.worldX = x;
         this.worldY = y;
+        this.solidArea.y = 48;
         walk = new Animation("walk",6, "/assets/npc/"+name+"/WALK/");
         animationList.add(walk);
         idle = new Animation("walk",6, "/assets/npc/"+name+"/IDLE/");
@@ -22,6 +23,10 @@ public class Npc extends Entity {
         direction = "down";
         setAnimation("walk");
         speed = 1;
+
+        this.solidAreaDefaultX = this.solidArea.x;
+        this.solidAreaDefaultY = this.solidArea.y;
+
 
     }
 

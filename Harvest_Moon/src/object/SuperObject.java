@@ -15,7 +15,7 @@ public class SuperObject {
     public String path;
     public boolean collision = false;
     public int worldX, worldY, map; 
-    public Rectangle solidArea = new Rectangle(0, 0, 48, 48); 
+    public Rectangle solidArea = new Rectangle(); 
     public int solidAreaDefaultX=0, solidAreaDefaultY=0; 
     int width=48, height=48; 
     GamePanel gp;
@@ -41,8 +41,6 @@ public class SuperObject {
         if(gp.showDebugHitboxes) {
             // Draw the solid area for debugging
             g2.setColor(Color.RED);
-            this.solidArea.y = height / 2;
-            this.solidArea.x = 0;
             g2.fillRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
         }
 
