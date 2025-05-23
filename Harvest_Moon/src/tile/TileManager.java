@@ -21,9 +21,9 @@ public class TileManager {
         
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow]; // Initialize the mapTileNum array with the maximum screen columns and rows
 
-        loadTileData("/assets/map/mapHouseTileData.txt"); // Load tile data from the specified file
+        loadTileData("/assets/map/Map_Home_TileData"); // Load tile data from the specified file
 
-        loadMap("/assets/map/mapHouseMap.txt");
+        loadMap("/assets/map/Map_Home_Map");
     }
     
 
@@ -54,7 +54,7 @@ public class TileManager {
         tile.clear();
 
         for(int i = 0; i < fileNames.size(); i++){
-            String fileName = "/assets/tile/"+fileNames.get(i);
+            String fileName = "/assets/tile/HomeTiles/"+fileNames.get(i);
             boolean collision;
 
             if(collisionStatus.get(i).equalsIgnoreCase("true")){
@@ -68,8 +68,6 @@ public class TileManager {
         }
 
 
-        // tile.add(new Tile("/Assets/grass.png", false));
-        // tile.add(new Tile("/Assets/brick.jpg", true));
         
     }
 

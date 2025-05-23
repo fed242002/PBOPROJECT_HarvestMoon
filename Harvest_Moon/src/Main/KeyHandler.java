@@ -35,6 +35,10 @@ public class KeyHandler implements KeyListener{
             rightPressed = true;
         }
 
+        if(code == KeyEvent.VK_ENTER){
+            gp.gameState = gp.playState;
+        }
+
         // Add debug hitbox toggle when F3 is pressed
         if(code == KeyBind.hitbox) {
             gp.showDebugHitboxes = !gp.showDebugHitboxes;

@@ -1,5 +1,6 @@
 package object;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -21,6 +22,7 @@ public class SuperObject {
 
     public SuperObject(GamePanel gp) {
         this.gp = gp; // Initialize the GamePanel instance
+        
     }
 
     public void interact(){
@@ -28,16 +30,23 @@ public class SuperObject {
     }
 
     public void draw(Graphics2D g2, GamePanel gp) {
-        
-            int screenX = worldX - gp.player.worldX + gp.player.screenX; // Calculate the screen X position
-            int screenY = worldY - gp.player.worldY + gp.player.screenY; // Calculate the screen Y position
+        int screenX = worldX - gp.player.worldX + gp.player.screenX; // Calculate the screen X position
+        int screenY = worldY - gp.player.worldY + gp.player.screenY; // Calculate the screen Y position
 
-            if(worldX + gp.tileSize > gp.player.worldX - gp.player.screenX && // If the tile is within the screen bounds
-               worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-               worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-               worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) 
-            { 
-                g2.drawImage(image, screenX, screenY, width, height,null);
-            }
+        // if(worldX + gp.tileSize * 2> gp.player.worldX - gp.player.screenX && // If the tile is within the screen bounds
+        //    worldX - gp.tileSize * 2< gp.player.worldX + gp.player.screenX &&
+        //    worldY + gp.tileSize * 2> gp.player.worldY - gp.player.screenY &&
+        //    worldY - gp.tileSize * 2 < gp.player.worldY + gp.player.screenY) 
+        // {
+        if(gp.showDebugHitboxes) {
+            // Draw the solid area for debugging
+            g2.setColor(Color.RED);
+            this.solidArea.y = height / 2;
+            this.solidArea.x = 0;
+            g2.fillRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+        }
+
+            g2.drawImage(image, screenX, screenY, width, height,null);
+        // }
     }
 }

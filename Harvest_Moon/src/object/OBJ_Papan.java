@@ -12,12 +12,19 @@ public class OBJ_Papan extends SuperObject {
     public OBJ_Papan(GamePanel gp,int x, int y) {
         super(gp); 
         name = "Key";
-        path = "/Assets/tile/tile1012.png";
+        path = "/assets/Farmer_House_1_48x48.png";
         collision = false;
         worldX = x;
         worldY = y;
-        width = 48*1;
-        height = 48 * 1;
+        width = 48*10;
+        height = 48 * 10;
+
+        this.solidArea.y = height / 2;
+        this.solidArea.x = width / 2;
+        this.solidArea.width = width;
+        this.solidArea.height = height/2;
+        System.out.println("TEST");
+        
 
         try {
             image = ImageIO.read(getClass().getResourceAsStream(path));

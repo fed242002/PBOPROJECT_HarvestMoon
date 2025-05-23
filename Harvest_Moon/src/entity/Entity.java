@@ -43,7 +43,7 @@ public class Entity {
         solidArea.x = 0;
         solidArea.y = 0; // Adjust based on your NPC sprites
         solidArea.width = 48;
-        solidArea.height = 96;
+        solidArea.height = 48;
     }
 
     public void draw(Graphics2D g2) {
