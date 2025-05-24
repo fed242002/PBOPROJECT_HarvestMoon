@@ -28,6 +28,8 @@ public class UI {
     public UI(GamePanel gp){
         this.gp = gp;
         // arial_40 = new Font("Arial", Font.PLAIN, 40);
+        this.energyBar = new EnergyBar(70, 50, 200, 20, 10, gp.player.maxEnergy);
+        
     }
 
    
@@ -48,33 +50,7 @@ public class UI {
         }
 
         if(gp.gameState == gp.playState){
-
-            //logo karakter
-
-            //ini aku mau nambain kalo dia energy > 50 pake haappy yang mata nya buka kalo ga pake yang sleep
-            BufferedImage playerIcon = null;
-            try {
-                playerIcon = ImageIO.read(getClass().getResourceAsStream("/assets/player/SLEEP/" + gp.player.getPath() + "kanan-0.png"));
-            } catch (IOException e) {
-                System.out.println("Error loading player image UI: " + e.getMessage());
-            }
-            g2.drawImage(playerIcon, 3, 8, gp.tileSize*1 + 15, gp.tileSize *2 + 15, null);
-            //energy bar and name
-            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
-            g2.drawString(gp.player.name, 70, 40);
-            this.energyBar = new EnergyBar(70, 50, 200, 20, 10, gp.player.maxEnergy);
-            energyBar.setValue(gp.player.energy);
-            energyBar.draw(g2);
-
-            //info panel
-            BufferedImage infoPanel = null;
-            try {
-                infoPanel = ImageIO.read(getClass().getResourceAsStream("/assets/ui/infoPanel.png"));
-            } catch (IOException e) {
-                System.out.println("Error loading info panel image UI: " + e.getMessage());
-            }
-            g2.drawImage(infoPanel, gp.screenWidth - 250, 0, 242, 128, null);
-
+            drawGameUI();
 
         }
 
@@ -85,6 +61,7 @@ public class UI {
         if(gp.gameState == gp.dialogueState){
             drawDialogueScreen();
         }
+
 
 
 
@@ -109,6 +86,37 @@ public class UI {
         //         messageOn = false;
         //     }
         // }
+    }
+
+
+    public void drawGameUI(){
+            //logo karakter
+
+            //ini aku mau nambain kalo dia energy > 50 pake haappy yang mata nya buka kalo ga pake yang sleep
+            BufferedImage playerIcon = null;
+            try {
+                playerIcon = ImageIO.read(getClass().getResourceAsStream("/assets/player/SLEEP/" + gp.player.getPath() + "kanan-0.png"));
+            } catch (IOException e) {
+                System.out.println("Error loading player image UI: " + e.getMessage());
+            }
+            g2.drawImage(playerIcon, 3, 8, gp.tileSize*1 + 15, gp.tileSize *2 + 15, null);
+            //energy bar and name
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
+            g2.drawString(gp.player.name, 70, 40);
+            this.energyBar.maxValue = gp.player.maxEnergy;
+            energyBar.setValue(gp.player.energy);
+            energyBar.draw(g2);
+
+            //info panel
+            BufferedImage infoPanel = null;
+            try {
+                infoPanel = ImageIO.read(getClass().getResourceAsStream("/assets/ui/infoPanel.png"));
+            } catch (IOException e) {
+                System.out.println("Error loading info panel image UI: " + e.getMessage());
+            }
+            g2.drawImage(infoPanel, gp.screenWidth - 250, 0, 242, 128, null);
+
+
     }
 
     public void drawTitleScreen(){

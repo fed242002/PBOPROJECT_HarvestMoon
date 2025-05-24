@@ -8,7 +8,7 @@ import java.awt.RadialGradientPaint;
 
 public class EnergyBar {
     private int x, y, width, height, cornerRadius;
-    private int maxValue, currentValue;
+    public int maxValue, currentValue;
     private Color backgroundColor = new Color(120, 0, 0);
     private Color fillColor = new Color(0, 180, 220);
     private Color borderColor = Color.WHITE;
