@@ -28,8 +28,22 @@ public class Npc extends Entity {
         this.solidAreaDefaultY = this.solidArea.y;
 
 
+        //set dialog
+        setDialogue();    
+
     }
 
+     public void setDialogue(){
+        dialogues.add("Hello, I'm " + name + "!");
+        dialogues.add("How are you?");
+        dialogues.add("Nice to meet you!");
+        dialogues.add("Have a great day!");
+        dialogues.add("See you later!");
+    }
+
+    public void speak(){
+        super.speak();
+    }
 
     public void setAction(){
         actionLockCounter++;

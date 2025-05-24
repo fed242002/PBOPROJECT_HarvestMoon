@@ -48,7 +48,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     
     // system
     TileManager tileM = new TileManager(this); // Create a new TileManager object
-    KeyHandler keyH = new KeyHandler(this); // Create a new KeyHandler object
+    public KeyHandler keyH = new KeyHandler(this); // Create a new KeyHandler object
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this); // Create a new AssetSetter object
     public SFX sfx = new SFX(); 
@@ -63,6 +63,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
     //Game state
     public int gameState; 
+    public final int titleState = 0; 
     public final int playState = 1; // Game is being played
     public final int pauseState = 2; // Game is paused
     public final int dialogueState = 3; // Dialog is being shown
@@ -90,7 +91,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public void setupGame(){
         aSetter.setObject(); 
         aSetter.setNPC(); 
-        gameState = playState; // Set the game state to play
+        gameState = titleState; // Set the game state to play
     }
 
     public void startGameThread(){
@@ -174,53 +175,59 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         super.paintComponent(g); 
         Graphics2D g2 = (Graphics2D) g; 
 
+        if(gameState == titleState) {
+            ui.draw(g2);
+        }
+        else{
+            //tile
+            tileM.draw(g2); 
 
-        //tile
-        tileM.draw(g2); 
+            
+            //object
+            for (SuperObject obj : this.obj) {
+                if (obj != null) {
+                    obj.draw(g2, this);
+                }
+                else {
+                    System.out.println("obj is null");
+                }
+            }
 
-        
-        //object
-        for (SuperObject obj : this.obj) {
-            if (obj != null) {
-                obj.draw(g2, this);
+            //NPC
+            for (Entity npc : npcs) {
+            if(npc!= null){
+                    npc.draw(g2); 
+                }
+                else {
+                    System.out.println("npc is null");
+                }
             }
-            else {
-                System.out.println("obj is null");
+
+            //player
+            player.draw(g2); 
+
+            //ui
+            ui.draw(g2); // Draw the UI
+
+            
+            
+            // Add hitbox drawing at the end (on top of everything else)
+            if(showDebugHitboxes) {
+                // Draw mouse coordinates
+                if(mouseX >= 0 && mouseY >= 0) {
+                    g2.setColor(Color.WHITE);
+                    g2.drawString("Screen X: " + mouseX + " Y: " + mouseY, 10, 20);
+                    g2.drawString("World X: " + mouseWorldX + " Y: " + mouseWorldY, 10, 40);
+                    // Optional: Add tile coordinates
+                    g2.drawString("Tile Col: " + (mouseWorldX / tileSize) + " Row: " + (mouseWorldY / tileSize), 10, 60);
+                }
+                cChecker.drawHitboxes(g2);
             }
+
+            g2.dispose(); // Dispose of the graphics object to free up resources
+
         }
 
-        //NPC
-        for (Entity npc : npcs) {
-           if(npc!= null){
-                npc.draw(g2); 
-            }
-            else {
-                System.out.println("npc is null");
-            }
-        }
-
-        //player
-        player.draw(g2); 
-
-        //ui
-        ui.draw(g2); // Draw the UI
-
-        
-        
-        // Add hitbox drawing at the end (on top of everything else)
-        if(showDebugHitboxes) {
-            // Draw mouse coordinates
-            if(mouseX >= 0 && mouseY >= 0) {
-                g2.setColor(Color.WHITE);
-                g2.drawString("Screen X: " + mouseX + " Y: " + mouseY, 10, 20);
-                g2.drawString("World X: " + mouseWorldX + " Y: " + mouseWorldY, 10, 40);
-                // Optional: Add tile coordinates
-                g2.drawString("Tile Col: " + (mouseWorldX / tileSize) + " Row: " + (mouseWorldY / tileSize), 10, 60);
-            }
-            cChecker.drawHitboxes(g2);
-        }
-
-        g2.dispose(); // Dispose of the graphics object to free up resources
     }
 
 

@@ -14,4 +14,10 @@ public class KeyBind {
 
     //pause key
     public static int pauseKey = KeyEvent.VK_ESCAPE;
+
+    //interact key
+    public static int interactKey = KeyEvent.VK_E;
+
+    //next key
+    public static int nextKey = KeyEvent.VK_ENTER;
 }

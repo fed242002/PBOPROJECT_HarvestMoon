@@ -171,10 +171,16 @@ public class Player extends Entity{
 
     public void interactNPC(int i){
         if(i != 999){
-            setAnimation("idle");
-            gp.gameState = gp.dialogueState; // Set the game state to dialogue
-            // gp.npcs.get(i).interact(); // Call the setAction method of the NPC
+            if(gp.keyH.interactPressed == true){
+                gp.gameState = gp.dialogueState; // Set the game state to dialogue
+                setAnimation("idle");
+                gp.gameState = gp.dialogueState; // Set the game state to dialogue
+                gp.npcs.get(i).speak(); // Call the speak method of the NPC
+                // gp.npcs.get(i).interact(); // Call the setAction method of the NPC
+            
+            }
         }
+        gp.keyH.interactPressed = false; // Reset the interact key
     }
 
     public void draw(Graphics2D g2){

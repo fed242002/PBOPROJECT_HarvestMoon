@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import Main.GamePanel;
@@ -30,8 +31,41 @@ public class Entity {
     //animation
     Animation walk;
     Animation idle;
-    ArrayList<Animation> animationList = new ArrayList<>(); //0: walk, 1:idle
+    public ArrayList<Animation> animationList = new ArrayList<>(); //0: walk, 1:idle
 
+
+    //dialogue
+    public ArrayList<String> dialogues = new ArrayList<>();
+    int dialogueIndex = 0; // Index for the current dialogue
+    
+    public void speak(){
+        if(dialogues.size()-1 < dialogueIndex){
+            dialogueIndex = 0;
+        }
+        gp.ui.currentDialogue = dialogues.get(dialogueIndex);
+        dialogueIndex++;
+
+        //biar npc pas ngomong hadap  player
+        switch(gp.player.direction){
+            case "up":
+                this.direction = "down";
+                break;
+            case "down":
+                this.direction = "up";
+                break;    
+            case "left":
+                this.direction = "right";
+                break;
+            case "right":
+                this.direction = "left";
+                break;
+
+        }
+    }
+
+
+    public void setDialog(){
+    }
 
 
     public Entity(GamePanel gp) {
