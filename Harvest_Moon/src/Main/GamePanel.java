@@ -22,8 +22,8 @@ import java.awt.Color;
 
 public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     
-    final int originalTileSize = 48; // 16x16 tile
-    final int scale = 1; // Scale the tile size by 3x
+    final int originalTileSize = 48; // 48x48 tile
+    final int scale = 1; // Scale the tile size by 1x
     
     public final int tileSize = originalTileSize * scale; // 48x48 tile size (ini size yang bakal muncul di screen)
     public final int maxScreenCol = 16; // 16 tiles in a row
@@ -91,7 +91,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public void setupGame(){
         aSetter.setObject(); 
         aSetter.setNPC(); 
-        gameState = titleState; // Set the game state to play
+        // gameState = titleState; 
+        gameState = playState; // Set the game state to play
     }
 
     public void startGameThread(){

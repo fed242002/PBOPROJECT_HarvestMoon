@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JProgressBar;
 
 public class UI {
  
@@ -22,6 +23,7 @@ public class UI {
     public String currentDialogue = "";
     public int commandNum = 0; // 0: new game, 1: load game, 2: exit
     public int titleScreenState = 0;
+    EnergyBar energyBar;
 
     public UI(GamePanel gp){
         this.gp = gp;
@@ -46,7 +48,34 @@ public class UI {
         }
 
         if(gp.gameState == gp.playState){
-            //do play State
+
+            //logo karakter
+
+            //ini aku mau nambain kalo dia energy > 50 pake haappy yang mata nya buka kalo ga pake yang sleep
+            BufferedImage playerIcon = null;
+            try {
+                playerIcon = ImageIO.read(getClass().getResourceAsStream("/assets/player/SLEEP/" + gp.player.getPath() + "kanan-0.png"));
+            } catch (IOException e) {
+                System.out.println("Error loading player image UI: " + e.getMessage());
+            }
+            g2.drawImage(playerIcon, 3, 8, gp.tileSize*1 + 15, gp.tileSize *2 + 15, null);
+            //energy bar and name
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
+            g2.drawString(gp.player.name, 70, 40);
+            this.energyBar = new EnergyBar(70, 50, 200, 20, 10, gp.player.maxEnergy);
+            energyBar.setValue(gp.player.energy);
+            energyBar.draw(g2);
+
+            //info panel
+            BufferedImage infoPanel = null;
+            try {
+                infoPanel = ImageIO.read(getClass().getResourceAsStream("/assets/ui/infoPanel.png"));
+            } catch (IOException e) {
+                System.out.println("Error loading info panel image UI: " + e.getMessage());
+            }
+            g2.drawImage(infoPanel, gp.screenWidth - 250, 0, 242, 128, null);
+
+
         }
 
         if(gp.gameState == gp.pauseState){
@@ -234,3 +263,4 @@ public class UI {
         g2.drawRoundRect(x+5, y+5, width-10, height-10,25,25);
     }
 }
+

@@ -79,6 +79,12 @@ public class KeyHandler implements KeyListener{
             if(code == KeyBind.hitbox) {
                 gp.showDebugHitboxes = !gp.showDebugHitboxes;
             }
+            
+            //sprint
+            if(code == KeyBind.sprintKey) {
+                gp.player.speed = gp.player.maxSpeed;
+                gp.player.spriteDraw = 4;
+            }
 
 
 
@@ -128,6 +134,10 @@ public class KeyHandler implements KeyListener{
         if(code == KeyBind.rightKey) {
             rightPressed = false;
         }
+        if(code == KeyBind.sprintKey) {
+                gp.player.speed = gp.player.normalSpeed; // Reset speed to normal when sprint key is released
+                gp.player.spriteDraw = 10;
+            }
 
     }
     

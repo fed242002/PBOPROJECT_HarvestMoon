@@ -20,4 +20,7 @@ public class KeyBind {
 
     //next key
     public static int nextKey = KeyEvent.VK_ENTER;
+
+    //sprint key
+    public static int sprintKey = KeyEvent.VK_SHIFT;
 }

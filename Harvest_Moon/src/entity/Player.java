@@ -15,12 +15,19 @@ import animation.Animation;
 
 public class Player extends Entity{
 
+    public String name = "Fedrian";
     public final int screenX; // X position on the screen
     public final int screenY; // Y position on the screen
     int hasKey = 0;
-    
+    public int maxEnergy = 100;
+    public int energy = maxEnergy - 50;
+    public int normalSpeed = 4; // pas jalan normal
+    public int maxSpeed = 6; //pas sprint
+    public int spriteDraw = 10;
+
+
     //ini buat sprite animation -> info2
-    String body = "black";
+    String body = "krem";
     String eye = "blue";
     String outfit = "blue";
     String hair = "baldBlondeAsh";
@@ -78,6 +85,10 @@ public class Player extends Entity{
 
     public String getPath(){
         return body+"-"+eye+"-"+outfit+"-"+hair+"-";
+    }
+
+    public String getIconPath(){
+        return body+"-"+eye+"-"+outfit+"-"+hair;
     }
 
     KeyHandler keyH; // KeyHandler object to handle key events
@@ -149,7 +160,7 @@ public class Player extends Entity{
                 }
                 
                 spriteCounter++;
-                if(spriteCounter > 10)
+                if(spriteCounter > spriteDraw)
                 {
                     spriteNum++; 
                 
