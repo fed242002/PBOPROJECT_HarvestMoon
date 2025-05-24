@@ -24,6 +24,7 @@ public class Player extends Entity{
     public int normalSpeed = 4; // pas jalan normal
     public int maxSpeed = 6; //pas sprint
     public int spriteDraw = 10;
+    public int gold = 100;
 
 
     //ini buat sprite animation -> info2

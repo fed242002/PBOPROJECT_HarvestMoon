@@ -17,11 +17,14 @@ public class KeyHandler implements KeyListener{
     public void keyTyped(KeyEvent e) {
     }
 
+   
+
     @Override
     public void keyPressed(KeyEvent e) {
 
         int code = e.getKeyCode();
 
+        
         if(gp.gameState == gp.titleState) {
             //main menu
             if(gp.ui.titleScreenState == 0) {
@@ -88,29 +91,24 @@ public class KeyHandler implements KeyListener{
 
 
 
-            //pause game
+            //pause game in play state
             if(code == KeyBind.pauseKey) {
                 gp.playSFX(gp.sfx, 3);
-                if(gp.gameState == gp.playState){ //kalo play ke pause
-                    gp.gameState = gp.pauseState;
-                }
+                System.out.println("Pause");
+                gp.gameState = gp.pauseState;
             }
+
         }
         
         // pause state
-        if(gp.gameState == gp.pauseState){
-            if(code == KeyEvent.VK_ENTER){
-                gp.gameState = gp.playState;
-            }
+        else if(gp.gameState == gp.pauseState){
             if(code == KeyBind.pauseKey) {
                 gp.playSFX(gp.sfx, 3);
-                if(gp.gameState == gp.pauseState){ //kalo pause ke play
-                    gp.gameState = gp.playState;
-                }
+                gp.gameState = gp.playState;
             }
         }
 
-        if(gp.gameState == gp.dialogueState){
+        else if(gp.gameState == gp.dialogueState){
             if(code == KeyBind.nextKey){
                 gp.gameState = gp.playState;
             }

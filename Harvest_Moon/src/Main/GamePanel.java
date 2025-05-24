@@ -1,6 +1,7 @@
 package Main;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
@@ -62,12 +63,12 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
 
     //Game state
-    public int gameState; 
     public final int titleState = 0; 
     public final int playState = 1; // Game is being played
     public final int pauseState = 2; // Game is paused
     public final int dialogueState = 3; // Dialog is being shown
-
+    public int gameState = playState; 
+    
     //UI
     public UI ui = new UI(this); // Create a new UI object
 
@@ -91,8 +92,6 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public void setupGame(){
         aSetter.setObject(); 
         aSetter.setNPC(); 
-        // gameState = titleState; 
-        gameState = playState; // Set the game state to play
     }
 
     public void startGameThread(){
@@ -175,6 +174,9 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public void paintComponent(Graphics g){
         super.paintComponent(g); 
         Graphics2D g2 = (Graphics2D) g; 
+
+
+        g2.setFont(new Font("Fixedsys", Font.BOLD, 20));
 
         if(gameState == titleState) {
             ui.draw(g2);

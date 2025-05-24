@@ -42,7 +42,7 @@ public class UI {
     public void draw(Graphics2D g2){
         this.g2 = g2;
 
-        g2.setFont(arial_40);
+        // g2.setFont(arial_40);
         g2.setColor(Color.WHITE);
 
         if(gp.gameState == gp.titleState){
@@ -115,6 +115,14 @@ public class UI {
                 System.out.println("Error loading info panel image UI: " + e.getMessage());
             }
             g2.drawImage(infoPanel, gp.screenWidth - 250, 0, 242, 128, null);
+
+               //info Panel gold
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 12F));
+            g2.setColor(Color.BLACK);
+            String gold = String.valueOf(gp.player.gold) + " G";
+            int x = getXforRightAlignedText(gold, 729);
+            g2.drawString(gold, x, 107);
+
 
 
     }
@@ -242,6 +250,12 @@ public class UI {
             int x = gp.screenWidth / 2 - length / 2; 
             return x;
     }
+
+    public int getXforRightAlignedText(String text, int rightEdge) {
+    int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+    int x = rightEdge - length;
+    return x;
+}
 
     public void drawDialogueScreen(){
         // window
