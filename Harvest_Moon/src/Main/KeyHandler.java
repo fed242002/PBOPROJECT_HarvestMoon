@@ -23,29 +23,38 @@ public class KeyHandler implements KeyListener{
         int code = e.getKeyCode();
 
         if(gp.gameState == gp.titleState) {
-            if(code == KeyBind.upKey) {
-                gp.ui.commandNum--;
-                if(gp.ui.commandNum < 0) {
-                    gp.ui.commandNum = 2; 
+            //main menu
+            if(gp.ui.titleScreenState == 0) {
+                if(code == KeyBind.upKey) {
+                    gp.playSFX(gp.sfx, 1);
+                    gp.ui.commandNum--;
+                    if(gp.ui.commandNum < 0) {
+                        gp.ui.commandNum = 2; 
+                    }
+                }
+                if(code == KeyBind.downKey) {
+                    gp.playSFX(gp.sfx, 1);
+                    gp.ui.commandNum++;
+                    if(gp.ui.commandNum > 2) {
+                        gp.ui.commandNum = 0;
+                    }
+                }
+                if(code == KeyBind.nextKey){
+                    gp.playSFX(gp.sfx, 2);
+                    if(gp.ui.commandNum == 0) {
+                       gp.ui.titleScreenState = 1;
+                    }
+                    if(gp.ui.commandNum == 1) {
+                        // Load game logic here
+                    }
+                    if(gp.ui.commandNum == 2) {
+                        System.exit(0);
+                    }
                 }
             }
-            if(code == KeyBind.downKey) {
-                gp.ui.commandNum++;
-                if(gp.ui.commandNum > 2) {
-                    gp.ui.commandNum = 0;
-                }
-            }
-            if(code == KeyBind.nextKey){
-               if(gp.ui.commandNum == 0) {
-                    gp.ui.titleScreenState = 1;
-                }
-                if(gp.ui.commandNum == 1) {
-                    // Load game logic here
-                }
-                if(gp.ui.commandNum == 2) {
-                    System.exit(0);
-                }
-            }
+
+            //new game
+            
         }
 
         if(gp.gameState == gp.playState){
@@ -70,22 +79,31 @@ public class KeyHandler implements KeyListener{
             if(code == KeyBind.hitbox) {
                 gp.showDebugHitboxes = !gp.showDebugHitboxes;
             }
+
+
+
+            //pause game
+            if(code == KeyBind.pauseKey) {
+                gp.playSFX(gp.sfx, 3);
+                if(gp.gameState == gp.playState){ //kalo play ke pause
+                    gp.gameState = gp.pauseState;
+                }
+            }
         }
+        
         // pause state
         if(gp.gameState == gp.pauseState){
             if(code == KeyEvent.VK_ENTER){
                 gp.gameState = gp.playState;
             }
             if(code == KeyBind.pauseKey) {
-                if(gp.gameState == gp.playState){ //kalo play ke pause
-                    gp.gameState = gp.pauseState;
-                }
-                else if(gp.gameState == gp.pauseState){ //kalo pause ke play
+                gp.playSFX(gp.sfx, 3);
+                if(gp.gameState == gp.pauseState){ //kalo pause ke play
                     gp.gameState = gp.playState;
                 }
             }
         }
-        
+
         if(gp.gameState == gp.dialogueState){
             if(code == KeyBind.nextKey){
                 gp.gameState = gp.playState;

@@ -104,21 +104,21 @@ public class UI {
 
             //new game button
             if(commandNum == 0){
-                g2.drawImage(newGameActive, gp.screenWidth / 2 - (gp.tileSize / 2) - 150, gp.tileSize * 4, gp.tileSize * 8, gp.tileSize * 2, null);
+                g2.drawImage(newGameActive, gp.screenWidth / 2 - (gp.tileSize / 2) - 150, gp.tileSize * 5, gp.tileSize * 8, gp.tileSize * 2, null);
             } else {
-                g2.drawImage(newGameButton, gp.screenWidth / 2 - (gp.tileSize / 2)- 150, gp.tileSize * 4, gp.tileSize * 8, gp.tileSize * 2, null);
+                g2.drawImage(newGameButton, gp.screenWidth / 2 - (gp.tileSize / 2)- 150, gp.tileSize * 5, gp.tileSize * 8, gp.tileSize * 2, null);
             }
             //load game button
             if(commandNum == 1){
-                g2.drawImage(loadGameActive, gp.screenWidth / 2 - (gp.tileSize / 2) - 150, gp.tileSize * 5, gp.tileSize * 8, gp.tileSize * 2, null);
+                g2.drawImage(loadGameActive, gp.screenWidth / 2 - (gp.tileSize / 2) - 150, gp.tileSize * 7, gp.tileSize * 8, gp.tileSize * 2, null);
             } else {
-                g2.drawImage(loadGameButton, gp.screenWidth / 2 - (gp.tileSize / 2) - 150, gp.tileSize * 5, gp.tileSize * 8, gp.tileSize * 2, null);
+                g2.drawImage(loadGameButton, gp.screenWidth / 2 - (gp.tileSize / 2) - 150, gp.tileSize * 7, gp.tileSize * 8, gp.tileSize * 2, null);
             }
             //exit button
             if(commandNum == 2){
-                g2.drawImage(exitActive, gp.screenWidth / 2 - (gp.tileSize / 2) - 150, gp.tileSize * 8, gp.tileSize * 5, gp.tileSize * 2, null);
+                g2.drawImage(exitActive, gp.screenWidth / 2 - (gp.tileSize / 2) - 150, gp.tileSize * 9, gp.tileSize * 8, gp.tileSize * 2, null);
             } else {
-                g2.drawImage(exitButton, gp.screenWidth / 2 - (gp.tileSize / 2) - 150, gp.tileSize * 8, gp.tileSize * 5, gp.tileSize * 2, null);
+                g2.drawImage(exitButton, gp.screenWidth / 2 - (gp.tileSize / 2) - 150, gp.tileSize * 9, gp.tileSize * 8, gp.tileSize * 2, null);
             }
         }
             
