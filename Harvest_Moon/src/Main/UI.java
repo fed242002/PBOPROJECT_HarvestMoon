@@ -23,6 +23,7 @@ public class UI {
     public String currentDialogue = "";
     public int commandNum = 0; // 0: new game, 1: load game, 2: exit
     public int titleScreenState = 0;
+    public int pauseScreenState = 0; // 0: pausedmenu , 1: resume, 2: settings, 3: exit
     EnergyBar energyBar;
 
     public UI(GamePanel gp){
@@ -64,28 +65,6 @@ public class UI {
 
 
 
-
-
-
-
-        // g2.setFont(arial_40);
-        // g2.setColor(Color.WHITE);
-        // // g2.drawImage(image,gp.tileSize/2, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
-        // // g2.drawString("Halo bang", 74, 50);
-
-
-
-        // //message 
-        // if(messageOn){
-        //     g2.setFont(g2.getFont().deriveFont(30F));
-        //     g2.drawString(message, gp.tileSize/2, gp.tileSize/2);
-        //     messageCounter++;
-
-        //     if(messageCounter > 120){
-        //         messageCounter = 0;
-        //         messageOn = false;
-        //     }
-        // }
     }
 
 
@@ -133,7 +112,7 @@ public class UI {
 
         if(titleScreenState == 0){
             try {
-            mainMenuImage = ImageIO.read(getClass().getResourceAsStream("/assets/ui/mainMenu.png"));
+            mainMenuImage = ImageIO.read(getClass().getResourceAsStream("/assets/ui/mainMenuBg.png"));
             newGameButton = ImageIO.read(getClass().getResourceAsStream("/assets/ui/newGame.png"));
             loadGameButton = ImageIO.read(getClass().getResourceAsStream("/assets/ui/loadGame.png"));
             exitButton = ImageIO.read(getClass().getResourceAsStream("/assets/ui/exit.png"));
@@ -166,55 +145,7 @@ public class UI {
                 g2.drawImage(exitButton, gp.screenWidth / 2 - (gp.tileSize / 2) - 150, gp.tileSize * 9, gp.tileSize * 8, gp.tileSize * 2, null);
             }
         }
-            
-
-            // g2.setColor(new Color(70,120,80));
-            // g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
-    
-            // //title name 
-            // g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
-            // String text = "Harvest Moon";
-            // int x = getXforCenteredText(text);
-            // int y = gp.tileSize * 3;
-    
-            // //shadow
-            // g2.setColor(Color.BLACK);
-            // g2.drawString(text, x+5, y+5);
-    
-            // // text
-            // g2.setColor(Color.WHITE);
-            // g2.drawString(text, x, y);
-    
-            // x = gp.screenWidth / 2 - (gp.tileSize / 2);
-            // y += gp.tileSize * 2 - 100;
-            // g2.drawImage(gp.player.animationList.get(1).down[0], x, y, gp.tileSize * 2, gp.tileSize * 4, null);
-       
-            // //menu
-            // g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-    
-            // text = "NEW GAME";
-            // x = getXforCenteredText(text);
-            // y += gp.tileSize * 5;
-            // g2.drawString(text, x, y);
-            // if(commandNum == 0){
-            //     g2.drawString(">", x - gp.tileSize, y);
-            // }
-    
-            // text = "LOAD GAME";
-            // x = getXforCenteredText(text);
-            // y += gp.tileSize ;
-            // g2.drawString(text, x, y);
-            // if(commandNum == 1){
-            //     g2.drawString(">", x - gp.tileSize, y);
-            // }
-    
-            // text = "EXIT";
-            // x = getXforCenteredText(text);
-            // y += gp.tileSize;
-            // g2.drawString(text, x, y);
-            // if(commandNum == 2){
-            //     g2.drawString(">", x - gp.tileSize, y);
-            // }  
+         
         }
         if(titleScreenState == 1){
             g2.setColor(new Color(70,120,80));
@@ -237,12 +168,65 @@ public class UI {
     }
 
     public void drawPauseScreen(){
+
+        //dim bg
+        g2.setColor(new Color(0,0,0, 150));
+        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+
+        if(pauseScreenState == 0){
+            g2.setColor(Color.WHITE);
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 80F));
             String text = "PAUSED";
             int x = getXforCenteredText(text);
-            int y = gp.screenHeight / 2;
+            int y = gp.screenHeight / 5;
 
             g2.drawString(text, x, y);
+
+
+            //pause menu
+            BufferedImage resumeButton = null, settingsButton = null, exitButton = null, resumeActive = null, settingsActive = null, exitActive = null, saveButton = null, saveActive = null;
+            try {
+                resumeButton = ImageIO.read(getClass().getResourceAsStream("/assets/ui/resume.png"));
+                settingsButton = ImageIO.read(getClass().getResourceAsStream("/assets/ui/settings.png"));
+                exitButton = ImageIO.read(getClass().getResourceAsStream("/assets/ui/mainMenu.png"));
+                saveButton = ImageIO.read(getClass().getResourceAsStream("/assets/ui/saveGame.png"));
+                resumeActive = ImageIO.read(getClass().getResourceAsStream("/assets/ui/resumeActive.png"));
+                settingsActive = ImageIO.read(getClass().getResourceAsStream("/assets/ui/settingsActive.png"));
+                exitActive = ImageIO.read(getClass().getResourceAsStream("/assets/ui/mainMenuActive.png"));
+                saveActive = ImageIO.read(getClass().getResourceAsStream("/assets/ui/saveGameActive.png"));
+            } catch (IOException e) {
+                System.out.println("Error loading pause screen images: " + e.getMessage());
+            }
+
+            if(commandNum == 0){
+                g2.drawImage(resumeActive, gp.screenWidth / 2 - 319 / 2, gp.tileSize * 4 , 319, 98, null);
+            }
+            else{
+                g2.drawImage(resumeButton, gp.screenWidth / 2 - 319 / 2, gp.tileSize * 4, 319, 98, null);
+            }
+
+            if(commandNum == 1){
+                g2.drawImage(saveActive, gp.screenWidth / 2 - 319 / 2, gp.tileSize * 5 + 20, 319, 98, null);
+            }
+            else{
+                g2.drawImage(saveButton, gp.screenWidth / 2 - 319 / 2, gp.tileSize * 5 + 20 , 319, 98, null);
+            }
+
+            if(commandNum == 2){
+                g2.drawImage(settingsActive, gp.screenWidth / 2 - 319 / 2, gp.tileSize * 6 + 40, 319, 98, null);
+            }
+            else{
+                g2.drawImage(settingsButton, gp.screenWidth / 2 - 319 / 2, gp.tileSize * 6 + 40, 319, 98, null);
+            }
+
+            if(commandNum == 3){
+                g2.drawImage(exitActive, gp.screenWidth / 2 - 319 / 2, gp.tileSize * 7 + 60, 319, 98, null);
+            }
+            else{
+                g2.drawImage(exitButton, gp.screenWidth / 2 - 319 / 2, gp.tileSize * 7 + 60, 319, 98, null);
+            }
+
+        }
     }
 
     public int getXforCenteredText(String text){
