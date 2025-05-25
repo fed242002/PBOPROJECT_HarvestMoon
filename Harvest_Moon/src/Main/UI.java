@@ -296,11 +296,11 @@ public class UI {
         g2.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 25, 25);
     }
 
-    public void setObject() {
-        gp.obj.add(new object.OBJ_Papan(gp, 0, 0)); // Example of adding an object
-    }
+    // public void setObject() {
+    // gp.obj.add(new object.OBJ_Papan(gp, 0, 0)); // Example of adding an object
+    // }
 
-    public void setNpc() {
-        gp.npcs.add(new NPC_Farmer(gp, 0, 0)); // Example of adding an NPC
-    }
+    // public void setNpc() {
+    // gp.npcs.add(new NPC_Farmer(gp, 0, 0)); // Example of adding an NPC
+    // }
 }
