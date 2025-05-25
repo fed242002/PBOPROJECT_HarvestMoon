@@ -43,6 +43,8 @@ public class Entity {
             dialogueIndex = 0;
         }
         gp.ui.currentDialogue = dialogues.get(dialogueIndex);
+        gp.ui.currentDialogueName = this.name;
+        gp.ui.currentEntityDialogue = this;
         dialogueIndex++;
 
         //biar npc pas ngomong hadap  player

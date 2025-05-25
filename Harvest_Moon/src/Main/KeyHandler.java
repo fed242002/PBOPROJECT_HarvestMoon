@@ -24,6 +24,11 @@ public class KeyHandler implements KeyListener{
 
         int code = e.getKeyCode();
 
+        // Add debug hitbox toggle when F3 is pressed
+            if(code == KeyBind.hitbox) {
+                gp.showDebugHitboxes = !gp.showDebugHitboxes;
+            }
+
         
         if(gp.gameState == gp.titleState) {
             //main menu
@@ -78,10 +83,7 @@ public class KeyHandler implements KeyListener{
                 interactPressed = true;
             }
             
-            // Add debug hitbox toggle when F3 is pressed
-            if(code == KeyBind.hitbox) {
-                gp.showDebugHitboxes = !gp.showDebugHitboxes;
-            }
+            
             
             //sprint
             if(code == KeyBind.sprintKey) {

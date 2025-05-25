@@ -11,6 +11,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JProgressBar;
 
+import entity.Entity;
+
 public class UI {
  
     Graphics2D g2;
@@ -21,10 +23,12 @@ public class UI {
     public String message = "";
     public int messageCounter = 0;
     public String currentDialogue = "";
+    public String currentDialogueName = "";
     public int commandNum = 0; // 0: new game, 1: load game, 2: exit
     public int titleScreenState = 0;
     public int pauseScreenState = 0; // 0: pausedmenu , 1: resume, 2: settings, 3: exit
     EnergyBar energyBar;
+    public Entity currentEntityDialogue; // Entity that is currently interacting with the player
 
     public UI(GamePanel gp){
         this.gp = gp;
@@ -234,6 +238,12 @@ public class UI {
             int x = gp.screenWidth / 2 - length / 2; 
             return x;
     }
+    public int getXforCenteredText(String text, int x1, int x2) {
+        int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+        int width = x2 - x1;
+        int x = x1 + (width / 2) - (length / 2);
+        return x;
+    }
 
     public int getXforRightAlignedText(String text, int rightEdge) {
     int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
@@ -242,22 +252,43 @@ public class UI {
 }
 
     public void drawDialogueScreen(){
-        // window
-        int x = gp.tileSize * 2;
-        int y = gp.tileSize / 2;
-        int width = gp.screenWidth - (gp.tileSize * 4);
-        int height = gp.tileSize * 4;
-        drawSubWindow(x, y, width, height);
+        //bikin screen gelapin play screen dikit
+        g2.setColor(new Color(0, 0, 0, 150)); // semi-transparent black
+        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 
+
+        //curren person yang ngomong
+
+        g2.drawImage(currentEntityDialogue.animationList.get(1).down[0], 450, 25,gp.tileSize * 4,gp.tileSize * 8, null);
+
+        // window
+        int x = 0;
+        int y = 0;
+        int width = gp.screenWidth;
+        int height = gp.screenHeight;
+        BufferedImage dialogueWindow = null;
+        try {
+            dialogueWindow = ImageIO.read(getClass().getResourceAsStream("/assets/ui/dialogBox.png"));
+        } catch (IOException e) {
+            System.out.println("Error loading dialogue window image: " + e.getMessage());
+        }
+        g2.drawImage(dialogueWindow, x, y, width, height, null);
+        
 
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
         x += gp.tileSize;
         y += gp.tileSize;
         
-        for(String line : currentDialogue.split("\n")){
-            g2.drawString(line, x, y);
-            y += 40;
-        }
+        //nulis nama
+        g2.setColor(new Color(94, 44, 19));
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
+        g2.drawString(currentDialogueName, getXforCenteredText(currentDialogueName, 73, 286), 350);
+        
+
+        // for(String line : currentDialogue.split("\n")){
+        //     g2.drawString(line, x, y);
+        //     y += 40;
+        // }
     }
 
     public void drawSubWindow(int x, int y, int width, int height){
