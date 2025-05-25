@@ -96,11 +96,11 @@ public class UI {
             g2.drawImage(infoPanel, gp.screenWidth - 250, 0, 242, 128, null);
 
                //info Panel gold
-            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 12F));
-            g2.setColor(Color.BLACK);
-            String gold = String.valueOf(gp.player.gold) + " G";
-            int x = getXforRightAlignedText(gold, 729);
-            g2.drawString(gold, x, 107);
+                g2.setFont(g2.getFont().deriveFont(Font.BOLD, 12F));
+                g2.setColor(Color.BLACK);
+                String gold = String.valueOf(gp.player.gold) + " G";
+                int x = getXforRightAlignedText(gold, 729);
+                g2.drawString(gold, x, 107);
 
 
 
