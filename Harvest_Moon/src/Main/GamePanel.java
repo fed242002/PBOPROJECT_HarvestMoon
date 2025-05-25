@@ -7,6 +7,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.swing.JPanel;
 
@@ -14,7 +17,6 @@ import entity.Entity;
 import entity.Npc;
 import entity.Player;
 import object.OBJ_Papan;
-import object.SuperObject;
 import tile.TileManager;
 
 import java.awt.Color;
@@ -53,8 +55,9 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
     // entity and object
     public Player player = new Player(this, keyH); // Create a new Player object
-    public ArrayList<SuperObject> obj = new ArrayList<>(); // List of objects in the game
+    public ArrayList<Entity> obj = new ArrayList<>(); // List of objects in the game
     public ArrayList<Entity> npcs = new ArrayList<>(); // List of NPCs in the game
+    public ArrayList<Entity> entityList = new ArrayList<>(); // List of all entities in the game
 
     // Game state
     public int gameState;
@@ -177,46 +180,58 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
             // tile
             tileM.draw(g2);
 
-            // object
-            for (SuperObject obj : this.obj) {
-                if (obj != null) {
-                    obj.draw(g2, this);
-                } else {
-                    System.out.println("obj is null");
+            // tambah entitiy to list
+            entityList.add(player); // Add player to the entity list
+
+            for (int i = 0; i < npcs.size(); i++) {
+                if (npcs.get(i) != null) {
+                    entityList.add(npcs.get(i)); // Add NPCs to the entity list
                 }
             }
 
-            // NPC
-            for (Entity npc : npcs) {
-                if (npc != null) {
-                    npc.draw(g2);
-                } else {
-                    System.out.println("npc is null");
+            for (int i = 0; i < obj.size(); i++) {
+                if (obj.get(i) != null) {
+                    entityList.add(obj.get(i)); // Add objects to the entity list
                 }
-            }
+                // sort
+                Collections.sort(entityList, new Comparator<Entity>() {
+                    @Override
+                    public int compare(Entity e1, Entity e2) {
+                        int result = Integer.compare(e1.worldY, e2.worldY); // Compare by worldY
+                        return result;
+                    }
+                });
 
-            // player
-            player.draw(g2);
-
-            // ui
-            ui.draw(g2); // Draw the UI
-
-            // Add hitbox drawing at the end (on top of everything else)
-            if (showDebugHitboxes) {
-                // Draw mouse coordinates
-                if (mouseX >= 0 && mouseY >= 0) {
-                    g2.setColor(Color.WHITE);
-                    g2.drawString("Screen X: " + mouseX + " Y: " + mouseY, 10, 20);
-                    g2.drawString("World X: " + mouseWorldX + " Y: " + mouseWorldY, 10, 40);
-                    // Optional: Add tile coordinates
-                    g2.drawString("Tile Col: " + (mouseWorldX / tileSize) + " Row: " + (mouseWorldY / tileSize), 10,
-                            60);
+                // draw entities
+                for (int j = 0; j < entityList.size(); j++) {
+                    entityList.get(j).draw(g2); // Draw each entity in the list
                 }
-                cChecker.drawHitboxes(g2);
+
+                // empty the entity list after drawing
+                for (int j = 0; j < entityList.size(); j++) {
+                    entityList.remove(entityList.get(j)); // Draw each entity in the list
+                }
+
+                // ui
+                ui.draw(g2); // Draw the UI
+
+                // Add hitbox drawing at the end (on top of everything else)
+                if (showDebugHitboxes) {
+                    // Draw mouse coordinates
+                    if (mouseX >= 0 && mouseY >= 0) {
+                        g2.setColor(Color.WHITE);
+                        g2.drawString("Screen X: " + mouseX + " Y: " + mouseY, 10, 20);
+                        g2.drawString("World X: " + mouseWorldX + " Y: " + mouseWorldY, 10, 40);
+                        // Optional: Add tile coordinates
+                        g2.drawString("Tile Col: " + (mouseWorldX / tileSize) + " Row: " + (mouseWorldY / tileSize), 10,
+                                60);
+                    }
+                    cChecker.drawHitboxes(g2);
+                }
+
+                g2.dispose(); // Dispose of the graphics object to free up resources
+
             }
-
-            g2.dispose(); // Dispose of the graphics object to free up resources
-
         }
 
     }
