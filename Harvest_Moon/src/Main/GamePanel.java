@@ -1,7 +1,6 @@
 package Main;
 
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
@@ -20,103 +19,100 @@ import tile.TileManager;
 
 import java.awt.Color;
 
-
 public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
-    
+
     final int originalTileSize = 48; // 48x48 tile
     final int scale = 1; // Scale the tile size by 1x
-    
+
     public final int tileSize = originalTileSize * scale; // 48x48 tile size (ini size yang bakal muncul di screen)
     public final int maxScreenCol = 16; // 16 tiles in a row
     public final int maxScreenRow = 12; // 12 tiles in a column
     public final int screenWidth = tileSize * maxScreenCol; // 768 pixels
     public final int screenHeight = tileSize * maxScreenRow; // 576 pixels
 
-    public int playerSizeX=tileSize; 
-    public int playerSizeY=tileSize*2; // tinggi player
+    public int playerSizeX = tileSize;
+    public int playerSizeY = tileSize * 2; // tinggi player
 
-    //world settings
+    // world settings
     public final int maxWorldCol = 50; // 50 tiles in a row
     public final int maxWorldRow = 50; // 50 tiles in a column
     public final int worldWidth = tileSize * maxWorldCol;
-    public final int worldHeight = tileSize * maxWorldRow; 
+    public final int worldHeight = tileSize * maxWorldRow;
 
-
-    //FPS
+    // FPS
     int FPS = 60; // Frames per second
 
-
-    
     // system
     TileManager tileM = new TileManager(this); // Create a new TileManager object
     public KeyHandler keyH = new KeyHandler(this); // Create a new KeyHandler object
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this); // Create a new AssetSetter object
-    public SFX sfx = new SFX(); 
+    public SFX sfx = new SFX();
     public MasterMusic masterMusic = new MasterMusic();
     Thread gameThread; // Thread for the game loop
 
-    //entity and object
+    // entity and object
     public Player player = new Player(this, keyH); // Create a new Player object
     public ArrayList<SuperObject> obj = new ArrayList<>(); // List of objects in the game
     public ArrayList<Entity> npcs = new ArrayList<>(); // List of NPCs in the game
 
-
-    //Game state
-    public final int titleState = 0; 
+    // Game state
+    public int gameState;
+    public final int titleState = 0;
     public final int playState = 1; // Game is being played
     public final int pauseState = 2; // Game is paused
     public final int dialogueState = 3; // Dialog is being shown
-    public int gameState = playState; 
-    
-    //UI
+
+    // UI
     public UI ui = new UI(this); // Create a new UI object
 
     private int mouseX = -1;
     private int mouseY = -1;
-    private int mouseWorldX = -1;  // Add this for world X coordinate
-    private int mouseWorldY = -1;  // Add this for world Y coordinate
+    private int mouseWorldX = -1; // Add this for world X coordinate
+    private int mouseWorldY = -1; // Add this for world Y coordinate
 
     public boolean showDebugHitboxes = false; // Toggle for showing hitboxes
 
-    public GamePanel(){
+    public GamePanel() {
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true); // Double buffering to reduce flickering
-        this.addKeyListener(keyH); 
+        this.addKeyListener(keyH);
         this.setFocusable(true); // Make the panel focusable to receive key events;
         this.addMouseMotionListener(this);
     }
 
-    public void setupGame(){
-        aSetter.setObject(); 
-        aSetter.setNPC(); 
+    public void setupGame() {
+        aSetter.setObject();
+        aSetter.setNPC();
+        // gameState = titleState;
+        gameState = playState; // Set the game state to play
     }
 
-    public void startGameThread(){
+    public void startGameThread() {
         gameThread = new Thread(this); // Create a new thread for the game loop
         gameThread.start(); // Start the thread
     }
 
     @Override
     public void run() {
-      
-        double drawInterval = 1000000000/FPS; // Calculate the draw interval in nanoseconds
+
+        double drawInterval = 1000000000 / FPS; // Calculate the draw interval in nanoseconds
         double delta = 0; // Time difference between frames
         long lastTime = System.nanoTime(); // Get the current time in nanoseconds
-        long currentTime; // Current time in nanoseconds  
+        long currentTime; // Current time in nanoseconds
         long timer = 0;
         int drawCount = 0; // Count the number of frames drawn
 
-        while(gameThread != null){
+        while (gameThread != null) {
 
             currentTime = System.nanoTime(); // Get the current time in nanoseconds
             delta += (currentTime - lastTime) / drawInterval; // Calculate the time difference
             timer += (currentTime - lastTime); // Update the timer
             lastTime = currentTime; // Update the last time
 
-            if(delta >= 1){ // If the time difference is greater than or equal to 1
+            if (delta >= 1) { // If the time difference is greater than or equal to 1
                 // Update the game state and repaint the screen
                 update(); // Update the game state
                 repaint(); // Repaint the screen
@@ -124,7 +120,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
                 drawCount++; // Increment the draw count
             }
 
-            if(timer >= 1000000000){ // If 1 second has passed
+            if (timer >= 1000000000) { // If 1 second has passed
                 System.out.println("FPS: " + drawCount); // Print the FPS
                 drawCount = 0; // Reset the draw count
                 timer = 0; // Reset the timer
@@ -134,34 +130,34 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
     }
 
-    public void update(){
+    public void update() {
 
-        if(gameState == playState) { // If the game is being played
+        if (gameState == playState) { // If the game is being played
             player.update(); // Update the player
 
-            for(Entity npc : npcs) { // Update all NPCs
-                if(npc != null) {
+            for (Entity npc : npcs) { // Update all NPCs
+                if (npc != null) {
                     npc.update();
                 }
             }
 
         }
-        
-        if(gameState == pauseState) { // If the game is paused
+
+        if (gameState == pauseState) { // If the game is paused
             // Handle pause state updates here if needed
         }
-        
+
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
-        
+
         // Calculate world coordinates based on player position and screen coordinates
         mouseWorldX = mouseX - player.screenX + player.worldX;
         mouseWorldY = mouseY - player.screenY + player.worldY;
-        
+
         repaint();
     }
 
@@ -171,58 +167,50 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     }
 
     @Override
-    public void paintComponent(Graphics g){
-        super.paintComponent(g); 
-        Graphics2D g2 = (Graphics2D) g; 
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
 
-
-        g2.setFont(new Font("Fixedsys", Font.BOLD, 20));
-
-        if(gameState == titleState) {
+        if (gameState == titleState) {
             ui.draw(g2);
-        }
-        else{
-            //tile
-            tileM.draw(g2); 
+        } else {
+            // tile
+            tileM.draw(g2);
 
-            
-            //object
+            // object
             for (SuperObject obj : this.obj) {
                 if (obj != null) {
                     obj.draw(g2, this);
-                }
-                else {
+                } else {
                     System.out.println("obj is null");
                 }
             }
 
-            //NPC
+            // NPC
             for (Entity npc : npcs) {
-            if(npc!= null){
-                    npc.draw(g2); 
-                }
-                else {
+                if (npc != null) {
+                    npc.draw(g2);
+                } else {
                     System.out.println("npc is null");
                 }
             }
 
-            //player
-            player.draw(g2); 
+            // player
+            player.draw(g2);
 
-            //ui
+            // ui
             ui.draw(g2); // Draw the UI
 
-            
-            
             // Add hitbox drawing at the end (on top of everything else)
-            if(showDebugHitboxes) {
+            if (showDebugHitboxes) {
                 // Draw mouse coordinates
-                if(mouseX >= 0 && mouseY >= 0) {
+                if (mouseX >= 0 && mouseY >= 0) {
                     g2.setColor(Color.WHITE);
                     g2.drawString("Screen X: " + mouseX + " Y: " + mouseY, 10, 20);
                     g2.drawString("World X: " + mouseWorldX + " Y: " + mouseWorldY, 10, 40);
                     // Optional: Add tile coordinates
-                    g2.drawString("Tile Col: " + (mouseWorldX / tileSize) + " Row: " + (mouseWorldY / tileSize), 10, 60);
+                    g2.drawString("Tile Col: " + (mouseWorldX / tileSize) + " Row: " + (mouseWorldY / tileSize), 10,
+                            60);
                 }
                 cChecker.drawHitboxes(g2);
             }
@@ -233,19 +221,18 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
     }
 
-
-    public void playMusic(Sound sound,int i){
+    public void playMusic(Sound sound, int i) {
         sound.setFile(i);
         sound.play();
         sound.loop();
     }
 
-    public void stopMusic(Sound sound){
-        if(sound.clip != null) // Check if the clip is not null
+    public void stopMusic(Sound sound) {
+        if (sound.clip != null) // Check if the clip is not null
             sound.stop();
     }
 
-    public void playSFX(Sound sound,int i){
+    public void playSFX(Sound sound, int i) {
         sound.setFile(i);
         sound.play();
     }
