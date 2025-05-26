@@ -198,8 +198,10 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
             Collections.sort(entityList, new Comparator<Entity>() {
                 @Override
                 public int compare(Entity e1, Entity e2) {
-                    int result = Integer.compare(e1.worldY, e2.worldY); // Compare by worldY
-                    return result;
+                    // Compare based on the bottom Y position (worldY + solidArea.y + height)
+                    int e1Bottom = e1.worldY + e1.solidArea.y + e1.solidArea.height;
+                    int e2Bottom = e2.worldY + e2.solidArea.y + e2.solidArea.height;
+                    return Integer.compare(e1Bottom, e2Bottom);
                 }
             });
 
