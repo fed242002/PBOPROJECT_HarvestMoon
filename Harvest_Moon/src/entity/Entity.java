@@ -4,11 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 
 import Main.GamePanel;
 import animation.Animation;
@@ -129,13 +126,13 @@ public class Entity extends SuperEntity {
 
             }
         } else {
+            if (gp.showDebugHitboxes) {
+                    // Draw the solid area for debugging
+                    g2.setColor(Color.RED);
+                    g2.fillRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+                }
             g2.drawImage(image, screenX, screenY, width, height, null);
 
-            if (gp.showDebugHitboxes) {
-                // Draw the solid area for debugging
-                g2.setColor(Color.RED);
-                g2.fillRect(worldX + solidArea.x, worldY + solidArea.y, solidArea.width, solidArea.height);
-            }
         }
     }
 
