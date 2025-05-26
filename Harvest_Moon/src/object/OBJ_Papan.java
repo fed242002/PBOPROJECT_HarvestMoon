@@ -19,6 +19,7 @@ public class OBJ_Papan extends Entity {
         worldY = y;
         width = 48 * 10;
         height = 48 * 10;
+        isObj = true; // Set this entity as an object
 
         this.solidArea.y = height / 2;
         this.solidArea.x = 0;

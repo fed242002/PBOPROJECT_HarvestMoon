@@ -4,13 +4,16 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import Main.GamePanel;
 import animation.Animation;
 
-public class Entity {
+public class Entity extends SuperEntity {
     GamePanel gp;
     public int worldX, worldY;
     public int speed; // Speed of the entity
@@ -28,6 +31,7 @@ public class Entity {
     public boolean collision = false;
     public BufferedImage image;
     public int width = 48, height = 48; // Default size of the entity
+    public boolean isObj = false;
 
     // animation
     Animation walk;
@@ -92,34 +96,52 @@ public class Entity {
         int screenX = worldX - gp.player.worldX + gp.player.screenX; // Calculate the screen X position
         int screenY = worldY - gp.player.worldY + gp.player.screenY; // Calculate the screen Y position
 
-        if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX && // If the tile is within the screen bounds
-                worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
+        if (!isObj) {
+            if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX && // If the tile is within the screen
+                                                                               // bounds
+                    worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
+                    worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
+                    worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
 
-            switch (direction) {
-                case "up":
-                    image = animationList.get(currentAnimationIndex).up[spriteNum]; // Get the idle up image
-                    break;
-                case "down":
-                    image = animationList.get(currentAnimationIndex).down[spriteNum]; // Get the idle up image
-                    break;
-                case "left":
-                    image = animationList.get(currentAnimationIndex).left[spriteNum]; // Get the idle up image
-                    break;
-                case "right":
-                    image = animationList.get(currentAnimationIndex).right[spriteNum]; // Get the idle up image
-                    break;
+                switch (direction) {
+                    case "up":
+                        image = animationList.get(currentAnimationIndex).up[spriteNum]; // Get the idle up image
+                        break;
+                    case "down":
+                        image = animationList.get(currentAnimationIndex).down[spriteNum]; // Get the idle up image
+                        break;
+                    case "left":
+                        image = animationList.get(currentAnimationIndex).left[spriteNum]; // Get the idle up image
+                        break;
+                    case "right":
+                        image = animationList.get(currentAnimationIndex).right[spriteNum]; // Get the idle up image
+                        break;
 
+                }
+                if (gp.showDebugHitboxes) {
+                    // Draw the solid area for debugging
+                    g2.setColor(Color.RED);
+                    g2.fillRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+                }
+                g2.drawImage(image, screenX, screenY, gp.playerSizeX, gp.playerSizeY, null);
             }
 
+        }
+
+        else {
+            // try {
+            // image = ImageIO.read(getClass().getResourceAsStream(path));
+            // } catch (IOException e) {
+            // // TODO Auto-generated catch block
+            // e.printStackTrace();
+            // }
+            g2.drawImage(image, worldX, worldY, width, height, null); // Draw the object image at the specified position
+                                                                      // and size
             if (gp.showDebugHitboxes) {
                 // Draw the solid area for debugging
                 g2.setColor(Color.RED);
-                g2.fillRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+                g2.fillRect(worldX + solidArea.x, worldY + solidArea.y, solidArea.width, solidArea.height);
             }
-            g2.drawImage(image, screenX, screenY, gp.playerSizeX, gp.playerSizeY, null);
-
         }
     }
 

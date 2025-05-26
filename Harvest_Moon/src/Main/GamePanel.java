@@ -193,47 +193,46 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
                 if (obj.get(i) != null) {
                     entityList.add(obj.get(i)); // Add objects to the entity list
                 }
-                // sort
-                Collections.sort(entityList, new Comparator<Entity>() {
-                    @Override
-                    public int compare(Entity e1, Entity e2) {
-                        int result = Integer.compare(e1.worldY, e2.worldY); // Compare by worldY
-                        return result;
-                    }
-                });
-
-                // draw entities
-                for (int j = 0; j < entityList.size(); j++) {
-                    entityList.get(j).draw(g2); // Draw each entity in the list
-                }
-
-                // empty the entity list after drawing
-                for (int j = 0; j < entityList.size(); j++) {
-                    entityList.remove(entityList.get(j)); // Draw each entity in the list
-                }
-
-                // ui
-                ui.draw(g2); // Draw the UI
-
-                // Add hitbox drawing at the end (on top of everything else)
-                if (showDebugHitboxes) {
-                    // Draw mouse coordinates
-                    if (mouseX >= 0 && mouseY >= 0) {
-                        g2.setColor(Color.WHITE);
-                        g2.drawString("Screen X: " + mouseX + " Y: " + mouseY, 10, 20);
-                        g2.drawString("World X: " + mouseWorldX + " Y: " + mouseWorldY, 10, 40);
-                        // Optional: Add tile coordinates
-                        g2.drawString("Tile Col: " + (mouseWorldX / tileSize) + " Row: " + (mouseWorldY / tileSize), 10,
-                                60);
-                    }
-                    cChecker.drawHitboxes(g2);
-                }
-
-                g2.dispose(); // Dispose of the graphics object to free up resources
-
             }
-        }
+            // sort
+            Collections.sort(entityList, new Comparator<Entity>() {
+                @Override
+                public int compare(Entity e1, Entity e2) {
+                    int result = Integer.compare(e1.worldY, e2.worldY); // Compare by worldY
+                    return result;
+                }
+            });
 
+            // draw entities
+            for (int i = 0; i < entityList.size(); i++) {
+                entityList.get(i).draw(g2); // Draw each entity in the list
+            }
+
+            // empty the entity list after drawing
+            for (int i = 0; i < entityList.size(); i++) {
+                entityList.remove(entityList.get(i)); // Draw each entity in the list
+            }
+
+            // ui
+            ui.draw(g2); // Draw the UI
+
+            // Add hitbox drawing at the end (on top of everything else)
+            if (showDebugHitboxes) {
+                // Draw mouse coordinates
+                if (mouseX >= 0 && mouseY >= 0) {
+                    g2.setColor(Color.WHITE);
+                    g2.drawString("Screen X: " + mouseX + " Y: " + mouseY, 10, 20);
+                    g2.drawString("World X: " + mouseWorldX + " Y: " + mouseWorldY, 10, 40);
+                    // Optional: Add tile coordinates
+                    g2.drawString("Tile Col: " + (mouseWorldX / tileSize) + " Row: " + (mouseWorldY / tileSize), 10,
+                            60);
+                }
+                cChecker.drawHitboxes(g2);
+            }
+
+            g2.dispose(); // Dispose of the graphics object to free up resources
+
+        }
     }
 
     public void playMusic(Sound sound, int i) {
