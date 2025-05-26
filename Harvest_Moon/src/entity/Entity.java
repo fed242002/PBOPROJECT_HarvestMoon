@@ -92,11 +92,12 @@ public class Entity extends SuperEntity {
     }
 
     public void draw(Graphics2D g2) {
-        BufferedImage image = null;
         int screenX = worldX - gp.player.worldX + gp.player.screenX; // Calculate the screen X position
         int screenY = worldY - gp.player.worldY + gp.player.screenY; // Calculate the screen Y position
 
         if (!isObj) {
+            BufferedImage image = null;
+
             if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX && // If the tile is within the screen
                                                                                // bounds
                     worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
@@ -118,25 +119,18 @@ public class Entity extends SuperEntity {
                         break;
 
                 }
+
                 if (gp.showDebugHitboxes) {
                     // Draw the solid area for debugging
                     g2.setColor(Color.RED);
                     g2.fillRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
                 }
                 g2.drawImage(image, screenX, screenY, gp.playerSizeX, gp.playerSizeY, null);
+
             }
+        } else {
+            g2.drawImage(image, screenX, screenY, width, height, null);
 
-        }
-
-        else {
-            // try {
-            // image = ImageIO.read(getClass().getResourceAsStream(path));
-            // } catch (IOException e) {
-            // // TODO Auto-generated catch block
-            // e.printStackTrace();
-            // }
-            g2.drawImage(image, worldX, worldY, width, height, null); // Draw the object image at the specified position
-                                                                      // and size
             if (gp.showDebugHitboxes) {
                 // Draw the solid area for debugging
                 g2.setColor(Color.RED);
