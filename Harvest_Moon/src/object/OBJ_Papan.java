@@ -1,10 +1,6 @@
 package object;
 
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-
 import javax.imageio.ImageIO;
-
 import Main.GamePanel;
 import entity.Entity;
 

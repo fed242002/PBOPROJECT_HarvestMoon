@@ -5,18 +5,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-
 import javax.swing.JPanel;
-
 import entity.Entity;
-import entity.Npc;
 import entity.Player;
-import object.OBJ_Papan;
 import tile.TileManager;
 
 import java.awt.Color;
