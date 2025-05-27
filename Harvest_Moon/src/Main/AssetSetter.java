@@ -1,7 +1,7 @@
 package Main;
 
 import entity.Npc;
-import object.OBJ_Papan;
+import object.OBJ_Rumah;
 
 public class AssetSetter {
 
@@ -11,7 +11,7 @@ public class AssetSetter {
     }
 
     public void setObject() {
-        gp.obj.add(new OBJ_Papan(gp ,12 * gp.tileSize, 12 * gp.tileSize));
+        gp.obj.add(new OBJ_Rumah(gp ,31 * gp.tileSize, 7 * gp.tileSize ));
 
 
         // Add more objects as needed

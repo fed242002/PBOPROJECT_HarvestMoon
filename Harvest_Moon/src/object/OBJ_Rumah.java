@@ -8,9 +8,9 @@ import javax.imageio.ImageIO;
 import Main.GamePanel;
 import entity.Entity;
 
-public class OBJ_Papan extends Entity {
+public class OBJ_Rumah extends Entity {
 
-    public OBJ_Papan(GamePanel gp, int x, int y) {
+    public OBJ_Rumah(GamePanel gp, int x, int y) {
         super(gp);
         name = "Key";
         path = "/assets/Farmer_House_1_48x48.png";
@@ -41,7 +41,8 @@ public class OBJ_Papan extends Entity {
     @Override
     public void interact() {
         System.out.println("Interacting with " + name);
-        // gp.ui.showMessage("You found a " + name + "!");
+    
+
     }
 
 }

@@ -9,8 +9,9 @@ public class KeyBind {
     public static int leftKey = KeyEvent.VK_A;
     public static int rightKey = KeyEvent.VK_D;
 
-    //hitbox key
+    // debugg key
     public static int hitbox = KeyEvent.VK_F3;
+    public static int grid = KeyEvent.VK_F4;
 
     //pause key
     public static int pauseKey = KeyEvent.VK_ESCAPE;
