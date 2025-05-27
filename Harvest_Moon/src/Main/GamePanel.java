@@ -1,6 +1,9 @@
 package Main;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
@@ -12,8 +15,6 @@ import javax.swing.JPanel;
 import entity.Entity;
 import entity.Player;
 import tile.TileManager;
-
-import java.awt.Color;
 
 public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
@@ -45,6 +46,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public AssetSetter aSetter = new AssetSetter(this); // Create a new AssetSetter object
     public SFX sfx = new SFX();
     public MasterMusic masterMusic = new MasterMusic();
+    public EventHandler eventHandler = new EventHandler(this); // Create a new EventHandler object
     Thread gameThread; // Thread for the game loop
 
     // entity and object
@@ -59,6 +61,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public final int playState = 1; // Game is being played
     public final int pauseState = 2; // Game is paused
     public final int dialogueState = 3; // Dialog is being shown
+    public final int eventFoundState = 4; // Event found is being shown
 
     // UI
     public UI ui = new UI(this); // Create a new UI object
@@ -69,6 +72,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     private int mouseWorldY = -1; // Add this for world Y coordinate
 
     public boolean showDebugHitboxes = false; // Toggle for showing hitboxes
+    public boolean showGrid = false; // Toggle for showing the grid
 
     public GamePanel() {
 
@@ -78,6 +82,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         this.addKeyListener(keyH);
         this.setFocusable(true); // Make the panel focusable to receive key events;
         this.addMouseMotionListener(this);
+
     }
 
     public void setupGame() {
@@ -85,6 +90,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         aSetter.setNPC();
         // gameState = titleState;
         gameState = playState; // Set the game state to play
+
     }
 
     public void startGameThread() {
@@ -214,7 +220,12 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
             // Add hitbox drawing at the end (on top of everything else)
             if (showDebugHitboxes) {
+                //event hitbox
+                eventHandler.draw(g2);
+
+
                 // Draw mouse coordinates
+                g2.fillRect(0,0,150,75);
                 if (mouseX >= 0 && mouseY >= 0) {
                     g2.setColor(Color.WHITE);
                     g2.drawString("Screen X: " + mouseX + " Y: " + mouseY, 10, 20);
@@ -226,9 +237,65 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
                 cChecker.drawHitboxes(g2);
             }
 
+            // Draw the grid if enabled
+            if (showGrid) {
+                drawGrid(g2);
+            }
+
             g2.dispose(); // Dispose of the graphics object to free up resources
 
         }
+    }
+
+    public void drawGrid(Graphics2D g2) {
+        g2.setColor(new Color(255, 255, 255, 100)); // Semi-transparent white
+        g2.setStroke(new BasicStroke(1)); // Thin lines
+
+        // Calculate the starting and ending positions for the grid
+        int startWorldCol = player.worldX / tileSize - 9;
+        int endWorldCol = player.worldX / tileSize + 10;
+        int startWorldRow = player.worldY / tileSize - 7;
+        int endWorldRow = player.worldY / tileSize + 8;
+
+        // Make sure we don't go out of bounds
+        if (startWorldCol < 0) startWorldCol = 0;
+        if (endWorldCol > maxWorldCol) endWorldCol = maxWorldCol;
+        if (startWorldRow < 0) startWorldRow = 0;
+        if (endWorldRow > maxWorldRow) endWorldRow = maxWorldRow;
+
+        // Draw vertical lines (columns)
+        for (int col = startWorldCol; col <= endWorldCol; col++) {
+            int screenX = col * tileSize - player.worldX + player.screenX;
+            g2.drawLine(screenX, 0, screenX, screenHeight);
+
+            // Add column numbers
+            if (col % 5 == 0) { // Only show numbers every 5 columns for clarity
+                g2.setColor(new Color(255, 255, 0, 200)); // Yellow for numbers
+                g2.drawString(String.valueOf(col), screenX + 2, 20);
+                g2.setColor(new Color(255, 255, 255, 100)); // Back to white for lines
+            }
+        }
+
+        // Draw horizontal lines (rows)
+        for (int row = startWorldRow; row <= endWorldRow; row++) {
+            int screenY = row * tileSize - player.worldY + player.screenY;
+            g2.drawLine(0, screenY, screenWidth, screenY);
+
+            // Add row numbers
+            if (row % 5 == 0) { // Only show numbers every 5 rows for clarity
+                g2.setColor(new Color(255, 255, 0, 200)); // Yellow for numbers
+                g2.drawString(String.valueOf(row), 2, screenY + 15);
+                g2.setColor(new Color(255, 255, 255, 100)); // Back to white for lines
+            }
+        }
+
+        // Add current player tile position in a more visible box
+        int playerCol = player.worldX / tileSize;
+        int playerRow = player.worldY / tileSize;
+        g2.setColor(new Color(0, 0, 0, 180));
+        g2.fillRect(screenWidth - 150, 0, 150, 40);
+        g2.setColor(Color.WHITE);
+        g2.drawString("Player Tile: Col " + playerCol + " Row " + playerRow, screenWidth - 145, 25);
     }
 
     public void playMusic(Sound sound, int i) {

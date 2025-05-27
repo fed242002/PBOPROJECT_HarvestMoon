@@ -61,8 +61,12 @@ public class UI {
         }
 
         if (gp.gameState == gp.dialogueState) {
-            drawDialogueScreen();
+                drawDialogueScreen();
         }
+        if(gp.gameState == gp.eventFoundState) {
+            drawDialogueScreenEvent();
+        }
+
 
     }
 
@@ -285,6 +289,35 @@ public class UI {
         // g2.drawString(line, x, y);
         // y += 40;
         // }
+    }
+
+    public void drawDialogueScreenEvent() {
+        // bikin screen gelapin play screen dikit
+        g2.setColor(new Color(0, 0, 0, 150)); // semi-transparent black
+        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+
+
+        // window
+        int x = 0;
+        int y = 0;
+        int width = gp.screenWidth;
+        int height = gp.screenHeight;
+        BufferedImage dialogueWindow = null;
+        try {
+            dialogueWindow = ImageIO.read(getClass().getResourceAsStream("/assets/ui/dialogBox.png"));
+        } catch (IOException e) {
+            System.out.println("Error loading dialogue window image: " + e.getMessage());
+        }
+        g2.drawImage(dialogueWindow, x, y, width, height, null);
+
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
+        x += gp.tileSize;
+        y += gp.tileSize;
+
+        for(String line : currentDialogue.split("\n")){
+        g2.drawString(currentDialogue, x, y);
+        y += 40;
+        }
     }
 
     public void drawSubWindow(int x, int y, int width, int height) {

@@ -136,6 +136,17 @@ public class KeyHandler implements KeyListener {
                 gp.gameState = gp.playState;
             }
         }
+
+        if (gp.gameState == gp.eventFoundState) {
+            if (code == KeyBind.nextKey) {
+                gp.gameState = gp.playState;
+            }
+        }
+        if (code == KeyBind.grid) {
+            gp.showGrid = !gp.showGrid;
+            System.out.println("Grid display: " + (gp.showGrid ? "ON" : "OFF"));
+        }
+
     }
 
     @Override
