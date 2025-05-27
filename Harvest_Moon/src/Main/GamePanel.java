@@ -48,6 +48,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public MasterMusic masterMusic = new MasterMusic();
     public EventHandler eventHandler = new EventHandler(this); // Create a new EventHandler object
     Thread gameThread; // Thread for the game loop
+    public boolean fullScreen = false; // Fullscreen mode toggle
 
     // entity and object
     public Player player = new Player(this, keyH); // Create a new Player object
@@ -220,12 +221,11 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
             // Add hitbox drawing at the end (on top of everything else)
             if (showDebugHitboxes) {
-                //event hitbox
+                // event hitbox
                 eventHandler.draw(g2);
 
-
                 // Draw mouse coordinates
-                g2.fillRect(0,0,150,75);
+                g2.fillRect(0, 0, 150, 75);
                 if (mouseX >= 0 && mouseY >= 0) {
                     g2.setColor(Color.WHITE);
                     g2.drawString("Screen X: " + mouseX + " Y: " + mouseY, 10, 20);
@@ -258,10 +258,14 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         int endWorldRow = player.worldY / tileSize + 8;
 
         // Make sure we don't go out of bounds
-        if (startWorldCol < 0) startWorldCol = 0;
-        if (endWorldCol > maxWorldCol) endWorldCol = maxWorldCol;
-        if (startWorldRow < 0) startWorldRow = 0;
-        if (endWorldRow > maxWorldRow) endWorldRow = maxWorldRow;
+        if (startWorldCol < 0)
+            startWorldCol = 0;
+        if (endWorldCol > maxWorldCol)
+            endWorldCol = maxWorldCol;
+        if (startWorldRow < 0)
+            startWorldRow = 0;
+        if (endWorldRow > maxWorldRow)
+            endWorldRow = maxWorldRow;
 
         // Draw vertical lines (columns)
         for (int col = startWorldCol; col <= endWorldCol; col++) {

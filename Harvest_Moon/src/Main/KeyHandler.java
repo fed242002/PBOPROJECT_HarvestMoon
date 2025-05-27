@@ -88,6 +88,7 @@ public class KeyHandler implements KeyListener {
 
             // pause game in play state
             if (code == KeyBind.pauseKey) {
+                gp.ui.pauseScreenState = 0; // Reset pause screen state
                 gp.gameState = gp.pauseState;
             }
         }
@@ -119,15 +120,57 @@ public class KeyHandler implements KeyListener {
                         // Save game logic here
                     }
                     if (gp.ui.commandNum == 2) {
-                        // setting game logic here
+                        gp.ui.pauseScreenState = 2;
                     }
                     if (gp.ui.commandNum == 3) {
                         gp.gameState = gp.titleState; // Return to title screen
                     }
                 }
             }
+            if (gp.ui.pauseScreenState == 2) {
+                if (code == KeyBind.upKey) {
+                    gp.playSFX(gp.sfx, 1);
+                    gp.ui.commandNum--;
+                    if (gp.ui.commandNum < 0) {
+                        gp.ui.commandNum = 3;
+                    }
 
-            System.out.println(gp.ui.commandNum);
+                }
+                if (code == KeyBind.downKey) {
+                    gp.playSFX(gp.sfx, 1);
+                    gp.ui.commandNum++;
+                    if (gp.ui.commandNum > 3) {
+                        gp.ui.commandNum = 0;
+                    }
+
+                }
+                if (code == KeyBind.leftKey) {
+                    gp.playSFX(gp.sfx, 1);
+                    if (gp.ui.subState == 0) {
+                        if (gp.ui.commandNum == 1 && gp.masterMusic.volumeScale > 0) {
+                            gp.masterMusic.volumeScale--;
+                            gp.masterMusic.checkVolume();
+                        }
+                        if (gp.ui.commandNum == 2 && gp.sfx.volumeScale > 0) {
+                            gp.sfx.volumeScale--;
+                            gp.sfx.checkVolume();
+                        }
+                    }
+                }
+                if (code == KeyBind.rightKey) {
+                    gp.playSFX(gp.sfx, 1);
+                    if (gp.ui.subState == 0) {
+                        if (gp.ui.commandNum == 1 && gp.masterMusic.volumeScale < 5) {
+                            gp.masterMusic.volumeScale++;
+                            gp.masterMusic.checkVolume();
+                        }
+                        if (gp.ui.commandNum == 2 && gp.sfx.volumeScale < 5) {
+                            gp.sfx.volumeScale++;
+                            gp.sfx.checkVolume();
+                        }
+                    }
+                }
+            }
 
         }
 

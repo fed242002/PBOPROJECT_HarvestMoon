@@ -26,8 +26,10 @@ public class UI {
     public int commandNum = 0; // 0: new game, 1: load game, 2: exit
     public int titleScreenState = 0;
     public int pauseScreenState = 0; // 0: pausedmenu , 1: resume, 2: settings, 3: exit
+    public int optionState = 0; // 0: top, 1: music, 2: se, 3: control, 4: end game
     EnergyBar energyBar;
     public Entity currentEntityDialogue; // Entity that is currently interacting with the player
+    int subState = 0;
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -57,16 +59,21 @@ public class UI {
         }
 
         if (gp.gameState == gp.pauseState) {
-            drawPauseScreen();
+            if (pauseScreenState == 0) {
+                drawPauseScreen();
+            }
+
+            if (pauseScreenState == 2) {
+                drawOptionScreen();
+            }
         }
 
         if (gp.gameState == gp.dialogueState) {
-                drawDialogueScreen();
+            drawDialogueScreen();
         }
-        if(gp.gameState == gp.eventFoundState) {
+        if (gp.gameState == gp.eventFoundState) {
             drawDialogueScreenEvent();
         }
-
 
     }
 
@@ -253,6 +260,117 @@ public class UI {
         return x;
     }
 
+    public void drawOptionScreen() {
+        g2.setColor(Color.WHITE);
+        g2.setFont(g2.getFont().deriveFont(32F));
+
+        // sub window
+        int frameX = gp.tileSize * 6;
+        int frameY = gp.tileSize;
+        int frameWidth = gp.tileSize * 8;
+        int frameHeight = gp.tileSize * 10;
+        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+
+        switch (subState) {
+            case 0:
+                option_Top(frameX, frameY);
+                break;
+            case 1:
+                options_fullScreenNotification(frameX, frameY);
+                break;
+            case 2:
+                break;
+        }
+        // gp.keyH.enterPressed = false; // reset enter pressed after drawing options
+    }
+
+    public void option_Top(int frameX, int frameY) {
+        int textX;
+        int textY;
+
+        // title
+        String text = "Options";
+        textX = getXforCenteredText(text);
+        textY = frameY + gp.tileSize;
+        g2.drawString(text, textX, textY);
+
+        // full screen on/off
+        textX = frameX + gp.tileSize;
+        textY += gp.tileSize * 2;
+        g2.drawString("Full Screen ", textX, textY);
+        if (commandNum == 0) {
+            g2.drawString(">", textX - 25, textY);
+            // //if (gp.keyH.enterPressed == true) {
+            // if (gp.fullScreen == false) {
+            // gp.fullScreen = true;
+            // } else if (gp.fullScreen == true) {
+            // gp.fullScreen = false;
+            // }
+            // }
+            subState = 1; // go to full screen notification
+        }
+
+        // music
+        textY += gp.tileSize * 2;
+        g2.drawString("Music ", textX, textY);
+        if (commandNum == 1) {
+            g2.drawString(">", textX - 25, textY);
+        }
+        // se
+        textY += gp.tileSize;
+        g2.drawString("SE ", textX, textY);
+        if (commandNum == 2) {
+            g2.drawString(">", textX - 25, textY);
+        }
+
+        // back
+
+        textY += gp.tileSize * 2;
+        g2.drawString("Back ", textX, textY);
+        if (commandNum == 3) {
+            g2.drawString(">", textX - 25, textY);
+            // if(gp.keyH.enterPressed == true) {
+            pauseScreenState = 0; // go back to pause screen
+            // }
+        }
+
+        // full screen check box
+        int checkBoxSize = 24;
+        int checkBoxOffset = 180; // distance from text to checkbox
+        int musicBarOffset = 180;
+        int seBarOffset = 180;
+
+        // Full Screen
+        textX = frameX + gp.tileSize;
+        textY = frameY + gp.tileSize * 3;
+        int checkBoxX = textX + checkBoxOffset;
+        int checkBoxY = textY - checkBoxSize + 8; // align vertically with text
+
+        g2.setStroke(new BasicStroke(3));
+        g2.drawRect(checkBoxX, checkBoxY, checkBoxSize, checkBoxSize);
+        if (gp.fullScreen) {
+            g2.fillRect(checkBoxX, checkBoxY, checkBoxSize, checkBoxSize);
+        }
+
+        // Music volume bar
+        textY += gp.tileSize * 2;
+        int volumeBarWidth = 120;
+        int volumeBarHeight = 24;
+        int musicBarX = textX + musicBarOffset;
+        int musicBarY = textY - volumeBarHeight + 8;
+        g2.drawRect(musicBarX, musicBarY, volumeBarWidth, volumeBarHeight);
+        int musicVolumeWidth = (int) ((volumeBarWidth / 5.0) * gp.masterMusic.volumeScale);
+        g2.fillRect(musicBarX, musicBarY, musicVolumeWidth, volumeBarHeight);
+
+        // SE volume bar
+        textY += gp.tileSize;
+        int seBarX = textX + seBarOffset;
+        int seBarY = textY - volumeBarHeight + 8;
+        g2.drawRect(seBarX, seBarY, volumeBarWidth, volumeBarHeight);
+        int seVolumeWidth = (int) ((volumeBarWidth / 5.0) * gp.sfx.volumeScale);
+        g2.fillRect(seBarX, seBarY, seVolumeWidth, volumeBarHeight);
+    }
+
     public void drawDialogueScreen() {
         // bikin screen gelapin play screen dikit
         g2.setColor(new Color(0, 0, 0, 150)); // semi-transparent black
@@ -296,7 +414,6 @@ public class UI {
         g2.setColor(new Color(0, 0, 0, 150)); // semi-transparent black
         g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 
-
         // window
         int x = 0;
         int y = 0;
@@ -314,10 +431,33 @@ public class UI {
         x += gp.tileSize;
         y += gp.tileSize;
 
-        for(String line : currentDialogue.split("\n")){
-        g2.drawString(currentDialogue, x, y);
-        y += 40;
+        for (String line : currentDialogue.split("\n")) {
+            g2.drawString(currentDialogue, x, y);
+            y += 40;
         }
+    }
+
+    public void options_fullScreenNotification(int frameX, int frameY) {
+        int textX = frameX + gp.tileSize;
+        int textY = frameY + gp.tileSize * 3;
+
+        currentDialogue = "The change will take effect after you restart the game.";
+
+        for (String line : currentDialogue.split("\n")) {
+            g2.drawString(line, textX, textY);
+            textY += 40;
+        }
+
+        // back
+        textY += gp.tileSize * 9;
+        g2.drawString("Back", textX, textY);
+        if (commandNum == 0) {
+            g2.drawString(">", textX - 25, textY);
+            // if(gp.keyH.enterPressed == true) {
+            // subState = 0;
+            // }
+        }
+
     }
 
     public void drawSubWindow(int x, int y, int width, int height) {
