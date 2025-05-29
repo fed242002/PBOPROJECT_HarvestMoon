@@ -89,8 +89,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public void setupGame() {
         aSetter.setObject();
         aSetter.setNPC();
-        // gameState = titleState;
-        gameState = playState; // Set the game state to play
+        gameState = titleState;
+        // gameState = playState; // Set the game state to play
 
     }
 

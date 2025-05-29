@@ -9,6 +9,16 @@ import animation.Animation;
 
 public class Player extends Entity {
 
+    public String listBody[] = {"white", "krem", "black"};
+    public String listEye[] = {"blue", "brown", "green"};
+    public String listHair[] = {"baldBlondeAsh", "longBrownHazel", "shortBrownDark"};
+    public String listOutfit[] = {"violet", "blue"};
+
+    public int bodyIndex = 1; // Index for the current body type
+    public int eyeIndex = 0; // Index for the current eye type
+    public int hairIndex = 0; // Index for the current hair type
+    public int outfitIndex = 1; // Index for the current outfit type
+
     public String name = "Fedrian";
     public final int screenX; // X position on the screen
     public final int screenY; // Y position on the screen
@@ -21,7 +31,7 @@ public class Player extends Entity {
     public int gold = 100;
 
     // ini buat sprite animation -> info2
-    String body = "krem";
+    public String body = "krem";
     String eye = "blue";
     String outfit = "blue";
     String hair = "baldBlondeAsh";
@@ -51,6 +61,7 @@ public class Player extends Entity {
         idle = new Animation("idle", 6, "/assets/player/IDLE/" + getPath());
         animationList.add(idle);
     }
+
 
     public void changePath(String bagian, String nama) {
 

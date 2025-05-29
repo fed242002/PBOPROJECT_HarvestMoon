@@ -15,6 +15,7 @@ public class Entity extends SuperEntity {
     public int speed; // Speed of the entity
     public String name;
 
+    public boolean specialNpc = false; 
     public String direction = "down";
     public int spriteCounter = 0;
     public int spriteNum = 1; // Sprite number for animation

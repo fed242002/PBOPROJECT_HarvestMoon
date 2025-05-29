@@ -57,6 +57,115 @@ public class KeyHandler implements KeyListener {
                     }
                 }
             }
+            else if(gp.ui.titleScreenState == 1) {
+                if (code == KeyBind.upKey) {
+                    gp.playSFX(gp.sfx, 2);
+                    gp.ui.customizeNum--;
+                    if (gp.ui.customizeNum < 0) {
+                        gp.ui.customizeNum = 3;
+                    }
+                }
+                if(code == KeyBind.downKey) {
+                    gp.playSFX(gp.sfx, 2);
+                    gp.ui.customizeNum++;
+                    if (gp.ui.customizeNum > 3) {
+                        gp.ui.customizeNum = 0;
+                    }
+                }
+                // // if(code == KeyBind.rightKey){
+                // //     gp.playSFX(gp.sfx, 2);
+                // //     if(gp.ui.customizeNum == 0) {
+                // //         if(gp.player.bodyIndex < gp.player.listBody.length - 1) {
+                // //             gp.player.bodyIndex++;
+                // //             gp.player.changePath("body", gp.player.listBody[gp.player.bodyIndex]);
+                // //         }
+                // //         else{
+                // //             gp.player.bodyIndex = 0; 
+                // //             gp.player.bodyIndex++;
+                // //             gp.player.changePath("body", gp.player.listBody[gp.player.bodyIndex]);
+                // //         }
+                // //     }
+                // //     if(gp.ui.customizeNum == 1) {
+                // //         if(gp.player.eyeIndex < gp.player.listEye.length - 1) {
+                // //             gp.player.eyeIndex++;
+                // //             gp.player.changePath("eye", gp.player.listEye[gp.player.eyeIndex]);
+                // //         }
+                // //         else{
+                // //             gp.player.eyeIndex = 0; 
+                // //             gp.player.eyeIndex++;
+                // //             gp.player.changePath("eye", gp.player.listEye[gp.player.eyeIndex]);
+                // //         }
+                // //     }
+                // //     }
+                // //     if(gp.ui.customizeNum == 2) {
+                // //         if(gp.player.hairIndex < gp.player.listHair.length - 1) {
+                // //             gp.player.hairIndex++;
+                // //             gp.player.changePath("hair", gp.player.listHair[gp.player.hairIndex]);
+                // //         }
+                // //         else{
+                // //             gp.player.hairIndex = 0; 
+                // //             gp.player.hairIndex++;
+                // //             gp.player.changePath("hair", gp.player.listHair[gp.player.hairIndex]);
+                // //         }
+                // //     }
+                // //     if(gp.ui.customizeNum == 3) {
+                // //         if(gp.player.outfitIndex < gp.player.listOutfit.length - 1) {
+                // //             gp.player.outfitIndex++;
+                // //             gp.player.changePath("outfit", gp.player.listOutfit[gp.player.outfitIndex]);
+                // //         }
+                // //         else{
+                // //             gp.player.outfitIndex = 0; 
+                // //             gp.player.outfitIndex++;
+                // //             gp.player.changePath("outfit", gp.player.listOutfit[gp.player.outfitIndex]);
+                // //         }
+                // //     }
+                // //     else if(code == KeyBind.leftKey) {
+                // //         gp.playSFX(gp.sfx, 2);
+                // //         if(gp.ui.customizeNum == 0) {
+                // //             if(gp.player.bodyIndex > 0) {
+                // //                 gp.player.bodyIndex--;
+                // //                 gp.player.changePath("body", gp.player.listBody[gp.player.bodyIndex]);
+                // //             }
+                // //             else{
+                // //                 gp.player.bodyIndex = gp.player.listBody.length - 1; 
+                // //                 gp.player.changePath("body", gp.player.listBody[gp.player.bodyIndex]);
+                // //             }
+                // //         }
+                // //         if(gp.ui.customizeNum == 1) {
+                // //             if(gp.player.eyeIndex > 0) {
+                // //                 gp.player.eyeIndex--;
+                // //                 gp.player.changePath("eye", gp.player.listEye[gp.player.eyeIndex]);
+                // //             }
+                // //             else{
+                // //                 gp.player.eyeIndex = gp.player.listEye.length - 1; 
+                // //                 gp.player.changePath("eye", gp.player.listEye[gp.player.eyeIndex]);
+                // //             }
+                // //         }
+                // //         if(gp.ui.customizeNum == 2) {
+                // //             if(gp.player.hairIndex > 0) {
+                // //                 gp.player.hairIndex--;
+                // //                 gp.player.changePath("hair", gp.player.listHair[gp.player.hairIndex]);
+                // //             }
+                // //             else{
+                // //                 gp.player.hairIndex = gp.player.listHair.length - 1; 
+                // //                 gp.player.changePath("hair", gp.player.listHair[gp.player.hairIndex]);
+                // //             }
+                // //         }
+                // //         if(gp.ui.customizeNum == 3) {
+                // //             if(gp.player.outfitIndex > 0) {
+                // //                 gp.player.outfitIndex--;
+                // //                 gp.player.changePath("outfit", gp.player.listOutfit[gp.player.outfitIndex]);
+                // //             }
+                // //             else{
+                // //                 gp.player.outfitIndex = gp.player.listOutfit.length - 1; 
+                // //                 gp.player.changePath("outfit", gp.player.listOutfit[gp.player.outfitIndex]);
+                // //             }
+                // //         }
+                //     }
+
+
+                }
+            
 
             // new game
 
@@ -187,7 +296,6 @@ public class KeyHandler implements KeyListener {
         }
         if (code == KeyBind.grid) {
             gp.showGrid = !gp.showGrid;
-            System.out.println("Grid display: " + (gp.showGrid ? "ON" : "OFF"));
         }
 
     }

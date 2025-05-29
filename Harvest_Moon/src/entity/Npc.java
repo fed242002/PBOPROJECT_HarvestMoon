@@ -16,9 +16,10 @@ public class Npc extends Entity {
         this.solidArea.y = 48;
         walk = new Animation("walk",6, "/assets/npc/"+name+"/WALK/");
         animationList.add(walk);
-        idle = new Animation("walk",6, "/assets/npc/"+name+"/IDLE/");
+        idle = new Animation("idle",6, "/assets/npc/"+name+"/IDLE/");
         animationList.add(idle);
         currentAnimationIndex = 1; // default idle
+        // specialNpc = true;
 
         direction = "down";
         setAnimation("walk");

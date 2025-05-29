@@ -24,9 +24,10 @@ public class UI {
     public String currentDialogue = "";
     public String currentDialogueName = "";
     public int commandNum = 0; // 0: new game, 1: load game, 2: exit
-    public int titleScreenState = 0;
+    public int titleScreenState = 0; // 0: title screen, 1: new Game(customize character)
     public int pauseScreenState = 0; // 0: pausedmenu , 1: resume, 2: settings, 3: exit
     public int optionState = 0; // 0: top, 1: music, 2: se, 3: control, 4: end game
+    int customizeNum = 0; //
     EnergyBar energyBar;
     public Entity currentEntityDialogue; // Entity that is currently interacting with the player
     int subState = 0;
@@ -164,22 +165,60 @@ public class UI {
 
         }
         if (titleScreenState == 1) {
-            g2.setColor(new Color(70, 120, 80));
-            g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+            
+            BufferedImage customizeCharacter = null;
+            try {
+                customizeCharacter = ImageIO.read(getClass().getResourceAsStream("/assets/ui/customizeCharacter/page.png"));
+            } catch (IOException e) {
+                System.out.println("Error loading customize character image: " + e.getMessage());
+            }
 
-            // title name
-            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
-            String text = "LOAD GAME";
-            int x = getXforCenteredText(text);
-            int y = gp.tileSize * 3;
+            if (customizeCharacter != null) {
+                g2.drawImage(customizeCharacter, 0, 0, gp.screenWidth, gp.screenHeight, null);
+            }
 
-            // shadow
-            g2.setColor(Color.BLACK);
-            g2.drawString(text, x + 5, y + 5);
 
-            // text
-            g2.setColor(Color.WHITE);
-            g2.drawString(text, x, y);
+            BufferedImage eye = null, hair = null, outfit = null, body = null;
+            BufferedImage eyeActive = null, hairActive = null, outfitActive = null, bodyActive = null;
+
+            try {
+                eye = ImageIO.read(getClass().getResourceAsStream("/assets/ui/customizeCharacter/eye/" + gp.player.listEye[gp.player.eyeIndex] + ".png"));
+                hair = ImageIO.read(getClass().getResourceAsStream("/assets/ui/customizeCharacter/hair/" + gp.player.listHair[gp.player.hairIndex] + ".png"));
+                outfit = ImageIO.read(getClass().getResourceAsStream("/assets/ui/customizeCharacter/outfit/" + gp.player.listOutfit[gp.player.outfitIndex] + ".png"));
+                body = ImageIO.read(getClass().getResourceAsStream("/assets/ui/customizeCharacter/body/" + gp.player.listBody[gp.player.bodyIndex] + ".png"));
+
+                eyeActive = ImageIO.read(getClass().getResourceAsStream("/assets/ui/customizeCharacter/eye/" + gp.player.listEye[gp.player.eyeIndex] + "Active.png"));
+                hairActive = ImageIO.read(getClass().getResourceAsStream("/assets/ui/customizeCharacter/hair/" + gp.player.listHair[gp.player.hairIndex] + "Active.png"));
+                outfitActive = ImageIO.read(getClass().getResourceAsStream("/assets/ui/customizeCharacter/outfit/" + gp.player.listOutfit[gp.player.outfitIndex] + "Active.png"));
+                bodyActive = ImageIO.read(getClass().getResourceAsStream("/assets/ui/customizeCharacter/body/" + gp.player.listBody[gp.player.bodyIndex] + "Active.png"));
+
+            } catch (IOException e) {
+                System.out.println("Error loading character customization images: " + e.getMessage());
+            }
+
+            if(customizeNum == 0) {
+                g2.drawImage(bodyActive, 400, 125, 335, 65, null);
+            } else {
+                g2.drawImage(body, 400, 125, 335, 65, null);
+            }
+            if(customizeNum == 1) {
+                g2.drawImage(eyeActive, 400, 225, 335, 65, null);
+            } else {
+                g2.drawImage(eye, 400, 225, 335, 65, null);
+            }
+            if(customizeNum == 2) {
+                g2.drawImage(hairActive, 400, 325, 335, 65, null);
+            } else {
+                g2.drawImage(hair, 400, 325, 335, 65, null);
+            } 
+            if(customizeNum == 3) {
+                g2.drawImage(outfitActive, 400, 425, 335, 65, null);
+            } else {
+                g2.drawImage(outfit, 400, 425, 335, 65, null);
+            }
+
+
+            g2.drawImage(gp.player.animationList.get(1).down[0], 150, 125, gp.playerSizeX * 2, gp.playerSizeY * 2, null);
         }
     }
 
@@ -388,7 +427,12 @@ public class UI {
         int height = gp.screenHeight;
         BufferedImage dialogueWindow = null;
         try {
-            dialogueWindow = ImageIO.read(getClass().getResourceAsStream("/assets/ui/dialogBox.png"));
+            if(currentEntityDialogue.specialNpc){
+                dialogueWindow = ImageIO.read(getClass().getResourceAsStream("/assets/ui/dialogBoxSpecial.png"));
+            }
+            else{
+                dialogueWindow = ImageIO.read(getClass().getResourceAsStream("/assets/ui/dialogBox.png"));
+            }
         } catch (IOException e) {
             System.out.println("Error loading dialogue window image: " + e.getMessage());
         }
