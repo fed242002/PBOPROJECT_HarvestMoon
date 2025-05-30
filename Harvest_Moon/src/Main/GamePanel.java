@@ -94,8 +94,9 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public void setupGame() {
         aSetter.setObject();
         aSetter.setNPC();
-        gameState = titleState;
-        // gameState = playState; // Set the game state to play
+        eManager.setup(); // ini untuk setting dalam kegelapan
+        // gameState = titleState;
+        gameState = playState; // Set the game state to play
 
     }
 
@@ -222,7 +223,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
             }
 
             // enviroment
-            eManager.draw(g2); // Draw the environment (lighting, etc.)
+            // eManager.draw(g2); // cara buat setting kegelapan nya disini
 
             // ui
             ui.draw(g2); // Draw the UI

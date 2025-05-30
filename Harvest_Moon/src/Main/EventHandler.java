@@ -13,24 +13,23 @@ public class EventHandler {
     int previousEventX, previousEventY; // Previous event coordinates
     boolean canTouchEvent = true; // Flag to check if the event is done
 
-    public EventHandler(GamePanel gp) 
-    {
+    public EventHandler(GamePanel gp) {
         this.gp = gp;
 
         eventRect = new EventRect[gp.maxWorldCol][gp.maxWorldRow]; // Initialize the event rectangle array
-        int col =0 , row =0;
+        int col = 0, row = 0;
 
-        while(col < gp.maxWorldCol && row < gp.maxWorldRow) {
+        while (col < gp.maxWorldCol && row < gp.maxWorldRow) {
             eventRect[col][row] = new EventRect();
             eventRect[col][row].x = 23; // Set default X position
             eventRect[col][row].y = 23; // Set default Y position
             eventRect[col][row].width = 2; // Set width to tile size
             eventRect[col][row].height = 2; // Set height to tile size
             eventRect[col][row].eventRectDefaultX = eventRect[col][row].x; // Store default X position
-            eventRect[col][row].eventRectDefaultY = eventRect[col][row].y; // Store default Y position  
+            eventRect[col][row].eventRectDefaultY = eventRect[col][row].y; // Store default Y position
 
             col++;
-            if(col == gp.maxWorldCol) {
+            if (col == gp.maxWorldCol) {
                 col = 0;
                 row++;
             }
@@ -45,25 +44,25 @@ public class EventHandler {
         // g2.fillRect(worldX, worldY, eventRect[].width, eventRect.height);
     }
 
-    public void checkEvent(){
+    public void checkEvent() {
         int xDistance = Math.abs(gp.player.worldX - previousEventX);
         int yDistance = Math.abs(gp.player.worldY - previousEventY);
         int distance = Math.max(xDistance, yDistance);
 
-        if(distance > gp.tileSize) {
+        if (distance > gp.tileSize) {
             canTouchEvent = true; // Reset the flag if the player has moved far enough
         }
 
-        if(canTouchEvent){
-            if(hit(27,14, null) == true && eventRect[27][14].eventDone == false) {
-                //event
-                damagePit(27,14,gp.eventFoundState);
+        if (canTouchEvent) {
+            if (hit(27, 14, null) == true && eventRect[27][14].eventDone == false) {
+                // event
+                damagePit(27, 14, gp.eventFoundState);
             }
 
         }
     }
 
-    public boolean hit(int eventCol, int eventRow, String reqDirection){
+    public boolean hit(int eventCol, int eventRow, String reqDirection) {
         boolean hit = false;
 
         gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
@@ -71,8 +70,8 @@ public class EventHandler {
         eventRect[eventCol][eventRow].x = eventCol * gp.tileSize + eventRect[eventCol][eventRow].x;
         eventRect[eventCol][eventRow].y = eventRow * gp.tileSize + eventRect[eventCol][eventRow].y;
 
-        if(gp.player.solidArea.intersects(eventRect[eventCol][eventRow])) {
-            if(reqDirection == null || gp.player.direction.equals(reqDirection)) {
+        if (gp.player.solidArea.intersects(eventRect[eventCol][eventRow])) {
+            if (reqDirection == null || gp.player.direction.equals(reqDirection)) {
                 hit = true;
 
                 previousEventX = gp.player.worldX;
@@ -88,9 +87,8 @@ public class EventHandler {
         return hit;
     }
 
+    public void damagePit(int col, int row, int gameState) {
 
-    public void damagePit(int col, int row,int gameState ){
-       
         gp.gameState = gameState;
         gp.ui.currentDialogue = "You fell into a pit!";
         eventRect[col][row].eventDone = true; // Mark the event as done
