@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import javax.swing.JPanel;
+
+import Environment.EnvironmentManager;
 import entity.Entity;
 import entity.Player;
 import tile.TileManager;
@@ -66,6 +68,9 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
     // UI
     public UI ui = new UI(this); // Create a new UI object
+
+    // lighting
+    EnvironmentManager eManager = new EnvironmentManager(this); // Create a new EnvironmentManager object
 
     private int mouseX = -1;
     private int mouseY = -1;
@@ -215,6 +220,9 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
             for (int i = 0; i < entityList.size(); i++) {
                 entityList.remove(entityList.get(i)); // Draw each entity in the list
             }
+
+            // enviroment
+            eManager.draw(g2); // Draw the environment (lighting, etc.)
 
             // ui
             ui.draw(g2); // Draw the UI
