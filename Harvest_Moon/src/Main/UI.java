@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JTextField;
 
 import entity.Entity;
 
@@ -36,7 +37,6 @@ public class UI {
         this.gp = gp;
         // arial_40 = new Font("Arial", Font.PLAIN, 40);
         this.energyBar = new EnergyBar(70, 50, 200, 20, 10, gp.player.maxEnergy);
-
     }
 
     public void showMessage(String text) {
@@ -216,9 +216,15 @@ public class UI {
             } else {
                 g2.drawImage(outfit, 400, 425, 335, 65, null);
             }
+      
 
 
+
+            //preview player
             g2.drawImage(gp.player.animationList.get(1).down[0], 150, 125, gp.playerSizeX * 2, gp.playerSizeY * 2, null);
+        
+            
+
         }
     }
 
