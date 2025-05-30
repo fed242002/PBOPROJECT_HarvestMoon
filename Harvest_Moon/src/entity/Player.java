@@ -69,18 +69,18 @@ public class Player extends Entity {
             this.body = nama;
         }
         if (bagian.equalsIgnoreCase("eye")) {
-            this.eye = eye;
+            this.eye = nama;
         }
         if (bagian.equalsIgnoreCase("outfit")) {
-            this.outfit = outfit;
+            this.outfit = nama;
         }
         if (bagian.equalsIgnoreCase("hair")) {
-            this.hair = hair;
+            this.hair = nama;
         }
 
-        for (Animation x : animationList) {
-            x.setPath(getPath());
-        }
+        // for (Animation x : animationList) {
+        //     x.setPath(getPath());
+        // }
     }
 
     public String getPath() {

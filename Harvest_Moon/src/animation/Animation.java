@@ -15,8 +15,8 @@ public class Animation {
     public int currentSprite=0;
     public int soundFX = -1;
 
-        public Animation(String name,int spriteTotal, String path) {
-        this.name = name;
+        public Animation(String name1,int spriteTotal, String path) {
+        this.name = name1.toUpperCase();
         this.spriteTotal = spriteTotal;
         this.path = path;
         up = new BufferedImage[spriteTotal];
