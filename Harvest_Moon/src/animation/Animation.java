@@ -50,6 +50,8 @@ public class Animation {
                 right[i] = ImageIO.read(getClass().getResourceAsStream(path + "kanan-" + i + ".png"));
             }
 
+            System.out.println("setSprite("+path+") di class Animation berhasil");
+
         }catch (Exception e) {
             System.out.println("error di setSprite("+path+") di class Animation"); 
             e.printStackTrace(); 

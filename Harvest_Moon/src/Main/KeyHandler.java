@@ -82,10 +82,6 @@ public class KeyHandler implements KeyListener {
                         gp.ui.titleScreenState = 0;
                         gp.gameState = gp.playState;
                         gp.player.setAnimation("idle");
-                        gp.player.changePath("body", gp.player.listBody[gp.player.bodyIndex]);
-                        gp.player.changePath("eye", gp.player.listEye[gp.player.eyeIndex]);
-                        gp.player.changePath("hair", gp.player.listHair[gp.player.hairIndex]);
-                        gp.player.changePath("outfit", gp.player.listOutfit[gp.player.outfitIndex]);
                     }
                 }
                 
@@ -345,9 +341,7 @@ public class KeyHandler implements KeyListener {
 
 
     public void updatePlayerPath(){
-        for(Animation x : gp.player.animationList){
-            x.setPath("/assets/player/"+x.name+"/" + gp.player.getPath()); 
-        }
+        gp.player.redeclareAnimation();
     }
 
 }
