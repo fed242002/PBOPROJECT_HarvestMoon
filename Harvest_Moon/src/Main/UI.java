@@ -106,10 +106,13 @@ public class UI {
             System.out.println("Error loading info panel image UI: " + e.getMessage());
         }
         g2.drawImage(infoPanel, gp.screenWidth - 250, 0, 242, 128, null);
-
-        // info Panel gold
+        
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 12F));
         g2.setColor(Color.BLACK);
+
+        // info Panel day
+
+        // info Panel gold
         String gold = String.valueOf(gp.player.gold) + " G";
         int x = getXforRightAlignedText(gold, 729);
         g2.drawString(gold, x, 107);
@@ -180,17 +183,20 @@ public class UI {
 
             BufferedImage eye = null, hair = null, outfit = null, body = null;
             BufferedImage eyeActive = null, hairActive = null, outfitActive = null, bodyActive = null;
+            BufferedImage confirm = null, confirmActive = null;
 
             try {
                 eye = ImageIO.read(getClass().getResourceAsStream("/assets/ui/customizeCharacter/eye/" + gp.player.listEye[gp.player.eyeIndex] + ".png"));
                 hair = ImageIO.read(getClass().getResourceAsStream("/assets/ui/customizeCharacter/hair/" + gp.player.listHair[gp.player.hairIndex] + ".png"));
                 outfit = ImageIO.read(getClass().getResourceAsStream("/assets/ui/customizeCharacter/outfit/" + gp.player.listOutfit[gp.player.outfitIndex] + ".png"));
                 body = ImageIO.read(getClass().getResourceAsStream("/assets/ui/customizeCharacter/body/" + gp.player.listBody[gp.player.bodyIndex] + ".png"));
+                confirm = ImageIO.read(getClass().getResourceAsStream("/assets/ui/customizeCharacter/confirm.png"));
 
                 eyeActive = ImageIO.read(getClass().getResourceAsStream("/assets/ui/customizeCharacter/eye/" + gp.player.listEye[gp.player.eyeIndex] + "Active.png"));
                 hairActive = ImageIO.read(getClass().getResourceAsStream("/assets/ui/customizeCharacter/hair/" + gp.player.listHair[gp.player.hairIndex] + "Active.png"));
                 outfitActive = ImageIO.read(getClass().getResourceAsStream("/assets/ui/customizeCharacter/outfit/" + gp.player.listOutfit[gp.player.outfitIndex] + "Active.png"));
                 bodyActive = ImageIO.read(getClass().getResourceAsStream("/assets/ui/customizeCharacter/body/" + gp.player.listBody[gp.player.bodyIndex] + "Active.png"));
+                confirmActive = ImageIO.read(getClass().getResourceAsStream("/assets/ui/customizeCharacter/confirmActive.png"));
 
             } catch (IOException e) {
                 System.out.println("Error loading character customization images: " + e.getMessage());
@@ -216,6 +222,12 @@ public class UI {
             } else {
                 g2.drawImage(outfit, 400, 425, 335, 65, null);
             }
+            if(customizeNum == 4) {
+                g2.drawImage(confirmActive, 40, 400, 335, 65, null);
+            } else {
+                g2.drawImage(confirm, 40, 400, 335, 65, null);
+            }
+            
       
 
 

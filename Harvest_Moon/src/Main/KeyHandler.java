@@ -62,22 +62,35 @@ public class KeyHandler implements KeyListener {
             }
             else if(gp.ui.titleScreenState == 1) {
                 if (code == KeyBind.upKey) {
-                    gp.playSFX(gp.sfx, 2);
+                    gp.playSFX(gp.sfx, 1);
                     gp.ui.customizeNum--;
                     if (gp.ui.customizeNum < 0) {
-                        gp.ui.customizeNum = 3;
+                        gp.ui.customizeNum = 4;
                     }
                 }
                 if(code == KeyBind.downKey) {
-                    gp.playSFX(gp.sfx, 2);
+                    gp.playSFX(gp.sfx, 1);
                     gp.ui.customizeNum++;
                     if (gp.ui.customizeNum > 4) {
                         gp.ui.customizeNum = 0;
                     }
                 }
+                if(code == KeyBind.nextKey) {
+                    
+                    if(gp.ui.customizeNum == 4) {
+                        gp.playSFX(gp.sfx, 2);
+                        gp.ui.titleScreenState = 0;
+                        gp.gameState = gp.playState;
+                        gp.player.setAnimation("idle");
+                        gp.player.changePath("body", gp.player.listBody[gp.player.bodyIndex]);
+                        gp.player.changePath("eye", gp.player.listEye[gp.player.eyeIndex]);
+                        gp.player.changePath("hair", gp.player.listHair[gp.player.hairIndex]);
+                        gp.player.changePath("outfit", gp.player.listOutfit[gp.player.outfitIndex]);
+                    }
+                }
                 
                 if(code == KeyBind.rightKey) {
-                    gp.playSFX(gp.sfx, 2);
+                    gp.playSFX(gp.sfx, 1);
                     
                     if(gp.ui.customizeNum == 0) {
                         if(gp.player.bodyIndex < gp.player.listBody.length - 1) {
@@ -122,7 +135,7 @@ public class KeyHandler implements KeyListener {
                     updatePlayerPath();
                 }
                 else if(code == KeyBind.leftKey) {
-                    gp.playSFX(gp.sfx, 2);
+                    gp.playSFX(gp.sfx, 1);
                     
                     if(gp.ui.customizeNum == 0) {
                         if(gp.player.bodyIndex > 0) {
