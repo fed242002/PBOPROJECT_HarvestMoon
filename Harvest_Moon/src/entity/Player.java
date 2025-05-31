@@ -59,24 +59,7 @@ public class Player extends Entity {
         setDefaultValues();
 
         // declare animation
-        animationList.add(new Animation("walk", 6, "/assets/player/WALK/" + getPath(), 0));
-        animationList.add(new Animation("idle", 6, "/assets/player/IDLE/" + getPath(), 0));
-        animationList.add(new Animation("chop", 10, "/assets/player/AXE CHOP/" + getPath(), 0));
-        animationList.add(new Animation("dig", 9, "/assets/player/AXE DIG/" + getPath(), 0));
-        animationList.add(new Animation("cast", 9, "/assets/player/FIST CAST LINE/" + getPath(), 0));
-        animationList.add(new Animation("FISHIDLE", 6, "/assets/player/FISH IDLE/" + getPath(), 0));
-        animationList.add(new Animation("FISHIDLECAUGHT", 6, "/assets/player/FISH IDLE/" + getPath(), 0));
-        animationList.add(new Animation("FISHCAUGHT", 9, "/assets/player/FISH CAUGHT/" + getPath(), 0));
-        animationList.add(new Animation("FISHPULLED", 2, "/assets/player/FISH REEL IN/" + getPath(), 0));
-        animationList.add(new Animation("HARVEST", 9, "/assets/player/HARVEST/" + getPath(), 0));
-        animationList.add(new Animation("lift", 14, "/assets/player/LIFT/" + getPath(), 0));
-        animationList.add(new Animation("PickUp", 12, "/assets/player/PICK UP/" + getPath(), 0));
-        animationList.add(new Animation("Sit", 6, "/assets/player/SIT 1/" + getPath(), 0));
-        animationList.add(new Animation("sleep", 6, "/assets/player/SLEEP/" + getPath(), 0));
-        animationList.add(new Animation("throw", 14, "/assets/player/THROW/" + getPath(), 0));
-        animationList.add(new Animation("watering", 14, "/assets/player/WATERING/" + getPath(), 0));
-
-
+        redeclareAnimation();
 
         //TOOLS ANIMATION -> ini nanti maw kak pindah ke gp aja soalnya sama aja di smua entity biar gausah ke declare banyak kali
         toolsAnimationList.add(new ToolsAnimation(gp,"axe", "idle", 6));
@@ -105,21 +88,21 @@ public class Player extends Entity {
 
         // declare animation
         animationList.add(new Animation("walk", 6, "/assets/player/WALK/" + getPath(), 0));
-        animationList.add(new Animation("idle", 6, "/assets/player/IDLE/" + getPath(), 0));
-        animationList.add(new Animation("chop", 10, "/assets/player/AXE CHOP/" + getPath(), 0));
-        animationList.add(new Animation("dig", 9, "/assets/player/AXE DIG/" + getPath(), 0));
-        animationList.add(new Animation("cast", 9, "/assets/player/FIST CAST LINE/" + getPath(), 0));
-        animationList.add(new Animation("FISHIDLE", 6, "/assets/player/FISH IDLE/" + getPath(), 0));
-        animationList.add(new Animation("FISHIDLECAUGHT", 6, "/assets/player/FISH IDLE/" + getPath(), 0));
-        animationList.add(new Animation("FISHCAUGHT", 9, "/assets/player/FISH CAUGHT/" + getPath(), 0));
-        animationList.add(new Animation("FISHPULLED", 2, "/assets/player/FISH REEL IN/" + getPath(), 0));
-        animationList.add(new Animation("HARVEST", 9, "/assets/player/HARVEST/" + getPath(), 0));
-        animationList.add(new Animation("lift", 14, "/assets/player/LIFT/" + getPath(), 0));
-        animationList.add(new Animation("PickUp", 12, "/assets/player/PICK UP/" + getPath(), 0));
-        animationList.add(new Animation("Sit", 6, "/assets/player/SIT 1/" + getPath(), 0));
-        animationList.add(new Animation("sleep", 6, "/assets/player/SLEEP/" + getPath(), 0));
-        animationList.add(new Animation("throw", 14, "/assets/player/THROW/" + getPath(), 0));
-        animationList.add(new Animation("watering", 14, "/assets/player/WATERING/" + getPath(), 0));
+        animationList.add(new Animation("idle", 6, "/assets/player/IDLE/" + getPath()));
+        animationList.add(new Animation("chop", 10, "/assets/player/AXE CHOP/" + getPath()));
+        animationList.add(new Animation("dig", 9, "/assets/player/DIG/" + getPath(), 0));
+        animationList.add(new Animation("cast", 9, "/assets/player/FISH CAST LINE/" + getPath()));
+        animationList.add(new Animation("FISHIDLE", 6, "/assets/player/FISH IDLE/" + getPath()));
+        animationList.add(new Animation("FISHIDLECAUGHT", 6, "/assets/player/FISH IDLE/" + getPath()));
+        animationList.add(new Animation("FISHCAUGHT", 9, "/assets/player/FISH CAUGHT/" + getPath()));
+        animationList.add(new Animation("FISHPULLED", 2, "/assets/player/FISH REEL IN/" + getPath()));
+        animationList.add(new Animation("HARVEST", 9, "/assets/player/HARVEST/" + getPath()));
+        animationList.add(new Animation("lift", 14, "/assets/player/LIFT/" + getPath()));
+        animationList.add(new Animation("PickUp", 12, "/assets/player/PICK UP/" + getPath()));
+        animationList.add(new Animation("Sit", 6, "/assets/player/SIT 1/" + getPath()));
+        animationList.add(new Animation("sleep", 6, "/assets/player/SLEEP/" + getPath(), true));
+        animationList.add(new Animation("throw", 14, "/assets/player/THROW/" + getPath()));
+        animationList.add(new Animation("watering", 14, "/assets/player/WATERING/" + getPath()));
 
 
 

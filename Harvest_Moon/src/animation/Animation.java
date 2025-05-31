@@ -14,6 +14,7 @@ public class Animation {
     public String name;
     public int currentSprite=0;
     public int soundFX = -1;
+    boolean oneD = false; // true if the animation is one direction only (kek sleep)
 
         public Animation(String name1,int spriteTotal, String path) {
         this.name = name1.toUpperCase();
@@ -26,6 +27,47 @@ public class Animation {
 
         setSprite();
         }
+
+        
+        public Animation(String name1,int spriteTotal, String path, boolean oneD) {
+        this.name = name1.toUpperCase();
+        this.spriteTotal = spriteTotal;
+        this.path = path;
+        up = new BufferedImage[spriteTotal];
+        down = new BufferedImage[spriteTotal];
+        left = new BufferedImage[spriteTotal];
+        right = new BufferedImage[spriteTotal];
+        this.oneD = oneD;
+
+
+            if(!oneD)
+                setSprite();
+            else
+                setSpriteAllD();
+                
+            
+        }
+
+                public Animation(String name1,int spriteTotal, String path, boolean oneD, int soundFX) {
+        this.name = name1.toUpperCase();
+        this.spriteTotal = spriteTotal;
+        this.path = path;
+        up = new BufferedImage[spriteTotal];
+        down = new BufferedImage[spriteTotal];
+        left = new BufferedImage[spriteTotal];
+        right = new BufferedImage[spriteTotal];
+        this.oneD = oneD;
+        this.soundFX = soundFX;
+
+            if(!oneD)
+                setSprite();
+            else
+                setSpriteAllD();
+                
+            
+        }
+
+
 
         public Animation(String name,int spriteTotal, String path, int soundFX) {
         this.soundFX = soundFX;
@@ -40,6 +82,24 @@ public class Animation {
         setSprite();
         }
 
+    public void setSpriteAllD()
+    {
+        try{
+            for (int i = 0; i < spriteTotal; i++) {
+                up[i] = ImageIO.read(getClass().getResourceAsStream(path + i + ".png"));
+                down[i] = ImageIO.read(getClass().getResourceAsStream(path + i + ".png"));
+                left[i] =ImageIO.read(getClass().getResourceAsStream(path + i + ".png"));
+                right[i] = ImageIO.read(getClass().getResourceAsStream(path + i + ".png"));
+            }
+
+            System.out.println("setSprite("+path+") di class Animation berhasil");
+
+        }catch (Exception e) {
+            System.out.println("error di setSprite("+path+") di class Animation"); 
+            e.printStackTrace(); 
+        }
+
+    }
     public void setSprite() {
         
         try{
