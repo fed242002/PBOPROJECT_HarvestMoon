@@ -131,7 +131,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
             }
 
             if (timer >= 1000000000) { // If 1 second has passed
-                System.out.println("FPS: " + drawCount); // Print the FPS
+                // System.out.println("FPS: " + drawCount); // Print the FPS
                 drawCount = 0; // Reset the draw count
                 timer = 0; // Reset the timer
             }
@@ -150,7 +150,6 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
                     npc.update();
                 }
             }
-            eManager.update(); // Update the environment manager
 
         }
 
@@ -224,9 +223,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
             }
 
             // enviroment
-            // if (isNight = true)
-            eManager.draw(g2); // cara buat setting kegelapan nya disini
-            // }
+            // eManager.draw(g2); // cara buat setting kegelapan nya disini
 
             // ui
             ui.draw(g2); // Draw the UI
@@ -257,7 +254,6 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
             g2.dispose(); // Dispose of the graphics object to free up resources
 
         }
-
     }
 
     public void drawGrid(Graphics2D g2) {
