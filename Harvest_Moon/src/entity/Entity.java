@@ -29,6 +29,9 @@ public class Entity extends SuperEntity {
     public BufferedImage image;
     public int width = 48, height = 48; // Default size of the entity
     public boolean isObj = false;
+    public Entity currentLight; // Current light source for the entity, if any
+    public int lightRadius = 0; // Radius of the light source, if any
+    public final int type_light = 9;
 
     // animation
     Animation walk;

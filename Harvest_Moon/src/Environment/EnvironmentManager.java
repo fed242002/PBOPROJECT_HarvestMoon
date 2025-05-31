@@ -16,6 +16,10 @@ public class EnvironmentManager {
         lighting = new Lighting(gp, 576); // Circle size can be adjusted
     }
 
+    public void update() {
+        lighting.update();
+    }
+
     public void draw(Graphics2D g2) {
         lighting.draw(g2);
     }

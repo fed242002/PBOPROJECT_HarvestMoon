@@ -2,6 +2,7 @@ package Environment;
 
 import Main.GamePanel;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RadialGradientPaint;
@@ -15,31 +16,23 @@ import java.awt.Shape;
 public class Lighting {
     GamePanel gp;
     BufferedImage darknessFilter;
+    int dayCounter;
+    float filterAlpha = 0f;
+
+    final int day = 0;
+    final int dusk = 1;
+    final int night = 2;
+    final int dawn = 3;
+    int dayState = day; // Default to day state
 
     public Lighting(GamePanel gp, int circleSize) {
         // bufferedimage
         darknessFilter = new BufferedImage(gp.screenWidth, gp.screenHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D) darknessFilter.getGraphics();
 
-        // untuk screen sized rectangle
-        Area screenArea = new Area(new Rectangle2D.Double(0, 0, gp.screenWidth, gp.screenHeight));
-
         // untuk nyari center x dan y player
         int centerX = gp.player.screenX + (gp.player.width / 2);
         int centerY = gp.player.screenY + (gp.player.width / 2);
-
-        // get the top left x and y of the circle
-        double x = centerX - (circleSize / 2);
-        double y = centerY - (circleSize / 2);
-
-        // create a circle area
-        Shape circleShape = new Ellipse2D.Double(x, y, circleSize, circleSize);
-
-        // create light circle
-        Area lightCircle = new Area(circleShape);
-
-        // subtract the light circle from the screen area
-        screenArea.subtract(lightCircle);
 
         // crate a gradation effect
         Color color[] = new Color[12];
@@ -77,15 +70,68 @@ public class Lighting {
         // set gradient paint to graphics
         g2.setPaint(gPaint);
 
-        // draw the light circle
-        g2.fill(lightCircle);
+        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 
-        // draw the screen rectangle without light circle
-        g2.fill(screenArea);
         g2.dispose();
     }
 
-    public void draw(Graphics2D g2) {
-        g2.drawImage(darknessFilter, 0, 0, null);
+    public void update() {
+        if (dayState == day) {
+            dayCounter++;
+
+            if (dayCounter > 600) {
+                dayCounter = 0;
+                dayState = dusk; // Change to dusk after 600 frames
+            }
+        } else if (dayState == dusk) {
+            filterAlpha += 0.001f;
+            if (filterAlpha >= 1f) {
+                filterAlpha = 1f;
+                dayState = night; // Change to night after reaching full darkness
+            }
+        } else if (dayState == night) {
+            dayCounter++;
+
+            if (dayCounter > 600) {
+                dayCounter = 0;
+                dayState = dawn; // Change to dawn after 600 frames
+            }
+        } else if (dayState == dawn) {
+            filterAlpha -= 0.001f;
+
+            if (filterAlpha < 0f) {
+                filterAlpha = 0f;
+                dayState = day; // Reset to day after reaching full brightness
+            }
+        }
+
     }
+
+    public void draw(Graphics2D g2) {
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, filterAlpha));
+        g2.drawImage(darknessFilter, 0, 0, null);
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f)); // Reset alpha to 1 for other drawings
+
+        // debug
+        String situation = "";
+
+        switch (dayState) {
+            case day:
+                situation = "Day";
+                break;
+            case dusk:
+                situation = "Dusk";
+                break;
+            case night:
+                situation = "Night";
+                break;
+            case dawn:
+                situation = "Dawn";
+                break;
+        }
+        g2.setColor(Color.WHITE);
+        g2.setFont(g2.getFont().deriveFont(50f));
+        g2.drawString(situation, 600, 500);
+    }
+
 }

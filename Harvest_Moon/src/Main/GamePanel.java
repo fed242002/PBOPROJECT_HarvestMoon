@@ -150,6 +150,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
                     npc.update();
                 }
             }
+            eManager.update(); // Update the environment manager
 
         }
 
@@ -223,7 +224,9 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
             }
 
             // enviroment
-            // eManager.draw(g2); // cara buat setting kegelapan nya disini
+            // if (isNight = true)
+            eManager.draw(g2); // cara buat setting kegelapan nya disini
+            // }
 
             // ui
             ui.draw(g2); // Draw the UI
@@ -254,6 +257,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
             g2.dispose(); // Dispose of the graphics object to free up resources
 
         }
+
     }
 
     public void drawGrid(Graphics2D g2) {

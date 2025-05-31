@@ -29,6 +29,7 @@ public class Player extends Entity {
     public int maxSpeed = 6; // pas sprint
     public int spriteDraw = 10;
     public int gold = 100;
+    public boolean lightUpdated = false;
 
     // ini buat sprite animation -> info2
     public String body = "krem";
@@ -42,6 +43,7 @@ public class Player extends Entity {
         this.keyH = keyH; // Assign the KeyHandler object to the instance variable
         screenX = gp.screenWidth / 2 - (gp.tileSize / 2); // Center the player on the screen
         screenY = gp.screenHeight / 2 - (gp.tileSize / 2); // Center the player on the screen
+        lightRadius = 250; // Radius of the light source for the player
 
         solidArea = new Rectangle(); // Set the size of the solid area for collision detection
 
