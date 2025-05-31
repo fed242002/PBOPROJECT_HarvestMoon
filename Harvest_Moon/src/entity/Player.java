@@ -66,7 +66,7 @@ public class Player extends Entity {
 
 
 
-        //TOOLS ANIMATION
+        //TOOLS ANIMATION -> ini nanti maw kak pindah ke gp aja soalnya sama aja di smua entity biar gausah ke declare banyak kali
         toolsAnimationList.add(new ToolsAnimation(gp,"axe", "idle", 6));
         toolsAnimationList.add(new ToolsAnimation(gp,"axe", "walk", 6));
         toolsAnimationList.add(new ToolsAnimation(gp,"axe", "chop", 10));
@@ -77,6 +77,12 @@ public class Player extends Entity {
         toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "fishpulled", 2));
         toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "idle", 6));
         toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "walk", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp,"shovel", "idle", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp,"shovel", "walk", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp,"shovel", "dig", 9));
+        toolsAnimationList.add(new ToolsAnimation(gp,"WateringCan", "idle", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp,"WateringCan", "walk", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp,"WateringCan", "watering", 14));
 
         this.currentTools = "fishrod";
     }
@@ -232,7 +238,7 @@ public class Player extends Entity {
         switch (direction) {
             case "up":
                 image = animationList.get(currentAnimationIndex).up[spriteNum]; // Get the idle up image
-                if(currentTool != null) {
+                if(currentTool != null ) {
                     image1 = currentTool.up[spriteNum]; // Get the tool up image
                 }
                 break;
@@ -257,7 +263,7 @@ public class Player extends Entity {
         }
 
         g2.drawImage(image, screenX, screenY, gp.playerSizeX, gp.playerSizeY, null); // Draw player image
-        if(currentTool != null) {
+        if(currentTool != null && image1 != null) {
             g2.drawImage(image1, currentTool.x, currentTool.y, currentTool.width, currentTool.height, null); // Draw tool image
         }
         }
