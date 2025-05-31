@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import Main.GamePanel;
 import animation.Animation;
+import animation.ToolsAnimation;
 
 public class Entity extends SuperEntity {
     GamePanel gp;
@@ -20,6 +21,7 @@ public class Entity extends SuperEntity {
     public int spriteCounter = 0;
     public int spriteNum = 1; // Sprite number for animation
     public int currentAnimationIndex = 0;
+    public String currentTools = null; // Current tool being used by the entity
     public int actionLockCounter = 0;
     public Rectangle solidArea; // Rectangle for collision detection
     public String path;
@@ -37,6 +39,7 @@ public class Entity extends SuperEntity {
     Animation walk;
     Animation idle;
     public ArrayList<Animation> animationList = new ArrayList<>(); // 0: walk, 1:idle
+    public ArrayList<ToolsAnimation> toolsAnimationList = new ArrayList<>(); 
 
     // dialogue
     public ArrayList<String> dialogues = new ArrayList<>();

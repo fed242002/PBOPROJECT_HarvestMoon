@@ -40,8 +40,6 @@ public class Animation {
         setSprite();
         }
 
-    
-
     public void setSprite() {
         
         try{

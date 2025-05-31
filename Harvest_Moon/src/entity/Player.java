@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import Main.GamePanel;
 import Main.KeyHandler;
 import animation.Animation;
+import animation.ToolsAnimation;
 
 public class Player extends Entity {
 
@@ -62,6 +63,22 @@ public class Player extends Entity {
         animationList.add(walk);
         idle = new Animation("idle", 6, "/assets/player/IDLE/" + getPath());
         animationList.add(idle);
+
+
+
+        //TOOLS ANIMATION
+        toolsAnimationList.add(new ToolsAnimation(gp,"axe", "idle", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp,"axe", "walk", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp,"axe", "chop", 10));
+        toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "fishcaught", 9));
+        toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "CAST", 9));
+        toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "fishingidle", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "fishingidlecaught", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "fishpulled", 2));
+        toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "idle", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "walk", 6));
+
+        this.currentTools = "fishrod";
     }
 
 
@@ -194,26 +211,55 @@ public class Player extends Entity {
     public void draw(Graphics2D g2) {
 
         BufferedImage image = null;
+        BufferedImage image1 = null;
+        ToolsAnimation currentTool = null;
+
+        if(currentTools != null){
+            
+            for(ToolsAnimation tool : toolsAnimationList){
+                if(tool.tools.equalsIgnoreCase(currentTools) && tool.AnimationName.equalsIgnoreCase(animationList.get(currentAnimationIndex).name)){
+                    currentTool = tool;
+                    break;
+                }
+            }
+
+            if(currentTool == null){
+                System.out.println("Error: Current tool not found in toolsAnimationList ");
+                return;
+            }
+        }
 
         switch (direction) {
             case "up":
                 image = animationList.get(currentAnimationIndex).up[spriteNum]; // Get the idle up image
+                if(currentTool != null) {
+                    image1 = currentTool.up[spriteNum]; // Get the tool up image
+                }
                 break;
             case "down":
-                image = animationList.get(currentAnimationIndex).down[spriteNum]; // Get the idle up image
+                image = animationList.get(currentAnimationIndex).down[spriteNum]; // Get the idle down image
+                if(currentTool != null) {
+                    image1 = currentTool.down[spriteNum]; // Get the tool down image
+                }
                 break;
             case "left":
-                image = animationList.get(currentAnimationIndex).left[spriteNum]; // Get the idle up image
+                image = animationList.get(currentAnimationIndex).left[spriteNum]; // Get the idle left image
+                if(currentTool != null) {
+                    image1 = currentTool.left[spriteNum]; // Get the tool left image
+                }
                 break;
             case "right":
-                image = animationList.get(currentAnimationIndex).right[spriteNum]; // Get the idle up image
+                image = animationList.get(currentAnimationIndex).right[spriteNum]; // Get the idle right image
+                if(currentTool != null) {
+                    image1 = currentTool.right[spriteNum]; // Get the tool right image
+                }
                 break;
-
         }
 
-        g2.drawImage(image, screenX, screenY, gp.playerSizeX, gp.playerSizeY, null); // Draw the player image at the
-                                                                                     // specified position and size
-
-    }
+        g2.drawImage(image, screenX, screenY, gp.playerSizeX, gp.playerSizeY, null); // Draw player image
+        if(currentTool != null) {
+            g2.drawImage(image1, currentTool.x, currentTool.y, currentTool.width, currentTool.height, null); // Draw tool image
+        }
+        }
 
 }
