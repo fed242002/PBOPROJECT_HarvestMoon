@@ -13,7 +13,7 @@ public class EnvironmentManager {
     }
 
     public void setup() {
-        lighting = new Lighting(gp, 576); // Circle size can be adjusted
+        lighting = new Lighting(gp); // Circle size can be adjusted
     }
 
     public void update() {

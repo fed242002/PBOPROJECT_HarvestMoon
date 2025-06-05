@@ -25,50 +25,63 @@ public class Lighting {
     final int dawn = 3;
     int dayState = day; // Default to day state
 
-    public Lighting(GamePanel gp, int circleSize) {
+    public Lighting(GamePanel gp) {
+        this.gp = gp;
+        setLightSource();
+    }
+
+    public void setLightSource() {
         // bufferedimage
         darknessFilter = new BufferedImage(gp.screenWidth, gp.screenHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D) darknessFilter.getGraphics();
 
-        // untuk nyari center x dan y player
-        int centerX = gp.player.screenX + (gp.player.width / 2);
-        int centerY = gp.player.screenY + (gp.player.width / 2);
+        if (gp.player.currentLight == null) {
+            // Use filterAlpha to control the darkness level
+            g2.setColor(new Color(0, 0, 0, 0.7f));
+        }
 
-        // crate a gradation effect
-        Color color[] = new Color[12];
-        float fraction[] = new float[12];
+        else {
+            // untuk nyari center x dan y player
+            int centerX = gp.player.screenX + (gp.player.width / 2);
+            int centerY = gp.player.screenY + (gp.player.width / 2);
 
-        color[0] = new Color(0, 0, 0, 0.1f); // almost black
-        color[1] = new Color(0, 0, 0, 0.42f); // dark gray
-        color[2] = new Color(0, 0, 0, 0.52f); // gray
-        color[3] = new Color(0, 0, 0, 0.61f); // light gray
-        color[4] = new Color(0, 0, 0, 0.69f); // very light gray
-        color[5] = new Color(0, 0, 0, 0.76f); // almost black
-        color[6] = new Color(0, 0, 0, 0.82f); // dark gray
-        color[7] = new Color(0, 0, 0, 0.87f); // gray
-        color[8] = new Color(0, 0, 0, 0.91f); // light gray
-        color[9] = new Color(0, 0, 0, 0.94f); // very light gray
-        color[10] = new Color(0, 0, 0, 0.96f); // almost black
-        color[11] = new Color(0, 0, 0, 0.98f); // dark gray
+            // crate a gradation effect
+            Color color[] = new Color[12];
+            float fraction[] = new float[12];
 
-        fraction[0] = 0f;
-        fraction[1] = 0.4f;
-        fraction[2] = 0.5f;
-        fraction[3] = 0.6f;
-        fraction[4] = 0.65f;
-        fraction[5] = 0.7f;
-        fraction[6] = 0.75f;
-        fraction[7] = 0.8f;
-        fraction[8] = 0.85f;
-        fraction[9] = 0.9f;
-        fraction[10] = 0.95f;
-        fraction[11] = 1f;
+            color[0] = new Color(0, 0, 0, 0.1f); // almost black
+            color[1] = new Color(0, 0, 0, 0.42f); // dark gray
+            color[2] = new Color(0, 0, 0, 0.52f); // gray
+            color[3] = new Color(0, 0, 0, 0.61f); // light gray
+            color[4] = new Color(0, 0, 0, 0.69f); // very light gray
+            color[5] = new Color(0, 0, 0, 0.76f); // almost black
+            color[6] = new Color(0, 0, 0, 0.82f); // dark gray
+            color[7] = new Color(0, 0, 0, 0.87f); // gray
+            color[8] = new Color(0, 0, 0, 0.91f); // light gray
+            color[9] = new Color(0, 0, 0, 0.94f); // very light gray
+            color[10] = new Color(0, 0, 0, 0.96f); // almost black
+            color[11] = new Color(0, 0, 0, 0.98f); // dark gray
 
-        // create a radial gradient paint
-        RadialGradientPaint gPaint = new RadialGradientPaint(centerX, centerY, (circleSize / 2), fraction, color);
+            fraction[0] = 0f;
+            fraction[1] = 0.4f;
+            fraction[2] = 0.5f;
+            fraction[3] = 0.6f;
+            fraction[4] = 0.65f;
+            fraction[5] = 0.7f;
+            fraction[6] = 0.75f;
+            fraction[7] = 0.8f;
+            fraction[8] = 0.85f;
+            fraction[9] = 0.9f;
+            fraction[10] = 0.95f;
+            fraction[11] = 1f;
 
-        // set gradient paint to graphics
-        g2.setPaint(gPaint);
+            // create a radial gradient paint
+            RadialGradientPaint gPaint = new RadialGradientPaint(centerX, centerY, gp.player.currentLight.lightRadius,
+                    fraction, color);
+
+            // set gradient paint to graphics
+            g2.setPaint(gPaint);
+        }
 
         g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 
@@ -76,15 +89,21 @@ public class Lighting {
     }
 
     public void update() {
+        if (gp.player.lightUpdated == true) {
+            setLightSource();
+            gp.player.lightUpdated = false; // Reset the flag after updating the light source
+        }
+
         if (dayState == day) {
             dayCounter++;
 
             if (dayCounter > 600) {
                 dayCounter = 0;
                 dayState = dusk; // Change to dusk after 600 frames
+                filterAlpha = 0f; // Ensure filterAlpha starts at 0 for dusk transition
             }
         } else if (dayState == dusk) {
-            filterAlpha += 0.001f;
+            filterAlpha += 0.001f; // Increase the increment for a more visible transition
             if (filterAlpha >= 1f) {
                 filterAlpha = 1f;
                 dayState = night; // Change to night after reaching full darkness
@@ -95,15 +114,18 @@ public class Lighting {
             if (dayCounter > 600) {
                 dayCounter = 0;
                 dayState = dawn; // Change to dawn after 600 frames
+                filterAlpha = 1f; // Ensure filterAlpha starts at 1 for dawn transition
             }
         } else if (dayState == dawn) {
-            filterAlpha -= 0.001f;
+            filterAlpha -= 0.001f; // Increase the decrement for a more visible transition
 
             if (filterAlpha < 0f) {
                 filterAlpha = 0f;
                 dayState = day; // Reset to day after reaching full brightness
             }
         }
+        System.out.println(dayCounter); // Optional: comment out or remove debug
+        // output
 
     }
 

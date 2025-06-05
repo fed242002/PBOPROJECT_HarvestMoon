@@ -150,7 +150,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
                     npc.update();
                 }
             }
-
+            eManager.update();
         }
 
         if (gameState == pauseState) { // If the game is paused
@@ -223,9 +223,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
             }
 
             // enviroment
-            // eManager.draw(g2); // cara buat setting kegelapan nya disini
+            eManager.draw(g2); // cara buat setting kegelapan nya disini
 
-            // ui
             ui.draw(g2); // Draw the UI
 
             // Add hitbox drawing at the end (on top of everything else)
