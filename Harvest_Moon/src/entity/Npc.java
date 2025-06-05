@@ -14,9 +14,9 @@ public class Npc extends Entity {
         this.worldX = x;
         this.worldY = y;
         this.solidArea.y = 48;
-        walk = new Animation("walk",6, "/assets/npc/"+name+"/WALK/");
+        walk = new Animation("walk", 6, "/assets/npc/" + name + "/WALK/");
         animationList.add(walk);
-        idle = new Animation("idle",6, "/assets/npc/"+name+"/IDLE/");
+        idle = new Animation("idle", 6, "/assets/npc/" + name + "/IDLE/");
         animationList.add(idle);
         currentAnimationIndex = 1; // default idle
         // specialNpc = true;
@@ -28,13 +28,12 @@ public class Npc extends Entity {
         this.solidAreaDefaultX = this.solidArea.x;
         this.solidAreaDefaultY = this.solidArea.y;
 
-
-        //set dialog
-        setDialogue();    
+        // set dialog
+        setDialogue();
 
     }
 
-     public void setDialogue(){
+    public void setDialogue() {
         dialogues.add("Hello, I'm " + name + "!");
         dialogues.add("How are you?");
         dialogues.add("Nice to meet you!");
@@ -42,27 +41,26 @@ public class Npc extends Entity {
         dialogues.add("See you later!");
     }
 
-    public void speak(){
+    public void speak() {
         super.speak();
+
+        gp.player.gold += 100;
     }
 
-    public void setAction(){
+    public void setAction() {
         actionLockCounter++;
 
-        if(actionLockCounter == 120){
+        if (actionLockCounter == 120) {
             Random random = new Random();
-            int i = random.nextInt(100)+1;
+            int i = random.nextInt(100) + 1;
 
-            if(i <= 25){
+            if (i <= 25) {
                 direction = "up";
-            }
-            else if(i <= 50){
+            } else if (i <= 50) {
                 direction = "down";
-            }
-            else if(i <= 75){
+            } else if (i <= 75) {
                 direction = "left";
-            }
-            else if(i <= 100){
+            } else if (i <= 100) {
                 direction = "right";
             }
 

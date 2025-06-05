@@ -25,7 +25,7 @@ public class saveLoad {
             // tambah sendiri bang
 
             ds.energy = gp.player.energy;
-            // ds.coin = gp.player.
+            ds.coin = gp.player.gold;
 
             // write datastorage obj
             oos.writeObject(ds);
@@ -46,6 +46,7 @@ public class saveLoad {
 
             // contoh masukinnya
             gp.player.energy = ds.energy;
+            gp.player.gold = ds.coin;
 
         } catch (Exception e) {
             System.out.println("Load Exception");
