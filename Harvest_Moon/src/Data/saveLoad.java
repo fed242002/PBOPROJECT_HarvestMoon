@@ -1,0 +1,55 @@
+package Data;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+import Main.GamePanel;
+
+public class saveLoad {
+    GamePanel gp;
+
+    public saveLoad(GamePanel gp) {
+        this.gp = gp;
+    }
+
+    public void save() {
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("save.dat")));
+
+            dataStorage ds = new dataStorage();
+            // tambah sendiri bang
+
+            ds.energy = gp.player.energy;
+            // ds.coin = gp.player.
+
+            // write datastorage obj
+            oos.writeObject(ds);
+
+        } catch (Exception e) {
+            System.out.println("Save Exception");
+            e.printStackTrace();
+        }
+    }
+
+    public void load() {
+        try {
+
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File("save.dat")));
+
+            // read objectnya
+            dataStorage ds = (dataStorage) ois.readObject();
+
+            // contoh masukinnya
+            gp.player.energy = ds.energy;
+
+        } catch (Exception e) {
+            System.out.println("Load Exception");
+            e.printStackTrace();
+        }
+    }
+}

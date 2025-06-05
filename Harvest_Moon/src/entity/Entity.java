@@ -16,7 +16,7 @@ public class Entity extends SuperEntity {
     public int speed; // Speed of the entity
     public String name;
 
-    public boolean specialNpc = false; 
+    public boolean specialNpc = false;
     public String direction = "down";
     public int spriteCounter = 0;
     public int spriteNum = 1; // Sprite number for animation
@@ -32,14 +32,14 @@ public class Entity extends SuperEntity {
     public int width = 48, height = 48; // Default size of the entity
     public boolean isObj = false;
     public Entity currentLight; // Current light source for the entity, if any
-    public int lightRadius = 0; // Radius of the light source, if any
+    public int lightRadius; // Radius of the light source, if any
     public final int type_light = 9;
 
     // animation
     Animation walk;
     Animation idle;
     public ArrayList<Animation> animationList = new ArrayList<>(); // 0: walk, 1:idle
-    public ArrayList<ToolsAnimation> toolsAnimationList = new ArrayList<>(); 
+    public ArrayList<ToolsAnimation> toolsAnimationList = new ArrayList<>();
 
     // dialogue
     public ArrayList<String> dialogues = new ArrayList<>();

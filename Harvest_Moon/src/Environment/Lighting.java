@@ -6,12 +6,7 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RadialGradientPaint;
-import java.awt.Rectangle;
-import java.awt.geom.Area;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.awt.Shape;
 
 public class Lighting {
     GamePanel gp;
@@ -37,7 +32,7 @@ public class Lighting {
 
         if (gp.player.currentLight == null) {
             // Use filterAlpha to control the darkness level
-            g2.setColor(new Color(0, 0, 0, 0.7f));
+            g2.setColor(new Color(0, 0, 0, 0.65f));
         }
 
         else {
@@ -124,8 +119,6 @@ public class Lighting {
                 dayState = day; // Reset to day after reaching full brightness
             }
         }
-        System.out.println(dayCounter); // Optional: comment out or remove debug
-        // output
 
     }
 

@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import javax.swing.JPanel;
 
+import Data.saveLoad;
 import Environment.EnvironmentManager;
 import entity.Entity;
 import entity.Player;
@@ -57,6 +58,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public ArrayList<Entity> obj = new ArrayList<>(); // List of objects in the game
     public ArrayList<Entity> npcs = new ArrayList<>(); // List of NPCs in the game
     public ArrayList<Entity> entityList = new ArrayList<>(); // List of all entities in the game
+    saveLoad saveLoad1 = new saveLoad(this);
 
     // Game state
     public int gameState;
