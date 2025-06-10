@@ -7,7 +7,7 @@ import animation.Animation;
 
 public class KeyHandler implements KeyListener {
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed, isSprint, undoShovelPressed;
     GamePanel gp;
 
     public KeyHandler(GamePanel gp) {
@@ -184,11 +184,16 @@ public class KeyHandler implements KeyListener {
             if (code == KeyBind.interactKey) {
                 interactPressed = true;
             }
+            if(code == KeyBind.undoShovelKey) {
+                undoShovelPressed = true;
+            }
 
             // sprint
             if (code == KeyBind.sprintKey) {
+                isSprint = true;
                 gp.player.speed = gp.player.maxSpeed;
                 gp.player.spriteDraw = 4;
+
             }
 
             // pause game in play state
@@ -316,6 +321,7 @@ public class KeyHandler implements KeyListener {
         if (code == KeyBind.sprintKey) {
             gp.player.speed = gp.player.normalSpeed; // Reset speed to normal when sprint key is released
             gp.player.spriteDraw = 10;
+            isSprint = false; 
         }
 
     }

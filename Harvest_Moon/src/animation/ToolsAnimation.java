@@ -33,6 +33,7 @@ public class ToolsAnimation {
         left = new BufferedImage[spriteTotal];
         right = new BufferedImage[spriteTotal];
         setSprite();
+
     }
 
      public ToolsAnimation(GamePanel gp,String tools, String Animationname, int spriteTotal, int width, int height, int x, int y) {

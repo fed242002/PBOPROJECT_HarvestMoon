@@ -45,6 +45,7 @@ public class Player extends Entity {
     
     boolean moveDisabled = false;
     boolean isDigging = false; 
+    boolean isUndoDigging = false; 
     int animationDone = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
@@ -103,7 +104,7 @@ public class Player extends Entity {
         animationList.add(new Animation("walk", 6, "/assets/player/WALK/" + getPath(), 0));
         animationList.add(new Animation("idle", 6, "/assets/player/IDLE/" + getPath()));
         animationList.add(new Animation("chop", 10, "/assets/player/AXE CHOP/" + getPath()));
-        animationList.add(new Animation("dig", 9, "/assets/player/DIG/" + getPath(), 0));
+        animationList.add(new Animation("dig", 9, "/assets/player/DIG/" + getPath(), 5));
         animationList.add(new Animation("cast", 9, "/assets/player/FISH CAST LINE/" + getPath()));
         animationList.add(new Animation("FISHIDLE", 6, "/assets/player/FISH IDLE/" + getPath()));
         animationList.add(new Animation("FISHIDLECAUGHT", 6, "/assets/player/FISH IDLE/" + getPath()));
@@ -322,7 +323,15 @@ public class Player extends Entity {
         }
 
         action(targetWorldX, targetWorldY);
+        if(gp.keyH.undoShovelPressed){
+            isUndoDigging = true;
+            moveDisabled = true; // Disable movement while undo digging
+            gp.keyH.undoShovelPressed = false; // Reset the undo key
+        }
+        
     }
+
+
     
     public void action(int x, int y){
         //interact with soil -> buat grass jadi soil (tambahin pengecekan nanti)
@@ -333,8 +342,6 @@ public class Player extends Entity {
                 spriteCounter = 0; // Reset the sprite counter to 0
                 spriteNum++;
             }
-            System.out.println("spriteNum: " + spriteNum);
-            System.out.println("SpriteTotal: " + animationList.get(currentAnimationIndex).spriteTotal);
 
             if(spriteNum==animationList.get(currentAnimationIndex).spriteTotal - 1){
                 animationDone++;
@@ -351,6 +358,37 @@ public class Player extends Entity {
 
             }
         }
+        if(isUndoDigging){
+            setAnimation("dig");
+            spriteCounter++;
+            if(spriteCounter > 3) {
+                spriteCounter = 0; // Reset the sprite counter to 0
+                spriteNum++;
+            }
+
+            if(spriteNum==animationList.get(currentAnimationIndex).spriteTotal - 1){
+                animationDone++;
+                spriteCounter = 0;
+                spriteNum = 0; // Reset the sprite number to 0
+            }
+            
+            if(animationDone == 3){
+                isUndoDigging = false;
+                moveDisabled = false; // Enable movement after digging
+                animationDone = 0;
+                setAnimation("idle");
+
+                for(Entity s :gp.farmObj){
+                    if(s instanceof OBJ_soil && s.worldX == x && s.worldY == y) {
+                        gp.farmObj.remove(s); // Remove the soil object
+                        break; // Exit the loop after removing the first matching soil object
+                    }
+
+                }
+
+            }
+        }
+
     }
 
 
