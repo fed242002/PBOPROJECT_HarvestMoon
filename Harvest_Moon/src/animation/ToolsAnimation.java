@@ -61,7 +61,7 @@ public class ToolsAnimation {
                 left[i] = ImageIO.read(getClass().getResourceAsStream("/assets/player/TOOLS/"+ tools +"/" + AnimationName+ "/left/" + i + ".png"));
                 right[i] = ImageIO.read(getClass().getResourceAsStream("/assets/player/TOOLS/"+ tools +"/" + AnimationName+ "/right/" + i + ".png"));
             
-                System.out.println("Loaded sprite: " + tools +"/" + AnimationName + " - Frame: " + i);
+                // System.out.println("Loaded sprite: " + tools +"/" + AnimationName + " - Frame: " + i);
             } catch (IOException e) {
                 System.out.println("Error loading sprite: " + tools +"/" + AnimationName );
                 e.printStackTrace();

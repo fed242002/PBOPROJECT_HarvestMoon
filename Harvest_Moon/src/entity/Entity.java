@@ -99,9 +99,6 @@ public class Entity extends SuperEntity {
         int screenX = worldX - gp.player.worldX + gp.player.screenX; // Calculate the screen X position
         int screenY = worldY - gp.player.worldY + gp.player.screenY; // Calculate the screen Y position
 
-        if(this instanceof OBJ_soil){
-            System.out.println("Drawing soil at: " + worldX + ", " + worldY);
-        }
 
         if (!isObj) {
             BufferedImage image = null;
@@ -200,6 +197,7 @@ public class Entity extends SuperEntity {
                     currentAnimationIndex = i;
                     // reset animation
                     spriteCounter = 0;
+                    spriteNum = 0;
                     // play sfx
                     if (x.soundFX != -1) {
                         gp.playMusic(gp.sfx, x.soundFX);

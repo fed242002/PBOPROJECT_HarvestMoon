@@ -1,5 +1,8 @@
 package Main;
 
+import java.security.KeyStore.Entry;
+
+import entity.Entity;
 import entity.Npc;
 import object.OBJ_Rumah;
 import object.OBJ_soil;
@@ -19,11 +22,16 @@ public class AssetSetter {
     }
 
     public void addSoil(OBJ_soil soil) {
-        gp.farmObj.add(soil);
-
-        System.out.println("added soil at: " + soil.worldX + ", " + soil.worldY);
-        System.out.println("Soil added to farmObj collection. Size now: " + gp.farmObj.size());
-
+        boolean found = false;
+        for(Entity s : gp.farmObj) {
+            if(s.worldX == soil.worldX && s.worldY == soil.worldY) {
+                found = true;
+                break;
+            }
+        }
+        if(!found) {
+            gp.farmObj.add(soil);
+        }
     }
 
 

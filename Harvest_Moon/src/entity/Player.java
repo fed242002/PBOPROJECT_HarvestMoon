@@ -45,6 +45,7 @@ public class Player extends Entity {
     
     boolean moveDisabled = false;
     boolean isDigging = false; 
+    int animationDone = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
 
@@ -328,15 +329,28 @@ public class Player extends Entity {
         if(isDigging){
             setAnimation("dig");
             spriteCounter++;
+            if(spriteCounter > 3) {
+                spriteCounter = 0; // Reset the sprite counter to 0
+                spriteNum++;
+            }
+            System.out.println("spriteNum: " + spriteNum);
+            System.out.println("SpriteTotal: " + animationList.get(currentAnimationIndex).spriteTotal);
+
+            if(spriteNum==animationList.get(currentAnimationIndex).spriteTotal - 1){
+                animationDone++;
+                spriteCounter = 0;
+                spriteNum = 0; // Reset the sprite number to 0
+            }
             
-            if(spriteCounter==animationList.get(currentAnimationIndex).spriteTotal - 1){
-                gp.aSetter.addSoil(new OBJ_soil(gp, x, y));
+            if(animationDone == 3){
+                animationDone = 0;
                 isDigging = false;
+                gp.aSetter.addSoil(new OBJ_soil(gp, x, y));
                 moveDisabled = false; // Enable movement after digging
                 setAnimation("idle");
+
             }
-        
-    }
+        }
     }
 
 
