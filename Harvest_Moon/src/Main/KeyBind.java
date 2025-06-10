@@ -26,4 +26,5 @@ public class KeyBind {
 
     //sprint key
     public static int sprintKey = KeyEvent.VK_SHIFT;
+
 }

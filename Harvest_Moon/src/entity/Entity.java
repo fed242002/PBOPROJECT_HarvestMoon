@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import Main.GamePanel;
 import animation.Animation;
 import animation.ToolsAnimation;
+import object.OBJ_soil;
 
 public class Entity extends SuperEntity {
     GamePanel gp;
@@ -97,6 +98,10 @@ public class Entity extends SuperEntity {
     public void draw(Graphics2D g2) {
         int screenX = worldX - gp.player.worldX + gp.player.screenX; // Calculate the screen X position
         int screenY = worldY - gp.player.worldY + gp.player.screenY; // Calculate the screen Y position
+
+        if(this instanceof OBJ_soil){
+            System.out.println("Drawing soil at: " + worldX + ", " + worldY);
+        }
 
         if (!isObj) {
             BufferedImage image = null;
@@ -194,7 +199,6 @@ public class Entity extends SuperEntity {
                     // set animation
                     currentAnimationIndex = i;
                     // reset animation
-                    spriteCounter = 0;
                     spriteCounter = 0;
                     // play sfx
                     if (x.soundFX != -1) {

@@ -3,10 +3,15 @@ package entity;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import Main.GamePanel;
 import Main.KeyHandler;
 import animation.Animation;
 import animation.ToolsAnimation;
+import object.OBJ_soil;
 
 public class Player extends Entity {
 
@@ -37,9 +42,16 @@ public class Player extends Entity {
     String eye = "blue";
     String outfit = "blue";
     String hair = "baldBlondeAsh";
+    
+    boolean moveDisabled = false;
+    boolean isDigging = false; 
 
     public Player(GamePanel gp, KeyHandler keyH) {
+
         super(gp);
+        
+        currentTools = "shovel";
+
         this.gp = gp; // Assign the GamePanel object to the instance variable
         this.keyH = keyH; // Assign the KeyHandler object to the instance variable
         screenX = gp.screenWidth / 2 - (gp.tileSize / 2); // Center the player on the screen
@@ -146,72 +158,84 @@ public class Player extends Entity {
         direction = "down"; // Set the default direction of the player
     }
 
+    // function buat soil area
+    public void setSolidArea() {
+        
+    }
+
+
+
     public void update() {
         // cek kalo lagi jalan ga
-        if (keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true
-                || keyH.rightPressed == true) {
-            setAnimation("walk"); // set current animation jadi walking
-
-            if (keyH.upPressed == true) {
-                direction = "up";
-            } else if (keyH.downPressed == true) {
-                direction = "down";
-            } else if (keyH.leftPressed == true) {
-                direction = "left";
-            } else if (keyH.rightPressed == true) {
-                direction = "right";
-            }
-
-            // check tile collision
-            collisionOn = false;
-            gp.cChecker.checkTile(this);
-
-            // check object collision
-            int objIndex = gp.cChecker.checkObject(this, true);
-            pickUpObject(objIndex);
-
-            // check npc collision
-            int npcIndex = gp.cChecker.checkEntity(this, gp.npcs);
-            interactNPC(npcIndex);
-
-            // check event collision
-            gp.eventHandler.checkEvent();
-
-            // kalo collision -> false bisa dijalani
-            if (collisionOn == false) {
-                switch (direction) {
-                    case "up":
-                        worldY -= speed; // Move the player up
-                        break;
-                    case "down":
-                        worldY += speed; // Move the player down
-                        break;
-                    case "left":
-                        worldX -= speed; // Move the pldddddayer left
-                        break;
-                    case "right":
-                        worldX += speed; // Move the player right
-                        break;
-
+        if(!moveDisabled){
+            if (keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true
+                    || keyH.rightPressed == true) {
+                setAnimation("walk"); // set current animation jadi walking
+    
+                if (keyH.upPressed == true) {
+                    direction = "up";
+                } else if (keyH.downPressed == true) {
+                    direction = "down";
+                } else if (keyH.leftPressed == true) {
+                    direction = "left";
+                } else if (keyH.rightPressed == true) {
+                    direction = "right";
                 }
+    
+                // check tile collision
+                collisionOn = false;
+                gp.cChecker.checkTile(this);
+    
+                // check object collision
+                int objIndex = gp.cChecker.checkObject(this, true);
+                pickUpObject(objIndex);
+    
+                // check npc collision
+                int npcIndex = gp.cChecker.checkEntity(this, gp.npcs);
+                interactNPC(npcIndex);
+    
+                // check event collision
+                gp.eventHandler.checkEvent();
+    
+                // kalo collision -> false bisa dijalani
+                if (collisionOn == false) {
+                    switch (direction) {
+                        case "up":
+                            worldY -= speed; // Move the player up
+                            break;
+                        case "down":
+                            worldY += speed; // Move the player down
+                            break;
+                        case "left":
+                            worldX -= speed; // Move the pldddddayer left
+                            break;
+                        case "right":
+                            worldX += speed; // Move the player right
+                            break;
+    
+                    }
+                }
+    
+            } else {
+                // ini buat idle animation
+                setAnimation("idle");
+    
+            }
+    
+            spriteCounter++;
+            if (spriteCounter > spriteDraw) {
+                spriteNum++;
+    
+                if (spriteNum > animationList.get(currentAnimationIndex).spriteTotal - 1) // If the sprite number exceeds
+                                                                                          // the number of images
+                    spriteNum = 0; // Reset the sprite number to 0
+    
+                spriteCounter = 0; // Reset the sprite counter to 0
             }
 
-        } else {
-            // ini buat idle animation
-            setAnimation("idle");
-
         }
 
-        spriteCounter++;
-        if (spriteCounter > spriteDraw) {
-            spriteNum++;
 
-            if (spriteNum > animationList.get(currentAnimationIndex).spriteTotal - 1) // If the sprite number exceeds
-                                                                                      // the number of images
-                spriteNum = 0; // Reset the sprite number to 0
-
-            spriteCounter = 0; // Reset the sprite counter to 0
-        }
 
     }
 
@@ -235,12 +259,95 @@ public class Player extends Entity {
         gp.keyH.interactPressed = false; // Reset the interact key
     }
 
+
+  
+
+    public void drawFrontBlock(Graphics2D g2) {
+        //hitbox player di world posisi
+    int hitboxCenterWorldX = worldX + solidArea.x + (solidArea.width / 2);
+    int hitboxCenterWorldY = worldY + solidArea.y + (solidArea.height / 2);
+    
+    int targetWorldX = hitboxCenterWorldX;
+    int targetWorldY = hitboxCenterWorldY;
+    
+    switch(direction) {
+        case "up":
+            targetWorldY -= gp.tileSize;
+            break;
+        case "down":
+            targetWorldY += gp.tileSize;
+            break;
+        case "left":
+            targetWorldX -= gp.tileSize;
+            break;
+        case "right":
+            targetWorldX += gp.tileSize;
+            break;
+    }
+    
+    // jadiin tile trus balekin ke px balek
+    targetWorldX = (targetWorldX / gp.tileSize) * gp.tileSize;
+    targetWorldY = (targetWorldY / gp.tileSize) * gp.tileSize;
+    
+    //ini versi row col nya 
+    int targetTileCol = targetWorldX / gp.tileSize;
+    int targetTileRow = targetWorldY / gp.tileSize;
+
+    // ini buat pas print nya
+    int targetScreenX = targetWorldX - worldX + screenX;
+    int targetScreenY = targetWorldY - worldY + screenY;
+    
+    
+    
+    // Load and draw cursor image
+    BufferedImage cursor = null;
+    try {
+        cursor = ImageIO.read(getClass().getResourceAsStream("/assets/ui/target1Block.png"));
+        if (cursor != null) {
+            g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);
+        }
+    } catch (IOException e) {
+        System.out.println("Error loading drawFrontBlock cursor image: " + e.getMessage());
+    }
+    
+    
+    
+    if(gp.keyH.interactPressed){
+            if(currentTools.equalsIgnoreCase("shovel")){
+                isDigging = true;
+                moveDisabled = true; // Disable movement while digging
+            }
+            gp.keyH.interactPressed = false; // Reset the interact key
+        }
+
+        action(targetWorldX, targetWorldY);
+    }
+    
+    public void action(int x, int y){
+        //interact with soil -> buat grass jadi soil (tambahin pengecekan nanti)
+        if(isDigging){
+            setAnimation("dig");
+            spriteCounter++;
+            
+            if(spriteCounter==animationList.get(currentAnimationIndex).spriteTotal - 1){
+                gp.aSetter.addSoil(new OBJ_soil(gp, x, y));
+                isDigging = false;
+                moveDisabled = false; // Enable movement after digging
+                setAnimation("idle");
+            }
+        
+    }
+    }
+
+
     public void draw(Graphics2D g2) {
 
         BufferedImage image = null;
         BufferedImage image1 = null;
         ToolsAnimation currentTool = null;
 
+
+        drawFrontBlock(g2); // Draw the block in front of the player
         if(currentTools != null){
             
             for(ToolsAnimation tool : toolsAnimationList){

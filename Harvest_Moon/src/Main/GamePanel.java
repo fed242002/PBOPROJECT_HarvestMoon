@@ -8,9 +8,13 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import Data.saveLoad;
@@ -56,6 +60,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     // entity and object
     public Player player = new Player(this, keyH); // Create a new Player object
     public ArrayList<Entity> obj = new ArrayList<>(); // List of objects in the game
+    public ArrayList<Entity> farmObj = new ArrayList<>(); // List of objects in the game
     public ArrayList<Entity> npcs = new ArrayList<>(); // List of NPCs in the game
     public ArrayList<Entity> entityList = new ArrayList<>(); // List of all entities in the game
     saveLoad saveLoad1 = new saveLoad(this);
@@ -188,6 +193,12 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         } else {
             // tile
             tileM.draw(g2);
+            //draw farm dkk
+            for(Entity x : farmObj) {
+                if (x != null) {
+                    x.draw(g2); // Draw each farm object
+                }
+            }
 
             // tambah entitiy to list
             entityList.add(player); // Add player to the entity list
@@ -203,6 +214,12 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
                     entityList.add(obj.get(i)); // Add objects to the entity list
                 }
             }
+            // for (int i = 0; i < farmObj.size(); i++) {
+            //     if (farmObj.get(i) != null) {
+            //         entityList.add(farmObj.get(i)); // Add objects to the entity list
+            //     }
+            // }
+
             // sort
             Collections.sort(entityList, new Comparator<Entity>() {
                 @Override
@@ -220,9 +237,10 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
             }
 
             // empty the entity list after drawing
-            for (int i = 0; i < entityList.size(); i++) {
-                entityList.remove(entityList.get(i)); // Draw each entity in the list
-            }
+            // for (int i = 0; i < entityList.size(); i++) {
+            //     entityList.remove(entityList.get(i)); // Draw each entity in the list
+            // }
+            entityList.clear(); // Clear the entity list after drawing
 
             // enviroment
             eManager.draw(g2); // cara buat setting kegelapan nya disini
@@ -254,6 +272,18 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
             g2.dispose(); // Dispose of the graphics object to free up resources
 
+        }
+    }
+
+    public BufferedImage setImage(String imagePath) {
+        try {
+            BufferedImage image = ImageIO.read(getClass().getResourceAsStream(imagePath));
+            this.setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
+            this.repaint();
+            return image;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -311,6 +341,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         g2.setColor(Color.WHITE);
         g2.drawString("Player Tile: Col " + playerCol + " Row " + playerRow, screenWidth - 145, 25);
     }
+
 
     public void playMusic(Sound sound, int i) {
         sound.setFile(i);
