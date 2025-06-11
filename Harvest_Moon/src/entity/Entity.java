@@ -12,10 +12,18 @@ import animation.ToolsAnimation;
 import object.OBJ_soil;
 
 public class Entity extends SuperEntity {
-    GamePanel gp;
+
+    public void chop(){}
+    public void reset(){}
+    public void watering(){}
+
+
+    public boolean isWet = false;
+    public GamePanel gp;
     public int worldX, worldY;
     public int speed; // Speed of the entity
     public String name;
+    public boolean isChopped = false; // Flag to check if the tree is chopped
 
     public boolean specialNpc = false;
     public String direction = "down";

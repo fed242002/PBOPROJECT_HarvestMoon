@@ -27,8 +27,8 @@ public class KeyBind {
     //sprint key
     public static int sprintKey = KeyEvent.VK_SHIFT;
 
-    //undo shovel
-    public static int undoShovelKey = KeyEvent.VK_Q;
+    //undo TOOLS key
+    public static int undoToolsKey = KeyEvent.VK_Q;
 
     //kalo mau useTools
     public static int useToolKey = KeyEvent.VK_U;

@@ -36,12 +36,12 @@ public class ToolsAnimation {
 
     }
 
-     public ToolsAnimation(GamePanel gp,String tools, String Animationname, int spriteTotal, int width, int height, int x, int y) {
+     public ToolsAnimation(GamePanel gp,String tools, String Animationname, int spriteTotal, boolean special) {
         this.gp = gp;
-        this.width = width;
-        this.height = height;
-        this.x = x;
-        this.y = y;
+        this.width = 240;
+        this.height = 240;
+        x = (gp.screenWidth / 2 - (gp.tileSize / 2) - gp.tileSize) - 49;
+        y = (gp.screenHeight / 2 - (gp.tileSize / 2)) -54;
         this.AnimationName = Animationname.toUpperCase();
         this.tools = tools.toUpperCase();
         this.spriteTotal = spriteTotal;

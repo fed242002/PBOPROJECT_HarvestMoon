@@ -16,6 +16,10 @@ public class AssetSetter {
 
     public void setObject() {
         gp.obj.add(new OBJ_Rumah(gp ,31 * gp.tileSize, 7 * gp.tileSize ));
+        
+        gp.obj.add(new object.OBJ_Tree(gp, 15 * gp.tileSize, 23 * gp.tileSize));
+        gp.obj.add(new object.OBJ_Tree(gp, 10 * gp.tileSize, 23 * gp.tileSize));
+        gp.obj.add(new object.OBJ_Tree(gp, 5 * gp.tileSize, 15 * gp.tileSize));
 
 
         // Add more objects as needed
@@ -34,6 +38,7 @@ public class AssetSetter {
         }
     }
 
+   
 
     public void setNPC(){
         gp.npcs.add(new Npc(gp, "Eddy", 21 * gp.tileSize, 23 * gp.tileSize));

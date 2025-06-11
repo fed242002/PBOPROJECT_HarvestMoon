@@ -34,6 +34,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public final int screenWidth = tileSize * maxScreenCol; // 768 pixels
     public final int screenHeight = tileSize * maxScreenRow; // 576 pixels
 
+    public int currentMap = 0; // Current map index -> 0: Home
     public int playerSizeX = tileSize;
     public int playerSizeY = tileSize * 2; // tinggi player
 
@@ -47,7 +48,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     int FPS = 60; // Frames per second
 
     // system
-    TileManager tileM = new TileManager(this); // Create a new TileManager object
+    public TileManager tileM = new TileManager(this); // Create a new TileManager object
     public KeyHandler keyH = new KeyHandler(this); // Create a new KeyHandler object
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this); // Create a new AssetSetter object
@@ -65,6 +66,10 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public ArrayList<Entity> entityList = new ArrayList<>(); // List of all entities in the game
     saveLoad saveLoad1 = new saveLoad(this);
 
+    void changeMap(){
+        
+
+    }
     // Game state
     public int gameState;
     public final int titleState = 0;
@@ -214,11 +219,6 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
                     entityList.add(obj.get(i)); // Add objects to the entity list
                 }
             }
-            // for (int i = 0; i < farmObj.size(); i++) {
-            //     if (farmObj.get(i) != null) {
-            //         entityList.add(farmObj.get(i)); // Add objects to the entity list
-            //     }
-            // }
 
             // sort
             Collections.sort(entityList, new Comparator<Entity>() {
