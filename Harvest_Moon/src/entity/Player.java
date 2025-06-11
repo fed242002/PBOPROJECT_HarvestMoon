@@ -315,6 +315,10 @@ public class Player extends Entity {
     
     
     if(gp.keyH.interactPressed){
+            if(currentTools == null){
+                return;
+            }
+            
             if(currentTools.equalsIgnoreCase("shovel")){
                 isDigging = true;
                 moveDisabled = true; // Disable movement while digging
@@ -399,7 +403,9 @@ public class Player extends Entity {
         ToolsAnimation currentTool = null;
 
 
-        drawFrontBlock(g2); // Draw the block in front of the player
+        if(gp.keyH.useTool){
+            drawFrontBlock(g2); // Draw the block in front of the player
+        }
         if(currentTools != null){
             
             for(ToolsAnimation tool : toolsAnimationList){

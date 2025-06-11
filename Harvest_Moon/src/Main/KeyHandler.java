@@ -7,7 +7,7 @@ import animation.Animation;
 
 public class KeyHandler implements KeyListener {
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed, isSprint, undoShovelPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed, isSprint, undoShovelPressed, useTool;
     GamePanel gp;
 
     public KeyHandler(GamePanel gp) {
@@ -186,6 +186,25 @@ public class KeyHandler implements KeyListener {
             }
             if(code == KeyBind.undoShovelKey) {
                 undoShovelPressed = true;
+            }
+
+            //kalo mau use tools
+            if (code == KeyBind.useToolKey) {
+                useTool = !useTool;
+            }
+
+            //debug pertools tools an
+            if(code == KeyBind.equipNothing) {
+                gp.player.currentTools = null;
+            }
+            if(code == KeyBind.equipShovel) {
+                gp.player.currentTools = "shovel";
+            }
+            if(code == KeyBind.equipAxe) {
+                gp.player.currentTools = "axe";
+            }
+            if(code == KeyBind.equipFishingRod) {
+                gp.player.currentTools = "fishRod";
             }
 
             // sprint

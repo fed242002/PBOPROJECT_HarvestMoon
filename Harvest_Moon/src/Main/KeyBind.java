@@ -30,4 +30,22 @@ public class KeyBind {
     //undo shovel
     public static int undoShovelKey = KeyEvent.VK_Q;
 
+    //kalo mau useTools
+    public static int useToolKey = KeyEvent.VK_U;
+
+
+
+    //buat debugg
+    //equip nothing
+    public static int equipNothing = KeyEvent.VK_0;
+    //equip shovel
+    public static int equipShovel = KeyEvent.VK_1;
+    //equip axe
+    public static int equipAxe = KeyEvent.VK_2;
+    //equip fishingrod
+    public static int equipFishingRod = KeyEvent.VK_3;
+
+
+
+
 }
