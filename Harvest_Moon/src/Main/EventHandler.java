@@ -12,6 +12,7 @@ public class EventHandler {
     int worldX, worldY; // World coordinates for the event
     int previousEventX, previousEventY; // Previous event coordinates
     boolean canTouchEvent = true; // Flag to check if the event is done
+    int tempMap, tempCol, tempRow;
 
     public EventHandler(GamePanel gp) {
         this.gp = gp;
@@ -93,5 +94,14 @@ public class EventHandler {
         gp.ui.currentDialogue = "You fell into a pit!";
         eventRect[col][row].eventDone = true; // Mark the event as done
         canTouchEvent = false; // Prevent further interaction until the player moves away
+    }
+
+    public void teleport(int map, int col, int row) {
+        gp.gameState = gp.transitionState; // Change game state to transition state
+        tempMap = map; // Store the target map
+        tempCol = col; // Store the target column
+        tempRow = row; // Store the target row
+        canTouchEvent = false; // Prevent further interaction until the transition is complete
+        //gp.playSE(nomer); // sound effect for teleportation
     }
 }

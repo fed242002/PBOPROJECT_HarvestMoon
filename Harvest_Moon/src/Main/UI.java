@@ -32,6 +32,7 @@ public class UI {
     EnergyBar energyBar;
     public Entity currentEntityDialogue; // Entity that is currently interacting with the player
     int subState = 0;
+    int counter = 0;
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -80,6 +81,10 @@ public class UI {
         }
         if (gp.gameState == gp.eventFoundState) {
             drawDialogueScreenEvent();
+        }
+
+        if (gp.gameState == gp.transitionState) {
+            drawTransition();
         }
 
     }
@@ -539,5 +544,28 @@ public class UI {
         g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke(5));
         g2.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 25, 25);
+    }
+
+    public void drawTransition() {
+        counter++;
+        g2.setColor(new Color(0, 0, 0, counter * 5));
+        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+        if (counter >= 50) {
+            counter = 0; // Reset counter for next transition
+            
+            gp.gameState = gp.playState; // Change back to play state after transition
+            gp.currentMap = gp.eHandler.tempMap; // Update current map to next map
+            gp.player.worldX = gp.eHandler.tempCol * gp.tileSize;
+            gp.player.worldY = gp.eHandler.tempRow * gp.tileSize; // Update player position
+            gp.eHandler.previousEventX = gp.player.worldX; // Reset previous event position
+            gp.eHandler.previousEventY = gp.player.worldY; // Reset previous event position
+            gp.eHandler.tempMap = -1; // Reset temp map
+        }
+        // g2.setFont(g2.getFont().deriveFont(Font.BOLD, 80F));
+        // String text = "Loading...";
+        // int x = getXforCenteredText(text);
+        // int y = gp.screenHeight / 2;
+
+        // g2.drawString(text, x, y); //klo mau nambahin loading text
     }
 }
