@@ -335,10 +335,11 @@ public class UI {
         for (int i = 0; i < gp.player.inventory.size(); i++) {
 
             // equip cursor
-            if (gp.player.inventory.get(i) == gp.player.equippedItem) { // kalo dipake dan itu equipment
-                g2.setColor(new Color(240, 190, 90)); // gold color with transparency
-                g2.fillRoundRect(slotX, slotY, gp.tileSize, gp.tileSize, 10, 10);
-            }
+            // if (gp.player.inventory.get(i) == gp.player.equippedItem) { // kalo dipake
+            // dan itu equipment
+            // g2.setColor(new Color(240, 190, 90)); // gold color with transparency
+            // g2.fillRoundRect(slotX, slotY, gp.tileSize, gp.tileSize, 10, 10);
+            // }
 
             g2.drawImage(gp.player.inventory.get(i).image, slotX, slotY, null);
 
