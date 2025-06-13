@@ -333,6 +333,13 @@ public class UI {
 
         // draw players item
         for (int i = 0; i < gp.player.inventory.size(); i++) {
+
+            // equip cursor
+            if (gp.player.inventory.get(i) == gp.player.equippedItem) { // kalo dipake dan itu equipment
+                g2.setColor(new Color(240, 190, 90)); // gold color with transparency
+                g2.fillRoundRect(slotX, slotY, gp.tileSize, gp.tileSize, 10, 10);
+            }
+
             g2.drawImage(gp.player.inventory.get(i).image, slotX, slotY, null);
 
             slotX += slotSize; // move to next slot in row
@@ -359,7 +366,6 @@ public class UI {
         int dFrameY = frameY + frameHeight;
         int dFrameWidth = frameWidth;
         int dFrameHeight = gp.tileSize * 3; // height for description
-        drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
 
         // draw desc text
         int textX = dFrameX + 20;
@@ -369,6 +375,8 @@ public class UI {
         int itemIndex = getItemIndexOnSlot(); // get item index based on slotCol and slotRow
 
         if (itemIndex < gp.player.inventory.size()) {
+
+            drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
 
             for (String line : gp.player.inventory.get(itemIndex).description.split("\n")) {
                 g2.drawString(line, textX, textY);

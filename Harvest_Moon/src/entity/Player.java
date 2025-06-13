@@ -71,7 +71,7 @@ public class Player extends Entity {
 
     // inventory player
     public ArrayList<Entity> inventory = new ArrayList<>();
-    public final int inventorySize = 20; // Size of the inventory
+    public final int maxInventorySize = 20; // Size of the inventory
 
     public Player(GamePanel gp, KeyHandler keyH) {
 
@@ -264,11 +264,38 @@ public class Player extends Entity {
 
         }
 
+        if (pickCounterOn) {
+            pickCounter++;
+            if (pickCounter == 180) {
+                pickCounter = 0;
+                pickCounterOn = false;
+            }
+        }
+
     }
 
+    boolean pickCounterOn;
+    int pickCounter;
+
     public void pickUpObject(int i) {
+
+        String text = "";
+
         if (i != 999) {
-            gp.obj.get(i).interact(); // Call the interact method of the object
+            if (inventory.size() != maxInventorySize) {
+                inventory.add(gp.obj.get(i)); // Add the object to the inventory
+                gp.obj.get(i).interact(); // Call the interact method of the object
+                text = "You picked up " + gp.obj.get(i).name + "!"; // Set the text to display
+                gp.ui.showMessage(text); // Show the message on the UI
+                gp.obj.remove(i); // Remove the object from the game world
+            }
+
+            else {
+                text = "Your inventory is full!"; // Set the text to display if the inventory is full
+                gp.ui.showMessage(text); // Show the message on the UI
+                pickCounterOn = true; // Set the pick counter on flag to true
+            }
+
         }
     }
 
@@ -427,6 +454,17 @@ public class Player extends Entity {
             gp.keyH.undoToolsPressed = false; // Reset the undo key
         }
 
+    }
+
+    public void selectItem() {
+        int itemIndex = gp.ui.getItemIndexOnSlot(); // Get the selected item index from the UI
+
+        if (itemIndex < inventory.size()) {
+            Entity selectedItem = inventory.get(itemIndex); // Get the selected item from the inventory
+
+            // if(selectedItem == type_tools) //tipe tools misalnya
+            // currentTools = selectedItem;
+        }
     }
 
     public void action(int x, int y) {

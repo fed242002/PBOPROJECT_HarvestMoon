@@ -338,6 +338,9 @@ public class KeyHandler implements KeyListener {
                 }
             }
 
+            if (code == KeyBind.nextKey) {
+                gp.player.selectItem();
+            }
             if (code == KeyBind.pauseKey) { // pencet escape
                 gp.gameState = gp.playState; // Exit inventory and return to play state
             }
