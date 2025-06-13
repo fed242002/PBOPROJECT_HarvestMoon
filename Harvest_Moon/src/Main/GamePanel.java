@@ -129,7 +129,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         eManager.setup(); // ini untuk setting dalam kegelapan
         // gameState = titleState;
         gameState = playState; // Set the game state to play
-        changeMap(0);
+        changeMap(1);
 
     }
 
@@ -141,6 +141,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     @Override
     public void run() {
 
+
+        ;
         double drawInterval = 1000000000 / FPS; // Calculate the draw interval in nanoseconds
         double delta = 0; // Time difference between frames
         long lastTime = System.nanoTime(); // Get the current time in nanoseconds
@@ -213,6 +215,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+
+        System.out.println("CURRENT MAP: " + currentMap);
 
         if (gameState == titleState) {
             ui.draw(g2);
