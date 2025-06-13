@@ -21,11 +21,12 @@ public class TileManager {
         
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow]; // Initialize the mapTileNum array with the maximum screen columns and rows
 
-        loadTileData("/assets/map/Map_Home_TileData"); // Load tile data from the specified file
+        loadTileData(gp.mapList.get(gp.currentMap).tileDataPath); // Load tile data from the specified file
 
-        loadMap("/assets/map/Map_Home_Map");
+        loadMap(gp.mapList.get(gp.currentMap).path);
     }
     
+
 
     public void loadTileData(String dataPath){
         // clear previous data
@@ -46,15 +47,15 @@ public class TileManager {
             System.out.println("Error loading tile data: " + e.getMessage());
         }
 
-        getTileImage(); 
+        getTileImage(gp.mapList.get(gp.currentMap).tilePath); // Load tile images using the file names and collision status
 
     }
 
-    public void getTileImage(){
+    public void getTileImage(String dataPath){
         tile.clear();
 
         for(int i = 0; i < fileNames.size(); i++){
-            String fileName = "/assets/tile/HomeTiles/"+fileNames.get(i);
+            String fileName = dataPath +fileNames.get(i);
             boolean collision;
 
             if(collisionStatus.get(i).equalsIgnoreCase("true")){
@@ -75,7 +76,8 @@ public class TileManager {
         try {
             InputStream is = getClass().getResourceAsStream(mapPath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            
+
+
             int row = 0;
             
             while(row < gp.maxWorldRow) { // Process one row at a time

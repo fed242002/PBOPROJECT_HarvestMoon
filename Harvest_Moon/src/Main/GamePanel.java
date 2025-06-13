@@ -59,15 +59,35 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public boolean fullScreen = false; // Fullscreen mode toggle
 
     // entity and object
+
     public Player player = new Player(this, keyH); // Create a new Player object
     public ArrayList<Entity> obj = new ArrayList<>(); // List of objects in the game
     public ArrayList<Entity> farmObj = new ArrayList<>(); // List of objects in the game
     public ArrayList<Entity> npcs = new ArrayList<>(); // List of NPCs in the game
     public ArrayList<Entity> entityList = new ArrayList<>(); // List of all entities in the game
     saveLoad saveLoad1 = new saveLoad(this);
+    
+    public ArrayList<MapData> mapList = new ArrayList<>(); 
 
-    void changeMap(){
-        
+    void changeMap(int mapNum){
+        if(mapNum < 0 || mapNum >= mapList.size()) {
+            System.out.println("Invalid map number: " + mapNum);
+            return; // Invalid map number
+        }
+        currentMap = mapNum;
+
+        MapData current = mapList.get(currentMap);
+
+        obj = current.obj; 
+        farmObj = current.farmObj;
+        npcs = current.npcs; // Load NPCs from the current map
+        entityList = current.entityList; // Load all entities from the current map
+        // tileM.loadMap(current.path); // Load tile data for the current map
+        // tileM.loadTileData(current.tileDataPath);
+
+        tileM.loadTileData(current.tileDataPath); // Load tile data from the specified file
+        tileM.getTileImage(current.tilePath);
+        tileM.loadMap(current.path); // Load map data from the specified file
 
     }
     // Game state
@@ -101,6 +121,9 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         this.setFocusable(true); // Make the panel focusable to receive key events;
         this.addMouseMotionListener(this);
 
+
+        mapList.add(new MapData(this, "Home", "/assets/map/Map_Home_Map", "/assets/map/Map_Home_TileData", "/assets/tile/HomeTiles/")); // Add the Home map
+        mapList.add(new MapData(this, "Town Hall", "/assets/map/mapTownHall", "/assets/map/TileData_TownHall", "/assets/tile/TownHallTiles/"));
     }
 
     public void setupGame() {
@@ -109,6 +132,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         eManager.setup(); // ini untuk setting dalam kegelapan
         // gameState = titleState;
         gameState = playState; // Set the game state to play
+        changeMap(0);
 
     }
 
