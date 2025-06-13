@@ -67,16 +67,15 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public ArrayList<Entity> entityList = new ArrayList<>(); // List of all entities in the game
     saveLoad saveLoad1 = new saveLoad(this);
     
-    public ArrayList<MapData> mapList = new ArrayList<>(); 
 
     void changeMap(int mapNum){
-        if(mapNum < 0 || mapNum >= mapList.size()) {
+        if(mapNum < 0 || mapNum >= MapDB.mapList.size()) {
             System.out.println("Invalid map number: " + mapNum);
             return; // Invalid map number
         }
         currentMap = mapNum;
 
-        MapData current = mapList.get(currentMap);
+        MapData current = MapDB.mapList.get(currentMap);
 
         obj = current.obj; 
         farmObj = current.farmObj;
@@ -122,8 +121,6 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         this.addMouseMotionListener(this);
 
 
-        mapList.add(new MapData(this, "Home", "/assets/map/Map_Home_Map", "/assets/map/Map_Home_TileData", "/assets/tile/HomeTiles/")); // Add the Home map
-        mapList.add(new MapData(this, "Town Hall", "/assets/map/mapTownHall", "/assets/map/TileData_TownHall", "/assets/tile/TownHallTiles/"));
     }
 
     public void setupGame() {

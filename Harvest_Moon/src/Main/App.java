@@ -1,10 +1,13 @@
 package Main;
+import java.util.Map;
+
 import javax.swing.JFrame;
 
 
 //tes
 public class App {
     public static void main(String[] args) throws Exception {
+        new MapDB(); 
         JFrame window = new JFrame("nanem Bulan");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);

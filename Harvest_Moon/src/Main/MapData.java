@@ -7,7 +7,6 @@ import entity.Entity;
 
 public class MapData{
 
-    public GamePanel gp;
     public String name;
     public String path;
     public String tileDataPath;
@@ -21,8 +20,7 @@ public class MapData{
 
 
 
-    public MapData(GamePanel gp, String name, String path, String tileDataPath, String tilePath) {
-        this.gp = gp;
+    public MapData  (String name, String path, String tileDataPath, String tilePath) {
         mapNum = totalMaps;
         totalMaps++;
         this.name = name;

@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import Main.GamePanel;
+import Main.MapDB;
 
 public class TileManager {
     GamePanel gp;
@@ -21,9 +22,9 @@ public class TileManager {
         
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow]; // Initialize the mapTileNum array with the maximum screen columns and rows
 
-        loadTileData(gp.mapList.get(gp.currentMap).tileDataPath); // Load tile data from the specified file
+        loadTileData(MapDB.mapList.get(gp.currentMap).tileDataPath); // Load tile data from the specified file
 
-        loadMap(gp.mapList.get(gp.currentMap).path);
+        loadMap(MapDB.mapList.get(gp.currentMap).path);
     }
     
 
@@ -47,7 +48,7 @@ public class TileManager {
             System.out.println("Error loading tile data: " + e.getMessage());
         }
 
-        getTileImage(gp.mapList.get(gp.currentMap).tilePath); // Load tile images using the file names and collision status
+        getTileImage(MapDB.mapList.get(gp.currentMap).tilePath); // Load tile images using the file names and collision status
 
     }
 
