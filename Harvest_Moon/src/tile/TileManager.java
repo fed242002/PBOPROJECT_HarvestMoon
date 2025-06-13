@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import Main.GamePanel;
 import Main.MapDB;
+import Main.MapData;
 
 public class TileManager {
     GamePanel gp;
@@ -19,12 +20,13 @@ public class TileManager {
 
     public TileManager(GamePanel gp) {
         this.gp = gp; 
-        
-        mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow]; // Initialize the mapTileNum array with the maximum screen columns and rows
 
-        loadTileData(MapDB.mapList.get(gp.currentMap).tileDataPath); // Load tile data from the specified file
+        mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow]; // Initialize the mapTileNum array with the correct size
+        loadTileData(MapDB.mapList.get(gp.currentMap).tileDataPath); // Load tile data from the specified path
+        loadMap(MapDB.mapList.get(gp.currentMap).path); // Load the map from the specified path
+        MapDB.mapList.get(gp.currentMap).needsRefresh = true;
 
-        loadMap(MapDB.mapList.get(gp.currentMap).path);
+
     }
     
 
@@ -68,7 +70,7 @@ public class TileManager {
             Tile t = new Tile(fileName, collision);
             tile.add(t); 
         }
-
+        
 
         
     }
@@ -132,6 +134,12 @@ public class TileManager {
                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) 
             { 
+
+                if(tileNum < 0 || tileNum >= tile.size()) {
+                    System.out.println("Warning: Tile number " + tileNum + " is out of bounds for the tile list.");
+                    System.out.println("Available tiles: " + tile.size());
+                    tileNum = 0; // Default to the first tile if out of bounds
+                }
                 g2.drawImage(tile.get(tileNum).image, screenX, screenY, gp.tileSize, gp.tileSize,null);
             }
 

@@ -44,6 +44,7 @@ public class KeyBind {
     public static int equipAxe = KeyEvent.VK_2;
     //equip fishingrod
     public static int equipFishingRod = KeyEvent.VK_3;
+    public static int equipWateringCan = KeyEvent.VK_4;
 
 
 

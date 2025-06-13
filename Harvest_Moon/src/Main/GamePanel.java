@@ -44,6 +44,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
 
+    public boolean justChangedMap = false; // Flag to indicate if the map has just changed
+
     // FPS
     int FPS = 60; // Frames per second
 
@@ -61,14 +63,14 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     // entity and object
 
     public Player player = new Player(this, keyH); // Create a new Player object
-    public ArrayList<Entity> obj = new ArrayList<>(); // List of objects in the game
-    public ArrayList<Entity> farmObj = new ArrayList<>(); // List of objects in the game
-    public ArrayList<Entity> npcs = new ArrayList<>(); // List of NPCs in the game
-    public ArrayList<Entity> entityList = new ArrayList<>(); // List of all entities in the game
+    public ArrayList<Entity> obj = new ArrayList<>(MapDB.mapList.get(currentMap).obj); // List of objects in the game
+    public ArrayList<Entity> farmObj = new ArrayList<>(MapDB.mapList.get(currentMap).farmObj); // List of objects in the game
+    public ArrayList<Entity> npcs = new ArrayList<>(MapDB.mapList.get(currentMap).npcs); // List of NPCs in the game
+    public ArrayList<Entity> entityList = new ArrayList<>(MapDB.mapList.get(currentMap).entityList); // List of all entities in the game
     saveLoad saveLoad1 = new saveLoad(this);
     
 
-    void changeMap(int mapNum){
+    public void changeMap(int mapNum){
         if(mapNum < 0 || mapNum >= MapDB.mapList.size()) {
             System.out.println("Invalid map number: " + mapNum);
             return; // Invalid map number
@@ -77,17 +79,17 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
         MapData current = MapDB.mapList.get(currentMap);
 
-        obj = current.obj; 
-        farmObj = current.farmObj;
-        npcs = current.npcs; // Load NPCs from the current map
-        entityList = current.entityList; // Load all entities from the current map
-        // tileM.loadMap(current.path); // Load tile data for the current map
-        // tileM.loadTileData(current.tileDataPath);
 
         tileM.loadTileData(current.tileDataPath); // Load tile data from the specified file
         tileM.getTileImage(current.tilePath);
         tileM.loadMap(current.path); // Load map data from the specified file
 
+
+        System.out.println("Map " + mapNum + " loaded with " + tileM.tile.size() + " tiles");
+
+        MapDB.mapList.get(currentMap).needsRefresh = true; // Set the needsRefresh flag to true
+        justChangedMap = true; // Set the flag to indicate that the map has just changed
+        
     }
     // Game state
     public int gameState;
@@ -129,7 +131,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         eManager.setup(); // ini untuk setting dalam kegelapan
         // gameState = titleState;
         gameState = playState; // Set the game state to play
-        changeMap(1);
+        // changeMap(1);
 
     }
 
@@ -176,6 +178,22 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     }
 
     public void update() {
+    
+        MapData current = MapDB.mapList.get(currentMap);
+
+            if(justChangedMap|| current.needsRefresh) { // If the map has just changed
+
+            obj = current.obj; // Update the object list
+            farmObj = current.farmObj;
+            npcs = current.npcs;
+            entityList = current.entityList;
+
+            // Reset flags
+            current.needsRefresh = false;
+            justChangedMap = false;
+
+        }
+
 
         if (gameState == playState) { // If the game is being played
             player.update(); // Update the player
@@ -215,8 +233,6 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-
-        System.out.println("CURRENT MAP: " + currentMap);
 
         if (gameState == titleState) {
             ui.draw(g2);

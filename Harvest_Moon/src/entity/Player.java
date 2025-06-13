@@ -122,9 +122,9 @@ public class Player extends Entity {
         // declare animation
         animationList.add(new Animation("walk", 6, "/assets/player/WALK/" + getPath(), 0));
         animationList.add(new Animation("idle", 6, "/assets/player/IDLE/" + getPath()));
-        animationList.add(new Animation("chop", 10, "/assets/player/AXE CHOP/" + getPath()));
+        animationList.add(new Animation("chop", 10, "/assets/player/AXE CHOP/" + getPath(),6));
         animationList.add(new Animation("dig", 9, "/assets/player/DIG/" + getPath(), 5));
-        animationList.add(new Animation("cast", 9, "/assets/player/FISH CAST LINE/" + getPath()));
+        animationList.add(new Animation("cast", 9, "/assets/player/FISH CAST LINE/" + getPath(),7));
         animationList.add(new Animation("FISHIDLE", 6, "/assets/player/FISH IDLE/" + getPath()));
         animationList.add(new Animation("FISHIDLE1", 6, "/assets/player/FISH IDLE/" + getPath()));
         animationList.add(new Animation("FISHCAUGHT", 9, "/assets/player/FISH CAUGHT/" + getPath()));

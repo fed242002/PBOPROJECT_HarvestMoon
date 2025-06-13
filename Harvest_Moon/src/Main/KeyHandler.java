@@ -206,6 +206,9 @@ public class KeyHandler implements KeyListener {
             if(code == KeyBind.equipFishingRod) {
                 gp.player.currentTools = "fishRod";
             }
+            if(code == KeyBind.equipWateringCan) {
+                gp.player.currentTools = "wateringCan";
+            }
 
             // sprint
             if (code == KeyBind.sprintKey) {
