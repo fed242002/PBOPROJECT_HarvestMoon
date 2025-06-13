@@ -1,9 +1,12 @@
 package Main;
 
+import Data.saveLoad;
+import Environment.EnvironmentManager;
+import entity.Entity;
+import entity.Player;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
@@ -13,14 +16,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-
-import Data.saveLoad;
-import Environment.EnvironmentManager;
-import entity.Entity;
-import entity.Player;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
@@ -194,6 +191,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
         }
 
+        eventHandler.update();
 
         if (gameState == playState) { // If the game is being played
             player.update(); // Update the player
@@ -311,6 +309,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
                 drawGrid(g2);
             }
 
+            eventHandler.draw(g2);
+            
             g2.dispose(); // Dispose of the graphics object to free up resources
 
         }
