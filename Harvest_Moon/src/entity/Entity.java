@@ -13,10 +13,14 @@ import object.OBJ_soil;
 
 public class Entity extends SuperEntity {
 
-    public void chop(){}
-    public void reset(){}
-    public void watering(){}
+    public void chop() {
+    }
 
+    public void reset() {
+    }
+
+    public void watering() {
+    }
 
     public boolean isWet = false;
     public GamePanel gp;
@@ -42,6 +46,9 @@ public class Entity extends SuperEntity {
     public boolean isObj = false;
     public Entity currentLight; // Current light source for the entity, if any
     public int lightRadius; // Radius of the light source, if any
+
+    // item attributes
+    public String description = " "; // Description of the item
     public final int type_light = 9;
 
     // animation
@@ -106,7 +113,6 @@ public class Entity extends SuperEntity {
     public void draw(Graphics2D g2) {
         int screenX = worldX - gp.player.worldX + gp.player.screenX; // Calculate the screen X position
         int screenY = worldY - gp.player.worldY + gp.player.screenY; // Calculate the screen Y position
-
 
         if (!isObj) {
             BufferedImage image = null;

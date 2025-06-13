@@ -66,10 +66,10 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public ArrayList<Entity> entityList = new ArrayList<>(); // List of all entities in the game
     saveLoad saveLoad1 = new saveLoad(this);
 
-    void changeMap(){
-        
+    void changeMap() {
 
     }
+
     // Game state
     public int gameState;
     public final int titleState = 0;
@@ -77,6 +77,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public final int pauseState = 2; // Game is paused
     public final int dialogueState = 3; // Dialog is being shown
     public final int eventFoundState = 4; // Event found is being shown
+    public final int inventoryState = 5; // Inventory is being shown
 
     // UI
     public UI ui = new UI(this); // Create a new UI object
@@ -198,8 +199,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         } else {
             // tile
             tileM.draw(g2);
-            //draw farm dkk
-            for(Entity x : farmObj) {
+            // draw farm dkk
+            for (Entity x : farmObj) {
                 if (x != null) {
                     x.draw(g2); // Draw each farm object
                 }
@@ -238,7 +239,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
             // empty the entity list after drawing
             // for (int i = 0; i < entityList.size(); i++) {
-            //     entityList.remove(entityList.get(i)); // Draw each entity in the list
+            // entityList.remove(entityList.get(i)); // Draw each entity in the list
             // }
             entityList.clear(); // Clear the entity list after drawing
 
@@ -341,7 +342,6 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         g2.setColor(Color.WHITE);
         g2.drawString("Player Tile: Col " + playerCol + " Row " + playerRow, screenWidth - 145, 25);
     }
-
 
     public void playMusic(Sound sound, int i) {
         sound.setFile(i);

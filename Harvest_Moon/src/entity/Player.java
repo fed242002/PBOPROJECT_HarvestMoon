@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -18,10 +19,10 @@ import object.OBJ_Tree;
 
 public class Player extends Entity {
 
-    public String listBody[] = {"white", "krem", "black"};
-    public String listEye[] = {"blue", "brown", "green"};
-    public String listHair[] = {"baldBlondeAsh", "longBrownHazel", "shortBrownDark"};
-    public String listOutfit[] = {"violet", "blue"};
+    public String listBody[] = { "white", "krem", "black" };
+    public String listEye[] = { "blue", "brown", "green" };
+    public String listHair[] = { "baldBlondeAsh", "longBrownHazel", "shortBrownDark" };
+    public String listOutfit[] = { "violet", "blue" };
 
     public int bodyIndex = 1; // Index for the current body type
     public int eyeIndex = 0; // Index for the current eye type
@@ -52,13 +53,13 @@ public class Player extends Entity {
     String eye = "blue";
     String outfit = "blue";
     String hair = "baldBlondeAsh";
-    
+
     public boolean moveDisabled = false;
-    public boolean isDigging = false; 
-    public boolean isUndoDigging = false; 
+    public boolean isDigging = false;
+    public boolean isUndoDigging = false;
     public int animationDone = 0;
 
-    public boolean isChopping  = false; 
+    public boolean isChopping = false;
     public boolean isCasting = false;
     public boolean isFishing = false;
     public boolean fishDetected = false; // Flag to check if the fish is detected
@@ -68,10 +69,14 @@ public class Player extends Entity {
 
     public boolean isWatering = false;
 
+    // inventory player
+    public ArrayList<Entity> inventory = new ArrayList<>();
+    public final int inventorySize = 20; // Size of the inventory
+
     public Player(GamePanel gp, KeyHandler keyH) {
 
         super(gp);
-        
+
         currentTools = "shovel";
 
         this.gp = gp; // Assign the GamePanel object to the instance variable
@@ -90,33 +95,36 @@ public class Player extends Entity {
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
 
+        // set items
+        setItems();
+
         setDefaultValues();
 
         // declare animationiswa
         redeclareAnimation();
 
-        //TOOLS ANIMATION -> ini nanti maw kak pindah ke gp aja soalnya sama aja di smua entity biar gausah ke declare banyak kali
-        toolsAnimationList.add(new ToolsAnimation(gp,"axe", "idle", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp,"axe", "walk", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp,"axe", "chop", 10));
-        toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "fishcaught", 9,true));
-        toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "CAST", 9, true));
-        toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "FISHIDLE", 6,true));
-        toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "FISHIDLE1", 6, true));
-        toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "fishpulled", 2, true));
-        toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "idle", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "walk", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp,"shovel", "idle", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp,"shovel", "walk", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp,"shovel", "dig", 9));
-        toolsAnimationList.add(new ToolsAnimation(gp,"WateringCan", "idle", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp,"WateringCan", "walk", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp,"WateringCan", "watering", 14));
+        // TOOLS ANIMATION -> ini nanti maw kak pindah ke gp aja soalnya sama aja di
+        // smua entity biar gausah ke declare banyak kali
+        toolsAnimationList.add(new ToolsAnimation(gp, "axe", "idle", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "axe", "walk", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "axe", "chop", 10));
+        toolsAnimationList.add(new ToolsAnimation(gp, "fishRod", "fishcaught", 9, true));
+        toolsAnimationList.add(new ToolsAnimation(gp, "fishRod", "CAST", 9, true));
+        toolsAnimationList.add(new ToolsAnimation(gp, "fishRod", "FISHIDLE", 6, true));
+        toolsAnimationList.add(new ToolsAnimation(gp, "fishRod", "FISHIDLE1", 6, true));
+        toolsAnimationList.add(new ToolsAnimation(gp, "fishRod", "fishpulled", 2, true));
+        toolsAnimationList.add(new ToolsAnimation(gp, "fishRod", "idle", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "fishRod", "walk", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "shovel", "idle", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "shovel", "walk", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "shovel", "dig", 9));
+        toolsAnimationList.add(new ToolsAnimation(gp, "WateringCan", "idle", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "WateringCan", "walk", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "WateringCan", "watering", 14));
 
     }
 
-
-    public void redeclareAnimation(){
+    public void redeclareAnimation() {
         animationList.clear();
 
         // declare animation
@@ -137,9 +145,6 @@ public class Player extends Entity {
         animationList.add(new Animation("throw", 14, "/assets/player/THROW/" + getPath()));
         animationList.add(new Animation("watering", 14, "/assets/player/WATERING/" + getPath()));
 
-
-
-
     }
 
     public void changePath(String bagian, String nama) {
@@ -158,7 +163,7 @@ public class Player extends Entity {
         }
 
         // for (Animation x : animationList) {
-        //     x.setPath(getPath());
+        // x.setPath(getPath());
         // }
     }
 
@@ -181,18 +186,20 @@ public class Player extends Entity {
 
     // function buat soil area
     public void setSolidArea() {
-        
+
     }
 
-
+    public void setItems() {
+        // inventory.add() // set item default player apa belum tau mau diisi apa
+    }
 
     public void update() {
         // cek kalo lagi jalan ga
-        if(!moveDisabled){
+        if (!moveDisabled) {
             if (keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true
                     || keyH.rightPressed == true) {
                 setAnimation("walk"); // set current animation jadi walking
-    
+
                 if (keyH.upPressed == true) {
                     direction = "up";
                 } else if (keyH.downPressed == true) {
@@ -202,22 +209,22 @@ public class Player extends Entity {
                 } else if (keyH.rightPressed == true) {
                     direction = "right";
                 }
-    
+
                 // check tile collision
                 collisionOn = false;
                 gp.cChecker.checkTile(this);
-    
+
                 // check object collision
                 int objIndex = gp.cChecker.checkObject(this, true);
                 pickUpObject(objIndex);
-    
+
                 // check npc collision
                 int npcIndex = gp.cChecker.checkEntity(this, gp.npcs);
                 interactNPC(npcIndex);
-    
+
                 // check event collision
                 gp.eventHandler.checkEvent();
-    
+
                 // kalo collision -> false bisa dijalani
                 if (collisionOn == false) {
                     switch (direction) {
@@ -233,30 +240,29 @@ public class Player extends Entity {
                         case "right":
                             worldX += speed; // Move the player right
                             break;
-    
+
                     }
                 }
-    
+
             } else {
                 // ini buat idle animation
                 setAnimation("idle");
-    
+
             }
-    
+
             spriteCounter++;
             if (spriteCounter > spriteDraw) {
                 spriteNum++;
-    
-                if (spriteNum > animationList.get(currentAnimationIndex).spriteTotal - 1) // If the sprite number exceeds
+
+                if (spriteNum > animationList.get(currentAnimationIndex).spriteTotal - 1) // If the sprite number
+                                                                                          // exceeds
                                                                                           // the number of images
                     spriteNum = 0; // Reset the sprite number to 0
-    
+
                 spriteCounter = 0; // Reset the sprite counter to 0
             }
 
         }
-
-
 
     }
 
@@ -280,154 +286,157 @@ public class Player extends Entity {
         gp.keyH.interactPressed = false; // Reset the interact key
     }
 
-
-  
-
     public void drawFrontBlock(Graphics2D g2) {
-        //hitbox player di world posisi
-    int hitboxCenterWorldX = worldX + solidArea.x + (solidArea.width / 2);
-    int hitboxCenterWorldY = worldY + solidArea.y + (solidArea.height / 2);
-    
-    targetWorldX = hitboxCenterWorldX;
-    targetWorldY = hitboxCenterWorldY;
-    
-    switch(direction) {
-        case "up":
-            targetWorldY -= gp.tileSize;
-            break;
-        case "down":
-            targetWorldY += gp.tileSize;
-            break;
-        case "left":
-            targetWorldX -= gp.tileSize;
-            break;
-        case "right":
-            targetWorldX += gp.tileSize;
-            break;
-    }
-    
-    // jadiin tile trus balekin ke px balek
-    targetWorldX = (targetWorldX / gp.tileSize) * gp.tileSize;
-    targetWorldY = (targetWorldY / gp.tileSize) * gp.tileSize;
+        // hitbox player di world posisi
+        int hitboxCenterWorldX = worldX + solidArea.x + (solidArea.width / 2);
+        int hitboxCenterWorldY = worldY + solidArea.y + (solidArea.height / 2);
 
-    //ini versi row col nya
-    targetTileCol = targetWorldX / gp.tileSize;
-    targetTileRow = targetWorldY / gp.tileSize;
+        targetWorldX = hitboxCenterWorldX;
+        targetWorldY = hitboxCenterWorldY;
 
-    // ini buat pas print nya
-    int targetScreenX = targetWorldX - worldX + screenX;
-    int targetScreenY = targetWorldY - worldY + screenY;
-    
-    
-    
-    
-    // Load cursor imagedui
-    BufferedImage cursor = null;
-    try {
-        cursor = ImageIO.read(getClass().getResourceAsStream("/assets/ui/target1Block.png"));
-    } catch (IOException e) {
-        System.out.println("Error loading drawFrontBlock cursor image: " + e.getMessage());
-    }
-    
-    //show info if it can be done or nahwdwud
-    if(currentTools!= null){
-        if(currentTools!=null && gp.keyH.useTool && !currentTools.equalsIgnoreCase("fishRod")){
-            if(currentTools.equalsIgnoreCase("shovel")){
-                if((gp.tileM.mapTileNum[targetTileCol][targetTileRow] >= 40 && gp.tileM.mapTileNum[targetTileCol][targetTileRow] <=59) || gp.tileM.mapTileNum[targetTileCol][targetTileRow] == 0 ){
-                    //kalo dia grass bisa di dig trus kasih mark ijo
-                    g2.setColor(new Color(0, 255, 0, 100));
-                    g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
-                } else {
-                    g2.setColor(new Color(255, 0, 0, 100));
-                    g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
-                    g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);  //ini jangan lupa kalo ada red soalnya ak lgsng return hehe
-                    return;
-                }
-            }
-            if(currentTools.equalsIgnoreCase("axe")){
-                int objIndex = gp.cChecker.checkObject(this, true);
-                if(objIndex != 999 && gp.obj.get(objIndex) instanceof OBJ_Tree && gp.obj.get(objIndex).isChopped == false) {
-                    g2.setColor(new Color(0, 255, 0, 100));
-                    g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
-                }
-                else{
-                    g2.setColor(new Color(255, 0, 0, 100));
-                    g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
-                    g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);  //ini jangan lupa kalo ada red soalnya ak lgsng return hehe
-                    return;
-                }
-            }
-    
-            g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);
-            
-    
+        switch (direction) {
+            case "up":
+                targetWorldY -= gp.tileSize;
+                break;
+            case "down":
+                targetWorldY += gp.tileSize;
+                break;
+            case "left":
+                targetWorldX -= gp.tileSize;
+                break;
+            case "right":
+                targetWorldX += gp.tileSize;
+                break;
         }
 
-    }
-    
+        // jadiin tile trus balekin ke px balek
+        targetWorldX = (targetWorldX / gp.tileSize) * gp.tileSize;
+        targetWorldY = (targetWorldY / gp.tileSize) * gp.tileSize;
 
+        // ini versi row col nya
+        targetTileCol = targetWorldX / gp.tileSize;
+        targetTileRow = targetWorldY / gp.tileSize;
 
+        // ini buat pas print nya
+        int targetScreenX = targetWorldX - worldX + screenX;
+        int targetScreenY = targetWorldY - worldY + screenY;
 
-    if(gp.keyH.interactPressed ) {
+        // Load cursor imagedui
+        BufferedImage cursor = null;
+        try {
+            cursor = ImageIO.read(getClass().getResourceAsStream("/assets/ui/target1Block.png"));
+        } catch (IOException e) {
+            System.out.println("Error loading drawFrontBlock cursor image: " + e.getMessage());
+        }
+
+        // show info if it can be done or nahwdwud
+        if (currentTools != null) {
+            if (currentTools != null && gp.keyH.useTool && !currentTools.equalsIgnoreCase("fishRod")) {
+                if (currentTools.equalsIgnoreCase("shovel")) {
+                    if ((gp.tileM.mapTileNum[targetTileCol][targetTileRow] >= 40
+                            && gp.tileM.mapTileNum[targetTileCol][targetTileRow] <= 59)
+                            || gp.tileM.mapTileNum[targetTileCol][targetTileRow] == 0) {
+                        // kalo dia grass bisa di dig trus kasih mark ijo
+                        g2.setColor(new Color(0, 255, 0, 100));
+                        g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+                    } else {
+                        g2.setColor(new Color(255, 0, 0, 100));
+                        g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+                        g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null); // ini
+                                                                                                            // jangan
+                                                                                                            // lupa kalo
+                                                                                                            // ada red
+                                                                                                            // soalnya
+                                                                                                            // ak lgsng
+                                                                                                            // return
+                                                                                                            // hehe
+                        return;
+                    }
+                }
+                if (currentTools.equalsIgnoreCase("axe")) {
+                    int objIndex = gp.cChecker.checkObject(this, true);
+                    if (objIndex != 999 && gp.obj.get(objIndex) instanceof OBJ_Tree
+                            && gp.obj.get(objIndex).isChopped == false) {
+                        g2.setColor(new Color(0, 255, 0, 100));
+                        g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+                    } else {
+                        g2.setColor(new Color(255, 0, 0, 100));
+                        g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+                        g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null); // ini
+                                                                                                            // jangan
+                                                                                                            // lupa kalo
+                                                                                                            // ada red
+                                                                                                            // soalnya
+                                                                                                            // ak lgsng
+                                                                                                            // return
+                                                                                                            // hehe
+                        return;
+                    }
+                }
+
+                g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);
+
+            }
+
+        }
+
+        if (gp.keyH.interactPressed) {
             // Reset the interact key
-        gp.keyH.interactPressed = false;
+            gp.keyH.interactPressed = false;
 
-            if(currentTools == null){
+            if (currentTools == null) {
                 return;
             }
 
-
-            if(currentTools.equalsIgnoreCase("shovel")){
+            if (currentTools.equalsIgnoreCase("shovel")) {
                 isDigging = true;
                 moveDisabled = true; // Disable movement while digging
             }
 
-            
-            if(currentTools.equalsIgnoreCase("axe")){
+            if (currentTools.equalsIgnoreCase("axe")) {
                 int objIndex = gp.cChecker.checkObject(this, true);
-                if(objIndex != 999 && gp.obj.get(objIndex) instanceof OBJ_Tree) {
-                    if(gp.obj.get(objIndex).isChopped == false){
+                if (objIndex != 999 && gp.obj.get(objIndex) instanceof OBJ_Tree) {
+                    if (gp.obj.get(objIndex).isChopped == false) {
                         isChopping = true;
                         moveDisabled = true;
 
                     }
                 }
             }
-            
-            if(currentTools.equalsIgnoreCase("fishRod")) {
-                if(gp.tileM.mapTileNum[targetTileCol][targetTileRow] >= 25 && gp.tileM.mapTileNum[targetTileCol][targetTileRow] <= 48){
+
+            if (currentTools.equalsIgnoreCase("fishRod")) {
+                if (gp.tileM.mapTileNum[targetTileCol][targetTileRow] >= 25
+                        && gp.tileM.mapTileNum[targetTileCol][targetTileRow] <= 48) {
                     isCasting = true;
                     moveDisabled = true;
                 }
-    
+
             }
-            if(isFishing){
+            if (isFishing) {
                 resetAllAnimation();
                 setAnimation("fishCaught");
-                throwBack = true;             
+                throwBack = true;
             }
 
         }
 
         action(targetWorldX, targetWorldY);
-        if(gp.keyH.undoToolsPressed){
+        if (gp.keyH.undoToolsPressed) {
             isUndoDigging = true;
             moveDisabled = true; // Disable movement while undo digging
             gp.keyH.undoToolsPressed = false; // Reset the undo key
         }
-        
+
     }
 
+    public void action(int x, int y) {
 
-    
-    public void action(int x, int y){
-
-        //interact with soil -> buat grass jadi soil (tambahin pengecekan nanti)
-        if(isDigging){
+        // interact with soil -> buat grass jadi soil (tambahin pengecekan nanti)
+        if (isDigging) {
             setAnimation("dig");
             animation(3);
-            
-            if(animationDone == 3){
+
+            if (animationDone == 3) {
                 animationDone = 0;
                 resetAllAnimation();
                 gp.aSetter.addSoil(new OBJ_soil(gp, x, y));
@@ -436,18 +445,18 @@ public class Player extends Entity {
 
             }
         }
-        if(isUndoDigging){
+        if (isUndoDigging) {
             setAnimation("dig");
-            animation(3); 
+            animation(3);
 
-            if(animationDone == 3){
+            if (animationDone == 3) {
                 resetAllAnimation();
                 moveDisabled = false; // Enable movement after digging
                 animationDone = 0;
                 setAnimation("idle");
 
-                for(Entity s :gp.farmObj){
-                    if(s instanceof OBJ_soil && s.worldX == x && s.worldY == y) {
+                for (Entity s : gp.farmObj) {
+                    if (s instanceof OBJ_soil && s.worldX == x && s.worldY == y) {
                         gp.farmObj.remove(s); // Remove the soil object
                         break; // Exit the loop after removing the first matching soil object
                     }
@@ -457,13 +466,12 @@ public class Player extends Entity {
             }
         }
 
-
-        //chopping tree
-        if(isChopping){
+        // chopping tree
+        if (isChopping) {
             setAnimation("chop");
             animation(3);
 
-            if(animationDone == 3){
+            if (animationDone == 3) {
                 animationDone = 0;
                 resetAllAnimation();
 
@@ -471,31 +479,29 @@ public class Player extends Entity {
                 setAnimation("idle");
 
                 int objIndex = gp.cChecker.checkObject(this, true);
-                if(objIndex != 999 ) {
-                   gp.obj.get(objIndex).chop(); // Call the chop method of the tree object
+                if (objIndex != 999) {
+                    gp.obj.get(objIndex).chop(); // Call the chop method of the tree object
                 }
             }
         }
 
-
-        //mancing fishing
-        if(isCasting){
+        // mancing fishing
+        if (isCasting) {
             setAnimation("cast");
             animation(3);
 
-            
-            if(animationDone == 1){
+            if (animationDone == 1) {
                 animationDone = 0;
                 resetAllAnimation();
                 setAnimation("FISHIDLE");
                 // Set the fishing time random value
-                fishingTimeRandom = random.nextInt(5,10 ); // Random value between 5 and 20
+                fishingTimeRandom = random.nextInt(5, 10); // Random value between 5 and 20
                 isFishing = true;
             }
         }
 
-        if(isFishing){
-            if(gp.keyH.interactPressed){
+        if (isFishing) {
+            if (gp.keyH.interactPressed) {
                 isFishing = false;
                 setAnimation("FISHCAUGHT");
                 animationDone = 0;
@@ -506,8 +512,8 @@ public class Player extends Entity {
             setAnimation("FISHIDLE");
 
             animation(10);
-                        
-            if(animationDone == fishingTimeRandom){
+
+            if (animationDone == fishingTimeRandom) {
                 animationDone = 0;
                 resetAllAnimation();
                 setAnimation("FISHIDLE1");
@@ -516,12 +522,12 @@ public class Player extends Entity {
 
         }
 
-        if(fishDetected){
+        if (fishDetected) {
             setAnimation("FISHIDLE1");
 
             animation(10);
 
-            if(animationDone == 1){
+            if (animationDone == 1) {
                 animationDone = 0;
                 resetAllAnimation();
                 setAnimation("FISHIDLE");
@@ -529,11 +535,11 @@ public class Player extends Entity {
             }
         }
 
-        if(throwBack){
+        if (throwBack) {
             setAnimation("fishcaught");
             animation(3);
 
-            if(animationDone >= 1){
+            if (animationDone >= 1) {
                 animationDone = 0;
                 resetAllAnimation();
                 setAnimation("idle");
@@ -541,19 +547,16 @@ public class Player extends Entity {
             }
         }
 
-        
     }
 
-
-
-    void animation(int counter){
+    void animation(int counter) {
         spriteCounter++;
-        if(spriteCounter > counter) {
+        if (spriteCounter > counter) {
             spriteCounter = 0; // Reset the sprite counter to 0
             spriteNum++;
         }
 
-        if(spriteNum >= animationList.get(currentAnimationIndex).spriteTotal) {
+        if (spriteNum >= animationList.get(currentAnimationIndex).spriteTotal) {
             animationDone++;
             spriteCounter = 0;
             spriteNum = 0;
@@ -561,16 +564,16 @@ public class Player extends Entity {
 
     }
 
-    void resetAllAnimation(){
-        isDigging = false; 
-        isUndoDigging = false; 
-        isChopping  = false; 
+    void resetAllAnimation() {
+        isDigging = false;
+        isUndoDigging = false;
+        isChopping = false;
         isCasting = false;
         isFishing = false;
-        fishDetected = false; 
+        fishDetected = false;
         fishpulled = false;
-        fishCaught = false; 
-        throwBack = false; 
+        fishCaught = false;
+        throwBack = false;
         isWatering = false;
 
         animationDone = 0;
@@ -578,32 +581,29 @@ public class Player extends Entity {
         spriteNum = 0;
     }
 
-
     public void draw(Graphics2D g2) {
 
         BufferedImage image = null;
         BufferedImage image1 = null;
         ToolsAnimation currentTool = null;
 
-
-
-
-        if(currentTools!= null){
-            if(gp.keyH.useTool || currentTools.equalsIgnoreCase("fishRod")){
+        if (currentTools != null) {
+            if (gp.keyH.useTool || currentTools.equalsIgnoreCase("fishRod")) {
                 drawFrontBlock(g2); // Draw the block in front of the player
             }
         }
- 
-        if(currentTools != null){
-            
-            for(ToolsAnimation tool : toolsAnimationList){
-                if(tool.tools.equalsIgnoreCase(currentTools) && tool.AnimationName.equalsIgnoreCase(animationList.get(currentAnimationIndex).name)){
+
+        if (currentTools != null) {
+
+            for (ToolsAnimation tool : toolsAnimationList) {
+                if (tool.tools.equalsIgnoreCase(currentTools)
+                        && tool.AnimationName.equalsIgnoreCase(animationList.get(currentAnimationIndex).name)) {
                     currentTool = tool;
                     break;
                 }
             }
 
-            if(currentTool == null){
+            if (currentTool == null) {
                 System.out.println("Error: Current tool not found in toolsAnimationList ");
                 return;
             }
@@ -612,34 +612,36 @@ public class Player extends Entity {
         switch (direction) {
             case "up":
                 image = animationList.get(currentAnimationIndex).up[spriteNum]; // Get the idle up image
-                if(currentTool != null ) {
+                if (currentTool != null) {
                     image1 = currentTool.up[spriteNum]; // Get the tool up image
                 }
                 break;
             case "down":
                 image = animationList.get(currentAnimationIndex).down[spriteNum]; // Get the idle down image
-                if(currentTool != null) {
+                if (currentTool != null) {
                     image1 = currentTool.down[spriteNum]; // Get the tool down image
                 }
                 break;
             case "left":
                 image = animationList.get(currentAnimationIndex).left[spriteNum]; // Get the idle left image
-                if(currentTool != null) {
+                if (currentTool != null) {
                     image1 = currentTool.left[spriteNum]; // Get the tool left image
                 }
                 break;
             case "right":
                 image = animationList.get(currentAnimationIndex).right[spriteNum]; // Get the idle right image
-                if(currentTool != null) {
+                if (currentTool != null) {
                     image1 = currentTool.right[spriteNum]; // Get the tool right image
                 }
                 break;
         }
 
         g2.drawImage(image, screenX, screenY, gp.playerSizeX, gp.playerSizeY, null); // Draw player image
-        if(currentTool != null && image1 != null) {
-            g2.drawImage(image1, currentTool.x, currentTool.y, currentTool.width, currentTool.height, null); // Draw tool image
+        if (currentTool != null && image1 != null) {
+            g2.drawImage(image1, currentTool.x, currentTool.y, currentTool.width, currentTool.height, null); // Draw
+                                                                                                             // tool
+                                                                                                             // image
         }
-        }
+    }
 
 }
