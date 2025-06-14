@@ -326,7 +326,7 @@ public class UI {
         int slotCol = 0;
 
         if (entity == gp.player) {
-            frameX = gp.tileSize * 12;
+            frameX = gp.tileSize * 9;
             frameY = gp.tileSize;
             frameWidth = gp.tileSize * 6;
             frameHeight = gp.tileSize * 5;

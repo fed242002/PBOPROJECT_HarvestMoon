@@ -503,6 +503,22 @@ public class Player extends Entity {
 
             // if(selectedItem == type_tools) //tipe tools misalnya
             // currentTools = selectedItem;
+
+            // if(selectedItem == type_food) // misal makanan
+            // {
+            // if(selectedItem.use(this) == true)
+            // {
+            // if(selectedItem.amount > 1)
+            // {
+            // selectedItem.amount--; // Reduce the amount of the item by 1
+            // }
+            // else
+            // {
+            // inventory.remove(itemIndex); // Remove the item from the inventory if amount
+            // is 1
+            // }
+            // }
+            // }
         }
     }
 
