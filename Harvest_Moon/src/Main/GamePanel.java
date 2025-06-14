@@ -78,6 +78,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public final int dialogueState = 3; // Dialog is being shown
     public final int eventFoundState = 4; // Event found is being shown
     public final int inventoryState = 5; // Inventory is being shown
+    public final int tradeState = 6; // buat ngetrade 
 
     // UI
     public UI ui = new UI(this); // Create a new UI object

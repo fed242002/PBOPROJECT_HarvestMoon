@@ -34,6 +34,9 @@ public class UI {
     int subState = 0;
     public int slotCol = 0; // inventory slot column
     public int slotRow = 0; // inventory slot row
+    public int npcSlotCol = 0;
+    public int npcSlotRow = 0;
+    public Entity npc; // buat npc trade
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -87,6 +90,11 @@ public class UI {
         // buat inventory
         if (gp.gameState == gp.inventoryState) {
             drawInventory();
+        }
+
+        // trade state
+        if (gp.gameState == gp.tradeState){
+            drawTradeScreen();
         }
     }
 
@@ -623,5 +631,72 @@ public class UI {
         g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke(5));
         g2.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 25, 25);
+    }
+
+    public void drawTradeScreen(){
+        switch (subState) {
+            case 0:
+                trade_select();
+                break;
+            case 1:
+                trade_buy();
+                break;
+            case 2:
+                trade_sell();
+                break;
+        }
+        
+        //gp.keyH.enterPressed = false;
+    }
+
+    public void trade_select(){
+        drawDialogueScreen();
+
+        // draw mini window buat option user
+        int x = gp.tileSize*15;
+        int y = gp.tileSize*4;
+        int width = gp.tileSize*3;
+        int height = (int) (gp.tileSize*3.5);
+        drawSubWindow(x, y, width, height);
+
+        // DRAW TEXT
+        x += gp.tileSize;
+        y += gp.tileSize;
+        g2.drawString("Buy", x, y);
+        if (commandNum == 0){
+            g2.drawString(">", x-24, y);
+            //if (gp.keyH.enterPressed == true){
+            //     subState = 1;
+            // }
+        }
+        y += gp.tileSize;
+
+        g2.drawString("Sell", x, y);
+        if (commandNum == 0){
+            g2.drawString(">", x-24, y);
+            // if (gp.keyH.enterPressed == true){
+            //     subState = 1;
+            //}
+        }
+        y += gp.tileSize;
+
+        g2.drawString("Leave", x, y);
+        if (commandNum == 0){
+            g2.drawString(">", x-24, y);
+            // if (gp.keyH.enterPressed == true){
+            //     commandNum = 0;
+            //     gp.gameState = gp.dialogueState;
+            //     currentDialogue = "Come again, goodbye!";
+            // }
+        }
+        y += gp.tileSize;
+    }
+
+    public void trade_buy(){
+
+    }
+
+    public void trade_sell(){
+
     }
 }
