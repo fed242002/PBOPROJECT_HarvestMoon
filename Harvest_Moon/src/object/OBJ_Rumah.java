@@ -1,5 +1,7 @@
 package object;
 
+import java.awt.Rectangle;
+
 import javax.imageio.ImageIO;
 import Main.GamePanel;
 import entity.Entity;
@@ -9,12 +11,12 @@ public class OBJ_Rumah extends Entity {
     public OBJ_Rumah(GamePanel gp, int x, int y) {
         super(gp);
         name = "home";
-        path = "/assets/Farmer_House_1_48x48.png";
+        path = "/assets/object/Farmer_House_1_48x48.png";
         collision = false; // gaiso dilewati
         worldX = x;
         worldY = y;
-        width = 48 * 10;
-        height = 48 * 10;
+        width = 384;
+        height = 480;
         isObj = true; // Set this entity as an object
 
         this.solidArea.y = height / 2;
@@ -25,18 +27,30 @@ public class OBJ_Rumah extends Entity {
         this.solidAreaDefaultX = this.solidArea.x;
         this.solidAreaDefaultY = this.solidArea.y;
 
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream(path));
-        } catch (Exception e) {
-            System.out.println("Error loading " + name + " image: " + e.getMessage());
+       
+        objAnimationSpriteTotal = 8; // Total number of animation frames
+
+        for(int i = 0; i < objAnimationSpriteTotal; i++) {
+            objAnimation.add(gp.setImage("/assets/objAnimation/home/" + i + ".png"));
         }
 
+        image = objAnimation.get(0); // Set the initial image for the object
+
+
         collision = true; // Set collision to true for this object
+
     }
+   
 
     @Override
     public void interact() {
-        System.out.println("Interacting with " + name);
+
+        if(gp.keyH.interactPressed && gp.player.worldX >= worldX + 215 && gp.player.worldX <= worldX + 260 && gp.player.worldY > worldY + 200) {
+            gp.keyH.interactPressed = false; // Reset the interact key
+            objectAnimationOn = true; // Enable object animation
+
+        }
+
     
 
     }

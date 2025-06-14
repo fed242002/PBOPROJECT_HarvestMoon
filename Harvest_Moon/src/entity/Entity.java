@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import Main.GamePanel;
 import animation.Animation;
 import animation.ToolsAnimation;
+import object.OBJ_Rumah;
 import object.OBJ_soil;
 
 public class Entity extends SuperEntity {
@@ -16,6 +17,38 @@ public class Entity extends SuperEntity {
     public void chop(){}
     public void reset(){}
     public void watering(){}
+
+
+    public ArrayList<BufferedImage> objAnimation = new ArrayList<>(); // List of tool images
+    public int objAnimationSpriteCount = 0;
+    public int objAnimationSpriteNum = 0;
+    public int objAnimationSpriteTotal = 0;
+    public boolean objectAnimationOn = false; // Flag to check if the object animation is on
+
+
+    public void objAnimationUpdate() {
+        if (objectAnimationOn) {
+            
+            image = objAnimation.get(objAnimationSpriteNum); // Set the current image for the object animation
+            objAnimationSpriteCount++;
+            if (objAnimationSpriteCount > 10) {
+                objAnimationSpriteNum++;
+                objAnimationSpriteCount = 0;
+            }
+            if (objAnimationSpriteNum >= objAnimationSpriteTotal) {
+                if(this instanceof OBJ_Rumah){
+                    //ganti map disini
+    
+                }
+                objAnimationSpriteNum = 0;
+                objectAnimationOn = false; // Turn off the animation after it completes
+                image = gp.setImage(path); // Reset the image to the default path
+                gp.player.moveDisabled = false; // Enable player movement after the animation
+
+            }
+        }
+    }
+
 
     int thinkSpriteNum = 0;
     int thinkSpriteCount = 0;
@@ -157,6 +190,13 @@ public class Entity extends SuperEntity {
 
 
     public void draw(Graphics2D g2) {
+
+      
+
+        if(objectAnimationOn) {
+            objAnimationUpdate(); // Update the object animation if it's on
+        }
+
         int screenX = worldX - gp.player.worldX + gp.player.screenX; // Calculate the screen X position
         int screenY = worldY - gp.player.worldY + gp.player.screenY; // Calculate the screen Y position
 

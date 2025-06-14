@@ -11,7 +11,7 @@ public class SFX extends Sound {
         soundURL[6] = getClass().getResource("/assets/sound/axe.wav");   
         soundURL[7] = getClass().getResource("/assets/sound/fishrod.wav");   
         soundURL[8] = getClass().getResource("/assets/sound/watering.wav");   
-        soundURL[9] = getClass().getResource("/assets/sound/shovel.wav");   
+        soundURL[9] = getClass().getResource("/assets/sound/takeWater.wav");   
         soundURL[10] = getClass().getResource("/assets/sound/shovel.wav");   
         soundURL[11] = getClass().getResource("/assets/sound/shovel.wav");   
         soundURL[12] = getClass().getResource("/assets/sound/shovel.wav");   
