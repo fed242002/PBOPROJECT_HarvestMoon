@@ -46,9 +46,14 @@ public class Entity extends SuperEntity {
     public boolean isObj = false;
     public Entity currentLight; // Current light source for the entity, if any
     public int lightRadius; // Radius of the light source, if any
+    public boolean stackable = false; // kalo mau item nya stackable declare di obj nya jadi true
+    public int amount = 1; // Amount of the entity, used for stackable items
+    public ArrayList<Entity> inventory = new ArrayList<>();
 
     // item attributes
     public String description = " "; // Description of the item
+
+    // type item
     public final int type_light = 9;
 
     // animation

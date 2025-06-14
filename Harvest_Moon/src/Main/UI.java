@@ -32,8 +32,8 @@ public class UI {
     EnergyBar energyBar;
     public Entity currentEntityDialogue; // Entity that is currently interacting with the player
     int subState = 0;
-    public int slotCol = 0; // inventory slot column
-    public int slotRow = 0; // inventory slot row
+    public int playerSlotCol = 0; // inventory slot column
+    public int playerSlotRow = 0; // inventory slot row
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -86,7 +86,7 @@ public class UI {
 
         // buat inventory
         if (gp.gameState == gp.inventoryState) {
-            drawInventory();
+            drawInventory(gp.player, true);
         }
     }
 
@@ -315,13 +315,27 @@ public class UI {
         }
     }
 
-    public void drawInventory() // buat inventory
+    public void drawInventory(Entity entity, boolean cursor) // buat inventory
     {
         // frame nya
-        int frameX = gp.tileSize * 9;
-        int frameY = gp.tileSize;
-        int frameWidth = gp.tileSize * 6;
-        int frameHeight = gp.tileSize * 5;
+        int frameX = 0;
+        int frameY = 0;
+        int frameWidth = 0;
+        int frameHeight = 0;
+        int slotRow = 0;
+        int slotCol = 0;
+
+        if (entity == gp.player) {
+            frameX = gp.tileSize * 12;
+            frameY = gp.tileSize;
+            frameWidth = gp.tileSize * 6;
+            frameHeight = gp.tileSize * 5;
+            slotCol = playerSlotCol; // inventory slot column
+            slotRow = playerSlotRow; // inventory slot row
+        }
+        // tambahin npc mu disini
+
+        // frame
         drawSubWindow(frameX, frameY, frameWidth, frameHeight);
 
         // slot invent
@@ -332,16 +346,34 @@ public class UI {
         int slotSize = gp.tileSize + 3; // size of each slot
 
         // draw players item
-        for (int i = 0; i < gp.player.inventory.size(); i++) {
+        for (int i = 0; i < entity.inventory.size(); i++) {
 
             // equip cursor
-            // if (gp.player.inventory.get(i) == gp.player.equippedItem) { // kalo dipake
+            // if (entity.inventory.get(i) == entity.equippedItem) { // kalo dipake
             // dan itu equipment
             // g2.setColor(new Color(240, 190, 90)); // gold color with transparency
             // g2.fillRoundRect(slotX, slotY, gp.tileSize, gp.tileSize, 10, 10);
             // }
 
-            g2.drawImage(gp.player.inventory.get(i).image, slotX, slotY, null);
+            g2.drawImage(entity.inventory.get(i).image, slotX, slotY, null);
+
+            // display amount
+            if (entity.inventory.get(i).amount > 1) {
+                g2.setFont(g2.getFont().deriveFont(32F));
+                int amountX;
+                int amountY;
+
+                String s = "" + entity.inventory.get(i).amount;
+                amountX = getXforRightAlignedText(s, slotX + 44);
+                amountY = slotY + gp.tileSize; // adjust Y position to fit in the slot
+
+                // shadow
+                g2.setColor(new Color(60, 60, 60));
+                g2.drawString(s, amountX, amountY);
+                // number
+                g2.setColor(Color.WHITE);
+                g2.drawString(s, amountX - 3, amountY - 3);
+            }
 
             slotX += slotSize; // move to next slot in row
 
@@ -352,43 +384,45 @@ public class UI {
         }
 
         // cursor
-        int cursorX = slotXStart + (slotSize * slotCol);
-        int cursorY = slotYStart + (slotSize * slotRow);
-        int cursorWidth = gp.tileSize;
-        int cursorHeight = gp.tileSize;
+        if (cursor == true) {
+            int cursorX = slotXStart + (slotSize * slotCol);
+            int cursorY = slotYStart + (slotSize * slotRow);
+            int cursorWidth = gp.tileSize;
+            int cursorHeight = gp.tileSize;
 
-        // draw cursor
-        g2.setColor(Color.WHITE);
-        g2.setStroke(new BasicStroke(3));
-        g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
+            // draw cursor
+            g2.setColor(Color.WHITE);
+            g2.setStroke(new BasicStroke(3));
+            g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
 
-        // description frame nya
-        int dFrameX = frameX;
-        int dFrameY = frameY + frameHeight;
-        int dFrameWidth = frameWidth;
-        int dFrameHeight = gp.tileSize * 3; // height for description
+            // description frame nya
+            int dFrameX = frameX;
+            int dFrameY = frameY + frameHeight;
+            int dFrameWidth = frameWidth;
+            int dFrameHeight = gp.tileSize * 3; // height for description
 
-        // draw desc text
-        int textX = dFrameX + 20;
-        int textY = dFrameY + gp.tileSize;
-        g2.setFont(g2.getFont().deriveFont(28F));
+            // draw desc text
+            int textX = dFrameX + 20;
+            int textY = dFrameY + gp.tileSize;
+            g2.setFont(g2.getFont().deriveFont(28F));
 
-        int itemIndex = getItemIndexOnSlot(); // get item index based on slotCol and slotRow
+            int itemIndex = getItemIndexOnSlot(slotCol, slotRow); // get item index based on slotCol and slotRow
 
-        if (itemIndex < gp.player.inventory.size()) {
+            if (itemIndex < entity.inventory.size()) {
 
-            drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
+                drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
 
-            for (String line : gp.player.inventory.get(itemIndex).description.split("\n")) {
-                g2.drawString(line, textX, textY);
-                textY += 32;
+                for (String line : entity.inventory.get(itemIndex).description.split("\n")) {
+                    g2.drawString(line, textX, textY);
+                    textY += 32;
+                }
+
             }
-
         }
 
     }
 
-    public int getItemIndexOnSlot() {
+    public int getItemIndexOnSlot(int slotCol, int slotRow) {
         int itemIndex = slotCol + (slotRow * 5); // 5 items per row
         return itemIndex;
     }
