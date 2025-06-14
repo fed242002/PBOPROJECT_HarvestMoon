@@ -14,7 +14,7 @@ import Main.KeyHandler;
 import animation.Animation;
 import animation.ToolsAnimation;
 import object.OBJ_soil;
-import object.OBJ_Tree;
+import object.*;
 
 public class Player extends Entity {
 
@@ -99,10 +99,10 @@ public class Player extends Entity {
         toolsAnimationList.add(new ToolsAnimation(gp,"axe", "idle", 6));
         toolsAnimationList.add(new ToolsAnimation(gp,"axe", "walk", 6));
         toolsAnimationList.add(new ToolsAnimation(gp,"axe", "chop", 10));
-        toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "fishcaught", 9,true));
-        toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "CAST", 9, true));
-        toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "FISHIDLE", 6,true));
-        toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "FISHIDLE1", 6, true));
+        toolsAnimationList.add(new ToolsAnimation(gp,"FISHROD", "FISHCAUGHT", 9,true));
+        toolsAnimationList.add(new ToolsAnimation(gp,"FISHROD", "CAST", 9, true));
+        toolsAnimationList.add(new ToolsAnimation(gp,"FISHROD", "FISHIDLE", 6,true));
+        toolsAnimationList.add(new ToolsAnimation(gp,"FISHROD", "FISHIDLE1", 6, true));
         toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "fishpulled", 2, true));
         toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "idle", 6));
         toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "walk", 6));

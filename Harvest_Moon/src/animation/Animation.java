@@ -48,7 +48,7 @@ public class Animation {
             
         }
 
-                public Animation(String name1,int spriteTotal, String path, boolean oneD, int soundFX) {
+        public Animation(String name1,int spriteTotal, String path, boolean oneD, int soundFX) {
         this.name = name1.toUpperCase();
         this.spriteTotal = spriteTotal;
         this.path = path;
