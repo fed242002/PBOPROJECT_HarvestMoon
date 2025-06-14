@@ -86,7 +86,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
         MapDB.mapList.get(currentMap).needsRefresh = true; // Set the needsRefresh flag to true
         justChangedMap = true; // Set the flag to indicate that the map has just changed
-        
+        current.needsRefresh = true; // Set the needsRefresh flag to true
     }
     // Game state
     public int gameState;
@@ -98,6 +98,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
     // UI
     public UI ui = new UI(this); // Create a new UI object
+
 
     // lighting
     EnvironmentManager eManager = new EnvironmentManager(this); // Create a new EnvironmentManager object
@@ -178,7 +179,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     
         MapData current = MapDB.mapList.get(currentMap);
 
-            if(justChangedMap|| current.needsRefresh) { // If the map has just changed
+        if(justChangedMap|| current.needsRefresh) { // If the map has just changed
 
             obj = current.obj; // Update the object list
             farmObj = current.farmObj;

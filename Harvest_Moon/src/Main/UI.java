@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JTextField;
@@ -28,7 +29,7 @@ public class UI {
     public int titleScreenState = 0; // 0: title screen, 1: new Game(customize character)
     public int pauseScreenState = 0; // 0: pausedmenu , 1: resume, 2: settings, 3: exit
     public int optionState = 0; // 0: top, 1: music, 2: se, 3: control, 4: end game
-    int customizeNum = 0; //
+    public int customizeNum = 0; // 0: body, 1: eye, 2: hair, 3: outfit, 4: confirm
     EnergyBar energyBar;
     public Entity currentEntityDialogue; // Entity that is currently interacting with the player
     int subState = 0;
@@ -37,7 +38,11 @@ public class UI {
         this.gp = gp;
         // arial_40 = new Font("Arial", Font.PLAIN, 40);
         this.energyBar = new EnergyBar(70, 50, 200, 20, 10, gp.player.maxEnergy);
+
+
     }
+
+  
 
     public void showMessage(String text) {
         message = text;

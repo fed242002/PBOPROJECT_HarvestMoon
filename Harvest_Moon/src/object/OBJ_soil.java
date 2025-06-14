@@ -18,6 +18,14 @@ public class OBJ_soil extends Entity {
         isObj = true; // Set this entity as an object
         image = gp.setImage(path);
         
+        // solidArea.x = 10;
+        // solidArea.y = 10;
+        // solidArea.width = 68;
+        // solidArea.height = 68;
+        // this.solidAreaDefaultX = this.solidArea.x;
+        // this.solidAreaDefaultY = this.solidArea.y;
+
+        
     }
 
     public void watering(){
@@ -30,6 +38,10 @@ public class OBJ_soil extends Entity {
     public void reset() {
         isWet = false; // Reset the wet status
         image = gp.setImage(path); // Change the image back to dry soil
+    }
+    
+    public void interact() {
+    System.out.println("Interacting with " + name);
     }
 
 }

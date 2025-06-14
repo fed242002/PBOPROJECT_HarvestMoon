@@ -13,7 +13,6 @@ import Main.GamePanel;
 import Main.KeyHandler;
 import animation.Animation;
 import animation.ToolsAnimation;
-import object.OBJ_soil;
 import object.*;
 
 public class Player extends Entity {
@@ -41,6 +40,7 @@ public class Player extends Entity {
     public int gold = 100;
     public boolean lightUpdated = false;
     public int fishingTimeRandom;
+    
 
     int targetWorldX;
     int targetWorldY;
@@ -281,8 +281,6 @@ public class Player extends Entity {
     }
 
 
-  
-
     public void drawFrontBlock(Graphics2D g2) {
         //hitbox player di world posisi
     int hitboxCenterWorldX = worldX + solidArea.x + (solidArea.width / 2);
@@ -357,6 +355,20 @@ public class Player extends Entity {
                     return;
                 }
             }
+            if(currentTools.equalsIgnoreCase("WateringCan")){
+                int objIndex = gp.cChecker.checkObjectFarm(targetWorldX,targetWorldY,this, true);
+                if(objIndex != 999 && gp.farmObj.get(objIndex) instanceof OBJ_soil) {
+                    g2.setColor(new Color(0, 255, 0, 100));
+                    g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+                }else{
+                    g2.setColor(new Color(255, 0, 0, 100));
+                    g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+                    g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);  //ini jangan lupa kalo ada red soalnya ak lgsng return hehe
+                    return;
+                }
+
+            }
+
     
             g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);
             
@@ -393,6 +405,15 @@ public class Player extends Entity {
                     }
                 }
             }
+
+            if(currentTools.equalsIgnoreCase("WateringCan")){
+                int objIndex = gp.cChecker.checkObjectFarm(targetWorldX,targetWorldY,this, true);
+
+                if(objIndex != 999 && gp.farmObj.get(objIndex) instanceof OBJ_soil) {
+                    isWatering = true;
+                    moveDisabled = true; // Disable movement while watering
+                }
+            }
             
             if(currentTools.equalsIgnoreCase("fishRod")) {
                 if(gp.tileM.mapTileNum[targetTileCol][targetTileRow] >= 25 && gp.tileM.mapTileNum[targetTileCol][targetTileRow] <= 48){
@@ -405,6 +426,16 @@ public class Player extends Entity {
                 resetAllAnimation();
                 setAnimation("fishCaught");
                 throwBack = true;             
+            }
+            if(fishDetected){
+                resetAllAnimation();
+                setAnimation("fishpulled");
+                fishpulled = true;
+                fishingTimeRandom = random.nextInt(5,15 ); // Random value between 5 and 20
+                turnOffEmote();
+
+                //ini nanti buat nambah ikan kalo misal ke tangkap
+                fishCaught = true;
             }
 
         }
@@ -421,6 +452,26 @@ public class Player extends Entity {
 
     
     public void action(int x, int y){
+
+        if(isWatering){
+            
+
+            setAnimation("watering");
+            animation(5);
+
+            if(animationDone == 3){
+                animationDone = 0;
+                resetAllAnimation();
+                setAnimation("idle");
+                moveDisabled = false; 
+                int objIndex = gp.cChecker.checkObjectFarm(targetWorldX,targetWorldY,this, true);
+
+                if(objIndex != 999 && gp.farmObj.get(objIndex) instanceof OBJ_soil) {
+                    gp.farmObj.get(objIndex).watering();
+                }
+            }
+        }
+
 
         //interact with soil -> buat grass jadi soil (tambahin pengecekan nanti)
         if(isDigging){
@@ -512,6 +563,7 @@ public class Player extends Entity {
                 resetAllAnimation();
                 setAnimation("FISHIDLE1");
                 fishDetected = true;
+                emoteOn = true; // Show emote when fish is detected
             }
 
         }
@@ -521,11 +573,12 @@ public class Player extends Entity {
 
             animation(10);
 
-            if(animationDone == 1){
+            if(animationDone == 3){
                 animationDone = 0;
                 resetAllAnimation();
                 setAnimation("FISHIDLE");
                 isFishing = true;
+                turnOffEmote();
             }
         }
 
@@ -538,6 +591,24 @@ public class Player extends Entity {
                 resetAllAnimation();
                 setAnimation("idle");
                 moveDisabled = false; // bisa jalan lagi
+
+
+                if(fishCaught){
+                    //disini nanti tambahin ikan ke inventory
+
+
+                    fishCaught = false; // Reset the fish caught flag
+                }
+            }
+        }
+        if(fishpulled){
+            setAnimation("FISHPULLED");
+            animation(7);
+
+            if(animationDone >= fishingTimeRandom){
+                animationDone = 0;
+                resetAllAnimation();
+                throwBack = true; // Set throwBack to true to throw the fish back
             }
         }
 
@@ -578,8 +649,38 @@ public class Player extends Entity {
         spriteNum = 0;
     }
 
+    public void drawEmote(Graphics2D g2) {
+            // Draw the emote
+            BufferedImage emoteImage = bubble[thinkSpriteNum];
+            g2.drawImage(emoteImage, screenX + 28, screenY - 30, 48, 96, null);
+            if(thinkSpriteNum == 2 ){
+                g2.drawImage(emote.get(currentEmote).get(0), screenX + 28, screenY - 30, 48, 48, null);
+            }
+            if(thinkSpriteNum == 3 ){
+                g2.drawImage(emote.get(currentEmote).get(1), screenX + 28, screenY - 30, 48, 48, null);
+            }
+
+            if(thinkSpriteNum<3){
+                thinkSpriteCount++;
+                if (thinkSpriteCount > 10) {
+                    thinkSpriteNum++;
+                    thinkSpriteCount = 0;
+                    
+                }
+            }
+
+            
+
+    }
+
 
     public void draw(Graphics2D g2) {
+        
+        if(emoteOn){
+            drawEmote(g2);
+        }
+
+
 
         BufferedImage image = null;
         BufferedImage image1 = null;

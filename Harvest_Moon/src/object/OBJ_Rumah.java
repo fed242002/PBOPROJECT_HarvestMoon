@@ -8,7 +8,7 @@ public class OBJ_Rumah extends Entity {
 
     public OBJ_Rumah(GamePanel gp, int x, int y) {
         super(gp);
-        name = "Key";
+        name = "home";
         path = "/assets/Farmer_House_1_48x48.png";
         collision = false; // gaiso dilewati
         worldX = x;
