@@ -26,7 +26,6 @@ public class TileManager {
         loadMap(MapDB.mapList.get(gp.currentMap).path); // Load the map from the specified path
         MapDB.mapList.get(gp.currentMap).needsRefresh = true;
 
-
     }
     
 

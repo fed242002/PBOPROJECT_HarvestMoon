@@ -135,7 +135,7 @@ public class Player extends Entity {
         animationList.add(new Animation("Sit", 6, "/assets/player/SIT 1/" + getPath()));
         animationList.add(new Animation("sleep", 6, "/assets/player/SLEEP/" + getPath(), true));
         animationList.add(new Animation("throw", 14, "/assets/player/THROW/" + getPath()));
-        animationList.add(new Animation("watering", 14, "/assets/player/WATERING/" + getPath()));
+        animationList.add(new Animation("watering", 14, "/assets/player/WATERING/" + getPath(), 8));
 
 
 

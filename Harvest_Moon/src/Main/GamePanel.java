@@ -68,6 +68,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     
 
     public void changeMap(int mapNum){
+        player.setAnimation("idle");
+        stopMusic(masterMusic);
         if(mapNum < 0 || mapNum >= MapDB.mapList.size()) {
             System.out.println("Invalid map number: " + mapNum);
             return; // Invalid map number
@@ -87,6 +89,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         MapDB.mapList.get(currentMap).needsRefresh = true; // Set the needsRefresh flag to true
         justChangedMap = true; // Set the flag to indicate that the map has just changed
         current.needsRefresh = true; // Set the needsRefresh flag to true
+
+        playMusic(masterMusic, current.music);
     }
     // Game state
     public int gameState;
@@ -127,6 +131,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         aSetter.setObject();
         aSetter.setNPC();
         eManager.setup(); // ini untuk setting dalam kegelapan
+        playMusic(masterMusic, MapDB.mapList.get(currentMap).music);
+
         // gameState = titleState;
         gameState = playState; // Set the game state to play
         // changeMap(1);

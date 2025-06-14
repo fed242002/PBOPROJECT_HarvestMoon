@@ -18,6 +18,7 @@ public class MapData{
     public ArrayList<Entity> farmObj = new ArrayList<>(); // List of objects in the game
     public ArrayList<Entity> npcs = new ArrayList<>(); // List of NPCs in the game
     public ArrayList<Entity> entityList = new ArrayList<>(); // List of all entities in the game
+    public int music = 0;
 
 
     public int getTotalObj(){
@@ -31,7 +32,7 @@ public class MapData{
 
 
 
-    public MapData  (String name, String path, String tileDataPath, String tilePath) {
+    public MapData  (String name, String path, String tileDataPath, String tilePath, int music) {
         mapNum = totalMaps;
         totalMaps++;
         this.name = name;
