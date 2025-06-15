@@ -20,13 +20,13 @@ public class Player extends Entity {
 
     public String listBody[] = {"white", "krem", "black"};
     public String listEye[] = {"blue", "brown", "green"};
-    public String listHair[] = {"baldBlondeAsh", "longBrownHazel", "shortBrownDark"};
     public String listOutfit[] = {"violet", "blue"};
+    public String listHair[] = {"baldBlondeAsh", "longBrownHazel", "shortBrownDark"};
 
-    public int bodyIndex = 1; // Index for the current body type
+    public int bodyIndex = 2; // Index for the current body type
     public int eyeIndex = 0; // Index for the current eye type
-    public int hairIndex = 0; // Index for the current hair type
     public int outfitIndex = 1; // Index for the current outfit type
+    public int hairIndex = 1; // Index for the current hair type
     public Random random = new Random();
 
     public String name = "Fedrian";
@@ -49,11 +49,11 @@ public class Player extends Entity {
     int targetTileRow;
 
     // ini buat sprite animation -> info2
-    public String body = "krem";
-    String eye = "blue";
-    String outfit = "blue";
-    String hair = "baldBlondeAsh";
-    
+    public String body = listBody[bodyIndex];
+    String eye = listEye[eyeIndex];
+    String outfit = listOutfit[outfitIndex];
+    String hair = listHair[hairIndex];
+
     public boolean moveDisabled = false;
     public boolean isDigging = false; 
     public boolean isUndoDigging = false; 
@@ -68,6 +68,8 @@ public class Player extends Entity {
     public boolean throwBack = false; // Flag to check if the fish is caught
 
     public boolean isWatering = false;
+
+    public BufferedImage duvetImage = null; // Image for the duvet when sleeping
 
     public Player(GamePanel gp, KeyHandler keyH) {
 
@@ -747,6 +749,15 @@ public class Player extends Entity {
         if(currentTool != null && image1 != null) {
             g2.drawImage(image1, currentTool.x, currentTool.y, currentTool.width, currentTool.height, null); // Draw tool image
         }
+
+        if(currentAnimationIndex == 13){
+            if(duvetImage != null) {
+                g2.drawImage(duvetImage, screenX, screenY + 48, gp.playerSizeX, gp.playerSizeY, null);
+            }
+            else {
+                System.out.println("Error: duvetImage is null in Player draw method");
+            }
         }
+    }
 
 }

@@ -67,6 +67,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     saveLoad saveLoad1 = new saveLoad(this);
     
 
+
     public void changeMap(int mapNum){
         player.setAnimation("idle");
         stopMusic(masterMusic);
@@ -252,7 +253,10 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
             }
 
             // tambah entitiy to list
-            entityList.add(player); // Add player to the entity list
+            //special buat animasi turu kalo misal turu digambar diatas bed
+            if(player.currentAnimationIndex != 13) { // Only add player to the list if not in animation
+                entityList.add(player); // Add player to the entity list    
+            }
 
             for (int i = 0; i < npcs.size(); i++) {
                 if (npcs.get(i) != null) {
@@ -276,17 +280,18 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
                     return Integer.compare(e1Bottom, e2Bottom);
                 }
             });
-
+            
             // draw entities
             for (int i = 0; i < entityList.size(); i++) {
                 entityList.get(i).draw(g2); // Draw each entity in the list
             }
-
-            // empty the entity list after drawing
-            // for (int i = 0; i < entityList.size(); i++) {
-            //     entityList.remove(entityList.get(i)); // Draw each entity in the list
-            // }
             entityList.clear(); // Clear the entity list after drawing
+            
+            //draw player diatas smua entity k
+            if(player.currentAnimationIndex == 13) { // Only add player to the list if not in animation
+                player.draw(g2); // Draw player on top of all entities
+            }
+            
 
             // enviroment
             eManager.draw(g2); // cara buat setting kegelapan nya disini

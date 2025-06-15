@@ -4,10 +4,19 @@ import Main.GamePanel;
 import entity.Entity;
 
 public class OBJ_Bed extends Entity {
-    public OBJ_Bed(GamePanel gp, int x, int y) {
+
+    int type;
+    public OBJ_Bed(GamePanel gp, int type,int x, int y) {
+
         super(gp);
+        if(type>imagePathList.size() - 1) {
+            type = 0; // Reset to the first image if type exceeds available images
+        }
+        this.type = type; // Set the type of bed
+        imagePathList.add("/assets/object/bed0.png"); // Add the bed image path to the list
+
         name = "bed";
-        path = "/assets/object/bed0.png"; // Path to the bed image
+        path = imagePathList.get(type); // Path to the bed image
         image = gp.setImage(path); // Set the image for the bed
         collision = true; // Set collision to true for this object
         worldX = x;
@@ -30,8 +39,17 @@ public class OBJ_Bed extends Entity {
     @Override
     public void interact() {
         if(gp.keyH.interactPressed ){
-                
+            if(gp.player.currentTools != null) {
+                gp.player.currentTools = null; 
+            }
+            gp.player.duvetImage = gp.setImage("/assets/object/duvet" + type + ".png"); // Set the duvet image for the bed
             
+            gp.keyH.interactPressed = false; // Reset the interact key
+            gp.player.setAnimation("sleep"); // Set the player's animation to sleep
+            gp.player.moveDisabled = true; // Disable player movement
+            gp.player.worldX = worldX; // Set player's world position to the bed's position
+            gp.player.worldY = worldY; // Set player's world position to the bed's position
+
         }
     }
 

@@ -37,11 +37,12 @@ public class Animation {
         down = new BufferedImage[spriteTotal];
         left = new BufferedImage[spriteTotal];
         right = new BufferedImage[spriteTotal];
+
         this.oneD = oneD;
 
 
-        if(oneD)
-            setSpriteOneD();
+        if(!oneD)
+            setSprite();
         else
             setSpriteAllD();
            
@@ -60,10 +61,13 @@ public class Animation {
         this.soundFX = soundFX;
 
       
-        if(oneD)
-            setSpriteOneD();
+        
+
+        if(!oneD)
+            setSprite();
         else
             setSpriteAllD();
+           
             
         }
 
@@ -118,21 +122,6 @@ public class Animation {
         }
     }
 
-
-    public void setSpriteOneD() {
-        
-        try{
-            for (int i = 0; i < spriteTotal; i++) {
-                down[i] = ImageIO.read(getClass().getResourceAsStream(path + "-" + i + ".png"));
-            }
-
-            // System.out.println("setSprite("+path+") di class Animation berhasil");
-
-        }catch (Exception e) {
-            System.out.println("error di setSprite("+path+") di class Animation - One Direction Animation"); 
-            e.printStackTrace(); 
-        }
-    }
 
 
     public void setPath(String path) {
