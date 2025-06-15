@@ -46,6 +46,7 @@ public class Entity extends SuperEntity {
                     //ganti map disini
     
                 }
+
                 objAnimationSpriteNum = 0;
                 objectAnimationOn = false; // Turn off the animation after it completes
                 image = gp.setImage(path); // Reset the image to the default path
