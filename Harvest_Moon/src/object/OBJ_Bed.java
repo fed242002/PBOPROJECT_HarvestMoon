@@ -6,7 +6,14 @@ import entity.Entity;
 public class OBJ_Bed extends Entity {
 
     int type;
+    
+    //type ini variasi gambar bed ye misal 0 skarang itu bed ungu
+
+    int playerTempX;
+    int playerTempY;
+
     public OBJ_Bed(GamePanel gp, int type,int x, int y) {
+
 
         super(gp);
         if(type>imagePathList.size() - 1) {
@@ -39,6 +46,9 @@ public class OBJ_Bed extends Entity {
     @Override
     public void interact() {
         if(gp.keyH.interactPressed ){
+            playerTempX = gp.player.worldX; // Store the player's current X position
+            playerTempY = gp.player.worldY; // Store the player's current Y position
+
             if(gp.player.currentTools != null) {
                 gp.player.currentTools = null; 
             }
@@ -49,6 +59,54 @@ public class OBJ_Bed extends Entity {
             gp.player.moveDisabled = true; // Disable player movement
             gp.player.worldX = worldX; // Set player's world position to the bed's position
             gp.player.worldY = worldY; // Set player's world position to the bed's position
+            
+            //ganti hari implement sini
+
+            int sleepTimeInSecond = 5; // Sleep time in milliseconds
+
+            try {
+                int sleepCounter = sleepTimeInSecond * 3; // Total iterations for the animation
+                for(int i = 0; i < sleepCounter; i++) { 
+                    Thread.sleep(320);
+                    gp.player.spriteNum++;
+                    if(gp.player.spriteNum >= gp.player.animationList.get(gp.player.currentAnimationIndex).spriteTotal) {
+                        gp.player.spriteNum = 0; // Reset sprite number after reaching the total
+                    }
+                    gp.repaint(); // Repaint the game panel to update the player's animation
+
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } // Sleep for 1 second to simulate the sleeping process
+
+
+            //reset semua pas ganti hari
+                //reset semua Entity farm, wet soil -> not wet, pohon -> not cut, etc.
+                for(Entity e : gp.farmObj) {
+                    e.reset();
+                }
+
+                //reset Energy
+                gp.player.energy = gp.player.maxEnergy; // Reset player's energy to maximum
+            
+                
+
+
+
+
+
+
+
+
+
+
+
+            //pas bangun            
+            gp.player.setAnimation("idle");
+            gp.player.moveDisabled = false; // Enable player movement
+            gp.player.worldX = playerTempX; // Restore player's X position
+            gp.player.worldY = playerTempY; // Restore player's Y position
+            gp.player.duvetImage = null; // Reset duvet image
 
         }
     }

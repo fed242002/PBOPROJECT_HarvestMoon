@@ -174,6 +174,7 @@ public class Player extends Entity {
     }
 
     KeyHandler keyH; // KeyHandler object to handle key events
+    public int spriteTotal;
 
     public void setDefaultValues() {
         worldX = gp.tileSize * 23; // Set the default x position of the player
