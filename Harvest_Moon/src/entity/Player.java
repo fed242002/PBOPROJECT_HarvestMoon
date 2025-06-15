@@ -71,7 +71,7 @@ public class Player extends Entity {
 
     // inventory player
     public ArrayList<Entity> inventory = new ArrayList<>();
-    public final int maxInventorySize = 20; // Size of the inventory
+    public final int maxInventorySize = 20; // Maximum size of the inventory
 
     public Player(GamePanel gp, KeyHandler keyH) {
 
@@ -282,7 +282,7 @@ public class Player extends Entity {
         String text = "";
 
         if (i != 999) {
-            if (inventory.size() != maxInventorySize) {
+            if (canObtainItem(gp.obj.get(gp.currentMap)) == true) {
                 inventory.add(gp.obj.get(i)); // Add the object to the inventory
                 gp.obj.get(i).interact(); // Call the interact method of the object
                 text = "You picked up " + gp.obj.get(i).name + "!"; // Set the text to display
@@ -297,6 +297,44 @@ public class Player extends Entity {
             }
 
         }
+    }
+
+    public int searchItemInInventory(String itemName) {
+        int itemIndex = 999; // Default value if item is not found
+
+        for (int i = 0; i < inventory.size(); i++) {
+            if (inventory.get(i).name.equalsIgnoreCase(itemName)) {
+                itemIndex = i; // Set the item index if found
+                break; // Exit the loop once the item is found
+            }
+        }
+        return itemIndex; // Return the index of the item in the inventory
+    }
+
+    public boolean canObtainItem(Entity item) {
+        boolean canObtain = false;
+
+        // check kalo stackable
+        if (item.stackable == true) {
+            int index = searchItemInInventory(item.name);
+
+            if (index != 999) {
+                inventory.get(index).amount += item.amount; // Add the amount to the existing item
+                canObtain = true; // Item successfully obtained
+            } else {
+                if (inventory.size() != maxInventorySize) {
+                    inventory.add(item); // Add the item to the inventory
+                    canObtain = true; // Item successfully obtained
+                }
+            }
+        } else // not stackable
+        {
+            if (inventory.size() != maxInventorySize) {
+                inventory.add(item); // Add the item to the inventory
+                canObtain = true; // Item successfully obtained
+            }
+        }
+        return canObtain; // Return whether the item can be obtained or not
     }
 
     public void interactNPC(int i) {
@@ -457,13 +495,30 @@ public class Player extends Entity {
     }
 
     public void selectItem() {
-        int itemIndex = gp.ui.getItemIndexOnSlot(); // Get the selected item index from the UI
+        int itemIndex = gp.ui.getItemIndexOnSlot(gp.ui.playerSlotCol, gp.ui.playerSlotRow); // Get the selected item
+                                                                                            // index from the UI
 
         if (itemIndex < inventory.size()) {
             Entity selectedItem = inventory.get(itemIndex); // Get the selected item from the inventory
 
             // if(selectedItem == type_tools) //tipe tools misalnya
             // currentTools = selectedItem;
+
+            // if(selectedItem == type_food) // misal makanan
+            // {
+            // if(selectedItem.use(this) == true)
+            // {
+            // if(selectedItem.amount > 1)
+            // {
+            // selectedItem.amount--; // Reduce the amount of the item by 1
+            // }
+            // else
+            // {
+            // inventory.remove(itemIndex); // Remove the item from the inventory if amount
+            // is 1
+            // }
+            // }
+            // }
         }
     }
 

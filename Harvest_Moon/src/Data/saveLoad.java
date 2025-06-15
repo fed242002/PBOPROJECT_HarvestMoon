@@ -2,9 +2,7 @@ package Data;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -19,16 +17,16 @@ public class saveLoad {
 
     public void save() {
         try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("save.dat")));
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("save.dat")))) {
+                dataStorage ds = new dataStorage();
+                // tambah sendiri bang
 
-            dataStorage ds = new dataStorage();
-            // tambah sendiri bang
+                ds.energy = gp.player.energy;
+                ds.coin = gp.player.gold;
 
-            ds.energy = gp.player.energy;
-            ds.coin = gp.player.gold;
-
-            // write datastorage obj
-            oos.writeObject(ds);
+                // write datastorage obj
+                oos.writeObject(ds);
+            }
 
         } catch (Exception e) {
             System.out.println("Save Exception");
@@ -39,14 +37,14 @@ public class saveLoad {
     public void load() {
         try {
 
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File("save.dat")));
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File("save.dat")))) {
+                // read objectnya
+                dataStorage ds = (dataStorage) ois.readObject();
 
-            // read objectnya
-            dataStorage ds = (dataStorage) ois.readObject();
-
-            // contoh masukinnya
-            gp.player.energy = ds.energy;
-            gp.player.gold = ds.coin;
+                // contoh masukinnya
+                gp.player.energy = ds.energy;
+                gp.player.gold = ds.coin;
+            }
 
         } catch (Exception e) {
             System.out.println("Load Exception");

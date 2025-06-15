@@ -313,34 +313,13 @@ public class KeyHandler implements KeyListener {
 
         // kalo inventory
         if (gp.gameState == gp.inventoryState) {
-            if (code == KeyBind.upKey) {
-                if (gp.ui.slotRow != 0) {
-                    gp.ui.slotRow--;
-                }
 
-            }
-
-            if (code == KeyBind.downKey) {
-                if (gp.ui.slotRow != 3) {
-                    gp.ui.slotRow++;
-                }
-            }
-
-            if (code == KeyBind.rightKey) {
-                if (gp.ui.slotCol != 4) {
-                    gp.ui.slotCol++;
-                }
-            }
-
-            if (code == KeyBind.leftKey) {
-                if (gp.ui.slotCol != 0) {
-                    gp.ui.slotCol--;
-                }
-            }
+            playerInventory(code);
 
             if (code == KeyBind.nextKey) {
                 gp.player.selectItem();
             }
+
             if (code == KeyBind.pauseKey) { // pencet escape
                 gp.gameState = gp.playState; // Exit inventory and return to play state
             }
@@ -421,6 +400,33 @@ public class KeyHandler implements KeyListener {
 
     public void updatePlayerPath() {
         gp.player.redeclareAnimation();
+    }
+
+    public void playerInventory(int code) {
+        if (code == KeyBind.upKey) {
+            if (gp.ui.playerSlotRow != 0) {
+                gp.ui.playerSlotRow--;
+            }
+
+        }
+
+        if (code == KeyBind.downKey) {
+            if (gp.ui.playerSlotRow != 3) {
+                gp.ui.playerSlotRow++;
+            }
+        }
+
+        if (code == KeyBind.rightKey) {
+            if (gp.ui.playerSlotCol != 4) {
+                gp.ui.playerSlotCol++;
+            }
+        }
+
+        if (code == KeyBind.leftKey) {
+            if (gp.ui.playerSlotCol != 0) {
+                gp.ui.playerSlotCol--;
+            }
+        }
     }
 
 }
