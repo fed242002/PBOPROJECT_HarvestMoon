@@ -9,12 +9,14 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-import Main.EnergyIntake;
-import Main.GamePanel;
-import Main.KeyHandler;
-import animation.Animation;
-import animation.ToolsAnimation;
+import animation.*;
+import Data.*;
+import entity.*;
+import Environment.*;
 import object.*;
+import Main.*;
+import tile.*;
+
 
 public class Player extends Entity {
 

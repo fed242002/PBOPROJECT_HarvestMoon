@@ -6,12 +6,14 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import Main.GamePanel;
-import animation.Animation;
-import animation.ToolsAnimation;
-import object.OBJ_Bed;
-import object.OBJ_Rumah;
-import object.OBJ_soil;
+import animation.*;
+import Data.*;
+import entity.*;
+import Environment.*;
+import object.*;
+import Main.*;
+import tile.*;
+
 
 public class Entity extends SuperEntity {
 

@@ -3,7 +3,13 @@ package Main;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import animation.Animation;
+import animation.*;
+import Data.*;
+import entity.*;
+import Environment.*;
+import object.*;
+import Main.*;
+import tile.*;
 
 public class KeyHandler implements KeyListener {
 

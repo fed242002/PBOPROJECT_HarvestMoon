@@ -1,9 +1,5 @@
 package Main;
 
-import Data.saveLoad;
-import Environment.EnvironmentManager;
-import entity.Entity;
-import entity.Player;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,7 +14,15 @@ import java.util.Collections;
 import java.util.Comparator;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import tile.TileManager;
+
+
+import animation.*;
+import Data.*;
+import entity.*;
+import Environment.*;
+import object.*;
+import Main.*;
+import tile.*;
 
 public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 

@@ -2,10 +2,13 @@ package Main;
 
 import java.security.KeyStore.Entry;
 
-import entity.Entity;
-import entity.Npc;
-import object.OBJ_Rumah;
+import animation.*;
+import Data.*;
+import entity.*;
+import Environment.*;
 import object.*;
+import Main.*;
+import tile.*;
 
 public class AssetSetter {
 
