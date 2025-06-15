@@ -1,32 +1,41 @@
 package Main;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 
 public class EventHandler {
     GamePanel gp;
     EventRect eventRect[][];
-    int eventRectDefaultX = 0; // Default X position of the event rectangle
-    int eventRectDefaultY = 0; // Default Y position of the event rectangle
-    int worldX, worldY; // World coordinates for the event
-    int previousEventX, previousEventY; // Previous event coordinates
-    boolean canTouchEvent = true; // Flag to check if the event is done
+    int eventRectDefaultX = 0;
+    int eventRectDefaultY = 0;
+    int worldX, worldY;
+    int previousEventX, previousEventY;
+    boolean canTouchEvent = true;
+    
+    // Transition animation variables
+    private float alpha = 0f;
+    private boolean transitioning = false;
+    private boolean fadingOut = false; // True when fading to black, false when fading from black
+    private int pendingTargetMap = -1;
+    private int pendingX = -1;
+    private int pendingY = -1;
+    private final float FADE_SPEED = 0.05f; // Adjust this to control fade speed
 
     public EventHandler(GamePanel gp) {
         this.gp = gp;
 
-        eventRect = new EventRect[gp.maxWorldCol][gp.maxWorldRow]; // Initialize the event rectangle array
+        eventRect = new EventRect[gp.maxWorldCol][gp.maxWorldRow];
         int col = 0, row = 0;
 
         while (col < gp.maxWorldCol && row < gp.maxWorldRow) {
             eventRect[col][row] = new EventRect();
-            eventRect[col][row].x = 23; // Set default X position
-            eventRect[col][row].y = 23; // Set default Y position
-            eventRect[col][row].width = 2; // Set width to tile size
-            eventRect[col][row].height = 2; // Set height to tile size
-            eventRect[col][row].eventRectDefaultX = eventRect[col][row].x; // Store default X position
-            eventRect[col][row].eventRectDefaultY = eventRect[col][row].y; // Store default Y position
+            eventRect[col][row].x = 23;
+            eventRect[col][row].y = 23;
+            eventRect[col][row].width = 2;
+            eventRect[col][row].height = 2;
+            eventRect[col][row].eventRectDefaultX = eventRect[col][row].x;
+            eventRect[col][row].eventRectDefaultY = eventRect[col][row].y;
 
             col++;
             if (col == gp.maxWorldCol) {
@@ -35,30 +44,128 @@ public class EventHandler {
             }
         }
 
-        worldX = 27 * gp.tileSize; // Set the world X coordinate for the event
-        worldY = 14 * gp.tileSize; // Set the world Y coordinate for the event
+        worldX = 27 * gp.tileSize;
+        worldY = 14 * gp.tileSize;
+    }
+
+    public void update() {
+        // Handle transition animation
+        if (transitioning) {
+            if (fadingOut) {
+                // Fade to black
+                alpha += FADE_SPEED;
+                if (alpha >= 1.0f) {
+                    alpha = 1.0f;
+                    // Perform the actual map change when screen is fully black
+                    performMapTransition();
+                    fadingOut = false; // Start fading back in
+                }
+            } else {
+                // Fade from black
+                alpha -= FADE_SPEED;
+                if (alpha <= 0.0f) {
+                    alpha = 0.0f;
+                    transitioning = false;
+                    canTouchEvent = false; // Prevent immediate re-triggering
+                }
+            }
+        }
     }
 
     public void draw(Graphics2D g2) {
-        // g2.setColor(Color.BLUE);
-        // g2.fillRect(worldX, worldY, eventRect[].width, eventRect.height);
+        // Draw transition overlay
+        if (transitioning && alpha > 0) {
+            // Save the original composite
+            AlphaComposite originalComposite = (AlphaComposite) g2.getComposite();
+            
+            // Set alpha composite for transparency
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+            g2.setColor(Color.BLACK);
+            g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+            
+            // Restore original composite
+            g2.setComposite(originalComposite);
+        }
+    }
+
+    private void startMapTransition(int targetMap, int newX, int newY) {
+        if (!transitioning) { // Prevent starting multiple transitions
+            transitioning = true;
+            fadingOut = true;
+            alpha = 0f;
+            pendingTargetMap = targetMap;
+            pendingX = newX;
+            pendingY = newY;
+        }
+    }
+
+    private void performMapTransition() {
+        // This is called when the screen is fully black
+        gp.changeMap(pendingTargetMap);
+        gp.player.worldX = gp.tileSize * pendingX;
+        gp.player.worldY = gp.tileSize * pendingY;
+        
+        // Reset pending values
+        pendingTargetMap = -1;
+        pendingX = -1;
+        pendingY = -1;
+    }
+
+    // Old method - now calls the new transition method
+    private void handleMapTransition(int targetMap, int newX, int newY) {
+        startMapTransition(targetMap, newX, newY);
     }
 
     public void checkEvent() {
+        
+        if (!canTouchEvent) {
+            int distance = Math.abs(gp.player.worldX - previousEventX) + Math.abs(gp.player.worldY - previousEventY);
+            if (distance > gp.tileSize * 2) {
+                canTouchEvent = true;
+            }
+        }
+
+        if (!canTouchEvent || transitioning) return; // Don't check events during transition
+
+        // Map transition events
+        switch (gp.currentMap) {
+            case 0 -> { // Home
+                if (gp.player.worldY >= gp.tileSize * 47 && gp.player.worldY <= gp.tileSize * 48 &&
+                    gp.player.worldX >= gp.tileSize * 22 && gp.player.worldX <= gp.tileSize * 26) {
+                    handleMapTransition(1, 25, 2);
+                }
+            }
+            case 1 -> { // Forest
+                if (gp.player.worldX >= gp.tileSize * 24 && gp.player.worldX <= gp.tileSize * 26 && 
+                    gp.player.worldY >= gp.tileSize * 0 && gp.player.worldY <= gp.tileSize * 1) {
+                    handleMapTransition(0, 24, 46);
+                }
+                
+                else if (gp.player.worldX >= gp.tileSize * 47 && gp.player.worldX <= gp.tileSize * 48 && 
+                    gp.player.worldY >= gp.tileSize * 23 && gp.player.worldY <= gp.tileSize * 27) {
+                    handleMapTransition(2, 4, 37);
+                }
+            }
+            case 2 -> { // Town Hall
+                if (gp.player.worldX >= gp.tileSize * 0 && gp.player.worldX <= gp.tileSize * 1 && 
+                    gp.player.worldY >= gp.tileSize * 35 && gp.player.worldY <= gp.tileSize * 39) {
+                    handleMapTransition(1, 46, 25);
+                }
+            }
+        }
+        
         int xDistance = Math.abs(gp.player.worldX - previousEventX);
         int yDistance = Math.abs(gp.player.worldY - previousEventY);
         int distance = Math.max(xDistance, yDistance);
 
         if (distance > gp.tileSize) {
-            canTouchEvent = true; // Reset the flag if the player has moved far enough
+            canTouchEvent = true;
         }
 
         if (canTouchEvent) {
             if (hit(27, 14, null) == true && eventRect[27][14].eventDone == false) {
-                // event
                 damagePit(27, 14, gp.eventFoundState);
             }
-
         }
     }
 
@@ -88,10 +195,9 @@ public class EventHandler {
     }
 
     public void damagePit(int col, int row, int gameState) {
-
         gp.gameState = gameState;
         gp.ui.currentDialogue = "You fell into a pit!";
-        eventRect[col][row].eventDone = true; // Mark the event as done
-        canTouchEvent = false; // Prevent further interaction until the player moves away
+        eventRect[col][row].eventDone = true;
+        canTouchEvent = false;
     }
 }

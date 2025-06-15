@@ -1,27 +1,65 @@
 package entity;
 
+import Main.*;
+import animation.*;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import object.*;
 
-import Main.GamePanel;
-import animation.Animation;
-import animation.ToolsAnimation;
-import object.OBJ_soil;
 
 public class Entity extends SuperEntity {
 
-    public void chop() {
+    public void chop(){}
+    public void reset(){}
+    public void watering(){}
+
+    //ini buat kalo misale obj ada banyak variasi gambar
+    public ArrayList<String> imagePathList = new ArrayList<>(); // List of soil images
+    
+
+    public ArrayList<BufferedImage> objAnimation = new ArrayList<>(); // List of tool images
+    public int objAnimationSpriteCount = 0;
+    public int objAnimationSpriteNum = 0;
+    public int objAnimationSpriteTotal = 0;
+    public boolean objectAnimationOn = false; // Flag to check if the object animation is on
+
+
+    public void objAnimationUpdate() {
+        if (objectAnimationOn) {
+            
+            image = objAnimation.get(objAnimationSpriteNum); // Set the current image for the object animation
+            objAnimationSpriteCount++;
+            if (objAnimationSpriteCount > 10) {
+                objAnimationSpriteNum++;
+                objAnimationSpriteCount = 0;
+            }
+            if (objAnimationSpriteNum >= objAnimationSpriteTotal) {
+                if(this instanceof OBJ_Rumah){
+                    //ganti map disini
+    
+                }
+                objAnimationSpriteNum = 0;
+                objectAnimationOn = false; // Turn off the animation after it completes
+                image = gp.setImage(path); // Reset the image to the default path
+                gp.player.moveDisabled = false; // Enable player movement after the animation
+
+            }
+        }
     }
 
-    public void reset() {
-    }
 
-    public void watering() {
-    }
+    int thinkSpriteNum = 0;
+    int thinkSpriteCount = 0;
+    BufferedImage bubble[] = new BufferedImage[4];
+    BufferedImage exclamationMark[] = new BufferedImage[2];
+    ArrayList<ArrayList<BufferedImage>> emote = new ArrayList<>();
+    public boolean emoteOn = false; // apakah emoticon sedang ditampilkan
 
+
+    public int currentEmote = 0;
     public boolean isWet = false;
     public GamePanel gp;
     public int worldX, worldY;
@@ -115,11 +153,69 @@ public class Entity extends SuperEntity {
         this.solidAreaDefaultX = this.solidArea.x;
         this.solidAreaDefaultY = this.solidArea.y;
 
+
+
+
+        //add emote
+        bubble[0] = gp.setImage("/assets/ui/think/bubble_0.png");
+        bubble[1] = gp.setImage("/assets/ui/think/bubble_1.png");
+        bubble[2] = gp.setImage("/assets/ui/think/bubble_2.png");
+        bubble[3] = gp.setImage("/assets/ui/think/bubble_3.png");
+
+        ArrayList<BufferedImage> exclamationMark = new ArrayList<>();
+        exclamationMark.add(gp.setImage("/assets/ui/think/exclamation/0.png"));
+        exclamationMark.add(gp.setImage("/assets/ui/think/exclamation/1.png"));
+
+        emote.add(exclamationMark);
     }
 
+
+    public void turnOffEmote(){
+        emoteOn = false; // Turn off the emote
+        thinkSpriteNum = 0; // Reset the think sprite number
+        thinkSpriteCount = 0; // Reset the think sprite count
+    }
+
+    public void drawEmote(Graphics2D g2, int screenX, int screenY) {
+        BufferedImage emoteImage = bubble[thinkSpriteNum];
+        g2.drawImage(emoteImage, screenX + 28, screenY - 30, 48, 96, null);
+        if(thinkSpriteNum == 2 ){
+            g2.drawImage(emote.get(currentEmote).get(0), screenX + 28, screenY - 30, 48, 48, null);
+        }
+        if(thinkSpriteNum == 3 ){
+            g2.drawImage(emote.get(currentEmote).get(1), screenX + 28, screenY - 30, 48, 48, null);
+        }
+
+        if(thinkSpriteNum<3){
+            thinkSpriteCount++;
+            if (thinkSpriteCount > 10) {
+                thinkSpriteNum++;
+                thinkSpriteCount = 0;
+                
+            }
+        }
+
+        
+
+}
+
+
     public void draw(Graphics2D g2) {
+
+
+      
+
+        if(objectAnimationOn) {
+            objAnimationUpdate(); // Update the object animation if it's on
+        }
+
         int screenX = worldX - gp.player.worldX + gp.player.screenX; // Calculate the screen X position
         int screenY = worldY - gp.player.worldY + gp.player.screenY; // Calculate the screen Y position
+
+        if(emoteOn){
+            drawEmote(g2, screenX, screenY); // Draw the emote if it's on
+        }
+        
 
         if (!isObj) {
             BufferedImage image = null;

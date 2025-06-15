@@ -57,6 +57,7 @@ public class OBJ_Tree extends Entity {
 
     public void reset(){
         isChopped = false; // Reset the flag to indicate the tree is not chopped
+        image = gp.setImage(path);
 
         this.worldX = treeX;
         this.worldY = treeY;
@@ -64,7 +65,7 @@ public class OBJ_Tree extends Entity {
         this.width = 48 * 5;
         this.height = 48 * 5; 
 
-        image = gp.setImage(path);
+        // image = gp.setImage(path);
         solidArea.x = 100;
         solidArea.y = gp.tileSize * 4;
         solidArea.width = 48;

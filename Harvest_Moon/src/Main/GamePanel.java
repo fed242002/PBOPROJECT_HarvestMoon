@@ -3,7 +3,6 @@ package Main;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
@@ -13,15 +12,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import Data.saveLoad;
-import Environment.EnvironmentManager;
-import entity.Entity;
-import entity.Player;
-import tile.TileManager;
+
+import animation.*;
+import Data.*;
+import entity.*;
+import Environment.*;
+import object.*;
+import Main.*;
+import tile.*;
 
 public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
@@ -44,6 +45,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
 
+    public boolean justChangedMap = false; // Flag to indicate if the map has just changed
+
     // FPS
     int FPS = 60; // Frames per second
 
@@ -59,15 +62,40 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public boolean fullScreen = false; // Fullscreen mode toggle
 
     // entity and object
+
     public Player player = new Player(this, keyH); // Create a new Player object
-    public ArrayList<Entity> obj = new ArrayList<>(); // List of objects in the game
-    public ArrayList<Entity> farmObj = new ArrayList<>(); // List of objects in the game
-    public ArrayList<Entity> npcs = new ArrayList<>(); // List of NPCs in the game
-    public ArrayList<Entity> entityList = new ArrayList<>(); // List of all entities in the game
+    public ArrayList<Entity> obj = new ArrayList<>(MapDB.mapList.get(currentMap).obj); // List of objects in the game
+    public ArrayList<Entity> farmObj = new ArrayList<>(MapDB.mapList.get(currentMap).farmObj); // List of objects in the game
+    public ArrayList<Entity> npcs = new ArrayList<>(MapDB.mapList.get(currentMap).npcs); // List of NPCs in the game
+    public ArrayList<Entity> entityList = new ArrayList<>(MapDB.mapList.get(currentMap).entityList); // List of all entities in the game
     saveLoad saveLoad1 = new saveLoad(this);
+    
 
-    void changeMap() {
 
+    public void changeMap(int mapNum){
+        player.setAnimation("idle");
+        stopMusic(masterMusic);
+        if(mapNum < 0 || mapNum >= MapDB.mapList.size()) {
+            System.out.println("Invalid map number: " + mapNum);
+            return; // Invalid map number
+        }
+        currentMap = mapNum;
+
+        MapData current = MapDB.mapList.get(currentMap);
+
+
+        tileM.loadTileData(current.tileDataPath); // Load tile data from the specified file
+        tileM.getTileImage(current.tilePath);
+        tileM.loadMap(current.path); // Load map data from the specified file
+
+
+        System.out.println("Map " + mapNum + " loaded with " + tileM.tile.size() + " tiles");
+
+        MapDB.mapList.get(currentMap).needsRefresh = true; // Set the needsRefresh flag to true
+        justChangedMap = true; // Set the flag to indicate that the map has just changed
+        current.needsRefresh = true; // Set the needsRefresh flag to true
+
+        playMusic(masterMusic, current.music);
     }
 
     // Game state
@@ -81,6 +109,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
     // UI
     public UI ui = new UI(this); // Create a new UI object
+
 
     // lighting
     EnvironmentManager eManager = new EnvironmentManager(this); // Create a new EnvironmentManager object
@@ -102,14 +131,18 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         this.setFocusable(true); // Make the panel focusable to receive key events;
         this.addMouseMotionListener(this);
 
+
     }
 
     public void setupGame() {
         aSetter.setObject();
         aSetter.setNPC();
         eManager.setup(); // ini untuk setting dalam kegelapan
+        playMusic(masterMusic, MapDB.mapList.get(currentMap).music);
+
         // gameState = titleState;
         gameState = playState; // Set the game state to play
+        // changeMap(1);
 
     }
 
@@ -121,6 +154,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     @Override
     public void run() {
 
+
+        ;
         double drawInterval = 1000000000 / FPS; // Calculate the draw interval in nanoseconds
         double delta = 0; // Time difference between frames
         long lastTime = System.nanoTime(); // Get the current time in nanoseconds
@@ -154,6 +189,23 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     }
 
     public void update() {
+    
+        MapData current = MapDB.mapList.get(currentMap);
+
+        if(justChangedMap|| current.needsRefresh) { // If the map has just changed
+
+            obj = current.obj; // Update the object list
+            farmObj = current.farmObj;
+            npcs = current.npcs;
+            entityList = current.entityList;
+
+            // Reset flags
+            current.needsRefresh = false;
+            justChangedMap = false;
+
+        }
+
+        eventHandler.update();
 
         if (gameState == playState) { // If the game is being played
             player.update(); // Update the player
@@ -207,7 +259,10 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
             }
 
             // tambah entitiy to list
-            entityList.add(player); // Add player to the entity list
+            //special buat animasi turu kalo misal turu digambar diatas bed
+            if(player.currentAnimationIndex != 13) { // Only add player to the list if not in animation
+                entityList.add(player); // Add player to the entity list    
+            }
 
             for (int i = 0; i < npcs.size(); i++) {
                 if (npcs.get(i) != null) {
@@ -231,17 +286,18 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
                     return Integer.compare(e1Bottom, e2Bottom);
                 }
             });
-
+            
             // draw entities
             for (int i = 0; i < entityList.size(); i++) {
                 entityList.get(i).draw(g2); // Draw each entity in the list
             }
-
-            // empty the entity list after drawing
-            // for (int i = 0; i < entityList.size(); i++) {
-            // entityList.remove(entityList.get(i)); // Draw each entity in the list
-            // }
             entityList.clear(); // Clear the entity list after drawing
+            
+            //draw player diatas smua entity k
+            if(player.currentAnimationIndex == 13) { // Only add player to the list if not in animation
+                player.draw(g2); // Draw player on top of all entities
+            }
+            
 
             // enviroment
             eManager.draw(g2); // cara buat setting kegelapan nya disini
@@ -271,6 +327,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
                 drawGrid(g2);
             }
 
+            eventHandler.draw(g2);
+            
             g2.dispose(); // Dispose of the graphics object to free up resources
 
         }

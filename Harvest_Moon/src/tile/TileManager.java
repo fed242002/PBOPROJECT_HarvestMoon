@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import Main.GamePanel;
+import Main.MapDB;
+import Main.MapData;
 
 public class TileManager {
     GamePanel gp;
@@ -18,14 +20,15 @@ public class TileManager {
 
     public TileManager(GamePanel gp) {
         this.gp = gp; 
-        
-        mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow]; // Initialize the mapTileNum array with the maximum screen columns and rows
 
-        loadTileData("/assets/map/Map_Home_TileData"); // Load tile data from the specified file
+        mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow]; // Initialize the mapTileNum array with the correct size
+        loadTileData(MapDB.mapList.get(gp.currentMap).tileDataPath); // Load tile data from the specified path
+        loadMap(MapDB.mapList.get(gp.currentMap).path); // Load the map from the specified path
+        MapDB.mapList.get(gp.currentMap).needsRefresh = true;
 
-        loadMap("/assets/map/Map_Home_Map");
     }
     
+
 
     public void loadTileData(String dataPath){
         // clear previous data
@@ -46,15 +49,15 @@ public class TileManager {
             System.out.println("Error loading tile data: " + e.getMessage());
         }
 
-        getTileImage(); 
+        getTileImage(MapDB.mapList.get(gp.currentMap).tilePath); // Load tile images using the file names and collision status
 
     }
 
-    public void getTileImage(){
+    public void getTileImage(String dataPath){
         tile.clear();
 
         for(int i = 0; i < fileNames.size(); i++){
-            String fileName = "/assets/tile/HomeTiles/"+fileNames.get(i);
+            String fileName = dataPath +fileNames.get(i);
             boolean collision;
 
             if(collisionStatus.get(i).equalsIgnoreCase("true")){
@@ -66,7 +69,7 @@ public class TileManager {
             Tile t = new Tile(fileName, collision);
             tile.add(t); 
         }
-
+        
 
         
     }
@@ -75,7 +78,8 @@ public class TileManager {
         try {
             InputStream is = getClass().getResourceAsStream(mapPath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            
+
+
             int row = 0;
             
             while(row < gp.maxWorldRow) { // Process one row at a time
@@ -129,6 +133,12 @@ public class TileManager {
                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) 
             { 
+
+                if(tileNum < 0 || tileNum >= tile.size()) {
+                    System.out.println("Warning: Tile number " + tileNum + " is out of bounds for the tile list.");
+                    System.out.println("Available tiles: " + tile.size());
+                    tileNum = 0; // Default to the first tile if out of bounds
+                }
                 g2.drawImage(tile.get(tileNum).image, screenX, screenY, gp.tileSize, gp.tileSize,null);
             }
 

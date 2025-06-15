@@ -3,7 +3,13 @@ package Main;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import animation.Animation;
+import animation.*;
+import Data.*;
+import entity.*;
+import Environment.*;
+import object.*;
+import Main.*;
+import tile.*;
 
 public class KeyHandler implements KeyListener {
 
@@ -207,6 +213,9 @@ public class KeyHandler implements KeyListener {
             if (code == KeyBind.equipFishingRod) {
                 gp.player.currentTools = "fishRod";
             }
+            if(code == KeyBind.equipWateringCan) {
+                gp.player.currentTools = "wateringCan";
+            }
 
             // sprint
             if (code == KeyBind.sprintKey) {
@@ -227,6 +236,7 @@ public class KeyHandler implements KeyListener {
             if (code == KeyBind.pauseKey) {
                 gp.ui.pauseScreenState = 0; // Reset pause screen state
                 gp.gameState = gp.pauseState;
+                gp.ui.commandNum = 0; // Reset command number
             }
         }
 
@@ -260,6 +270,7 @@ public class KeyHandler implements KeyListener {
                         gp.ui.pauseScreenState = 2;
                     }
                     if (gp.ui.commandNum == 3) {
+                        gp.ui.commandNum = 0; // Reset command number
                         gp.gameState = gp.titleState; // Return to title screen
                     }
                 }

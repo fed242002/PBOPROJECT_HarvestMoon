@@ -2,10 +2,13 @@ package Main;
 
 import java.security.KeyStore.Entry;
 
-import entity.Entity;
-import entity.Npc;
-import object.OBJ_Rumah;
-import object.OBJ_soil;
+import animation.*;
+import Data.*;
+import entity.*;
+import Environment.*;
+import object.*;
+import Main.*;
+import tile.*;
 
 public class AssetSetter {
 
@@ -15,12 +18,11 @@ public class AssetSetter {
     }
 
     public void setObject() {
-        gp.obj.add(new OBJ_Rumah(gp ,31 * gp.tileSize, 7 * gp.tileSize ));
-        
-        gp.obj.add(new object.OBJ_Tree(gp, 15 * gp.tileSize, 23 * gp.tileSize));
-        gp.obj.add(new object.OBJ_Tree(gp, 10 * gp.tileSize, 23 * gp.tileSize));
-        gp.obj.add(new object.OBJ_Tree(gp, 5 * gp.tileSize, 15 * gp.tileSize));
-
+        MapDB.mapList.get(0).obj.add(new OBJ_Rumah(gp ,31 * gp.tileSize, 7 * gp.tileSize ));
+        MapDB.mapList.get(0).obj.add(new OBJ_Tree(gp, 15 * gp.tileSize, 23 * gp.tileSize));
+        MapDB.mapList.get(0).obj.add(new OBJ_Tree(gp, 10 * gp.tileSize, 23 * gp.tileSize));
+        MapDB.mapList.get(0).obj.add(new OBJ_WaterWell(gp, 5 * gp.tileSize, 15 * gp.tileSize));
+        MapDB.mapList.get(0).obj.add(new OBJ_Bed(gp, 0,1496, 1261));
 
         // Add more objects as needed
     }
@@ -41,7 +43,7 @@ public class AssetSetter {
    
 
     public void setNPC(){
-        gp.npcs.add(new Npc(gp, "Eddy", 21 * gp.tileSize, 23 * gp.tileSize));
+        MapDB.mapList.get(0).npcs.add(new Npc(gp, "Eddy", 21 * gp.tileSize, 23 * gp.tileSize));
 
     }
 
