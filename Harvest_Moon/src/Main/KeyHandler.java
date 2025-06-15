@@ -8,7 +8,7 @@ import animation.Animation;
 public class KeyHandler implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed, isSprint, undoToolsPressed,
-            useTool;
+            useTool, enterPressed;
     GamePanel gp;
 
     public KeyHandler(GamePanel gp) {
@@ -354,7 +354,7 @@ public class KeyHandler implements KeyListener {
 
     public void tradeState(int code){
         if (code == KeyEvent.VK_ENTER){
-            //enterPressed = true;
+            enterPressed = true;
         }
 
         if (gp.ui.subState == 0){
@@ -394,6 +394,9 @@ public class KeyHandler implements KeyListener {
             gp.player.speed = gp.player.normalSpeed; // Reset speed to normal when sprint key is released
             gp.player.spriteDraw = 10;
             isSprint = false;
+        }
+        if (code == KeyEvent.VK_ENTER) {
+            enterPressed = false;
         }
 
     }
