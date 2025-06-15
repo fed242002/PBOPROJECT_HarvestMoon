@@ -112,7 +112,7 @@ public class EventHandler {
     }
 
     // Old method - now calls the new transition method
-    private void handleMapTransition(int targetMap, int newX, int newY) {
+    public void handleMapTransition(int targetMap, int newX, int newY) {
         startMapTransition(targetMap, newX, newY);
     }
 
