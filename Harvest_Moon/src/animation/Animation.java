@@ -14,7 +14,7 @@ public class Animation {
     public String name;
     public int currentSprite=0;
     public int soundFX = -1;
-    boolean oneD = false; // true if the animation is one direction only (kek sleep)
+    public boolean oneD = false; // true if the animation is one direction only (kek sleep)
 
         public Animation(String name1,int spriteTotal, String path) {
         this.name = name1.toUpperCase();
@@ -40,11 +40,11 @@ public class Animation {
         this.oneD = oneD;
 
 
-            if(!oneD)
-                setSprite();
-            else
-                setSpriteAllD();
-                
+        if(oneD)
+            setSpriteOneD();
+        else
+            setSpriteAllD();
+           
             
         }
 
@@ -59,11 +59,11 @@ public class Animation {
         this.oneD = oneD;
         this.soundFX = soundFX;
 
-            if(!oneD)
-                setSprite();
-            else
-                setSpriteAllD();
-                
+      
+        if(oneD)
+            setSpriteOneD();
+        else
+            setSpriteAllD();
             
         }
 
@@ -118,6 +118,21 @@ public class Animation {
         }
     }
 
+
+    public void setSpriteOneD() {
+        
+        try{
+            for (int i = 0; i < spriteTotal; i++) {
+                down[i] = ImageIO.read(getClass().getResourceAsStream(path + "-" + i + ".png"));
+            }
+
+            // System.out.println("setSprite("+path+") di class Animation berhasil");
+
+        }catch (Exception e) {
+            System.out.println("error di setSprite("+path+") di class Animation - One Direction Animation"); 
+            e.printStackTrace(); 
+        }
+    }
 
 
     public void setPath(String path) {

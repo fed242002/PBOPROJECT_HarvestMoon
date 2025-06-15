@@ -19,7 +19,7 @@ public class AssetSetter {
         MapDB.mapList.get(0).obj.add(new OBJ_Tree(gp, 15 * gp.tileSize, 23 * gp.tileSize));
         MapDB.mapList.get(0).obj.add(new OBJ_Tree(gp, 10 * gp.tileSize, 23 * gp.tileSize));
         MapDB.mapList.get(0).obj.add(new OBJ_WaterWell(gp, 5 * gp.tileSize, 15 * gp.tileSize));
-
+        MapDB.mapList.get(0).obj.add(new OBJ_Bed(gp, 1496, 1261));
 
         // Add more objects as needed
     }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import Main.GamePanel;
 import animation.Animation;
 import animation.ToolsAnimation;
+import object.OBJ_Bed;
 import object.OBJ_Rumah;
 import object.OBJ_soil;
 
@@ -17,6 +18,9 @@ public class Entity extends SuperEntity {
     public void chop(){}
     public void reset(){}
     public void watering(){}
+
+    //ini buat kalo misale obj ada banyak variasi gambar
+    ArrayList<String> imagePathList = new ArrayList<>(); // List of soil images
 
 
     public ArrayList<BufferedImage> objAnimation = new ArrayList<>(); // List of tool images
@@ -191,6 +195,7 @@ public class Entity extends SuperEntity {
 
     public void draw(Graphics2D g2) {
 
+
       
 
         if(objectAnimationOn) {
@@ -297,6 +302,9 @@ public class Entity extends SuperEntity {
         for (Animation x : animationList) {
             if (animation.equalsIgnoreCase(x.name)) {
                 if (this.currentAnimationIndex != i) {
+                    if(animationList.get(currentAnimationIndex).oneD == true) {
+                        direction = "down"; // Set direction to down if the animation is one direction only
+                    }
                     gp.stopMusic(gp.sfx);
                     // set animation
                     currentAnimationIndex = i;

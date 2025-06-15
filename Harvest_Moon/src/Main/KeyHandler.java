@@ -222,6 +222,7 @@ public class KeyHandler implements KeyListener {
             if (code == KeyBind.pauseKey) {
                 gp.ui.pauseScreenState = 0; // Reset pause screen state
                 gp.gameState = gp.pauseState;
+                gp.ui.commandNum = 0; // Reset command number
             }
         }
 
@@ -255,6 +256,7 @@ public class KeyHandler implements KeyListener {
                         gp.ui.pauseScreenState = 2;
                     }
                     if (gp.ui.commandNum == 3) {
+                        gp.ui.commandNum = 0; // Reset command number
                         gp.gameState = gp.titleState; // Return to title screen
                     }
                 }

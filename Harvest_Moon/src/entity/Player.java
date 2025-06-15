@@ -477,11 +477,11 @@ public class Player extends Entity {
 
         //interact with soil -> buat grass jadi soil (tambahin pengecekan nanti)
         if(isDigging){
-            energy -= EnergyIntake.shovel;
             setAnimation("dig");
             animation(3);
             
             if(animationDone == 3){
+                energy -= EnergyIntake.shovel;
                 animationDone = 0;
                 resetAllAnimation();
                 gp.aSetter.addSoil(new OBJ_soil(gp, x, y));
@@ -491,11 +491,11 @@ public class Player extends Entity {
             }
         }
         if(isUndoDigging){
-            energy -= EnergyIntake.shovel;
             setAnimation("dig");
             animation(3); 
-
+            
             if(animationDone == 3){
+                energy -= EnergyIntake.shovel;
                 resetAllAnimation();
                 moveDisabled = false; // Enable movement after digging
                 animationDone = 0;
@@ -515,11 +515,11 @@ public class Player extends Entity {
 
         //chopping tree
         if(isChopping){
-            energy -= EnergyIntake.axe;
             setAnimation("chop");
             animation(3);
-
+            
             if(animationDone == 3){
+                energy -= EnergyIntake.axe;
                 animationDone = 0;
                 resetAllAnimation();
 
