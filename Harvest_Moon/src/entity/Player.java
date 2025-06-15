@@ -44,6 +44,8 @@ public class Player extends Entity {
     public int gold = 100;
     public boolean lightUpdated = false;
     public int fishingTimeRandom;
+    ArrayList<Entity> inventory = new ArrayList<>(); // Player's inventory
+    public int maxInventorySize = 20; // Maximum size of the inventory
     
 
     int targetWorldX;
@@ -198,6 +200,7 @@ public class Player extends Entity {
         // inventory.add() // set item default player apa belum tau mau diisi apa
     }
 
+    @Override
     public void update() {
         // cek kalo lagi jalan ga
         if (!moveDisabled) {
@@ -232,7 +235,7 @@ public class Player extends Entity {
 
                 // kalo collision -> false bisa dijalani
                 if (collisionOn == false) {
-                    switch (direction) {
+                    switch(direction) {
                         case "up":
                             worldY -= speed; // Move the player up
                             break;
@@ -284,7 +287,7 @@ public class Player extends Entity {
 
     public void pickUpObject(int i) {
 
-        String text = "";
+        String text = " "; // Initialize text to an empty string
 
         if (i != 999) {
             if (canObtainItem(gp.obj.get(gp.currentMap)) == true) {
@@ -747,6 +750,34 @@ public class Player extends Entity {
 
             
 
+    }
+
+    public void selectItem() {
+        int itemIndex = gp.ui.getItemIndexOnSlot(gp.ui.playerSlotCol, gp.ui.playerSlotRow); // Get the selected item
+                                                                                            // index from the UI
+
+        if (itemIndex < inventory.size()) {
+            Entity selectedItem = inventory.get(itemIndex); // Get the selected item from the inventory
+
+            // if(selectedItem == type_tools) //tipe tools misalnya
+            // currentTools = selectedItem;
+
+            // if(selectedItem == type_food) // misal makanan
+            // {
+            // if(selectedItem.use(this) == true)
+            // {
+            // if(selectedItem.amount > 1)
+            // {
+            // selectedItem.amount--; // Reduce the amount of the item by 1
+            // }
+            // else
+            // {
+            // inventory.remove(itemIndex); // Remove the item from the inventory if amount
+            // is 1
+            // }
+            // }
+            // }
+        }
     }
 
 
