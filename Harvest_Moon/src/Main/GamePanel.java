@@ -69,6 +69,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public ArrayList<Entity> npcs = new ArrayList<>(MapDB.mapList.get(currentMap).npcs); // List of NPCs in the game
     public ArrayList<Entity> entityList = new ArrayList<>(MapDB.mapList.get(currentMap).entityList); // List of all entities in the game
     saveLoad saveLoad1 = new saveLoad(this);
+
+    Crop crop = new Crop(this); // Create a new Crop object
     
 
 

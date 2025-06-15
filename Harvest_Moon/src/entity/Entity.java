@@ -15,11 +15,12 @@ import Main.*;
 import tile.*;
 
 
-public class Entity extends SuperEntity {
+public class Entity extends SuperEntity implements Cloneable{
 
     public void chop(){}
     public void reset(){}
     public void watering(){}
+    public void grow(){}
 
     //ini buat kalo misale obj ada banyak variasi gambar
     public ArrayList<String> imagePathList = new ArrayList<>(); // List of soil images
@@ -55,6 +56,8 @@ public class Entity extends SuperEntity {
             }
         }
     }
+
+
 
 
     int thinkSpriteNum = 0;
