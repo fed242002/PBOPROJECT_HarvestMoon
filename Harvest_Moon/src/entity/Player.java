@@ -9,6 +9,7 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import Main.EnergyIntake;
 import Main.GamePanel;
 import Main.KeyHandler;
 import animation.Animation;
@@ -33,7 +34,7 @@ public class Player extends Entity {
     public final int screenY; // Y position on the screen
     int hasKey = 0;
     public int maxEnergy = 100;
-    public int energy = maxEnergy - 50;
+    public int energy = maxEnergy;
     public int normalSpeed = 4; // pas jalan normal
     public int maxSpeed = 6; // pas sprint
     public int spriteDraw = 10;
@@ -460,6 +461,7 @@ public class Player extends Entity {
             animation(5);
 
             if(animationDone == 3){
+                energy -= EnergyIntake.watering;
                 animationDone = 0;
                 resetAllAnimation();
                 setAnimation("idle");
@@ -475,6 +477,7 @@ public class Player extends Entity {
 
         //interact with soil -> buat grass jadi soil (tambahin pengecekan nanti)
         if(isDigging){
+            energy -= EnergyIntake.shovel;
             setAnimation("dig");
             animation(3);
             
@@ -488,6 +491,7 @@ public class Player extends Entity {
             }
         }
         if(isUndoDigging){
+            energy -= EnergyIntake.shovel;
             setAnimation("dig");
             animation(3); 
 
@@ -511,6 +515,7 @@ public class Player extends Entity {
 
         //chopping tree
         if(isChopping){
+            energy -= EnergyIntake.axe;
             setAnimation("chop");
             animation(3);
 
@@ -587,6 +592,7 @@ public class Player extends Entity {
             animation(3);
 
             if(animationDone >= 1){
+                energy -= EnergyIntake.fishing;
                 animationDone = 0;
                 resetAllAnimation();
                 setAnimation("idle");

@@ -2,6 +2,7 @@ package object;
 
 import java.io.BufferedReader;
 
+import Main.EnergyIntake;
 import Main.GamePanel;
 import entity.Entity;
 
@@ -41,6 +42,7 @@ public class OBJ_WaterWell extends Entity{
         if(gp.keyH.interactPressed && gp.player.currentTools!= null){
             gp.keyH.interactPressed = false; // Reset the interact key
             if(gp.player.currentTools.equalsIgnoreCase("wateringCan")) {
+                gp.player.energy -= EnergyIntake.takingWater;
                 objectAnimationOn = true; // Enable object animation
                 gp.player.moveDisabled = true;
                 gp.player.setAnimation("idle");
