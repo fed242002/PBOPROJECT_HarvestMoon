@@ -1,22 +1,16 @@
 package entity;
 
+
+import Main.*;
+import animation.*;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Random;
-
 import javax.imageio.ImageIO;
-
-import animation.*;
-import Data.*;
-import entity.*;
-import Environment.*;
 import object.*;
-import Main.*;
-import tile.*;
 
 
 public class Player extends Entity {
@@ -44,7 +38,6 @@ public class Player extends Entity {
     public int gold = 100;
     public boolean lightUpdated = false;
     public int fishingTimeRandom;
-    ArrayList<Entity> inventory = new ArrayList<>(); // Player's inventory
     public int maxInventorySize = 20; // Maximum size of the inventory
     
 
@@ -846,7 +839,7 @@ public class Player extends Entity {
         if(currentTool != null && image1 != null) {
             g2.drawImage(image1, currentTool.x, currentTool.y, currentTool.width, currentTool.height, null); // Draw tool image
         }
-    }
+    
 
         if(currentAnimationIndex == 13){
             if(duvetImage != null) {
