@@ -112,8 +112,8 @@ public class Lighting {
                 dayState = dawn;
             }
             
-
-            switch (dayState) {
+            if(gp.currentMap == 1 || gp.currentMap == 2) { 
+                switch (dayState) {
                 case day -> filterAlpha = 0f; // No filter during day
                 case dusk -> {
                     filterAlpha += 0.003f; // Gradually darken
@@ -127,6 +127,8 @@ public class Lighting {
                 default -> {
                 }
             }
+            }
+            
         }
     }
 
