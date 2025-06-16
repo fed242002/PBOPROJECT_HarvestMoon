@@ -96,6 +96,7 @@ public class Entity extends SuperEntity implements Cloneable{
 
     // item attributes
     public String description = " "; // Description of the item
+    public int daysToMature;
 
     // type item
     // 0 = item, 1 = tool, 2 = seed, 3 = crop, 4 = food, 5 = fish, 6 = material, 7 = furniture

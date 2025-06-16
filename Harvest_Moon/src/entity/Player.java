@@ -1,6 +1,5 @@
 package entity;
 
-
 import Main.*;
 import animation.*;
 import java.awt.Color;
@@ -12,9 +11,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import object.*;
 
-
 public class Player extends Entity {
-
 
     public String listBody[] = {"white", "krem", "black"};
     public String listEye[] = {"blue", "brown", "green"};
@@ -40,13 +37,11 @@ public class Player extends Entity {
     public boolean lightUpdated = false;
     public int fishingTimeRandom;
     public int maxInventorySize = 20; // Maximum size of the inventory
-    
 
     int targetWorldX;
     int targetWorldY;
     int targetTileCol;
     int targetTileRow;
-    
 
     public Item currentItem;
 
@@ -104,35 +99,34 @@ public class Player extends Entity {
         redeclareAnimation();
 
         //TOOLS ANIMATION -> ini nanti maw kak pindah ke gp aja soalnya sama aja di smua entity biar gausah ke declare banyak kali
-        toolsAnimationList.add(new ToolsAnimation(gp,"axe", "idle", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp,"axe", "walk", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp,"axe", "chop", 10));
-        toolsAnimationList.add(new ToolsAnimation(gp,"FISHROD", "FISHCAUGHT", 9,true));
-        toolsAnimationList.add(new ToolsAnimation(gp,"FISHROD", "CAST", 9, true));
-        toolsAnimationList.add(new ToolsAnimation(gp,"FISHROD", "FISHIDLE", 6,true));
-        toolsAnimationList.add(new ToolsAnimation(gp,"FISHROD", "FISHIDLE1", 6, true));
-        toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "fishpulled", 2, true));
-        toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "idle", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp,"fishRod", "walk", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp,"shovel", "idle", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp,"shovel", "walk", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp,"shovel", "dig", 9));
-        toolsAnimationList.add(new ToolsAnimation(gp,"WateringCan", "idle", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp,"WateringCan", "walk", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp,"WateringCan", "watering", 14));
+        toolsAnimationList.add(new ToolsAnimation(gp, "axe", "idle", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "axe", "walk", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "axe", "chop", 10));
+        toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "FISHCAUGHT", 9, true));
+        toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "CAST", 9, true));
+        toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "FISHIDLE", 6, true));
+        toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "FISHIDLE1", 6, true));
+        toolsAnimationList.add(new ToolsAnimation(gp, "fishRod", "fishpulled", 2, true));
+        toolsAnimationList.add(new ToolsAnimation(gp, "fishRod", "idle", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "fishRod", "walk", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "shovel", "idle", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "shovel", "walk", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "shovel", "dig", 9));
+        toolsAnimationList.add(new ToolsAnimation(gp, "WateringCan", "idle", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "WateringCan", "walk", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "WateringCan", "watering", 14));
 
     }
 
-
-    public void redeclareAnimation(){
+    public void redeclareAnimation() {
         animationList.clear();
 
         // declare animation
         animationList.add(new Animation("walk", 6, "/assets/player/WALK/" + getPath(), 0));
         animationList.add(new Animation("idle", 6, "/assets/player/IDLE/" + getPath()));
-        animationList.add(new Animation("chop", 10, "/assets/player/AXE CHOP/" + getPath(),6));
+        animationList.add(new Animation("chop", 10, "/assets/player/AXE CHOP/" + getPath(), 6));
         animationList.add(new Animation("dig", 9, "/assets/player/DIG/" + getPath(), 5));
-        animationList.add(new Animation("cast", 9, "/assets/player/FISH CAST LINE/" + getPath(),7));
+        animationList.add(new Animation("cast", 9, "/assets/player/FISH CAST LINE/" + getPath(), 7));
         animationList.add(new Animation("FISHIDLE", 6, "/assets/player/FISH IDLE/" + getPath()));
         animationList.add(new Animation("FISHIDLE1", 6, "/assets/player/FISH IDLE/" + getPath()));
         animationList.add(new Animation("FISHCAUGHT", 9, "/assets/player/FISH CAUGHT/" + getPath()));
@@ -144,9 +138,6 @@ public class Player extends Entity {
         animationList.add(new Animation("sleep", 6, "/assets/player/SLEEP/" + getPath(), true));
         animationList.add(new Animation("throw", 14, "/assets/player/THROW/" + getPath()));
         animationList.add(new Animation("watering", 14, "/assets/player/WATERING/" + getPath(), 8));
-
-
-
 
     }
 
@@ -194,8 +185,11 @@ public class Player extends Entity {
     }
 
     public void setItems() {
-        // inventory.add() // set item default player apa belum tau mau diisi apa
-        inventory.add(new OBJ_soil(gp, 0, 0)); // Add a default soil item to the inventory
+        // inventory.add() // set item default player apa belum tau mau diisi apa\
+
+        inventory.add(ItemList.apple.clone());
+        inventory.add(ItemList.shovel.clone());
+        inventory.add(ItemList.axe.clone());
     }
 
     @Override
@@ -233,7 +227,7 @@ public class Player extends Entity {
 
                 // kalo collision -> false bisa dijalani
                 if (collisionOn == false) {
-                    switch(direction) {
+                    switch (direction) {
                         case "up":
                             worldY -= speed; // Move the player up
                             break;
@@ -261,10 +255,11 @@ public class Player extends Entity {
                 spriteNum++;
 
                 if (spriteNum > animationList.get(currentAnimationIndex).spriteTotal - 1) // If the sprite number
-                                                                                          // exceeds
-                                                                                          // the number of images
+                // exceeds
+                // the number of images
+                {
                     spriteNum = 0; // Reset the sprite number to 0
-
+                }
                 spriteCounter = 0; // Reset the sprite counter to 0
             }
 
@@ -287,7 +282,6 @@ public class Player extends Entity {
 
         String text = " "; // Initialize text to an empty string
 
-
         if (i != 999) {
             if (canObtainItem(gp.obj.get(gp.currentMap)) == true) {
                 inventory.add(gp.obj.get(gp.currentMap)); // Add the object to the inventory
@@ -295,7 +289,7 @@ public class Player extends Entity {
                 text = "You picked up " + gp.obj.get(i).name + "!"; // Set the text to display
                 gp.ui.showMessage(text); // Show the message on the UI
                 gp.obj.remove(i); // Remove the object from the game world
-            }else {
+            } else {
                 // text = "Your inventory is full!"; // Set the text to display if the inventory is full
                 // gp.ui.showMessage(text); // Show the message on the UI
                 // pickCounterOn = true; // Set the pick counter on flag to true
@@ -320,9 +314,9 @@ public class Player extends Entity {
 
     public boolean canObtainItem(Entity item) {
 
-        if(!item.pickUpAble)
+        if (!item.pickUpAble) {
             return false;
-
+        }
 
         boolean canObtain = false;
 
@@ -363,7 +357,6 @@ public class Player extends Entity {
         gp.keyH.interactPressed = false; // Reset the interact key
     }
 
-
     public void drawFrontBlock(Graphics2D g2) {
         // hitbox player di world posisi
         int hitboxCenterWorldX = worldX + solidArea.x + (solidArea.width / 2);
@@ -395,75 +388,66 @@ public class Player extends Entity {
         targetTileCol = targetWorldX / gp.tileSize;
         targetTileRow = targetWorldY / gp.tileSize;
 
-    // ini buat pas print nya
-    int targetScreenX = targetWorldX - worldX + screenX;
-    int targetScreenY = targetWorldY - worldY + screenY;
-    
-    
-    
-    
-    // Load cursor imagedui
-    BufferedImage cursor = null;
-    try {
-        cursor = ImageIO.read(getClass().getResourceAsStream("/assets/ui/target1Block.png"));
-    } catch (IOException e) {
-        System.out.println("Error loading drawFrontBlock cursor image: " + e.getMessage());
-    }
-    
-    //show info if it can be done or nahwdwud
-    if(currentTools!= null){
-        if(currentTools!=null && gp.keyH.useTool && !currentTools.equalsIgnoreCase("fishRod")){
-            if(currentTools.equalsIgnoreCase("shovel")){
-                if((gp.tileM.mapTileNum[targetTileCol][targetTileRow] >= 40 && gp.tileM.mapTileNum[targetTileCol][targetTileRow] <=59) || gp.tileM.mapTileNum[targetTileCol][targetTileRow] == 0 ){
-                    //kalo dia grass bisa di dig trus kasih mark ijo
-                    g2.setColor(new Color(0, 255, 0, 100));
-                    g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
-                } else {
-                    g2.setColor(new Color(255, 0, 0, 100));
-                    g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
-                    g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);  //ini jangan lupa kalo ada red soalnya ak lgsng return hehe
-                    return;
-                }
-            }
-            if(currentTools.equalsIgnoreCase("axe")){
-                int objIndex = gp.cChecker.checkObject(this, true);
-                if(objIndex != 999 && gp.obj.get(objIndex) instanceof OBJ_Tree && gp.obj.get(objIndex).isChopped == false) {
-                    g2.setColor(new Color(0, 255, 0, 100));
-                    g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
-                }
-                else{
-                    g2.setColor(new Color(255, 0, 0, 100));
-                    g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
-                    g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);  //ini jangan lupa kalo ada red soalnya ak lgsng return hehe
-                    return;
-                }
-            }
-            if(currentTools.equalsIgnoreCase("WateringCan")){
-                int objIndex = gp.cChecker.checkObjectFarm(targetWorldX,targetWorldY,this, true);
-                if(objIndex != 999 && gp.farmObj.get(objIndex) instanceof OBJ_soil) {
-                    g2.setColor(new Color(0, 255, 0, 100));
-                    g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
-                }else{
-                    g2.setColor(new Color(255, 0, 0, 100));
-                    g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
-                    g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);  //ini jangan lupa kalo ada red soalnya ak lgsng return hehe
-                    return;
-                }
+        // ini buat pas print nya
+        int targetScreenX = targetWorldX - worldX + screenX;
+        int targetScreenY = targetWorldY - worldY + screenY;
 
-            }
-
-    
-            g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);
-            
-    
+        // Load cursor imagedui
+        BufferedImage cursor = null;
+        try {
+            cursor = ImageIO.read(getClass().getResourceAsStream("/assets/ui/target1Block.png"));
+        } catch (IOException e) {
+            System.out.println("Error loading drawFrontBlock cursor image: " + e.getMessage());
         }
 
-    }
-    
+        //show info if it can be done or nahwdwud
+        if (currentTools != null) {
+            if (currentTools != null && gp.keyH.useTool && !currentTools.equalsIgnoreCase("fishRod")) {
+                if (currentTools.equalsIgnoreCase("shovel")) {
+                    if ((gp.tileM.mapTileNum[targetTileCol][targetTileRow] >= 40 && gp.tileM.mapTileNum[targetTileCol][targetTileRow] <= 59) || gp.tileM.mapTileNum[targetTileCol][targetTileRow] == 0) {
+                        //kalo dia grass bisa di dig trus kasih mark ijo
+                        g2.setColor(new Color(0, 255, 0, 100));
+                        g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+                    } else {
+                        g2.setColor(new Color(255, 0, 0, 100));
+                        g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+                        g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);  //ini jangan lupa kalo ada red soalnya ak lgsng return hehe
+                        return;
+                    }
+                }
+                if (currentTools.equalsIgnoreCase("axe")) {
+                    int objIndex = gp.cChecker.checkObject(this, true);
+                    if (objIndex != 999 && gp.obj.get(objIndex) instanceof OBJ_Tree && gp.obj.get(objIndex).isChopped == false) {
+                        g2.setColor(new Color(0, 255, 0, 100));
+                        g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+                    } else {
+                        g2.setColor(new Color(255, 0, 0, 100));
+                        g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+                        g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);  //ini jangan lupa kalo ada red soalnya ak lgsng return hehe
+                        return;
+                    }
+                }
+                if (currentTools.equalsIgnoreCase("WateringCan")) {
+                    int objIndex = gp.cChecker.checkObjectFarm(targetWorldX, targetWorldY, this, true);
+                    if (objIndex != 999 && gp.farmObj.get(objIndex) instanceof OBJ_soil) {
+                        g2.setColor(new Color(0, 255, 0, 100));
+                        g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+                    } else {
+                        g2.setColor(new Color(255, 0, 0, 100));
+                        g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+                        g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);  //ini jangan lupa kalo ada red soalnya ak lgsng return hehe
+                        return;
+                    }
 
+                }
 
+                g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);
 
-    if(gp.keyH.interactPressed ) {
+            }
+
+        }
+
+        if (gp.keyH.interactPressed) {
             // Reset the interact key
             gp.keyH.interactPressed = false;
 
@@ -487,17 +471,17 @@ public class Player extends Entity {
                 }
             }
 
-            if(currentTools.equalsIgnoreCase("WateringCan")){
-                int objIndex = gp.cChecker.checkObjectFarm(targetWorldX,targetWorldY,this, true);
+            if (currentTools.equalsIgnoreCase("WateringCan")) {
+                int objIndex = gp.cChecker.checkObjectFarm(targetWorldX, targetWorldY, this, true);
 
-                if(objIndex != 999 && gp.farmObj.get(objIndex) instanceof OBJ_soil) {
+                if (objIndex != 999 && gp.farmObj.get(objIndex) instanceof OBJ_soil) {
                     isWatering = true;
                     moveDisabled = true; // Disable movement while watering
                 }
             }
-            
-            if(currentTools.equalsIgnoreCase("fishRod")) {
-                if(gp.tileM.mapTileNum[targetTileCol][targetTileRow] >= 25 && gp.tileM.mapTileNum[targetTileCol][targetTileRow] <= 48){
+
+            if (currentTools.equalsIgnoreCase("fishRod")) {
+                if (gp.tileM.mapTileNum[targetTileCol][targetTileRow] >= 25 && gp.tileM.mapTileNum[targetTileCol][targetTileRow] <= 48) {
                     isCasting = true;
                     moveDisabled = true;
                 }
@@ -508,11 +492,11 @@ public class Player extends Entity {
                 setAnimation("fishCaught");
                 throwBack = true;
             }
-            if(fishDetected){
+            if (fishDetected) {
                 resetAllAnimation();
                 setAnimation("fishpulled");
                 fishpulled = true;
-                fishingTimeRandom = random.nextInt(5,15 ); // Random value between 5 and 20
+                fishingTimeRandom = random.nextInt(5, 15); // Random value between 5 and 20
                 turnOffEmote();
 
                 //ini nanti buat nambah ikan kalo misal ke tangkap
@@ -530,37 +514,33 @@ public class Player extends Entity {
 
     }
 
+    public void action(int x, int y) {
 
-    
-    public void action(int x, int y){
-
-        if(isWatering){
-            
+        if (isWatering) {
 
             setAnimation("watering");
             animation(5);
 
-            if(animationDone == 3){
+            if (animationDone == 3) {
                 energy -= EnergyIntake.watering;
                 animationDone = 0;
                 resetAllAnimation();
                 setAnimation("idle");
-                moveDisabled = false; 
-                int objIndex = gp.cChecker.checkObjectFarm(targetWorldX,targetWorldY,this, true);
+                moveDisabled = false;
+                int objIndex = gp.cChecker.checkObjectFarm(targetWorldX, targetWorldY, this, true);
 
-                if(objIndex != 999 && gp.farmObj.get(objIndex) instanceof OBJ_soil) {
+                if (objIndex != 999 && gp.farmObj.get(objIndex) instanceof OBJ_soil) {
                     gp.farmObj.get(objIndex).watering();
                 }
             }
         }
 
-
         //interact with soil -> buat grass jadi soil (tambahin pengecekan nanti)
-        if(isDigging){
+        if (isDigging) {
             setAnimation("dig");
             animation(3);
-            
-            if(animationDone == 3){
+
+            if (animationDone == 3) {
                 energy -= EnergyIntake.shovel;
                 animationDone = 0;
                 resetAllAnimation();
@@ -572,9 +552,9 @@ public class Player extends Entity {
         }
         if (isUndoDigging) {
             setAnimation("dig");
-            animation(3); 
-            
-            if(animationDone == 3){
+            animation(3);
+
+            if (animationDone == 3) {
                 energy -= EnergyIntake.shovel;
                 resetAllAnimation();
                 moveDisabled = false; // Enable movement after digging
@@ -596,8 +576,8 @@ public class Player extends Entity {
         if (isChopping) {
             setAnimation("chop");
             animation(3);
-            
-            if(animationDone == 3){
+
+            if (animationDone == 3) {
                 energy -= EnergyIntake.axe;
                 animationDone = 0;
                 resetAllAnimation();
@@ -655,7 +635,7 @@ public class Player extends Entity {
 
             animation(10);
 
-            if(animationDone == 3){
+            if (animationDone == 3) {
                 animationDone = 0;
                 resetAllAnimation();
                 setAnimation("FISHIDLE");
@@ -668,39 +648,34 @@ public class Player extends Entity {
             setAnimation("fishcaught");
             animation(3);
 
-            if(animationDone >= 1){
+            if (animationDone >= 1) {
                 energy -= EnergyIntake.fishing;
                 animationDone = 0;
                 resetAllAnimation();
                 setAnimation("idle");
                 moveDisabled = false; // bisa jalan lagi
 
-
-                if(fishCaught){
+                if (fishCaught) {
                     //disini nanti tambahin ikan ke inventory
-
 
                     fishCaught = false; // Reset the fish caught flag
                 }
             }
         }
-        if(fishpulled){
+        if (fishpulled) {
             setAnimation("FISHPULLED");
             animation(7);
 
-            if(animationDone >= fishingTimeRandom){
+            if (animationDone >= fishingTimeRandom) {
                 animationDone = 0;
                 resetAllAnimation();
                 throwBack = true; // Set throwBack to true to throw the fish back
             }
         }
 
-        
     }
 
-
-
-    void animation(int counter){
+    void animation(int counter) {
         spriteCounter++;
         if (spriteCounter > counter) {
             spriteCounter = 0; // Reset the sprite counter to 0
@@ -733,39 +708,36 @@ public class Player extends Entity {
     }
 
     public void drawEmote(Graphics2D g2) {
-            // Draw the emote
-            BufferedImage emoteImage = bubble[thinkSpriteNum];
-            g2.drawImage(emoteImage, screenX + 28, screenY - 30, 48, 96, null);
-            if(thinkSpriteNum == 2 ){
-                g2.drawImage(emote.get(currentEmote).get(0), screenX + 28, screenY - 30, 48, 48, null);
-            }
-            if(thinkSpriteNum == 3 ){
-                g2.drawImage(emote.get(currentEmote).get(1), screenX + 28, screenY - 30, 48, 48, null);
-            }
+        // Draw the emote
+        BufferedImage emoteImage = bubble[thinkSpriteNum];
+        g2.drawImage(emoteImage, screenX + 28, screenY - 30, 48, 96, null);
+        if (thinkSpriteNum == 2) {
+            g2.drawImage(emote.get(currentEmote).get(0), screenX + 28, screenY - 30, 48, 48, null);
+        }
+        if (thinkSpriteNum == 3) {
+            g2.drawImage(emote.get(currentEmote).get(1), screenX + 28, screenY - 30, 48, 48, null);
+        }
 
-            if(thinkSpriteNum<3){
-                thinkSpriteCount++;
-                if (thinkSpriteCount > 10) {
-                    thinkSpriteNum++;
-                    thinkSpriteCount = 0;
-                    
-                }
-            }
+        if (thinkSpriteNum < 3) {
+            thinkSpriteCount++;
+            if (thinkSpriteCount > 10) {
+                thinkSpriteNum++;
+                thinkSpriteCount = 0;
 
-            
+            }
+        }
 
     }
 
     public void selectItem() {
         int itemIndex = gp.ui.getItemIndexOnSlot(gp.ui.playerSlotCol, gp.ui.playerSlotRow); // Get the selected item
-                                                                                            // index from the UI
+        // index from the UI
 
         if (itemIndex < inventory.size()) {
             Entity selectedItem = inventory.get(itemIndex); // Get the selected item from the inventory
 
             // if(selectedItem == type_tools) //tipe tools misalnya
             // currentTools = selectedItem;
-
             // if(selectedItem == type_food) // misal makanan
             // {
             // if(selectedItem.use(this) == true)
@@ -784,14 +756,11 @@ public class Player extends Entity {
         }
     }
 
-
     public void draw(Graphics2D g2) {
-        
-        if(emoteOn){
+
+        if (emoteOn) {
             drawEmote(g2);
         }
-
-
 
         BufferedImage image = null;
         BufferedImage image1 = null;
@@ -847,16 +816,14 @@ public class Player extends Entity {
         }
 
         g2.drawImage(image, screenX, screenY, gp.playerSizeX, gp.playerSizeY, null); // Draw player image
-        if(currentTool != null && image1 != null) {
+        if (currentTool != null && image1 != null) {
             g2.drawImage(image1, currentTool.x, currentTool.y, currentTool.width, currentTool.height, null); // Draw tool image
         }
-    
 
-        if(currentAnimationIndex == 13){
-            if(duvetImage != null) {
+        if (currentAnimationIndex == 13) {
+            if (duvetImage != null) {
                 g2.drawImage(duvetImage, screenX, screenY + 48, gp.playerSizeX, gp.playerSizeY, null);
-            }
-            else {
+            } else {
                 System.out.println("Error: duvetImage is null in Player draw method");
             }
         }
