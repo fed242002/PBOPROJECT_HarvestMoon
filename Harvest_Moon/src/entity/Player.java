@@ -282,6 +282,8 @@ public class Player extends Entity {
 
         String text = " "; // Initialize text to an empty string
 
+
+
         if (i != 999) {
             if (canObtainItem(gp.obj.get(gp.currentMap)) == true) {
                 inventory.add(gp.obj.get(i)); // Add the object to the inventory
@@ -289,12 +291,12 @@ public class Player extends Entity {
                 text = "You picked up " + gp.obj.get(i).name + "!"; // Set the text to display
                 gp.ui.showMessage(text); // Show the message on the UI
                 gp.obj.remove(i); // Remove the object from the game world
-            }
+            }else {
+                // text = "Your inventory is full!"; // Set the text to display if the inventory is full
+                // gp.ui.showMessage(text); // Show the message on the UI
+                // pickCounterOn = true; // Set the pick counter on flag to true
 
-            else {
-                text = "Your inventory is full!"; // Set the text to display if the inventory is full
-                gp.ui.showMessage(text); // Show the message on the UI
-                pickCounterOn = true; // Set the pick counter on flag to true
+                gp.obj.get(gp.currentMap).interact();
             }
 
         }
@@ -313,6 +315,11 @@ public class Player extends Entity {
     }
 
     public boolean canObtainItem(Entity item) {
+
+        if(!item.pickUpAble)
+            return false;
+
+
         boolean canObtain = false;
 
         // check kalo stackable

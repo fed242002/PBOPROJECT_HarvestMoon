@@ -21,6 +21,8 @@ public class Entity extends SuperEntity implements Cloneable{
     public ArrayList<String> imagePathList = new ArrayList<>(); // List of soil images
     
 
+
+    public boolean pickUpAble = false; // Flag to check if the entity is pickable
     public ArrayList<BufferedImage> objAnimation = new ArrayList<>(); // List of tool images
     public int objAnimationSpriteCount = 0;
     public int objAnimationSpriteNum = 0;
