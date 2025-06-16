@@ -354,10 +354,12 @@ public class UI {
         int slotCol = 0;
 
         if (entity == gp.player) {
-            frameX = gp.tileSize * 9;
-            frameY = gp.tileSize;
-            frameWidth = gp.tileSize * 6;
-            frameHeight = gp.tileSize * 5;
+            frameX = 48;
+            frameY = 48;
+            // frameWidth = gp.tileSize * 6;
+            // frameHeight = gp.tileSize * 5;
+            frameWidth = 372;
+            frameHeight = 336;
             slotCol = playerSlotCol; // inventory slot column
             slotRow = playerSlotRow; // inventory slot row
         }
@@ -419,7 +421,8 @@ public class UI {
             int cursorHeight = gp.tileSize;
 
             // draw cursor
-            g2.setColor(Color.WHITE);
+            // g2.setColor(Color.WHITE);
+            g2.setColor(new Color(101, 67, 33));
             g2.setStroke(new BasicStroke(3));
             g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
 
@@ -679,10 +682,10 @@ public class UI {
     }
 
     public void drawSubWindow(int x, int y, int width, int height) {
-        g2.setColor(new Color(0, 0, 0, 200));
+        g2.setColor(new Color(230, 200, 177)); // semi-transparent white
         g2.fillRoundRect(x, y, width, height, 35, 35);
 
-        g2.setColor(Color.WHITE);
+        g2.setColor(new Color(101, 67, 33));
         g2.setStroke(new BasicStroke(5));
         g2.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 25, 25);
     }
