@@ -1,7 +1,6 @@
 package animation;
 
 import java.awt.image.BufferedImage;
-
 import javax.imageio.ImageIO;
 
 public class Animation {
@@ -71,6 +70,20 @@ public class Animation {
             
         }
 
+        public Animation(String name1,int spriteTotal, String path, boolean oneD,boolean isAnimal) {
+        this.name = name1.toUpperCase();
+        this.spriteTotal = spriteTotal;
+        this.path = path;
+        up = new BufferedImage[spriteTotal];
+        down = new BufferedImage[spriteTotal];
+        left = new BufferedImage[spriteTotal];
+        right = new BufferedImage[spriteTotal];
+
+        setSprit1();
+           
+            
+        }
+
 
 
         public Animation(String name,int spriteTotal, String path, int soundFX) {
@@ -84,6 +97,7 @@ public class Animation {
         right = new BufferedImage[spriteTotal];
 
         setSprite();
+
         }
 
     public void setSpriteAllD()
@@ -112,6 +126,24 @@ public class Animation {
                 down[i] = ImageIO.read(getClass().getResourceAsStream(path + "bawah-" + i + ".png"));
                 left[i] =ImageIO.read(getClass().getResourceAsStream(path + "kiri-" + i + ".png"));
                 right[i] = ImageIO.read(getClass().getResourceAsStream(path + "kanan-" + i + ".png"));
+            }
+
+            // System.out.println("setSprite("+path+") di class Animation berhasil");
+
+        }catch (Exception e) {
+            System.out.println("error di setSprite("+path+") di class Animation"); 
+            e.printStackTrace(); 
+        }
+    }
+
+    public void setSprit1() {
+        
+        try{
+            for (int i = 0; i < spriteTotal; i++) {
+                up[i] = ImageIO.read(getClass().getResourceAsStream(path + "up/" + i + ".png"));
+                down[i] = ImageIO.read(getClass().getResourceAsStream(path + "down/" + i + ".png"));
+                left[i] =ImageIO.read(getClass().getResourceAsStream(path + "left/" + i + ".png"));
+                right[i] = ImageIO.read(getClass().getResourceAsStream(path + "right/" + i + ".png"));
             }
 
             // System.out.println("setSprite("+path+") di class Animation berhasil");
