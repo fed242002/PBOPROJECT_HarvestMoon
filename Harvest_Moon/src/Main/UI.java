@@ -486,13 +486,23 @@ public class UI {
             int textY = dFrameY + gp.tileSize;
             g2.setFont(g2.getFont().deriveFont(28F));
 
-            int itemIndex = getItemIndexOnSlot(slotCol, slotRow); // get item index based on slotCol and slotRow
+            int itemIndex = getItemIndexOnSlot(slotCol, slotRow); // get iditem index based on slotCol and slotRow
 
             if (itemIndex < entity.inventory.size()) {
 
                 drawSubWindow(dFrameX, dFrameY + 10, dFrameWidth, dFrameHeight);
 
+                for (String line : entity.inventory.get(itemIndex).name.split("\n")) {
+                    textY += 5;
+                    g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
+                    g2.drawString(line, textX, textY);
+                    textY += 40;
+                }
+
+                formatDialogText(entity.inventory.get(itemIndex).description, 576);
+
                 for (String line : entity.inventory.get(itemIndex).description.split("\n")) {
+                    g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 25F));
                     g2.drawString(line, textX, textY);
                     textY += 32;
                 }
@@ -1062,5 +1072,34 @@ public class UI {
 
         }
 
+    }
+
+
+        public String formatDialogText(String text, int maxWidth) {
+        String[] words = text.split(" ");
+        StringBuilder result = new StringBuilder();
+        StringBuilder currentLine = new StringBuilder();
+        
+        for (String word : words) {
+            if (currentLine.length() + word.length() + 1 <= maxWidth) {
+                // Add to current line
+                if (currentLine.length() > 0) {
+                    currentLine.append(" ");
+                }
+
+                currentLine.append(word);
+            } else {
+                // Add current line to result and start a new line
+                result.append(currentLine).append("\n");
+                currentLine = new StringBuilder(word);
+            }
+        }
+        
+        // Add the last line
+        if (currentLine.length() > 0) {
+            result.append(currentLine);
+        }
+        
+        return result.toString();
     }
 }
