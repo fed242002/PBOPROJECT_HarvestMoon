@@ -8,14 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.Buffer;
-import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
-import javax.swing.JTextField;
-
-import entity.Entity;
-import entity.ItemList;
 
 public class UI {
 
@@ -38,6 +31,8 @@ public class UI {
     int subState = 0;
     public int playerSlotCol = 0; // inventory slot column
     public int playerSlotRow = 0; // inventory slot row
+    public BufferedImage imageLighting;
+    public String path2 = "";
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -134,6 +129,27 @@ public class UI {
         g2.drawString("Date: " + gp.date[gp.currDate] +  " " + gp.day[gp.currDay],550 , 35);
         g2.drawString("Month: " + gp.month[gp.currentMonth], 550, 55);
         g2.drawString("Time: " + gp.hour + ":" + String.format("%02d", gp.minute), 550, 75); // Display the time in 
+        if(gp.hour >= 6 && gp.hour < 13)  // 6 AM to 1 PM
+            {
+                path2 = "/assets/Lighting/Sunny.png";
+                imageLighting = gp.setImage(path2);
+            }
+            else if(gp.hour >= 13 && gp.hour < 18) // 1 PM to 6 PM
+            {
+                path2 = "/assets/Lighting/Dusk.png";
+                imageLighting = gp.setImage(path2);
+            }
+            else if (gp.hour >= 18 || gp.hour < 2) // 6 PM to 2 AM (spans midnight)
+            {
+                path2 = "/assets/Lighting/Moon.png";
+                imageLighting = gp.setImage(path2);
+            }
+            else if(gp.hour >= 2 && gp.hour < 6) // 2 AM to 6 AM
+            {
+                path2 = "/assets/Lighting/Dawn.png";
+                imageLighting = gp.setImage(path2);
+            }
+        g2.drawImage(imageLighting, 690, 35,48,48,null);
 
         // info Panel gold
         String gold = String.valueOf(gp.player.gold) + " G";
@@ -356,7 +372,7 @@ public class UI {
         if (entity == gp.player) {
             frameX = gp.tileSize * 9;
             frameY = gp.tileSize;
-            frameWidth = gp.tileSize * 6;
+            frameWidth = gp.tileSize * 8;
             frameHeight = gp.tileSize * 5;
             slotCol = playerSlotCol; // inventory slot column
             slotRow = playerSlotRow; // inventory slot row

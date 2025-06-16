@@ -195,6 +195,7 @@ public class Player extends Entity {
 
     public void setItems() {
         // inventory.add() // set item default player apa belum tau mau diisi apa
+        inventory.add(new OBJ_soil(gp, 0, 0)); // Add a default soil item to the inventory
     }
 
     @Override
