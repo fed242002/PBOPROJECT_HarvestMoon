@@ -7,5 +7,8 @@ public class dataStorage implements Serializable {
     int energy;
     int coin;
     String name;
+    int hour;
+    int minute;
+    int timeCounter;
 
 }

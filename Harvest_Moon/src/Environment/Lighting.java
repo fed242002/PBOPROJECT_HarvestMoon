@@ -1,7 +1,6 @@
 package Environment;
 
 import Main.GamePanel;
-
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -93,39 +92,51 @@ public class Lighting {
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastUpdate >= 1000) { // setiap 1 detik
             lastUpdate = currentTime;
+            if(gp.hour >= 6 && gp.hour < 13)  // Check if the hour is between 6 and 13
+            {
+                dayState = day; // Change to day after 600 frames
+            }
+            else if(gp.hour >= 2 && gp.hour < 6) {
+                dayState = dawn; // Change to dawn after 600 frames
+            }
+            else if(gp.hour >= 13 && gp.hour < 18) {
+                dayState = dusk; // Change to dusk after 600 frames
+            }
+            else{
+                dayState = night; // Change to night after 600 frames
+            }
+            
 
             if (dayState == day) {
-                dayCounter++;
-
-                if (dayCounter > 600) {
-                    dayCounter = 0;
+                if(gp.hour >= 13)
+                {
                     dayState = dusk; // Change to dusk after 600 frames
                     filterAlpha = 0f; // Ensure filterAlpha starts at 0 for dusk transition
                 }
+                    
             } else if (dayState == dusk) {
-                filterAlpha += 0.001f; // Increase the increment for a more visible transition
-                if (filterAlpha >= 1f) {
+                filterAlpha += 0.003f; // Increase the increment for a more visible transition
+                if(gp.hour >= 18)
+                {   
                     filterAlpha = 1f;
                     dayState = night; // Change to night after reaching full darkness
                 }
             } else if (dayState == night) {
-                dayCounter++;
-
-                if (dayCounter > 600) {
-                    dayCounter = 0;
+                filterAlpha = 1;
+                if (gp.hour >= 2) {
                     dayState = dawn; // Change to dawn after 600 frames
                     filterAlpha = 1f; // Ensure filterAlpha starts at 1 for dawn transition
                 }
             } else if (dayState == dawn) {
-                filterAlpha -= 0.001f; // Increase the decrement for a more visible transition
+                filterAlpha -= 0.004f; // Increase the decrement for a more visible transition
 
-                if (filterAlpha < 0f) {
-                    filterAlpha = 0f;
-                    dayState = day; // Reset to day after reaching full brightness
+                if(gp.hour >= 6) {
+                    filterAlpha = 0f; // Reset filterAlpha to 0 for day transition
+                    dayState = day; // Change back to day after reaching full brightness
                 }
             }
         }
-    }
+        }
 
     public void draw(Graphics2D g2) {
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, filterAlpha));
