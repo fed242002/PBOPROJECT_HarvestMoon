@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed, isSprint, undoToolsPressed,
-            useTool;
+            useTool, enterPressed;
     GamePanel gp;
 
     public KeyHandler(GamePanel gp) {
@@ -346,6 +346,7 @@ public class KeyHandler implements KeyListener {
                     gp.gameState = gp.playState;
                 } else if(gp.ui.commandNum == 1) {
                     //kalo hold makanan
+                    gp.player.isHolding = true; // Set hold food to true
                     gp.gameState = gp.playState;
                 }
             }

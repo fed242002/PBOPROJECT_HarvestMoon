@@ -31,6 +31,7 @@ public class UI {
     int subState = 0;
     public int playerSlotCol = 0; // inventory slot column
     public int playerSlotRow = 0; // inventory slot row
+    public int merchantChoice = 0;
     public BufferedImage imageLighting;
     public String path2 = "";
 
@@ -81,6 +82,7 @@ public class UI {
         }
 
         if (gp.gameState == gp.dialogueState) {
+            handleMerchantNavigation();
             drawDialogueScreen();
         }
         if (gp.gameState == gp.eventFoundState) {
@@ -642,8 +644,15 @@ public class UI {
 
         // curren person yang ngomong
 
-        g2.drawImage(currentEntityDialogue.animationList.get(1).down[0], 450, 25, gp.tileSize * 4, gp.tileSize * 8,
-                null);
+        // Draw the NPC portrait
+
+        if (currentEntityDialogue != null && currentEntityDialogue.specialNpc) {
+
+            g2.drawImage(currentEntityDialogue.animationList.get(currentEntityDialogue.currentAnimationIndex).down[0], 
+
+                450, 25, gp.tileSize * 4, gp.tileSize * 8, null);
+
+        }
 
         // window
         int x = 0;
@@ -671,10 +680,132 @@ public class UI {
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
         g2.drawString(currentDialogueName, getXforCenteredText(currentDialogueName, 73, 286), 350);
 
-        // for(String line : currentDialogue.split("\n")){
-        // g2.drawString(line, x, y);
-        // y += 40;
-        // }
+        int nameX = getXforCenteredText(currentDialogueName, 73, 286);
+
+        int nameY = 350;
+
+        g2.drawString(currentDialogueName, nameX, nameY);
+
+
+
+        // Jika NPC adalah merchant, tampilkan tombol buy, sell, dan leave
+
+        if (currentEntityDialogue != null && currentEntityDialogue.getClass().getSimpleName().equals("Npc_Merchant")) {
+
+            try {
+
+                // Properti umum untuk semua tombol
+
+                int buttonWidth = 158;
+
+                int buttonHeight = 50;
+
+                int buttonSpacing = 10; // Jarak antara tombol
+
+
+
+                // Load semua gambar tombol (normal dan aktif)
+
+                BufferedImage buyBtn = gp.setImage("/assets/ui/buyBtn.png");
+
+                BufferedImage sellBtn = gp.setImage("/assets/ui/sellBtn.png");
+
+                BufferedImage leaveBtn = gp.setImage("/assets/ui/leaveBtn.png");
+
+                BufferedImage buyBtnActive = gp.setImage("/assets/ui/buyBtnActive.png");
+
+                BufferedImage sellBtnActive = gp.setImage("/assets/ui/sellBtnActive.png");
+
+                BufferedImage leaveBtnActive = gp.setImage("/assets/ui/leaveBtnActive.png");
+
+
+
+                // Gambar tombol Buy
+
+                if (buyBtn != null && buyBtnActive != null) {
+
+                    g2.drawImage(merchantChoice == 0 ? buyBtnActive : buyBtn, 
+
+                        nameX, nameY - 70 - (buttonHeight + buttonSpacing) * 2, 
+
+                        buttonWidth, buttonHeight, null);
+
+                }
+
+
+
+                // Gambar tombol Sell
+
+                if (sellBtn != null && sellBtnActive != null) {
+
+                    g2.drawImage(merchantChoice == 1 ? sellBtnActive : sellBtn,
+
+                        nameX, nameY - 70 - (buttonHeight + buttonSpacing), 
+
+                        buttonWidth, buttonHeight, null);
+
+                }
+
+
+
+                // Gambar tombol Leave
+
+                if (leaveBtn != null && leaveBtnActive != null) {
+
+                    g2.drawImage(merchantChoice == 2 ? leaveBtnActive : leaveBtn,
+
+                        nameX, nameY - 70, 
+
+                        buttonWidth, buttonHeight, null);
+
+                }
+
+            } catch (Exception e) {
+
+                System.out.println("Error loading merchant buttons: " + e.getMessage());
+
+            }
+
+        }
+
+
+
+        // Posisi teks dialog di tengah bagian bawah layar
+
+        int dialogBoxHeight = gp.tileSize * 4;
+
+        int dialogBoxY = gp.screenHeight - dialogBoxHeight;
+
+
+
+        // Hitung jumlah baris dalam dialog untuk penempatan vertikal yang tepat
+
+        String[] lines = currentDialogue.split("\n");
+
+        int lineHeight = 35;
+
+        int totalTextHeight = (lines.length * lineHeight);
+
+        
+
+        // Posisi Y awal untuk teks dialog
+
+        int textY = dialogBoxY + (dialogBoxHeight - totalTextHeight) / 2;
+
+        // Gambar teks dialog yang terpusat
+        g2.setColor(new Color(94, 44, 19));
+
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 28F));
+
+        for(String line : currentDialogue.split("\n")) {
+
+            int textX = getXforCenteredText(line);
+
+            g2.drawString(line, textX, textY);
+
+            textY += lineHeight;
+
+        }
     }
 
     public void drawDialogueScreenEvent() {
@@ -697,10 +828,8 @@ public class UI {
 
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
         x += gp.tileSize;
-        y += gp.tileSize;
-
-        for (String line : currentDialogue.split("\n")) {
-            g2.drawString(currentDialogue, x, y);
+        y += gp.tileSize;        for (String line : currentDialogue.split("\n")) {
+            g2.drawString(line, x, y);
             y += 40;
         }
     }
@@ -735,5 +864,208 @@ public class UI {
         g2.setColor(new Color(101, 67, 33));
         g2.setStroke(new BasicStroke(5));
         g2.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 25, 25);
+    }
+
+    public void drawTradeScreen(){
+
+        switch (subState) {
+
+            case 1: trade_select(); break;
+
+            case 2: trade_buy(); break;
+
+            case 3: trade_sell(); break;
+
+        }
+
+        gp.keyH.enterPressed = false; // reset enter pressed after drawing trade screen
+
+    }
+
+
+
+    public void trade_select() {
+
+        // gambar buy, sell, mbe leave button
+
+        BufferedImage buyBtn = gp.setImage("/assets/ui/buyBtn.png");
+
+        // Posisikan di atas nama NPC
+
+        g2.drawImage(buyBtn, 
+
+            getXforCenteredText(currentDialogueName, 73, 286), // X sama dengan posisi nama NPC
+
+            280, // Y di atas nama NPC
+
+            158, 50, null); // Width dan height yang disesuaikan
+
+    }
+
+
+
+    public void trade_buy() {
+
+        // Window
+
+        int x = gp.tileSize * 2;
+
+        int y = gp.tileSize;
+
+        int width = gp.screenWidth - (gp.tileSize * 4);
+
+        int height = gp.screenHeight - (gp.tileSize * 2);
+
+        drawSubWindow(x, y, width, height);
+
+        
+
+        // Teks
+
+        g2.setColor(Color.white);
+
+        g2.setFont(g2.getFont().deriveFont(32F));
+
+        int textX = x + 20;
+
+        int textY = y + gp.tileSize;
+
+        g2.drawString("Buy Menu", textX, textY);
+
+        
+
+        // Kembali ke menu utama merchant
+
+        if (gp.keyH.interactPressed) {
+            gp.keyH.interactPressed = false;
+
+            subState = 1;
+
+        }
+
+    }
+
+    public void trade_sell() {
+
+        // Window
+
+        int x = gp.tileSize * 2;
+
+        int y = gp.tileSize;
+
+        int width = gp.screenWidth - (gp.tileSize * 4);
+
+        int height = gp.screenHeight - (gp.tileSize * 2);
+
+        drawSubWindow(x, y, width, height);
+
+        
+
+        // Teks
+
+        g2.setColor(Color.white);
+
+        g2.setFont(g2.getFont().deriveFont(32F));
+
+        int textX = x + 20;
+
+        int textY = y + gp.tileSize;
+
+        g2.drawString("Sell Menu", textX, textY);
+
+        
+
+        // Kembali ke menu utama merchant
+
+        if (gp.keyH.interactPressed) {
+
+            gp.keyH.interactPressed = false;
+
+            subState = 1;
+
+        }
+
+    }
+
+
+
+    public void handleMerchantNavigation() {
+
+        if (currentEntityDialogue != null && currentEntityDialogue.getClass().getSimpleName().equals("Npc_Merchant")) {
+
+            // Navigasi atas bawah
+
+            if (gp.keyH.upPressed) {
+
+                gp.keyH.upPressed = false;
+
+                gp.playSFX(gp.sfx, 1);
+
+                merchantChoice--;
+
+                if (merchantChoice < 0) {
+
+                    merchantChoice = 2; // Wrap around to bottom
+
+                }
+
+            }
+
+            
+
+            if (gp.keyH.downPressed) {
+
+                gp.keyH.downPressed = false;
+
+                gp.playSFX(gp.sfx, 1);
+
+                merchantChoice++;
+
+                if (merchantChoice > 2) {
+
+                    merchantChoice = 0; // Wrap around to top
+
+                }
+
+            }
+
+
+
+            // Handle pilihan dengan enter
+
+            if (gp.keyH.enterPressed) {
+
+                gp.keyH.enterPressed = false;
+
+                gp.playSFX(gp.sfx, 1);
+
+                
+
+                switch(merchantChoice) {
+
+                    case 0: // Buy
+
+                        subState = 2; // Pindah ke state buy
+
+                        break;
+
+                    case 1: // Sell
+
+                        subState = 3; // Pindah ke state sell
+
+                        break;
+
+                    case 2: // Leave
+
+                        gp.gameState = gp.playState;
+
+                        break;
+
+                }
+
+            }
+
+        }
+
     }
 }
