@@ -291,6 +291,11 @@ public class Player extends Entity {
 
         String text = " "; // Initialize text to an empty string
 
+        if (i != 999 && !gp.obj.get(i).pickUpAble)
+        {
+            return;
+        }
+
          if (i != 999) {
              if (canObtainItem(gp.obj.get(i)) == true) {
                  if(gp.obj.get(i).pickUpAble) {
