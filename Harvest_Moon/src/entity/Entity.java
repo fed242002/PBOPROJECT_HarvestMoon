@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import object.*;
+import Main.GamePanel;
 
 
 public class Entity extends SuperEntity implements Cloneable{
@@ -70,6 +71,7 @@ public class Entity extends SuperEntity implements Cloneable{
     BufferedImage exclamationMark[] = new BufferedImage[2];
     ArrayList<ArrayList<BufferedImage>> emote = new ArrayList<>();
     public boolean emoteOn = false; // apakah emoticon sedang ditampilkan
+    boolean goalDirection = false; //set jadi true kalo misalnya ga ngikutin player
 
 
     public int currentEmote = 0;
@@ -101,6 +103,8 @@ public class Entity extends SuperEntity implements Cloneable{
     public int amount = 1; // Amount of the entity, used for stackable items
     public ArrayList<Entity> inventory = new ArrayList<>();
     public int type; // declare tipe nya sendiri2
+    public boolean onPath = false;
+
 
     // item attributes
     public String description = " "; // Description of the item
@@ -292,6 +296,15 @@ public class Entity extends SuperEntity implements Cloneable{
     public void setAction() {
     } // npc action
 
+    public void checkCollison()
+    {
+        collisionOn = false;
+        gp.cChecker.checkTile(this);
+        gp.cChecker.checkObject(this, false);
+        gp.cChecker.checkEntity(this, gp.npcs);
+        boolean contactPlayer = gp.cChecker.checkPlayer1(this);
+    }
+
     public void update() {
         setAction();
 
@@ -352,6 +365,93 @@ public class Entity extends SuperEntity implements Cloneable{
                 break;
             }
             i++;
+        }
+    }
+
+    public void searchPath(int goalCol, int goalRow)
+    {
+        int startCol = (worldX + solidArea.x) / gp.tileSize;
+        int startRow = (worldY + solidArea.y) / gp.tileSize;
+
+        gp.pFinder.setNodes(startCol, startRow, goalCol, goalRow, this);
+
+        if(gp.pFinder.search() == true)
+        {
+            // next x and y 
+            int nextX = gp.pFinder.pathList.get(0).col * gp.tileSize;
+            int nextY = gp.pFinder.pathList.get(0).row * gp.tileSize;
+
+            //entity solid area position
+            int enLeftX = worldX + solidArea.x;
+            int enRightX = worldX + solidArea.x + solidArea.width;
+            int enTopY = worldY + solidArea.y;
+            int enBottomY = worldY + solidArea.y + solidArea.width; 
+
+            if(enTopY > nextY && enLeftX >= nextX && enRightX < nextX + gp.tileSize)
+            {
+                direction = "up";
+            }
+            else if(enTopY < nextY && enLeftX >= nextX && enRightX < nextX + gp.tileSize)
+            {
+                direction = "down";
+            }
+            else if(enTopY >= nextY && enBottomY < nextY + gp.tileSize)
+            {
+                if(enLeftX > nextX)
+                {
+                    direction = "left";
+                }
+                if(enLeftX < nextX)
+                {
+                    direction = "right";
+                }
+            }
+            else if(enTopY > nextY && enLeftX > nextX)
+            {
+                direction = "up";
+                checkCollison();
+                if(collisionOn == true)
+                {
+                    direction = "left";
+                }
+            }
+            else if(enTopY > nextY && enLeftX < nextX)
+            {
+                direction = "up";
+                checkCollison();
+                if(collisionOn == true)
+                {
+                    direction = "right";
+                }
+            }
+            else if(enTopY < nextY && enLeftX > nextX)
+            {
+                direction = "down";
+                checkCollison();
+                if(collisionOn == true)
+                {
+                    direction = "left";
+                }
+            }
+            else if(enTopY < nextY && enLeftX < nextX)
+            {
+                direction = "down";
+                checkCollison();
+                if(collisionOn == true)
+                {
+                    direction = "right";
+                }
+            }
+
+            if(this.goalDirection = true)
+            {
+                int nextCol = gp.pFinder.pathList.get(0).col;
+                int nextRow = gp.pFinder.pathList.get(0).row;
+                if(nextCol == goalCol && nextRol == goalRow)
+                {
+                    onPath = false;
+                }
+            }
         }
     }
 

@@ -22,6 +22,7 @@ import entity.*;
 import Environment.*;
 import object.*;
 import Main.*;
+import ai.PathFinder;
 import tile.*;
 
 public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
@@ -85,6 +86,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public EventHandler eventHandler = new EventHandler(this); // Create a new EventHandler object
     Thread gameThread; // Thread for the game loop
     public boolean fullScreen = false; // Fullscreen mode toggle
+    public PathFinder pFinder = new PathFinder(this);
 
     // entity and object
     Crop crop = new Crop(this); // Create a new Crop object
