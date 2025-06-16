@@ -96,6 +96,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     saveLoad saveLoad1 = new saveLoad(this);
 
     Crop crop = new Crop(this); // Create a new Crop object
+    ItemList itemList = new ItemList(this); // Create a new ItemList object
     
 
 
