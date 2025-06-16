@@ -52,21 +52,22 @@ public class Npc extends Entity {
 
         if(onPath == true)
         {
-            // ini contoh pake goal 
-            // int goalRow = 0; // masukin row
-            // int goalCol = 0; // masukin col
-            // goalDirection = true; // true in kalo mau sesuai goal direction
+            //ini contoh pake goal 
+            int goalRow = 17; // masukin row
+            int goalCol = 39; // masukin col
+            goalDirection = true; // true in kalo mau sesuai goal direction
 
 
             //ini contoh pake following player
-            int goalCol = (gp.player.worldX + gp.player.solidArea.x)/gp.tileSize; 
-            int goalRow = (gp.player.worldY + gp.player.solidArea.y)/gp.tileSize; 
+            // int goalCol = (gp.player.worldX + gp.player.solidArea.x)/gp.tileSize; 
+            // int goalRow = (gp.player.worldY + gp.player.solidArea.y)/gp.tileSize; 
 
             searchPath(goalCol,goalRow);
             
         }
 
-        if (actionLockCounter == 120) {
+        else {
+            if (actionLockCounter == 120) {
             Random random = new Random();
             int i = random.nextInt(100) + 1;
 
@@ -81,6 +82,7 @@ public class Npc extends Entity {
             }
 
             actionLockCounter = 0;
+        }
         }
 
     }
