@@ -171,9 +171,6 @@ public class Player extends Entity {
             this.hair = nama;
         }
 
-        // for (Animation x : animationList) {
-        // x.setPath(getPath());
-        // }
     }
 
     public String getPath() {
@@ -551,16 +548,19 @@ public class Player extends Entity {
                 resetAllAnimation();
                 setAnimation("fishCaught");
                 throwBack = true;
+                moveDisabled = true; // Disable movement while planting
+
             }
             if (fishDetected) {
+                //ini nanti buat nambah ikan kalo misal ke tangkap
+                fishCaught = true;
                 resetAllAnimation();
                 setAnimation("fishpulled");
                 fishpulled = true;
+                moveDisabled = true;
                 fishingTimeRandom = random.nextInt(5, 15); // Random value between 5 and 20
                 turnOffEmote();
 
-                //ini nanti buat nambah ikan kalo misal ke tangkap
-                fishCaught = true;
             }
             
         }
@@ -697,21 +697,16 @@ public class Player extends Entity {
                 // Set the fishing time random value
                 fishingTimeRandom = random.nextInt(5, 10); // Random value between 5 and 20
                 isFishing = true;
+                moveDisabled = true;
             }
         }
 
         if (isFishing) {
-            if (gp.keyH.interactPressed) {
-                isFishing = false;
-                setAnimation("FISHCAUGHT");
-                animationDone = 0;
-                spriteCounter = 0;
-                spriteNum = 0;
-                return;
-            }
             setAnimation("FISHIDLE");
 
             animation(10);
+
+            
 
             if (animationDone == fishingTimeRandom) {
                 animationDone = 0;
@@ -719,6 +714,7 @@ public class Player extends Entity {
                 setAnimation("FISHIDLE1");
                 fishDetected = true;
                 emoteOn = true; // Show emote when fish is detected
+                moveDisabled = true;
             }
 
         }
@@ -734,6 +730,7 @@ public class Player extends Entity {
                 setAnimation("FISHIDLE");
                 isFishing = true;
                 turnOffEmote();
+                moveDisabled = true;
             }
         }
 
@@ -755,14 +752,19 @@ public class Player extends Entity {
 
                     if(randomCaught<30){ //30% chance to get boots
                         inventory.add(ItemList.boots.clone()); // Add fish1 to the inventory
+                        System.out.println("Caught Boots");
                     }else if(randomCaught<60){ //30%
                         inventory.add(ItemList.orangeFish.clone()); // Add fish1 to the inventory
+                        System.out.println("Caught Orange Fish");
                     }else if(randomCaught<80){ //20%
                         inventory.add(ItemList.greenFish.clone()); // Add fish1 to the inventory
+                        System.out.println("Caught Green Fish");
                     }else if(randomCaught<95){ //15%
                         inventory.add(ItemList.redFish.clone()); // Add fish1 to the inventory
+                        System.out.println("Caught Red Fish");
                     }else if(randomCaught<100){ //5%
                         inventory.add(ItemList.blueFish.clone()); // Add fish1 to the inventory
+                        System.out.println("Caught Blue Fish");
                     }
                 
 
@@ -779,6 +781,7 @@ public class Player extends Entity {
             if (animationDone >= fishingTimeRandom) {
                 animationDone = 0;
                 resetAllAnimation();
+                moveDisabled = true;
                 throwBack = true; // Set throwBack to true to throw the fish back
             }
         }
@@ -808,7 +811,6 @@ public class Player extends Entity {
         isFishing = false;
         fishDetected = false;
         fishpulled = false;
-        fishCaught = false;
         throwBack = false;
         isWatering = false;
         isPlanting = false;
@@ -893,6 +895,7 @@ public class Player extends Entity {
     
 
     public void draw(Graphics2D g2) {
+
 
         if (emoteOn) {
             drawEmote(g2);
