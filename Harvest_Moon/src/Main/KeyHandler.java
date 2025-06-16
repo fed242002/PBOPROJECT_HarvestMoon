@@ -22,7 +22,13 @@ public class KeyHandler implements KeyListener {
 
         int code = e.getKeyCode();
 
-        // Add debug hitbox toggle when F3 is pressed
+        // Check for W and S keys
+        if(code == KeyBind.upKey) {
+            upPressed = true;
+        }
+        if(code == KeyBind.downKey) {
+            downPressed = true;
+        }
         if (code == KeyBind.hitbox) {
             gp.showDebugHitboxes = !gp.showDebugHitboxes;
         }

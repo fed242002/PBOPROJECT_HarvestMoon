@@ -75,7 +75,13 @@ public class Player extends Entity {
     public boolean isHarvesting = false;
 
 
+    
     public BufferedImage duvetImage = null; // Image for the duvet when sleeping
+
+
+    public String getSleepPath(){
+        return body + "-" + hair + "-";
+    }
 
     public Player(GamePanel gp, KeyHandler keyH) {
 
@@ -141,11 +147,11 @@ public class Player extends Entity {
         animationList.add(new Animation("FISHCAUGHT", 9, "/assets/player/FISH CAUGHT/" + getPath()));
         animationList.add(new Animation("FISHPULLED", 2, "/assets/player/FISH REEL IN/" + getPath()));
         animationList.add(new Animation("HARVEST", 9, "/assets/player/HARVEST/" + getPath()));
-        animationList.add(new Animation("lift", 14, "/assets/player/LIFT/" + getPath()));
-        animationList.add(new Animation("PickUp", 12, "/assets/player/PICK UP/" + getPath()));
+        // animationList.add(new Animation("lift", 14, "/assets/player/LIFT/" + getPath()));
+        // animationList.add(new Animation("PickUp", 12, "/assets/player/PICK UP/" + getPath()));
         animationList.add(new Animation("Sit", 6, "/assets/player/SIT 1/" + getPath()));
-        animationList.add(new Animation("sleep", 6, "/assets/player/SLEEP/" + getPath(), true));
-        animationList.add(new Animation("throw", 14, "/assets/player/THROW/" + getPath()));
+        animationList.add(new Animation("sleep", 6, "/assets/player/SLEEP/" + getSleepPath(), true));
+        // animationList.add(new Animation("throw", 14, "/assets/player/THROW/" + getPath()));
         animationList.add(new Animation("watering", 14, "/assets/player/WATERING/" + getPath(), 8));
 
     }
@@ -165,9 +171,6 @@ public class Player extends Entity {
             this.hair = nama;
         }
 
-        // for (Animation x : animationList) {
-        // x.setPath(getPath());
-        // }
     }
 
     public String getPath() {
@@ -199,6 +202,7 @@ public class Player extends Entity {
         inventory.add(ItemList.apple.clone()); 
         inventory.add(ItemList.shovel.clone()); 
         inventory.add(ItemList.wateringCan.clone()); 
+        inventory.add(ItemList.fishRod.clone()); 
         inventory.add(ItemList.axe.clone()); 
         inventory.add(ItemList.chiliSeedBag.clone()); 
         inventory.add(ItemList.lettuceSeedBag.clone()); 
@@ -477,22 +481,26 @@ public class Player extends Entity {
     }
 
     if(currentItem!=null){
-        if(currentItem.type_item == type_seed){
-            int objIndex = gp.cChecker.checkObjectFarm(targetWorldX,targetWorldY,this, true);
-            if(objIndex != 999 && gp.farmObj.get(objIndex) instanceof OBJ_soil) {
-                g2.setColor(new Color(0, 255, 0, 100));
-                g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
-            }else{
-                g2.setColor(new Color(255, 0, 0, 100));
-                g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
-                g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);  //ini jangan lupa kalo ada red soalnya ak lgsng return hehe
-                return;
+        if(!currentItem.name.equalsIgnoreCase("fishrod")){
+            if(currentItem.type_item == type_seed){
+                int objIndex = gp.cChecker.checkObjectFarm(targetWorldX,targetWorldY,this, true);
+                if(objIndex != 999 && gp.farmObj.get(objIndex) instanceof OBJ_soil) {
+                    g2.setColor(new Color(0, 255, 0, 100));
+                    g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+                }else{
+                    g2.setColor(new Color(255, 0, 0, 100));
+                    g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+                    g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);  //ini jangan lupa kalo ada red soalnya ak lgsng return hehe
+                    return;
+                }
+    
             }
+    
+            g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);
 
         }
 
     
-            g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);
 
     }
     
@@ -540,16 +548,19 @@ public class Player extends Entity {
                 resetAllAnimation();
                 setAnimation("fishCaught");
                 throwBack = true;
+                moveDisabled = true; // Disable movement while planting
+
             }
             if (fishDetected) {
+                //ini nanti buat nambah ikan kalo misal ke tangkap
+                fishCaught = true;
                 resetAllAnimation();
                 setAnimation("fishpulled");
                 fishpulled = true;
+                moveDisabled = true;
                 fishingTimeRandom = random.nextInt(5, 15); // Random value between 5 and 20
                 turnOffEmote();
 
-                //ini nanti buat nambah ikan kalo misal ke tangkap
-                fishCaught = true;
             }
             
         }
@@ -686,21 +697,16 @@ public class Player extends Entity {
                 // Set the fishing time random value
                 fishingTimeRandom = random.nextInt(5, 10); // Random value between 5 and 20
                 isFishing = true;
+                moveDisabled = true;
             }
         }
 
         if (isFishing) {
-            if (gp.keyH.interactPressed) {
-                isFishing = false;
-                setAnimation("FISHCAUGHT");
-                animationDone = 0;
-                spriteCounter = 0;
-                spriteNum = 0;
-                return;
-            }
             setAnimation("FISHIDLE");
 
             animation(10);
+
+            
 
             if (animationDone == fishingTimeRandom) {
                 animationDone = 0;
@@ -708,6 +714,7 @@ public class Player extends Entity {
                 setAnimation("FISHIDLE1");
                 fishDetected = true;
                 emoteOn = true; // Show emote when fish is detected
+                moveDisabled = true;
             }
 
         }
@@ -723,6 +730,7 @@ public class Player extends Entity {
                 setAnimation("FISHIDLE");
                 isFishing = true;
                 turnOffEmote();
+                moveDisabled = true;
             }
         }
 
@@ -739,6 +747,28 @@ public class Player extends Entity {
 
                 if (fishCaught) {
                     //disini nanti tambahin ikan ke inventory
+                    Random random = new Random();
+                    int randomCaught = random.nextInt(0, 101); 
+
+                    if(randomCaught<30){ //30% chance to get boots
+                        inventory.add(ItemList.boots.clone()); // Add fish1 to the inventory
+                        System.out.println("Caught Boots");
+                    }else if(randomCaught<60){ //30%
+                        inventory.add(ItemList.orangeFish.clone()); // Add fish1 to the inventory
+                        System.out.println("Caught Orange Fish");
+                    }else if(randomCaught<80){ //20%
+                        inventory.add(ItemList.greenFish.clone()); // Add fish1 to the inventory
+                        System.out.println("Caught Green Fish");
+                    }else if(randomCaught<95){ //15%
+                        inventory.add(ItemList.redFish.clone()); // Add fish1 to the inventory
+                        System.out.println("Caught Red Fish");
+                    }else if(randomCaught<100){ //5%
+                        inventory.add(ItemList.blueFish.clone()); // Add fish1 to the inventory
+                        System.out.println("Caught Blue Fish");
+                    }
+                
+
+
 
                     fishCaught = false; // Reset the fish caught flag
                 }
@@ -751,6 +781,7 @@ public class Player extends Entity {
             if (animationDone >= fishingTimeRandom) {
                 animationDone = 0;
                 resetAllAnimation();
+                moveDisabled = true;
                 throwBack = true; // Set throwBack to true to throw the fish back
             }
         }
@@ -780,7 +811,6 @@ public class Player extends Entity {
         isFishing = false;
         fishDetected = false;
         fishpulled = false;
-        fishCaught = false;
         throwBack = false;
         isWatering = false;
         isPlanting = false;
@@ -865,6 +895,7 @@ public class Player extends Entity {
     
 
     public void draw(Graphics2D g2) {
+
 
         if (emoteOn) {
             drawEmote(g2);

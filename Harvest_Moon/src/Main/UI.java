@@ -134,7 +134,7 @@ public class UI {
         BufferedImage playerIcon = null;
         try {
             playerIcon = ImageIO
-                    .read(getClass().getResourceAsStream("/assets/player/SLEEP/" + gp.player.getPath() + "0.png"));
+                    .read(getClass().getResourceAsStream("/assets/player/SLEEP/" + gp.player.getSleepPath() + "0.png"));
         } catch (IOException e) {
             System.out.println("Error loading player image UI: " + e.getMessage());
         }
@@ -716,12 +716,12 @@ public class UI {
 
                 // Load semua gambar tombol (normal dan aktif)
 
-                BufferedImage buyBtn = gp.setImage("/assets/ui/buyBtn.png");
-                BufferedImage sellBtn = gp.setImage("/assets/ui/sellBtn.png");
-                BufferedImage leaveBtn = gp.setImage("/assets/ui/leaveBtn.png");
-                BufferedImage buyBtnActive = gp.setImage("/assets/ui/buyBtnActive.png");
-                BufferedImage sellBtnActive = gp.setImage("/assets/ui/sellBtnActive.png");
-                BufferedImage leaveBtnActive = gp.setImage("/assets/ui/leaveBtnActive.png");
+                BufferedImage buyBtn = gp.setImage("/assets/ui/buy.png");
+                BufferedImage sellBtn = gp.setImage("/assets/ui/sell.png");
+                BufferedImage leaveBtn = gp.setImage("/assets/ui/leave.png");
+                BufferedImage buyBtnActive = gp.setImage("/assets/ui/buyActive.png");
+                BufferedImage sellBtnActive = gp.setImage("/assets/ui/sellActive.png");
+                BufferedImage leaveBtnActive = gp.setImage("/assets/ui/leaveActive.png");
 
 
 
