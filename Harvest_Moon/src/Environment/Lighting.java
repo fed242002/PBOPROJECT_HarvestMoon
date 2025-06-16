@@ -9,8 +9,9 @@ import java.awt.image.BufferedImage;
 
 public class Lighting {
     GamePanel gp;
+    public BufferedImage imageLighting;
+    public String path = "";
     BufferedImage darknessFilter;
-    int dayCounter;
     float filterAlpha = 0f;
     long lastUpdate = System.currentTimeMillis();
 
@@ -18,7 +19,7 @@ public class Lighting {
     final int dusk = 1;
     final int night = 2;
     final int dawn = 3;
-    int dayState = day; // Default to day state
+    public int dayState = day; // Default to day state
 
     public Lighting(GamePanel gp) {
         this.gp = gp;
@@ -132,28 +133,7 @@ public class Lighting {
     public void draw(Graphics2D g2) {
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, filterAlpha));
         g2.drawImage(darknessFilter, 0, 0, null);
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f)); // Reset alpha to 1 for other drawings
-
-        // debug
-        String situation = "";
-
-        switch (dayState) {
-            case day:
-                situation = "Day";
-                break;
-            case dusk:
-                situation = "Dusk";
-                break;
-            case night:
-                situation = "Night";
-                break;
-            case dawn:
-                situation = "Dawn";
-                break;
-        }
-        g2.setColor(Color.WHITE);
-        g2.setFont(g2.getFont().deriveFont(50f));
-        g2.drawString(situation, 600, 500);
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f)); // Reset alpha to 1 for other drawing
     }
 
 }

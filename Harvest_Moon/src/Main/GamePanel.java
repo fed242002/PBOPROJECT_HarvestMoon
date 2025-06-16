@@ -156,6 +156,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
     // lighting
     EnvironmentManager eManager = new EnvironmentManager(this); // Create a new EnvironmentManager object
+    Lighting lighting = new Lighting(this); // Create a new Lighting object
 
     private int mouseX = -1;
     private int mouseY = -1;
