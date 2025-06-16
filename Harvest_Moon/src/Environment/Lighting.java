@@ -102,7 +102,7 @@ public class Lighting {
             else if(gp.hour >= 13 && gp.hour < 18) {
                 dayState = dusk; // Change to dusk after 600 frames
             }
-            else{
+            else if (gp.hour >= 18 || gp.hour < 2) {
                 dayState = night; // Change to night after 600 frames
             }
             
