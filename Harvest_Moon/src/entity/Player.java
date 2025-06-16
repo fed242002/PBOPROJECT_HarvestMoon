@@ -77,6 +77,7 @@ public class Player extends Entity {
 
         super(gp);
 
+
         currentTools = "shovel";
 
         this.gp = gp; // Assign the GamePanel object to the instance variable
