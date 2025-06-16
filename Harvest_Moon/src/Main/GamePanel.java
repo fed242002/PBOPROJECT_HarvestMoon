@@ -241,7 +241,6 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
     
         MapData current = MapDB.mapList.get(currentMap);
-
         if(currentMonth == 3)
         {
             currentMonth = 0;

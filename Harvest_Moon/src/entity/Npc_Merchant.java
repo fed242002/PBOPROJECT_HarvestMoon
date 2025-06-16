@@ -19,7 +19,7 @@ public class Npc_Merchant extends Entity {
         this.worldY = y;
         this.solidArea.y = 48;
         
-        idle = new Animation("merchant", 6, "/assets/npc/" + name + "/IDLE/");
+        idle = new Animation("idle", 6, "/assets/npc/" + name + "/IDLE/");
         animationList.add(idle);
         currentAnimationIndex = 0; // default idle
         

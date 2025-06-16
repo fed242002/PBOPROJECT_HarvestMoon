@@ -36,7 +36,7 @@ public class Player extends Entity {
     public int gold = 100;
     public boolean lightUpdated = false;
     public int fishingTimeRandom;
-    public int maxInventorySize = 55; // Maximum size of the inventory
+    public int maxInventorySize = 60; // Maximum size of the inventory
 
     public boolean isHolding = false; // Flag to check if the player is holding an item
 
@@ -292,7 +292,13 @@ public class Player extends Entity {
 
         String text = " "; // Initialize text to an empty string
 
-         if (i != 999) {
+        if (i != 999 && !gp.obj.get(i).pickUpAble)
+        {
+            gp.obj.get(i).interact(); // Call the interact method of the object
+            return;
+        }
+
+        if (i != 999) {
              if (canObtainItem(gp.obj.get(i)) == true) {
                  if(gp.obj.get(i).pickUpAble) {
                      text = "You picked up " + gp.obj.get(i).name + "!"; // Set the text to display
