@@ -152,6 +152,14 @@ public class EventHandler {
                     handleMapTransition(1, 46, 25);
                 }
             }
+            case 3 -> { // Inside the House
+                if (gp.player.worldX >= gp.tileSize * 24 && gp.player.worldX <= gp.tileSize * 26 && 
+                    gp.player.worldY >= gp.tileSize * 27 && gp.player.worldY <= gp.tileSize * 28) {
+                    handleMapTransition(0, 37, 17);
+                }
+            }
+
+
         }
         
         int xDistance = Math.abs(gp.player.worldX - previousEventX);

@@ -196,6 +196,7 @@ public class Player extends Entity {
         inventory.add(ItemList.axe.clone()); 
         inventory.add(ItemList.chiliSeedBag.clone()); 
         inventory.add(ItemList.lettuceSeedBag.clone()); 
+        
     }
 
     @Override
@@ -320,9 +321,6 @@ public class Player extends Entity {
 
     public boolean canObtainItem(Entity item) {
 
-        if (!item.pickUpAble) {
-            return false;
-        }
 
         boolean canObtain = false;
 
@@ -364,6 +362,8 @@ public class Player extends Entity {
     }
 
     public void drawFrontBlock(Graphics2D g2) {
+
+
         // hitbox player di world posisi
         int hitboxCenterWorldX = worldX + solidArea.x + (solidArea.width / 2);
         int hitboxCenterWorldY = worldY + solidArea.y + (solidArea.height / 2);
@@ -410,7 +410,7 @@ public class Player extends Entity {
     }
     
     //show info if it can be done or nahwdwud
-    if(currentTools!= null || currentItem != null){
+    if(currentTools!= null){
         if(currentTools!=null && gp.keyH.useTool && !currentTools.equalsIgnoreCase("fishRod")){
             if(currentTools.equalsIgnoreCase("shovel")){
                 if((gp.tileM.mapTileNum[targetTileCol][targetTileRow] >= 40 && gp.tileM.mapTileNum[targetTileCol][targetTileRow] <=59) || gp.tileM.mapTileNum[targetTileCol][targetTileRow] == 0 ){
@@ -451,25 +451,29 @@ public class Player extends Entity {
 
             }
 
-            if(currentItem.type_item == type_seed){
-                int objIndex = gp.cChecker.checkObjectFarm(targetWorldX,targetWorldY,this, true);
-                if(objIndex != 999 && gp.farmObj.get(objIndex) instanceof OBJ_soil) {
-                    g2.setColor(new Color(0, 255, 0, 100));
-                    g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
-                }else{
-                    g2.setColor(new Color(255, 0, 0, 100));
-                    g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
-                    g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);  //ini jangan lupa kalo ada red soalnya ak lgsng return hehe
-                    return;
-                }
-
-            }
-
-    
-            g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);
             
     
         }
+
+    }
+
+    if(currentItem!=null){
+        if(currentItem.type_item == type_seed){
+            int objIndex = gp.cChecker.checkObjectFarm(targetWorldX,targetWorldY,this, true);
+            if(objIndex != 999 && gp.farmObj.get(objIndex) instanceof OBJ_soil) {
+                g2.setColor(new Color(0, 255, 0, 100));
+                g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+            }else{
+                g2.setColor(new Color(255, 0, 0, 100));
+                g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+                g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);  //ini jangan lupa kalo ada red soalnya ak lgsng return hehe
+                return;
+            }
+
+        }
+
+    
+            g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);
 
     }
     
@@ -480,17 +484,8 @@ public class Player extends Entity {
             // Reset the interact key
             gp.keyH.interactPressed = false;
 
-            if (currentTools == null) {
-                return;
-            }
-
-            if(currentItem.type_item == type_seed){
-                isPlanting = true;
-                moveDisabled = true; // Disable movement while planting
-            }
-
-
-            if (currentTools.equalsIgnoreCase("shovel")) {
+            if (currentTools != null) {
+                            if (currentTools.equalsIgnoreCase("shovel")) {
                 isDigging = true;
                 moveDisabled = true; // Disable movement while digging
             }
@@ -537,9 +532,16 @@ public class Player extends Entity {
                 //ini nanti buat nambah ikan kalo misal ke tangkap
                 fishCaught = true;
             }
-
-                
+            
         }
+
+            if(currentItem.type_item == type_seed){
+                isPlanting = true;
+                moveDisabled = true; // Disable movement while planting
+            }
+
+        }
+                
 
         action(targetWorldX, targetWorldY);
         if (gp.keyH.undoToolsPressed) {
@@ -783,12 +785,14 @@ public class Player extends Entity {
 
     public void selectItem() {
         int itemIndex = gp.ui.getItemIndexOnSlot(gp.ui.playerSlotCol, gp.ui.playerSlotRow); // Get the selected item
+
         // index from the UI
 
         if (itemIndex < inventory.size()) {
             Entity selectedItem = inventory.get(itemIndex); // Get the selected item from the inventory
             gp.player.currentItem = selectedItem; // Set the current item to the selected item
             currentTools = null; // Set current tools to null if the selected item is not a tool
+            gp.gameState = gp.playState; // Set the game state to play state
 
             if(selectedItem.type_item == type_food) // Check if the selected item is food
             {
@@ -796,11 +800,14 @@ public class Player extends Entity {
                 gp.ui.commandNum = 0;
 
             }
-
-
-            if(selectedItem.type_item == type_tool) //tipe tools misalnya{
+            if(selectedItem.type_item == type_tool){ //tipe tools misalnya{
                 currentTools = selectedItem.name;
             }
+        
+        }
+            
+
+
             // if(selectedItem == type_food) // misal makanan
             // {
             // if(selectedItem.use(this) == true)
@@ -830,8 +837,13 @@ public class Player extends Entity {
         ToolsAnimation currentTool = null;
 
         if (currentTools != null || currentItem!=null) {
-            if (gp.keyH.useTool || currentTools.equalsIgnoreCase("fishRod")) {
-                drawFrontBlock(g2); // Draw the block in front of the player
+            if(currentTools!=null){
+                if (gp.keyH.useTool || currentTools.equalsIgnoreCase("fishRod")) {
+                    drawFrontBlock(g2); // Draw the block in front of the player
+                }
+            }
+            else if(currentItem!=null && gp.keyH.useTool && currentItem.type_item == type_seed){
+                drawFrontBlock(g2);
             }
         }
 
