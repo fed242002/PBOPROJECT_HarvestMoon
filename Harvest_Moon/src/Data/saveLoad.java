@@ -1,12 +1,11 @@
 package Data;
 
+import Main.GamePanel;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-import Main.GamePanel;
 
 public class saveLoad {
     GamePanel gp;
@@ -23,6 +22,10 @@ public class saveLoad {
 
                 ds.energy = gp.player.energy;
                 ds.coin = gp.player.gold;
+                ds.hour = gp.hour;
+                ds.minute = gp.minute;
+                ds.timeCounter = gp.timeCounter;
+                
 
                 // write datastorage obj
                 oos.writeObject(ds);
@@ -44,6 +47,9 @@ public class saveLoad {
                 // contoh masukinnya
                 gp.player.energy = ds.energy;
                 gp.player.gold = ds.coin;
+                gp.hour =  ds.hour;
+                gp.minute = ds.minute; 
+                gp.timeCounter = ds.timeCounter;
             }
 
         } catch (Exception e) {

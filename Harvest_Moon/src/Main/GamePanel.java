@@ -54,6 +54,26 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public int hour = 8;
     public int minute;
     public int timeCounter = 0;
+    public String month [] = {"Moonlit", "Sunlit", "Frostbloom", "Amberfall"};
+    public int currentMonth = 0;
+    public int monthCounter = 0;
+    public String date[] = {
+    "1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th",
+    "11th", "12th", "13th", "14th", "15th", "16th", "17th", "18th", "19th", "20th",
+    "21st", "22nd", "23rd", "24th", "25th", "26th", "27th", "28th", "29th", "30th"
+};
+ 
+    public int currDate = 0;
+    public String day[] = {
+    "Moon's Dawn",   // inspired by Moonlit
+    "Sun's Rise",    // inspired by Sunlit
+    "Frostday",      // from Frostbloom
+    "Bloomrest",     // from Frostbloom
+    "Amberlight",    // from Amberfall
+    "Fallenday",     // from Amberfall
+    "Eclipsend"      // general fantasy style
+};
+    public int currDay = 0;
 
     // system
     public TileManager tileM = new TileManager(this); // Create a new TileManager object
@@ -177,7 +197,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public void run() {
 
 
-        ;
+        
         double drawInterval = 1000000000 / FPS; // Calculate the draw interval in nanoseconds
         double delta = 0; // Time difference between frames
         long lastTime = System.nanoTime(); // Get the current time in nanoseconds
@@ -214,9 +234,27 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     
         MapData current = MapDB.mapList.get(currentMap);
 
+        if(currentMonth == 3)
+        {
+            currentMonth = 0;
+        }
+        
+        if(currDate == 29)
+        {
+            currDate = 0;
+            currentMonth++;
+        }
+
+        if(currDay == 6)
+        {
+            currDay = 0;
+        }
+
         if(hour == 24)
         {
             hour = 0;
+            currDay++;
+            currDate++;
         }
 
         if(minute > 59)

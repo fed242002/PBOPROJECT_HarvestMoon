@@ -124,7 +124,9 @@ public class UI {
         g2.setColor(Color.BLACK);
 
         // info Panel day
-        g2.drawString("Time: " + gp.hour + ":" + String.format("%02d", gp.minute), 550, 50); // Display the time in 
+        g2.drawString("Date: " + gp.date[gp.currDate] +  " " + gp.day[gp.currDay],550 , 35);
+        g2.drawString("Month: " + gp.month[gp.currentMonth], 550, 55);
+        g2.drawString("Time: " + gp.hour + ":" + String.format("%02d", gp.minute), 550, 75); // Display the time in 
 
         // info Panel gold
         String gold = String.valueOf(gp.player.gold) + " G";
