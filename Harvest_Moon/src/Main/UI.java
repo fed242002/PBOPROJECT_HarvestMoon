@@ -96,6 +96,37 @@ public class UI {
         if (gp.gameState == gp.inventoryState) {
             drawInventory(gp.player, true);
         }
+
+        if(gp.gameState == gp.foodItemChooseState){
+            chooseFoodItem();
+        }
+    }
+
+
+    public void chooseFoodItem(){
+        BufferedImage use = gp.setImage("/assets/ui/use.png");
+        BufferedImage useActive = gp.setImage("/assets/ui/useActive.png");
+        BufferedImage hold = gp.setImage("/assets/ui/hold.png");
+        BufferedImage holdActive = gp.setImage("/assets/ui/holdActive.png");
+
+
+        //bikin bg dim
+        g2.setColor(new Color(0, 0, 0, 150)); // semi-transparent black
+        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+
+        if(commandNum == 0){
+            g2.drawImage(useActive, gp.screenWidth / 2 - 288 / 2, gp.tileSize * 4, 288, 48, null);
+        }else{
+            g2.drawImage(use, gp.screenWidth / 2 - 288 / 2, gp.tileSize * 4, 288, 48, null);
+        }
+
+        if(commandNum == 1){
+            g2.drawImage(holdActive, gp.screenWidth / 2 - 288 / 2, gp.tileSize * 5 , 288, 48, null);
+        }else{
+            g2.drawImage(hold, gp.screenWidth / 2 - 288 / 2, gp.tileSize * 5  , 288, 48, null);
+        }
+        
+
     }
 
     public void drawGameUI() {

@@ -1,5 +1,6 @@
 package entity;
 
+import Main.Crop;
 import Main.GamePanel;
 
 public class Item extends Entity {
@@ -23,6 +24,32 @@ public class Item extends Entity {
             System.out.println("Image not found: " + path);
         }
     }
+
+        public Item(GamePanel gp, String name, int type, String description, String cropName, int daysToMature) {
+        super(gp);
+        this.name = name;
+        this.gp = gp;
+        type_item = type;
+        this.seedCrop = cropName;
+        this.daysToMature = daysToMature;
+        this.description = description;
+        
+
+        width = 32;
+        height = 32;
+
+        path = "/assets/item/" + name + ".png";
+        image = gp.setImage(path);
+
+        if(image == null) {
+            System.out.println("Image not found: " + path);
+        }
+
+        if(type ==2){
+            Crop.getCrop(cropName).daysToMature = daysToMature; // Set the days to mature for the crop
+        }
+    }
+
 
     @Override
     public void interact() {

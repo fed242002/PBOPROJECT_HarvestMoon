@@ -1,12 +1,13 @@
 package Main;
 
+import entity.Item;
 import object.OBJ_Crop;
 
 public class Crop {
 
     GamePanel gp;
     static OBJ_Crop berry;
-    static OBJ_Crop cabbage;
+    static OBJ_Crop lettuce;
     static OBJ_Crop carrot;
     static OBJ_Crop cauliflower;
     static OBJ_Crop chili;
@@ -33,7 +34,7 @@ public class Crop {
         this.gp = gp;
 
         berry = new OBJ_Crop(gp, "berry", 4); 
-        cabbage = new OBJ_Crop(gp, "cabbage", 3);
+        lettuce = new OBJ_Crop(gp, "lettuce", 3);
         carrot = new OBJ_Crop(gp, "carrot", 6);
         cauliflower = new OBJ_Crop(gp, "cauliflower", 4);
         chili = new OBJ_Crop(gp, "chili", 5);
@@ -53,10 +54,21 @@ public class Crop {
         zucchini = new OBJ_Crop(gp, "zucchini", 5);
 
 
-        cropList = new OBJ_Crop[]{berry, cabbage, carrot, cauliflower, chili, corn, cotton, grain, grapes, onion, pear, pineapple, pumpkin, radish, strawberry, tomato, turnip, watermelon, zucchini};
+        cropList = new OBJ_Crop[]{berry, lettuce, carrot, cauliflower, chili, corn, cotton, grain, grapes, onion, pear, pineapple, pumpkin, radish, strawberry, tomato, turnip, watermelon, zucchini};
 
 
     }
+
+
+    static public OBJ_Crop getCrop(String name) {
+        for (OBJ_Crop crop : cropList) {
+            if (crop.name.equals(name)) {
+                return crop.clone(0, 0); // Clone with default position
+            }
+        }
+        return null; // Crop not found
+    }
+
 
 
 }

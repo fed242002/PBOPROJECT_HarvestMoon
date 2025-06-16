@@ -323,7 +323,7 @@ public class KeyHandler implements KeyListener {
         }
 
         // kalo inventory
-        if (gp.gameState == gp.inventoryState) {
+        else if (gp.gameState == gp.inventoryState) {
 
             playerInventory(code);
 
@@ -335,25 +335,50 @@ public class KeyHandler implements KeyListener {
                 gp.gameState = gp.playState; // Exit inventory and return to play state
             }
         }
-        if (gp.gameState == gp.dialogueState) {
+        else if(gp.gameState == gp.foodItemChooseState){
+            if(code == KeyBind.upKey) {
+               if(gp.ui.commandNum == 0)
+                    gp.ui.commandNum = 1;
+                else
+                    gp.ui.commandNum = 0;
+            }
+            if(code == KeyBind.downKey) {
+                if(gp.ui.commandNum ==0)
+                    gp.ui.commandNum = 1;
+                else
+                    gp.ui.commandNum = 0;
+            }
+            if(code == KeyBind.nextKey) {
+                if(gp.ui.commandNum == 0) {
+                    //kalo makan
+                    gp.gameState = gp.playState;
+                } else if(gp.ui.commandNum == 1) {
+                    //kalo hold makanan
+                    gp.gameState = gp.playState;
+                }
+            }
+        }
+
+
+        else if (gp.gameState == gp.dialogueState) {
             if (code == KeyBind.nextKey) {
                 gp.gameState = gp.playState;
             }
         }
 
-        if (gp.gameState == gp.inventoryState) {
+        else if (gp.gameState == gp.inventoryState) {
 
             if (code == KeyBind.nextKey) {
                 gp.gameState = gp.playState;
             }
         }
 
-        if (gp.gameState == gp.eventFoundState) {
+        else if (gp.gameState == gp.eventFoundState) {
             if (code == KeyBind.nextKey) {
                 gp.gameState = gp.playState;
             }
         }
-        if (code == KeyBind.grid) {
+        else if (code == KeyBind.grid) {
             gp.showGrid = !gp.showGrid;
         }
 

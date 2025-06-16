@@ -20,15 +20,8 @@ public class ItemList {
 
     public void initializeItems() {
         // Type 0: General items
-        apple = new Item(gp, "apple", 0, "A crisp, juicy red fruit. Good for eating or cooking.");
-        banana = new Item(gp, "banana", 0, "A sweet yellow fruit with a curved shape. Rich in potassium.");
-        lemon = new Item(gp, "lemon", 0, "A sour citrus fruit with bright yellow skin. Used in cooking and beverages.");
-        orange = new Item(gp, "orange", 0, "A juicy citrus fruit high in vitamin C. Sweet with a hint of tartness.");
-        peach = new Item(gp, "peach", 0, "A soft, fuzzy fruit with sweet pink flesh. Popular in summer.");
-        pear = new Item(gp, "pear", 0, "A sweet fruit with a distinctive bell shape and grainy texture.");
         emptySeedBag = new Item(gp, "emptySeedBag", 0, "A plain cloth bag that once held seeds. Could be reused for storage.");
-        WatermelonSlice = new Item(gp, "WatermelonSlice", 0, "A refreshing slice of watermelon. Sweet, juicy, and perfect for hot days.");
-
+        
         // Type 1: Tools
         axe = new Item(gp, "axe", 1, "A sturdy tool for chopping trees and collecting wood.");
         fishRod = new Item(gp, "fishRod", 1, "Used to catch fish from ponds, rivers, and the ocean.");
@@ -39,24 +32,24 @@ public class ItemList {
         wateringCan = new Item(gp, "wateringCan", 1, "Used to water crops. Remember to refill it regularly!");
 
         // Type 2: Seeds
-        carrotSeedBag = new Item(gp, "carrotSeedBag", 2, "Contains seeds for growing orange root vegetables. Takes 4 days to mature.");
-        cauliflowerSeedBag = new Item(gp, "cauliflowerSeedBag", 2, "Seeds for growing large white florets. Takes 8 days to mature.");
-        chiliSeedBag = new Item(gp, "chiliSeedBag", 2, "Seeds for growing spicy red peppers. Takes 5 days to mature.");
-        coffeeSeedBag = new Item(gp, "coffeeSeedBag", 2, "Contains beans that can be planted to grow coffee plants. Takes 10 days.");
-        grainBag = new Item(gp, "grainBag", 2, "Contains various cereal grains for planting. Takes 7 days to mature.");
-        grainSeedBag = new Item(gp, "grainSeedBag", 2, "Premium seeds for growing higher quality grains. Takes 7 days.");
-        grapeSeedBag = new Item(gp, "grapeSeedBag", 2, "Seeds for growing purple grape vines. Takes 9 days to mature.");
-        lettuceSeedBag = new Item(gp, "lettuceSeedBag", 2, "Seeds for growing leafy green vegetables. Takes 5 days to mature.");
-        onionSeedBag = new Item(gp, "onionSeedBag", 2, "Seeds for growing pungent bulb vegetables. Takes 6 days to mature.");
-        pearSeedBag = new Item(gp, "pearSeedBag", 2, "Seeds to grow pear trees. Takes a season to grow into a sapling.");
-        pineappleSeedBag = new Item(gp, "pineappleSeedBag", 2, "Seeds for growing tropical pineapple plants. Takes 14 days.");
-        pumpkinSeedBag = new Item(gp, "pumpkinSeedBag", 2, "Seeds for growing large orange gourds. Takes 13 days to mature.");
-        radishSeedBag = new Item(gp, "radishSeedBag", 2, "Seeds for growing crisp white root vegetables. Takes 3 days.");
-        strawberrySeedBag = new Item(gp, "strawberrySeedBag", 2, "Seeds for growing sweet red berries. Takes 7 days to mature.");
-        tomatoSeedBag = new Item(gp, "tomatoSeedBag", 2, "Seeds for growing juicy red vegetables. Takes 6 days to mature.");
-        turnipSeedBag = new Item(gp, "turnipSeedBag", 2, "Seeds for growing purple and white root vegetables. Takes 4 days.");
-        watermelonSeedBag = new Item(gp, "watermelonSeedBag", 2, "Seeds for growing large, striped melons. Takes 12 days.");
-        zucchiniSeedBag = new Item(gp, "zucchiniSeedBag", 2, "Seeds for growing green summer squash. Takes 5 days to mature.");
+        carrotSeedBag = new Item(gp, "carrotSeedBag", 2, "Contains seeds for growing orange root vegetables. Takes 4 days to mature.", "carrot", 4);
+        cauliflowerSeedBag = new Item(gp, "cauliflowerSeedBag", 2, "Seeds for growing large white florets. Takes 8 days to mature.", "cauliflower", 8);
+        chiliSeedBag = new Item(gp, "chiliSeedBag", 2, "Seeds for growing spicy red peppers. Takes 5 days to mature.", "chili", 5);
+        coffeeSeedBag = new Item(gp, "coffeeSeedBag", 2, "Contains beans that can be planted to grow coffee plants. Takes 10 days.", "coffee", 10);
+        grainBag = new Item(gp, "grainBag", 2, "Contains various cereal grains for planting. Takes 7 days to mature.", "grain", 7);
+        grainSeedBag = new Item(gp, "grainSeedBag", 2, "Premium seeds for growing higher quality grains. Takes 7 days.", "grain", 7);
+        grapeSeedBag = new Item(gp, "grapeSeedBag", 2, "Seeds for growing purple grape vines. Takes 9 days to mature.", "grape", 9);
+        lettuceSeedBag = new Item(gp, "lettuceSeedBag", 2, "Seeds for growing leafy green vegetables. Takes 5 days to mature.", "lettuce", 5);
+        onionSeedBag = new Item(gp, "onionSeedBag", 2, "Seeds for growing pungent bulb vegetables. Takes 6 days to mature.", "onion", 6);
+        pearSeedBag = new Item(gp, "pearSeedBag", 2, "Seeds to grow pear trees. Takes a season to grow into a sapling.", "pear", 30);
+        pineappleSeedBag = new Item(gp, "pineappleSeedBag", 2, "Seeds for growing tropical pineapple plants. Takes 14 days.", "pineapple", 14);
+        pumpkinSeedBag = new Item(gp, "pumpkinSeedBag", 2, "Seeds for growing large orange gourds. Takes 13 days to mature.", "pumpkin", 13);
+        radishSeedBag = new Item(gp, "radishSeedBag", 2, "Seeds for growing crisp white root vegetables. Takes 3 days.", "radish", 3);
+        strawberrySeedBag = new Item(gp, "strawberrySeedBag", 2, "Seeds for growing sweet red berries. Takes 7 days to mature.", "strawberry", 7);
+        tomatoSeedBag = new Item(gp, "tomatoSeedBag", 2, "Seeds for growing juicy red vegetables. Takes 6 days to mature.", "tomato", 6);
+        turnipSeedBag = new Item(gp, "turnipSeedBag", 2, "Seeds for growing purple and white root vegetables. Takes 4 days.", "turnip", 4);
+        watermelonSeedBag = new Item(gp, "watermelonSeedBag", 2, "Seeds for growing large, striped melons. Takes 12 days.", "watermelon", 12);
+        zucchiniSeedBag = new Item(gp, "zucchiniSeedBag", 2, "Seeds for growing green summer squash. Takes 5 days to mature.", "zucchini", 5);
 
         // Type 3: Crops
         carrot = new Item(gp, "carrot", 3, "A crunchy orange root vegetable. Good for vision.");
@@ -75,8 +68,15 @@ public class ItemList {
         turnip = new Item(gp, "turnip", 3, "Purple and white root vegetable with a slightly sweet flavor.");
         watermelon = new Item(gp, "watermelon", 3, "Large striped melon with sweet, juicy red flesh.");
         zucchini = new Item(gp, "zucchini", 3, "Green summer squash that's versatile for cooking.");
-
+        pear = new Item(gp, "pear", 3, "A sweet fruit with a distinctive bell shape and grainy texture.");
+        
         // Type 4: Food
+        apple = new Item(gp, "apple", 4, "A crisp, juicy red fruit. Good for eating or cooking.");
+        banana = new Item(gp, "banana", 4, "A sweet yellow fruit with a curved shape. Rich in potassium.");
+        lemon = new Item(gp, "lemon", 4, "A sour citrus fruit with bright yellow skin. Used in cooking and beverages.");
+        orange = new Item(gp, "orange", 4, "A juicy citrus fruit high in vitamin C. Sweet with a hint of tartness.");
+        peach = new Item(gp, "peach", 4, "A soft, fuzzy fruit with sweet pink flesh. Popular in summer.");
+        WatermelonSlice = new Item(gp, "WatermelonSlice", 4, "A refreshing slice of watermelon. Sweet, juicy, and perfect for hot days.");
         baguette = new Item(gp, "baguette", 4, "Long, crusty French bread. Perfect with cheese or on its own.");
         cheese = new Item(gp, "cheese", 4, "Dairy product made from fermented milk. Rich and flavorful.");
         chicken = new Item(gp, "chicken", 4, "Prepared poultry meat, ready to eat. High in protein.");

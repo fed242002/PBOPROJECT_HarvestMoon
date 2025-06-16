@@ -48,7 +48,7 @@ public class Player extends Entity {
     int targetTileRow;
     
 
-    public Item currentItem;
+    public Entity currentItem;
 
     // ini buat sprite animation -> info2
     public String body = listBody[bodyIndex];
@@ -70,6 +70,9 @@ public class Player extends Entity {
     public boolean throwBack = false; // Flag to check if the fish is caught
 
     public boolean isWatering = false;
+    public boolean isPlanting = false;
+    public boolean isHarvesting = false;
+
 
     public BufferedImage duvetImage = null; // Image for the duvet when sleeping
 
@@ -78,7 +81,6 @@ public class Player extends Entity {
         super(gp);
 
 
-        currentTools = "shovel";
 
         this.gp = gp; // Assign the GamePanel object to the instance variable
         this.keyH = keyH; // Assign the KeyHandler object to the instance variable
@@ -200,6 +202,8 @@ public class Player extends Entity {
         inventory.add(ItemList.apple.clone()); 
         inventory.add(ItemList.shovel.clone()); 
         inventory.add(ItemList.axe.clone()); 
+        inventory.add(ItemList.chiliSeedBag.clone()); 
+        inventory.add(ItemList.lettuceSeedBag.clone()); 
     }
 
     @Override
@@ -415,7 +419,7 @@ public class Player extends Entity {
     }
     
     //show info if it can be done or nahwdwud
-    if(currentTools!= null){
+    if(currentTools!= null || currentItem != null){
         if(currentTools!=null && gp.keyH.useTool && !currentTools.equalsIgnoreCase("fishRod")){
             if(currentTools.equalsIgnoreCase("shovel")){
                 if((gp.tileM.mapTileNum[targetTileCol][targetTileRow] >= 40 && gp.tileM.mapTileNum[targetTileCol][targetTileRow] <=59) || gp.tileM.mapTileNum[targetTileCol][targetTileRow] == 0 ){
@@ -456,6 +460,20 @@ public class Player extends Entity {
 
             }
 
+            if(currentItem.type_item == type_seed){
+                int objIndex = gp.cChecker.checkObjectFarm(targetWorldX,targetWorldY,this, true);
+                if(objIndex != 999 && gp.farmObj.get(objIndex) instanceof OBJ_soil) {
+                    g2.setColor(new Color(0, 255, 0, 100));
+                    g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+                }else{
+                    g2.setColor(new Color(255, 0, 0, 100));
+                    g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+                    g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);  //ini jangan lupa kalo ada red soalnya ak lgsng return hehe
+                    return;
+                }
+
+            }
+
     
             g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);
             
@@ -474,6 +492,12 @@ public class Player extends Entity {
             if (currentTools == null) {
                 return;
             }
+
+            if(currentItem.type_item == type_seed){
+                isPlanting = true;
+                moveDisabled = true; // Disable movement while planting
+            }
+
 
             if (currentTools.equalsIgnoreCase("shovel")) {
                 isDigging = true;
@@ -537,6 +561,14 @@ public class Player extends Entity {
 
     
     public void action(int x, int y){
+
+
+        if(isPlanting){
+            gp.farmObj.add(Crop.getCrop(currentItem.name));
+            resetAllAnimation();
+            
+            setAnimation("idle");
+        }
 
         if(isWatering){
             
@@ -730,10 +762,13 @@ public class Player extends Entity {
         fishCaught = false;
         throwBack = false;
         isWatering = false;
+        isPlanting = false;
+        isHarvesting = false;
 
         animationDone = 0;
         spriteCounter = 0;
         spriteNum = 0;
+        moveDisabled = false; // Enable movement after the action is done
     }
 
     public void drawEmote(Graphics2D g2) {
@@ -760,16 +795,28 @@ public class Player extends Entity {
 
     }
 
+    public int choosedFoodState = 0;
+
     public void selectItem() {
         int itemIndex = gp.ui.getItemIndexOnSlot(gp.ui.playerSlotCol, gp.ui.playerSlotRow); // Get the selected item
                                                                                             // index from the UI
 
         if (itemIndex < inventory.size()) {
             Entity selectedItem = inventory.get(itemIndex); // Get the selected item from the inventory
+            gp.player.currentItem = selectedItem; // Set the current item to the selected item
+            currentTools = null; // Set current tools to null if the selected item is not a tool
 
-            // if(selectedItem == type_tools) //tipe tools misalnya
-            // currentTools = selectedItem;
+            if(selectedItem.type_item == type_food) // Check if the selected item is food
+            {
+                gp.gameState = gp.foodItemChooseState;
+                gp.ui.commandNum = 0;
 
+            }
+
+
+            if(selectedItem.type_item == type_tool) //tipe tools misalnya{
+                currentTools = selectedItem.name;
+            }
             // if(selectedItem == type_food) // misal makanan
             // {
             // if(selectedItem.use(this) == true)
@@ -785,8 +832,8 @@ public class Player extends Entity {
             // }
             // }
             // }
-        }
     }
+    
 
 
     public void draw(Graphics2D g2) {
@@ -801,7 +848,7 @@ public class Player extends Entity {
         BufferedImage image1 = null;
         ToolsAnimation currentTool = null;
 
-        if (currentTools != null) {
+        if (currentTools != null || currentItem!=null) {
             if (gp.keyH.useTool || currentTools.equalsIgnoreCase("fishRod")) {
                 drawFrontBlock(g2); // Draw the block in front of the player
             }
