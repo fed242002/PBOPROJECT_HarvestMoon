@@ -199,6 +199,7 @@ public class Player extends Entity {
         inventory.add(ItemList.apple.clone()); 
         inventory.add(ItemList.shovel.clone()); 
         inventory.add(ItemList.wateringCan.clone()); 
+        inventory.add(ItemList.fishRod.clone()); 
         inventory.add(ItemList.axe.clone()); 
         inventory.add(ItemList.chiliSeedBag.clone()); 
         inventory.add(ItemList.lettuceSeedBag.clone()); 
@@ -477,22 +478,26 @@ public class Player extends Entity {
     }
 
     if(currentItem!=null){
-        if(currentItem.type_item == type_seed){
-            int objIndex = gp.cChecker.checkObjectFarm(targetWorldX,targetWorldY,this, true);
-            if(objIndex != 999 && gp.farmObj.get(objIndex) instanceof OBJ_soil) {
-                g2.setColor(new Color(0, 255, 0, 100));
-                g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
-            }else{
-                g2.setColor(new Color(255, 0, 0, 100));
-                g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
-                g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);  //ini jangan lupa kalo ada red soalnya ak lgsng return hehe
-                return;
+        if(!currentItem.name.equalsIgnoreCase("fishrod")){
+            if(currentItem.type_item == type_seed){
+                int objIndex = gp.cChecker.checkObjectFarm(targetWorldX,targetWorldY,this, true);
+                if(objIndex != 999 && gp.farmObj.get(objIndex) instanceof OBJ_soil) {
+                    g2.setColor(new Color(0, 255, 0, 100));
+                    g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+                }else{
+                    g2.setColor(new Color(255, 0, 0, 100));
+                    g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+                    g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);  //ini jangan lupa kalo ada red soalnya ak lgsng return hehe
+                    return;
+                }
+    
             }
+    
+            g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);
 
         }
 
     
-            g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);
 
     }
     
@@ -739,6 +744,23 @@ public class Player extends Entity {
 
                 if (fishCaught) {
                     //disini nanti tambahin ikan ke inventory
+                    Random random = new Random();
+                    int randomCaught = random.nextInt(0, 101); 
+
+                    if(randomCaught<30){ //30% chance to get boots
+                        inventory.add(ItemList.boots.clone()); // Add fish1 to the inventory
+                    }else if(randomCaught<60){ //30%
+                        inventory.add(ItemList.orangeFish.clone()); // Add fish1 to the inventory
+                    }else if(randomCaught<80){ //20%
+                        inventory.add(ItemList.greenFish.clone()); // Add fish1 to the inventory
+                    }else if(randomCaught<95){ //15%
+                        inventory.add(ItemList.redFish.clone()); // Add fish1 to the inventory
+                    }else if(randomCaught<100){ //5%
+                        inventory.add(ItemList.blueFish.clone()); // Add fish1 to the inventory
+                    }
+                
+
+
 
                     fishCaught = false; // Reset the fish caught flag
                 }

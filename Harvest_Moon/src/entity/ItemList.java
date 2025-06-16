@@ -7,9 +7,9 @@ import Main.Crop;
 import Main.GamePanel;
 
 public class ItemList {
-    // 0 = item, 1 = tool, 2 = seed, 3 = crop, 4 = food, 5 = fish, 6 = material, 7 = furniture
+    // 0 = item, 1 = tool, 2 = seed, 3 = crop, 4 = food, 6 = material, 7 = furniture
    public static Item apple, axe, baguette, banana, carrot, carrotSeedBag, cauliflower, cauliflowerSeedBag, cheese, chicken, chili, chiliSeedBag, coffeeBean;
-    public static Item  croissant, egg, emptySeedBag, fishRod, grain, grainSeedBag, grapes, grapesSeedBag, lemon, lettuce, lettuceSeedBag, milkBucket, onion, onionSeedBag, orange, peach, pear, pearSeedBag, pineapple, pineappleSeedBag, pumpkin, pumpkinSeedBag, radish, radishSeedBag, rawChicken, rawSteak, shear, shovel, steak, strawberry, strawberrySeedBag, tomato, tomatoSeedBag, toolsBag, oakTrunk, spruceTrunk, appleWoodTrunk, pineTrunk, turnip, turnipSeedBag, wateringCan, watermelon, watermelonSeedBag, WatermelonSlice, whoolBrown, WhoolGray, WhoolWhite, WhoolYellow, zucchini, zucchiniSeedBag;
+    public static Item  blueFish, redFish, orangeFish, greenFish,boots,croissant, egg, emptySeedBag, fishRod, grain, grainSeedBag, grapes, grapesSeedBag, lemon, lettuce, lettuceSeedBag, milkBucket, onion, onionSeedBag, orange, peach, pear, pearSeedBag, pineapple, pineappleSeedBag, pumpkin, pumpkinSeedBag, radish, radishSeedBag, rawChicken, rawSteak, shear, shovel, steak, strawberry, strawberrySeedBag, tomato, tomatoSeedBag, toolsBag, oakTrunk, spruceTrunk, appleWoodTrunk, pineTrunk, turnip, turnipSeedBag, wateringCan, watermelon, watermelonSeedBag, WatermelonSlice, whoolBrown, WhoolGray, WhoolWhite, WhoolYellow, zucchini, zucchiniSeedBag;
     GamePanel gp;
     static ArrayList<Item> item;
 
@@ -23,7 +23,8 @@ public class ItemList {
     public void initializeItems() {
         // Type 0: General items
         emptySeedBag = new Item(gp, "emptySeedBag", 0, "A plain cloth bag that once held seeds. Could be reused for storage.");
-        
+        boots = new Item(gp, "boots", 0, "Sturdy footwear for protecting your feet while working.");
+
         // Type 1: Tools
         axe = new Item(gp, "axe", 1, "A sturdy tool for chopping trees and collecting wood.");
         fishRod = new Item(gp, "fishRod", 1, "Used to catch fish from ponds, rivers, and the ocean.");
@@ -95,7 +96,12 @@ public class ItemList {
         WhoolGray = new Item(gp, "WhoolGray", 6, "Thick gray sheep's wool. Good for warmer clothing and crafts.");
         WhoolWhite = new Item(gp, "WhoolWhite", 6, "Pure white sheep's wool. Premium quality for fine textiles.");
         WhoolYellow = new Item(gp, "WhoolYellow", 6, "Yellow-tinted sheep's wool. Unique color for specialty crafts.");
-    
+        redFish = new Item(gp, "redFish", 6, "A vibrant red fish. Fresh and rich in flavor.");
+        blueFish = new Item(gp, "blueFish", 6, "A rare blue fish. Known for its delicate taste.");
+        orangeFish = new Item(gp, "orangeFish", 6, "A bright orange fish. Popular in local markets.");
+        greenFish = new Item(gp, "greenFish", 6, "A unique green fish. Adds color to your catch.");
+        
+
         item = new ArrayList<>(java.util.Arrays.asList(
             apple, axe, baguette, banana, carrot, carrotSeedBag, cauliflower, cauliflowerSeedBag, cheese, chicken, chili, chiliSeedBag, coffeeBean, croissant, egg, emptySeedBag, fishRod, grain, grainSeedBag, grainSeedBag, grapes, grapesSeedBag, lemon, lettuce, lettuceSeedBag, milkBucket, onion, onionSeedBag, orange, peach, pear, pearSeedBag, pineapple, pineappleSeedBag, pumpkin, pumpkinSeedBag, radish, radishSeedBag, rawChicken, rawSteak, shear, shovel, steak, strawberry, strawberrySeedBag, tomato, tomatoSeedBag, toolsBag, oakTrunk, spruceTrunk, appleWoodTrunk, pineTrunk, turnip, turnipSeedBag, wateringCan, watermelon, watermelonSeedBag, WatermelonSlice, whoolBrown, WhoolGray, WhoolWhite, WhoolYellow, zucchini, zucchiniSeedBag
         ));
