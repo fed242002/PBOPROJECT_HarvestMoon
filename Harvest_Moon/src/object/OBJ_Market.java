@@ -1,20 +1,19 @@
 package object;
-//blom selesai
+
 import Main.GamePanel;
 import entity.Entity;
 
-public class OBJ_Barn extends Entity {
+public class OBJ_Market extends Entity {
 
-    
-    public OBJ_Barn(GamePanel gp, int x, int y) {
+    public OBJ_Market(GamePanel gp, int x, int y) {
         super(gp);
-        name = "barn";
-        path = "/assets/object/barn.png"; // Path to the barn image
+        name = "market";
+        path = "/Assets/object/objek_townHall/Market.png";
         collision = false; // gaiso dilewati
         worldX = x;
         worldY = y;
-        width = 288;
-        height = 240;
+        width = 336;
+        height = 576;
         isObj = true; // Set this entity as an object
 
         this.solidArea.y = height / 2;
@@ -29,7 +28,7 @@ public class OBJ_Barn extends Entity {
         objAnimationSpriteTotal = 8; // Total number of animation frames
 
         for(int i = 0; i < objAnimationSpriteTotal; i++) {
-            objAnimation.add(gp.setImage("/assets/objAnimation/barn/" + i + ".png"));
+            objAnimation.add(gp.setImage("/assets/objAnimation/market/" + i + ".png"));
         }
 
         image = objAnimation.get(0); // Set the initial image for the object

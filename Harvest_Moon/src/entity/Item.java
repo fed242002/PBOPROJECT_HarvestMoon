@@ -1,6 +1,5 @@
 package entity;
 
-import Main.Crop;
 import Main.GamePanel;
 
 public class Item extends Entity {
