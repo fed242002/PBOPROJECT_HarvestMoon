@@ -112,7 +112,7 @@ public class Lighting {
                 dayState = dawn;
             }
             
-            if(gp.currentMap == 1 || gp.currentMap == 2) { 
+            if(gp.currentMap == 0||gp.currentMap == 1 || gp.currentMap == 2) { 
                 switch (dayState) {
                 case day -> filterAlpha = 0f; // No filter during day
                 case dusk -> {
@@ -127,6 +127,9 @@ public class Lighting {
                 default -> {
                 }
             }
+            }
+            else{
+                filterAlpha = 0f; // No filter for other maps
             }
             
         }

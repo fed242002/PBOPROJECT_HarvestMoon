@@ -36,7 +36,7 @@ public class Player extends Entity {
     public int gold = 100;
     public boolean lightUpdated = false;
     public int fishingTimeRandom;
-    public int maxInventorySize = 55; // Maximum size of the inventory
+    public int maxInventorySize = 60; // Maximum size of the inventory
 
     public boolean isHolding = false; // Flag to check if the player is holding an item
 

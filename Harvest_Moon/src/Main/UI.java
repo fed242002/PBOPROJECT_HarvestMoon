@@ -456,7 +456,7 @@ public class UI {
 
             slotX += slotSize; // move to next slot in row
 
-            if (i % 11 == 10) {
+            if (i % 12 == 11) {
                 slotX = slotXStart; // reset to start of row
                 slotY += slotSize; // move to next row
             }
