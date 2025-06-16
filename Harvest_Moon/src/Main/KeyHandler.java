@@ -3,14 +3,6 @@ package Main;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import animation.*;
-import Data.*;
-import entity.*;
-import Environment.*;
-import object.*;
-import Main.*;
-import tile.*;
-
 public class KeyHandler implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed, isSprint, undoToolsPressed,
@@ -422,13 +414,13 @@ public class KeyHandler implements KeyListener {
         }
 
         if (code == KeyBind.downKey) {
-            if (gp.ui.playerSlotRow != 3) {
+            if (gp.ui.playerSlotRow != 5) {
                 gp.ui.playerSlotRow++;
             }
         }
 
         if (code == KeyBind.rightKey) {
-            if (gp.ui.playerSlotCol != 4) {
+            if (gp.ui.playerSlotCol != 11) {
                 gp.ui.playerSlotCol++;
             }
         }
