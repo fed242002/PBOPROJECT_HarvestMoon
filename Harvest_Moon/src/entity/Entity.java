@@ -1,18 +1,13 @@
 package entity;
 
+import Main.*;
+import animation.*;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
-import animation.*;
-import Data.*;
-import entity.*;
-import Environment.*;
 import object.*;
-import Main.*;
-import tile.*;
 
 
 public class Entity extends SuperEntity implements Cloneable{
@@ -44,8 +39,7 @@ public class Entity extends SuperEntity implements Cloneable{
             }
             if (objAnimationSpriteNum >= objAnimationSpriteTotal) {
                 if(this instanceof OBJ_Rumah){
-                    //ganti map disini
-    
+                    gp.eventHandler.handleMapTransition(3, 25, 25);
                 }
 
                 objAnimationSpriteNum = 0;
