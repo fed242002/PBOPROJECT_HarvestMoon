@@ -36,7 +36,9 @@ public class Player extends Entity {
     public int gold = 100;
     public boolean lightUpdated = false;
     public int fishingTimeRandom;
-    public int maxInventorySize = 55; // Maximum size of the inventory
+    public int maxInventorySize = 60; // Maximum size of the inventory
+
+    public boolean isHolding = false; // Flag to check if the player is holding an item
 
     int targetWorldX;
     int targetWorldY;
@@ -289,20 +291,33 @@ public class Player extends Entity {
 
         String text = " "; // Initialize text to an empty string
 
-         if (i != 999) {
-             if (canObtainItem(gp.obj.get(i)) == true) {
-                 inventory.add(gp.obj.get(i)); // Add the object to the inventory
-                 gp.obj.get(i).interact(); // Call the interact method of the object
-                 text = "You picked up " + gp.obj.get(i).name + "!"; // Set the text to display
-                 gp.ui.showMessage(text); // Show the message on the UI
-                 gp.obj.remove(i); // Remove the object from the game world
-             } else {
-                  text = "Your inventory is full!"; // Set the text to display if the inventory is full
-                  gp.ui.showMessage(text); // Show the message on the UI
-                  pickCounterOn = true; // Set the pick counter on flag to true
+        if (i != 999 && !gp.obj.get(i).pickUpAble)
+        {
+            gp.obj.get(i).interact(); // Call the interact method of the object
+            return;
+        }
 
-                 gp.obj.get(i).interact();
-         }
+        if (i != 999) {
+             if (canObtainItem(gp.obj.get(i)) == true) {
+                 if(gp.obj.get(i).pickUpAble) {
+                     text = "You picked up " + gp.obj.get(i).name + "!"; // Set the text to display
+                     gp.ui.showMessage(text); // Show the message on the UI
+                     gp.obj.remove(i); // Remove the object from the game world
+                     inventory.add(gp.obj.get(i)); // Add the object to the inventory
+                    }else{
+                        gp.obj.get(i).interact(); // Call the interact method of the object
+                    }
+             } else {
+                    if(gp.obj.get(i).pickUpAble) {
+                     text = "Your inventory is full!"; // Set the text to display if the inventory is full
+                     gp.ui.showMessage(text); // Show the message on the UI
+                     pickCounterOn = true; // Set the pick counter on flag to true
+                    }else{
+                        gp.obj.get(i).interact(); // Call the interact method of the object
+                    }
+
+
+             }
 
         }
     }
@@ -799,9 +814,11 @@ public class Player extends Entity {
                 gp.gameState = gp.foodItemChooseState;
                 gp.ui.commandNum = 0;
 
-            }
-            if(selectedItem.type_item == type_tool){ //tipe tools misalnya{
+            }else if(selectedItem.type_item == type_tool){ //tipe tools misalnya{
                 currentTools = selectedItem.name;
+            }
+            else{
+                isHolding = true; // Set the isHolding flag to true if the selected item is not food or tool
             }
         
         }
