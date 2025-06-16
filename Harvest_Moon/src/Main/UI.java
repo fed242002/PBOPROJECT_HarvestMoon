@@ -383,7 +383,7 @@ public class UI {
             // g2.fillRoundRect(slotX, slotY, gp.tileSize, gp.tileSize, 10, 10);
             // }
 
-            g2.drawImage(entity.inventory.get(i).image, slotX, slotY, null);
+            g2.drawImage(entity.inventory.get(i).image, slotX + 8, slotY + 8,32,32, null);
 
             // display amount
             if (entity.inventory.get(i).amount > 1) {

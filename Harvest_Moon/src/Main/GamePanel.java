@@ -52,7 +52,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
     //time
     public int hour = 8;
-    public int minute = 0;
+    public int minute;
     public int timeCounter = 0;
     public String month [] = {"Moonlit", "Sunlit", "Frostbloom", "Amberfall"};
     public int currentMonth = 0;
@@ -87,6 +87,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public boolean fullScreen = false; // Fullscreen mode toggle
 
     // entity and object
+    ItemList itemList = new ItemList(this); // Create a new ItemList object
+    Crop crop = new Crop(this); // Create a new Crop object
 
     public Player player = new Player(this, keyH); // Create a new Player object
     public ArrayList<Entity> obj = new ArrayList<>(MapDB.mapList.get(currentMap).obj); // List of objects in the game
@@ -95,8 +97,6 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public ArrayList<Entity> entityList = new ArrayList<>(MapDB.mapList.get(currentMap).entityList); // List of all entities in the game
     saveLoad saveLoad1 = new saveLoad(this);
 
-    Crop crop = new Crop(this); // Create a new Crop object
-    ItemList itemList = new ItemList(this); // Create a new ItemList object
     
 
 
@@ -422,6 +422,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
             this.repaint();
             return image;
         } catch (IOException e) {
+            System.out.println("error loading image: " + imagePath);
             e.printStackTrace();
             return null;
         }

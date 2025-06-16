@@ -195,7 +195,11 @@ public class Player extends Entity {
     }
 
     public void setItems() {
-        // inventory.add() // set item default player apa belum tau mau diisi apa
+        // inventory.add() // set item default player apa belum tau mau diisi apa\
+
+        inventory.add(ItemList.apple.clone()); 
+        inventory.add(ItemList.shovel.clone()); 
+        inventory.add(ItemList.axe.clone()); 
     }
 
     @Override
