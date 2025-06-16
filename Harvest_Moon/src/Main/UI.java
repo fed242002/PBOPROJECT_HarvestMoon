@@ -7,12 +7,14 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.nio.Buffer;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JTextField;
 
 import entity.Entity;
+import entity.ItemList;
 
 public class UI {
 
@@ -133,6 +135,23 @@ public class UI {
         String gold = String.valueOf(gp.player.gold) + " G";
         int x = getXforRightAlignedText(gold, 729);
         g2.drawString(gold, x, 107);
+
+
+        //draw currentActiveItem
+
+        //frame
+        BufferedImage currentActiveItemframe = gp.setImage("/assets/ui/currenActiveItem.png");
+        g2.drawImage(currentActiveItemframe, 10, 576-144+10, 158, 144, null);
+        
+        //item
+        if(gp.player.currentItem != null){
+            BufferedImage currentActiveItem = null;
+            currentActiveItem = gp.player.currentItem.image;
+            g2.drawImage(currentActiveItem, 25 + 35, 576-144+35, 64, 64, null);
+        }
+       
+
+
 
     }
 

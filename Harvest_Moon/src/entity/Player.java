@@ -15,6 +15,7 @@ import object.*;
 
 public class Player extends Entity {
 
+
     public String listBody[] = {"white", "krem", "black"};
     public String listEye[] = {"blue", "brown", "green"};
     public String listOutfit[] = {"violet", "blue"};
@@ -45,6 +46,9 @@ public class Player extends Entity {
     int targetWorldY;
     int targetTileCol;
     int targetTileRow;
+    
+
+    public Item currentItem;
 
     // ini buat sprite animation -> info2
     public String body = listBody[bodyIndex];

@@ -76,6 +76,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     saveLoad saveLoad1 = new saveLoad(this);
 
     Crop crop = new Crop(this); // Create a new Crop object
+    ItemList itemList = new ItemList(this); // Create a new ItemList object
     
 
 
@@ -225,9 +226,9 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
             timeCounter = 0;
             minute++;
         }
-        System.out.println("Time Counter : " + timeCounter );
-        System.out.println("Min Counter : " + minute );
-        System.out.println("Hour Counter : " + hour );
+        // System.out.println("Time Counter : " + timeCounter );
+        // System.out.println("Min Counter : " + minute );
+        // System.out.println("Hour Counter : " + hour );
 
 
         if(justChangedMap|| current.needsRefresh) { // If the map has just changed
