@@ -68,6 +68,16 @@ public class Crop {
         return null; // Crop not found
     }
 
+        static public void setMaturetime(String name, int days) {
+        for (OBJ_Crop crop : cropList) {
+            if (crop.name.equals(name)) {
+                crop.daysToMature = days;
+                
+            }
+        }
+    }
+
+
 
 
 }

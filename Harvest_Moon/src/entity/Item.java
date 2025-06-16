@@ -1,5 +1,6 @@
 package entity;
 
+import Main.Crop;
 import Main.GamePanel;
 
 public class Item extends Entity {
@@ -47,10 +48,15 @@ public class Item extends Entity {
         if(type == type_seed){
             if (name.endsWith("SeedBag")) {
                 seedCrop =  name.substring(0, name.length() - 7); // Removes "SeedBag" (7 characters)
+                try {
+                    Crop.setMaturetime(seedCrop, daysToMature);
+                        
+                } catch (Exception e) {
+                    System.out.println("crop " + seedCrop + " not founded");
+                }
             }
         }
 
-        System.out.println(seedCrop);
 
 
 

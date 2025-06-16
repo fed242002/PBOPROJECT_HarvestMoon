@@ -6,7 +6,6 @@ import Main.GamePanel;
 import entity.Entity;
 
 public class OBJ_Crop extends Entity{
-
     int stages;
     int currentStage = 0;
     boolean isRotten = false;
@@ -57,5 +56,11 @@ public class OBJ_Crop extends Entity{
         } else {
             // Crop is fully grown, you can add logic for harvesting here
         }
+    }
+
+
+    public void dayPassed(){
+        dayCount++;
+        // if()
     }
 }

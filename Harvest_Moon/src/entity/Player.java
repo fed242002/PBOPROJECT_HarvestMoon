@@ -631,8 +631,15 @@ public class Player extends Entity {
                         gp.farmObj.remove(s); // Remove the soil object
                         break; // Exit the loop after removing the first matching soil object
                     }
-
                 }
+
+                for (Entity s : gp.cropObj) {
+                    if (s instanceof OBJ_Crop && s.worldX == x && s.worldY == y) {
+                        gp.cropObj.remove(s); // Remove the crop object
+                        break; // Exit the loop after removing the first matching crop object
+                    }
+                }
+
 
             }
         }
