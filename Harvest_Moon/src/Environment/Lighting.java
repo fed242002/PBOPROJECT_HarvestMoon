@@ -13,6 +13,7 @@ public class Lighting {
     BufferedImage darknessFilter;
     int dayCounter;
     float filterAlpha = 0f;
+    long lastUpdate = System.currentTimeMillis();
 
     final int day = 0;
     final int dusk = 1;
@@ -89,37 +90,41 @@ public class Lighting {
             gp.player.lightUpdated = false; // Reset the flag after updating the light source
         }
 
-        if (dayState == day) {
-            dayCounter++;
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastUpdate >= 1000) { // setiap 1 detik
+            lastUpdate = currentTime;
 
-            if (dayCounter > 600) {
-                dayCounter = 0;
-                dayState = dusk; // Change to dusk after 600 frames
-                filterAlpha = 0f; // Ensure filterAlpha starts at 0 for dusk transition
-            }
-        } else if (dayState == dusk) {
-            filterAlpha += 0.001f; // Increase the increment for a more visible transition
-            if (filterAlpha >= 1f) {
-                filterAlpha = 1f;
-                dayState = night; // Change to night after reaching full darkness
-            }
-        } else if (dayState == night) {
-            dayCounter++;
+            if (dayState == day) {
+                dayCounter++;
 
-            if (dayCounter > 600) {
-                dayCounter = 0;
-                dayState = dawn; // Change to dawn after 600 frames
-                filterAlpha = 1f; // Ensure filterAlpha starts at 1 for dawn transition
-            }
-        } else if (dayState == dawn) {
-            filterAlpha -= 0.001f; // Increase the decrement for a more visible transition
+                if (dayCounter > 600) {
+                    dayCounter = 0;
+                    dayState = dusk; // Change to dusk after 600 frames
+                    filterAlpha = 0f; // Ensure filterAlpha starts at 0 for dusk transition
+                }
+            } else if (dayState == dusk) {
+                filterAlpha += 0.001f; // Increase the increment for a more visible transition
+                if (filterAlpha >= 1f) {
+                    filterAlpha = 1f;
+                    dayState = night; // Change to night after reaching full darkness
+                }
+            } else if (dayState == night) {
+                dayCounter++;
 
-            if (filterAlpha < 0f) {
-                filterAlpha = 0f;
-                dayState = day; // Reset to day after reaching full brightness
+                if (dayCounter > 600) {
+                    dayCounter = 0;
+                    dayState = dawn; // Change to dawn after 600 frames
+                    filterAlpha = 1f; // Ensure filterAlpha starts at 1 for dawn transition
+                }
+            } else if (dayState == dawn) {
+                filterAlpha -= 0.001f; // Increase the decrement for a more visible transition
+
+                if (filterAlpha < 0f) {
+                    filterAlpha = 0f;
+                    dayState = day; // Reset to day after reaching full brightness
+                }
             }
         }
-
     }
 
     public void draw(Graphics2D g2) {

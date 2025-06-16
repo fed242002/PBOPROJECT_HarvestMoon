@@ -13,7 +13,8 @@ import tile.*;
 
 public class KeyHandler implements KeyListener {
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed, isSprint, undoToolsPressed, useTool;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed, isSprint, undoToolsPressed,
+            useTool;
     GamePanel gp;
 
     public KeyHandler(GamePanel gp) {
@@ -190,26 +191,26 @@ public class KeyHandler implements KeyListener {
             if (code == KeyBind.interactKey) {
                 interactPressed = true;
             }
-            if(code == KeyBind.undoToolsKey && gp.player.currentTools == "shovel") {
+            if (code == KeyBind.undoToolsKey && gp.player.currentTools == "shovel") {
                 undoToolsPressed = true;
             }
 
-            //kalo mau use tools
+            // kalo mau use tools
             if (code == KeyBind.useToolKey) {
                 useTool = !useTool;
             }
 
-            //debug pertools tools an
-            if(code == KeyBind.equipNothing) {
+            // debug pertools tools an
+            if (code == KeyBind.equipNothing) {
                 gp.player.currentTools = null;
             }
-            if(code == KeyBind.equipShovel) {
+            if (code == KeyBind.equipShovel) {
                 gp.player.currentTools = "shovel";
             }
-            if(code == KeyBind.equipAxe) {
+            if (code == KeyBind.equipAxe) {
                 gp.player.currentTools = "axe";
             }
-            if(code == KeyBind.equipFishingRod) {
+            if (code == KeyBind.equipFishingRod) {
                 gp.player.currentTools = "fishRod";
             }
             if(code == KeyBind.equipWateringCan) {
@@ -222,6 +223,13 @@ public class KeyHandler implements KeyListener {
                 gp.player.speed = gp.player.maxSpeed;
                 gp.player.spriteDraw = 4;
 
+            }
+
+            // buat inventory
+            if (code == KeyBind.inventoryKey) {
+                if (gp.gameState == gp.playState) {
+                    gp.gameState = gp.inventoryState;
+                }
             }
 
             // pause game in play state
@@ -314,7 +322,27 @@ public class KeyHandler implements KeyListener {
 
         }
 
+        // kalo inventory
+        if (gp.gameState == gp.inventoryState) {
+
+            playerInventory(code);
+
+            if (code == KeyBind.nextKey) {
+                gp.player.selectItem();
+            }
+
+            if (code == KeyBind.pauseKey) { // pencet escape
+                gp.gameState = gp.playState; // Exit inventory and return to play state
+            }
+        }
         if (gp.gameState == gp.dialogueState) {
+            if (code == KeyBind.nextKey) {
+                gp.gameState = gp.playState;
+            }
+        }
+
+        if (gp.gameState == gp.inventoryState) {
+
             if (code == KeyBind.nextKey) {
                 gp.gameState = gp.playState;
             }
@@ -351,13 +379,40 @@ public class KeyHandler implements KeyListener {
         if (code == KeyBind.sprintKey) {
             gp.player.speed = gp.player.normalSpeed; // Reset speed to normal when sprint key is released
             gp.player.spriteDraw = 10;
-            isSprint = false; 
+            isSprint = false;
         }
 
     }
 
     public void updatePlayerPath() {
         gp.player.redeclareAnimation();
+    }
+
+    public void playerInventory(int code) {
+        if (code == KeyBind.upKey) {
+            if (gp.ui.playerSlotRow != 0) {
+                gp.ui.playerSlotRow--;
+            }
+
+        }
+
+        if (code == KeyBind.downKey) {
+            if (gp.ui.playerSlotRow != 3) {
+                gp.ui.playerSlotRow++;
+            }
+        }
+
+        if (code == KeyBind.rightKey) {
+            if (gp.ui.playerSlotCol != 4) {
+                gp.ui.playerSlotCol++;
+            }
+        }
+
+        if (code == KeyBind.leftKey) {
+            if (gp.ui.playerSlotCol != 0) {
+                gp.ui.playerSlotCol--;
+            }
+        }
     }
 
 }

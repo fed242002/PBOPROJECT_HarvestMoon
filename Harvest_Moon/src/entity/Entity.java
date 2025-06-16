@@ -21,6 +21,8 @@ public class Entity extends SuperEntity implements Cloneable{
     public ArrayList<String> imagePathList = new ArrayList<>(); // List of soil images
     
 
+
+    public boolean pickUpAble = false; // Flag to check if the entity is pickable
     public ArrayList<BufferedImage> objAnimation = new ArrayList<>(); // List of tool images
     public int objAnimationSpriteCount = 0;
     public int objAnimationSpriteNum = 0;
@@ -87,6 +89,16 @@ public class Entity extends SuperEntity implements Cloneable{
     public boolean isObj = false;
     public Entity currentLight; // Current light source for the entity, if any
     public int lightRadius; // Radius of the light source, if any
+    public boolean stackable = false; // kalo mau item nya stackable declare di obj nya jadi true
+    public int amount = 1; // Amount of the entity, used for stackable items
+    public ArrayList<Entity> inventory = new ArrayList<>();
+    public int type; // declare tipe nya sendiri2
+
+    // item attributes
+    public String description = " "; // Description of the item
+
+    // type item
+    public final int type_food = 8;
     public final int type_light = 9;
 
     // animation
