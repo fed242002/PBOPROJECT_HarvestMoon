@@ -18,8 +18,9 @@ public class AssetSetter {
         MapDB.mapList.get(3).obj.add(new OBJ_Bed(gp, 0, 15 * gp.tileSize, 10 * gp.tileSize));
         MapDB.mapList.get(0).obj.add(new OBJ_Barn(gp ,3 * gp.tileSize, 2 * gp.tileSize ));
         MapDB.mapList.get(2).obj.add(new OBJ_Market(gp ,4 * gp.tileSize, 17 * gp.tileSize));
-
-        // Add more objects as needed
+        MapDB.mapList.get(4).obj.add(new OBJ_HayManger(gp, 23 * gp.tileSize, 28 * gp.tileSize));
+        MapDB.mapList.get(4).obj.add(new OBJ_HayManger(gp, 23 * gp.tileSize, 22 * gp.tileSize));
+        MapDB.mapList.get(4).obj.add(new OBJ_HayManger(gp, 27 * gp.tileSize, 25 * gp.tileSize));
     }
 
     public void addSoil(OBJ_soil soil) {

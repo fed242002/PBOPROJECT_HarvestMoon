@@ -160,8 +160,8 @@ public class EventHandler {
             }
 
             case 4 -> { // Inside the Barn
-                if (gp.player.worldX >= gp.tileSize * 24 && gp.player.worldX <= gp.tileSize * 26 && 
-                    gp.player.worldY >= gp.tileSize * 29 && gp.player.worldY <= gp.tileSize * 34) {
+                if (gp.player.worldX >= gp.tileSize * 23 && gp.player.worldX <= gp.tileSize * 27 && 
+                    gp.player.worldY >= gp.tileSize * 29 && gp.player.worldY <= gp.tileSize * 31) {
                     handleMapTransition(0, 10, 19);
                 }
             }
