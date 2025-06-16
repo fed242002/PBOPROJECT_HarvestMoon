@@ -1,5 +1,6 @@
 package Main;
 
+import entity.Entity;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -7,12 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
-import javax.swing.JTextField;
-
-import entity.Entity;
 
 public class UI {
 
@@ -128,6 +124,7 @@ public class UI {
         g2.setColor(Color.BLACK);
 
         // info Panel day
+        g2.drawString("Time: " + gp.hour + ":" + String.format("%02d", gp.minute), 550, 50); // Display the time in 
 
         // info Panel gold
         String gold = String.valueOf(gp.player.gold) + " G";

@@ -81,6 +81,9 @@ public class OBJ_Bed extends Entity {
 
 
             //reset semua pas ganti hari
+                gp.hour = 8; // Reset hour to 8 AM
+                gp.minute = 0; // Reset minute to 0
+                gp.timeCounter = 0; // Reset time counter to 0
                 //reset semua Entity farm, wet soil -> not wet, pohon -> not cut, etc.
                 for(Entity e : gp.farmObj) {
                     e.reset();
