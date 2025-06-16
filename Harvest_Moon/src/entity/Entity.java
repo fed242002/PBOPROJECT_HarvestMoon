@@ -117,8 +117,8 @@ public class Entity extends SuperEntity implements Cloneable{
     public final int type_material = 6;
     public final int type_furniture = 7;
     
-
-    public String seedCrop = ""; // Seed crop name, used for seeds that grow into crops
+    public int multiplier = 1;
+    public String seedCrop = null; // Seed crop name, used for seeds that grow into crops
     public int dayCount = 0;
     public int wateredCount = 0;
 

@@ -35,7 +35,7 @@ public class AssetSetter {
         }
     }
 
-    public void addCrop(OBJ_Crop crop) {
+    public void addCrop(OBJ_Crop crop, int days) {
         boolean found = false;
         for(Entity s : gp.cropObj) {
             if(s.worldX == crop.worldX && s.worldY == crop.worldY) {
@@ -44,8 +44,8 @@ public class AssetSetter {
             }
         }
         if(!found) {
+            crop.daysToMature = days;
             gp.cropObj.add(crop);
-            System.out.println(gp.cropObj.get(gp.cropObj.size() - 1).daysToMature);
         }
     }
 

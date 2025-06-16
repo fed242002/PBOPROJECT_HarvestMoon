@@ -23,6 +23,9 @@ public class Player extends Entity {
     public int outfitIndex = 1; // Index for the current outfit type
     public int hairIndex = 1; // Index for the current hair type
     public Random random = new Random();
+    public boolean pickCounterOn;
+    public int pickCounter;
+
 
     public String name = "Fedrian";
     public final int screenX; // X position on the screen
@@ -204,6 +207,7 @@ public class Player extends Entity {
 
     @Override
     public void update() {
+
         // cek kalo lagi jalan ga
         if (!moveDisabled) {
             if (keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true
@@ -285,9 +289,8 @@ public class Player extends Entity {
 
     }
 
-    boolean pickCounterOn;
-    int pickCounter;
 
+    
     public void pickUpObject(int i) {
 
         String text = " "; // Initialize text to an empty string
@@ -574,7 +577,7 @@ public class Player extends Entity {
 
 
         if(isPlanting){
-            gp.aSetter.addCrop(Crop.getCrop(currentItem.seedCrop, x, y));
+            gp.aSetter.addCrop(Crop.getCrop(currentItem.seedCrop, x, y), currentItem.daysToMature);
             resetAllAnimation();
             
             setAnimation("idle");
@@ -597,6 +600,13 @@ public class Player extends Entity {
                 if (objIndex != 999 && gp.farmObj.get(objIndex) instanceof OBJ_soil) {
                     gp.farmObj.get(objIndex).watering();
                 }
+
+                for (Entity s : gp.cropObj) {
+                    if (s instanceof OBJ_Crop && s.worldX == x && s.worldY == y) {
+                        gp.cropObj.get(gp.cropObj.indexOf(s)).wateredCount++; // Set the watered flag to true
+                    }
+                }
+
             }
         }
 
@@ -827,6 +837,9 @@ public class Player extends Entity {
             }
             else{
                 isHolding = true; // Set the isHolding flag to true if the selected item is not food or tool
+                if(selectedItem.type_item == type_seed){
+                    System.out.println("day to mature: " + selectedItem.daysToMature);
+                }
             }
         
         }

@@ -6,9 +6,16 @@ import Main.GamePanel;
 import entity.Entity;
 
 public class OBJ_Crop extends Entity{
-    int stages;
+    public int stages;
     int currentStage = 0;
     boolean isRotten = false;
+    int dayToGrow;
+    Random rand = new Random();
+    int additionalDays = 0; // Additional days for growth
+    int growTracker =0;
+    boolean isMatured = false;
+    boolean fixRotten = false; // Fix rotten crop
+    
 
     public OBJ_Crop(GamePanel gp,String name,int stages) {
         super(gp);
@@ -19,6 +26,8 @@ public class OBJ_Crop extends Entity{
         width = 48;
         height = 48;
         isObj = true;
+        dayToGrow = daysToMature / stages; // Days to grow per stage
+
 
     }
 
@@ -35,13 +44,15 @@ public class OBJ_Crop extends Entity{
 
     @Override
     public void grow() {
+        if(isRotten)
+            return; // If the crop is rotten, it cannot grow
+
         if (currentStage < stages-1) {
             currentStage++;
             path = "/assets/crop/" + name + "/" + currentStage + ".png";
             image = gp.setImage(path);
         }else if(currentStage == stages-1){
             // ada chances buat crop gagal tumbuh
-                Random rand = new Random();
                 if(rand.nextInt(100) < 5){ // 5% chances crop gagal tumbuh
                     path = "/assets/crop/" + name + "/rotten.png";
                     image = gp.setImage(path);
@@ -59,8 +70,21 @@ public class OBJ_Crop extends Entity{
     }
 
 
+
     public void dayPassed(){
         dayCount++;
-        // if()
+        growTracker++;
+        if (growTracker >= dayToGrow) {
+            grow();
+            growTracker = 0; // Reset grow tracker after growing
+        }
+        if (dayCount >= daysToMature + 5) { //5 day after mature, crop will rot
+            if(!isRotten){
+                fixRotten = rand.nextBoolean();
+            }
+        }
+        if(wateredCount < dayCount - 5) {
+            fixRotten = rand.nextBoolean();
+        }
     }
 }

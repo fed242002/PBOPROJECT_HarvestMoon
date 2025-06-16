@@ -1,10 +1,15 @@
 package entity;
 
+import java.util.Random;
+
 import Main.Crop;
 import Main.GamePanel;
+import object.OBJ_Crop;
 
-public class Item extends Entity {
+public class Item extends Entity implements Cloneable {
 
+
+    int stages;
     int type; // 0 = item, 1 = tool, 2 = seed, 3 = crop, 4 = food, 5 = fish, 6 = material, 7 = furniture
     public Item(GamePanel gp, String name, int type, String description) {
         super(gp);
@@ -12,7 +17,6 @@ public class Item extends Entity {
         this.gp = gp;
         type_item = type;
         this.description = description;
-        
 
         width = 32;
         height = 32;
@@ -23,17 +27,19 @@ public class Item extends Entity {
         if(image == null) {
             System.out.println("Image not found: " + path);
         }
+
+
     }
 
-        public Item(GamePanel gp, String name, int type, String description, String cropName, int daysToMature) {
+
+    public Item(GamePanel gp, String name, int type, String description, int stages) {
         super(gp);
         this.name = name;
         this.gp = gp;
         type_item = type;
-        this.seedCrop = cropName;
-        this.daysToMature = daysToMature;
         this.description = description;
-        
+        this.stages = stages;
+
 
         width = 32;
         height = 32;
@@ -45,24 +51,38 @@ public class Item extends Entity {
             System.out.println("Image not found: " + path);
         }
 
-        if(type == type_seed){
-            if (name.endsWith("SeedBag")) {
-                seedCrop =  name.substring(0, name.length() - 7); // Removes "SeedBag" (7 characters)
-                try {
-                    Crop.setMaturetime(seedCrop, daysToMature);
-                        
-                } catch (Exception e) {
-                    System.out.println("crop " + seedCrop + " not founded");
-                }
+        if(type == type_seed) { // If it's a crop
+            Random random = new Random();
+            seedCrop = name.substring(0, name.length() - 7); // Removes "SeedBag" (7 characters)
+
+            int randomQuality = random.nextInt(1, 4); // Random quality between 1 and 3
+            if(randomQuality == 1){
+                name += " (High Quality)";
             }
+            if(randomQuality == 2){
+                name += " (Medium Quality)";
+            }
+            if(randomQuality == 3){
+                name += " (Low Quality)";
+            }
+            this.daysToMature = randomQuality * stages;
+            this.description += "\nIt takes " + this.daysToMature + " days to mature.";
+
         }
 
+        
 
-
-
+       
 
     }
 
+
+
+
+
+    
+        
+    
 
     @Override
     public void interact() {

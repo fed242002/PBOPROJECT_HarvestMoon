@@ -32,8 +32,8 @@ public class Crop {
     Crop(GamePanel gp){
         this.gp = gp;
 
+        lettuce = new OBJ_Crop(gp, "lettuce", 3); 
         berry = new OBJ_Crop(gp, "berry", 4); 
-        lettuce = new OBJ_Crop(gp, "lettuce", 3);
         carrot = new OBJ_Crop(gp, "carrot", 6);
         cauliflower = new OBJ_Crop(gp, "cauliflower", 4);
         chili = new OBJ_Crop(gp, "chili", 5);

@@ -92,6 +92,10 @@ public class OBJ_Bed extends Entity {
                     e.reset();
                 }
 
+                for(Entity e : gp.cropObj) {
+                    e.dayPassed();
+                }
+
                 //reset Energy
                 gp.player.energy = gp.player.maxEnergy; // Reset player's energy to maximum
             

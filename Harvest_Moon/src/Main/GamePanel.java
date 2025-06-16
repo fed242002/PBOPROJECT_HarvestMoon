@@ -241,6 +241,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
     
         MapData current = MapDB.mapList.get(currentMap);
+
         if(currentMonth == 3)
         {
             currentMonth = 0;
@@ -349,7 +350,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
             // draw farm dkk
             for (Entity x : cropObj) {
                 if (x != null) {
-                    x.draw(g2); // Draw each farm object
+                    x.draw(g2); // Draw each crop object
                 }
             }
 
