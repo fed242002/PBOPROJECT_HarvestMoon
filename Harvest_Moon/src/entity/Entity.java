@@ -112,6 +112,7 @@ public class Entity extends SuperEntity implements Cloneable{
 
     public String seedCrop = ""; // Seed crop name, used for seeds that grow into crops
 
+
     // animation
     Animation walk;
     Animation idle;
