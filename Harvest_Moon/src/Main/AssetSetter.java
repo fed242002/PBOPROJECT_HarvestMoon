@@ -35,6 +35,21 @@ public class AssetSetter {
         }
     }
 
+    public void addCrop(OBJ_Crop crop, int days) {
+        boolean found = false;
+        for(Entity s : gp.cropObj) {
+            if(s.worldX == crop.worldX && s.worldY == crop.worldY) {
+                found = true;
+                break;
+            }
+        }
+        if(!found) {
+            crop.daysToMature = days;
+            gp.cropObj.add(crop);
+        }
+    }
+
+
    
 
     public void setNPC(){

@@ -193,8 +193,9 @@ public class KeyHandler implements KeyListener {
             }
 
             // debug pertools tools an
-            if (code == KeyBind.equipNothing) {
+            if (code == KeyBind.unequipedAll) {
                 gp.player.currentTools = null;
+                gp.player.currentItem = null;
             }
             if (code == KeyBind.equipShovel) {
                 gp.player.currentTools = "shovel";

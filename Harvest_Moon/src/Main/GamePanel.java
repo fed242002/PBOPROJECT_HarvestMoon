@@ -95,6 +95,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public Player player = new Player(this, keyH); // Create a new Player object
     public ArrayList<Entity> obj = new ArrayList<>(MapDB.mapList.get(currentMap).obj); // List of objects in the game
     public ArrayList<Entity> farmObj = new ArrayList<>(MapDB.mapList.get(currentMap).farmObj); // List of objects in the game
+    public ArrayList<Entity> cropObj = new ArrayList<>(MapDB.mapList.get(currentMap).cropObj); // List of objects in the game
     public ArrayList<Entity> npcs = new ArrayList<>(MapDB.mapList.get(currentMap).npcs); // List of NPCs in the game
     public ArrayList<Entity> entityList = new ArrayList<>(MapDB.mapList.get(currentMap).entityList); // List of all entities in the game
     saveLoad saveLoad1 = new saveLoad(this);
@@ -107,11 +108,13 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         //balikin current obj ke mabDB
         MapDB.mapList.get(currentMap).obj = new ArrayList<>(obj);
         MapDB.mapList.get(currentMap).farmObj = new ArrayList<>(farmObj);
+        MapDB.mapList.get(currentMap).cropObj = new ArrayList<>(cropObj);
         MapDB.mapList.get(currentMap).npcs = new ArrayList<>(npcs);
         MapDB.mapList.get(currentMap).entityList = new ArrayList<>(entityList);
         // Clear the current lists
         obj.clear();
         farmObj.clear();
+        cropObj.clear();
         npcs.clear();
         entityList.clear();
         
@@ -240,6 +243,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
     
         MapData current = MapDB.mapList.get(currentMap);
+
         if(currentMonth == 3)
         {
             currentMonth = 0;
@@ -282,6 +286,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
             obj = current.obj; // Update the object list
             farmObj = current.farmObj;
+            cropObj = current.cropObj;
             npcs = current.npcs;
             entityList = current.entityList;
 
@@ -332,6 +337,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
+
         if (gameState == titleState) {
             ui.draw(g2);
         } else {
@@ -341,6 +347,12 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
             for (Entity x : farmObj) {
                 if (x != null) {
                     x.draw(g2); // Draw each farm object
+                }
+            }
+            // draw farm dkk
+            for (Entity x : cropObj) {
+                if (x != null) {
+                    x.draw(g2); // Draw each crop object
                 }
             }
 

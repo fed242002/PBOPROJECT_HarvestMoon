@@ -1,13 +1,15 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.Random;
 
+import Main.Crop;
 import Main.GamePanel;
 
 public class ItemList {
     // 0 = item, 1 = tool, 2 = seed, 3 = crop, 4 = food, 5 = fish, 6 = material, 7 = furniture
-   public static Item apple, axe, baguette, banana, carrot, carrotSeedBag, cauliflower, cauliflowerSeedBag, cheese, chicken, chili, chiliSeedBag, coffee, coffeeBean;
-    public static Item coffeeSeedBag, croissant, egg, emptySeedBag, fishRod, grain, grainBag, grainSeedBag, grape, grapeSeedBag, lemon, lettuce, lettuceSeedBag, milkBucket, onion, onionSeedBag, orange, peach, pear, pearSeedBag, pineapple, pineappleSeedBag, pumpkin, pumpkinSeedBag, radish, radishSeedBag, rawChicken, rawSteak, shear, shovel, steak, strawberry, strawberrySeedBag, tomato, tomatoSeedBag, toolsBag, oakTrunk, spruceTrunk, appleWoodTrunk, pineTrunk, turnip, turnipSeedBag, wateringCan, watermelon, watermelonSeedBag, WatermelonSlice, whoolBrown, WhoolGray, WhoolWhite, WhoolYellow, zucchini, zucchiniSeedBag;
+   public static Item apple, axe, baguette, banana, carrot, carrotSeedBag, cauliflower, cauliflowerSeedBag, cheese, chicken, chili, chiliSeedBag, coffeeBean;
+    public static Item  croissant, egg, emptySeedBag, fishRod, grain, grainSeedBag, grapes, grapesSeedBag, lemon, lettuce, lettuceSeedBag, milkBucket, onion, onionSeedBag, orange, peach, pear, pearSeedBag, pineapple, pineappleSeedBag, pumpkin, pumpkinSeedBag, radish, radishSeedBag, rawChicken, rawSteak, shear, shovel, steak, strawberry, strawberrySeedBag, tomato, tomatoSeedBag, toolsBag, oakTrunk, spruceTrunk, appleWoodTrunk, pineTrunk, turnip, turnipSeedBag, wateringCan, watermelon, watermelonSeedBag, WatermelonSlice, whoolBrown, WhoolGray, WhoolWhite, WhoolYellow, zucchini, zucchiniSeedBag;
     GamePanel gp;
     static ArrayList<Item> item;
 
@@ -32,24 +34,22 @@ public class ItemList {
         wateringCan = new Item(gp, "wateringCan", 1, "Used to water crops. Remember to refill it regularly!");
 
         // Type 2: Seeds
-        carrotSeedBag = new Item(gp, "carrotSeedBag", 2, "Contains seeds for growing orange root vegetables. Takes 4 days to mature.", "carrot", 4);
-        cauliflowerSeedBag = new Item(gp, "cauliflowerSeedBag", 2, "Seeds for growing large white florets. Takes 8 days to mature.", "cauliflower", 8);
-        chiliSeedBag = new Item(gp, "chiliSeedBag", 2, "Seeds for growing spicy red peppers. Takes 5 days to mature.", "chili", 5);
-        coffeeSeedBag = new Item(gp, "coffeeSeedBag", 2, "Contains beans that can be planted to grow coffee plants. Takes 10 days.", "coffee", 10);
-        grainBag = new Item(gp, "grainBag", 2, "Contains various cereal grains for planting. Takes 7 days to mature.", "grain", 7);
-        grainSeedBag = new Item(gp, "grainSeedBag", 2, "Premium seeds for growing higher quality grains. Takes 7 days.", "grain", 7);
-        grapeSeedBag = new Item(gp, "grapeSeedBag", 2, "Seeds for growing purple grape vines. Takes 9 days to mature.", "grape", 9);
-        lettuceSeedBag = new Item(gp, "lettuceSeedBag", 2, "Seeds for growing leafy green vegetables. Takes 5 days to mature.", "lettuce", 5);
-        onionSeedBag = new Item(gp, "onionSeedBag", 2, "Seeds for growing pungent bulb vegetables. Takes 6 days to mature.", "onion", 6);
-        pearSeedBag = new Item(gp, "pearSeedBag", 2, "Seeds to grow pear trees. Takes a season to grow into a sapling.", "pear", 30);
-        pineappleSeedBag = new Item(gp, "pineappleSeedBag", 2, "Seeds for growing tropical pineapple plants. Takes 14 days.", "pineapple", 14);
-        pumpkinSeedBag = new Item(gp, "pumpkinSeedBag", 2, "Seeds for growing large orange gourds. Takes 13 days to mature.", "pumpkin", 13);
-        radishSeedBag = new Item(gp, "radishSeedBag", 2, "Seeds for growing crisp white root vegetables. Takes 3 days.", "radish", 3);
-        strawberrySeedBag = new Item(gp, "strawberrySeedBag", 2, "Seeds for growing sweet red berries. Takes 7 days to mature.", "strawberry", 7);
-        tomatoSeedBag = new Item(gp, "tomatoSeedBag", 2, "Seeds for growing juicy red vegetables. Takes 6 days to mature.", "tomato", 6);
-        turnipSeedBag = new Item(gp, "turnipSeedBag", 2, "Seeds for growing purple and white root vegetables. Takes 4 days.", "turnip", 4);
-        watermelonSeedBag = new Item(gp, "watermelonSeedBag", 2, "Seeds for growing large, striped melons. Takes 12 days.", "watermelon", 12);
-        zucchiniSeedBag = new Item(gp, "zucchiniSeedBag", 2, "Seeds for growing green summer squash. Takes 5 days to mature.", "zucchini", 5);
+        carrotSeedBag = new Item(gp, "carrotSeedBag", 2, "Contains seeds for growing orange root vegetables.",6);
+        cauliflowerSeedBag = new Item(gp, "cauliflowerSeedBag", 2, "Seeds for growing large white florets.",4);
+        chiliSeedBag = new Item(gp, "chiliSeedBag", 2, "Seeds for growing spicy red peppers.",5);
+        grainSeedBag = new Item(gp, "grainSeedBag", 2, "Premium seeds for growing higher quality grains.",4);
+        grapesSeedBag = new Item(gp, "grapesSeedBag", 2, "Seeds for growing purple grape vines.", 6);
+        lettuceSeedBag = new Item(gp, "lettuceSeedBag", 2, "Seeds for growing leafy green vegetables.",3);
+        onionSeedBag = new Item(gp, "onionSeedBag", 2, "Seeds for growing pungent bulb vegetables.",3);
+        pearSeedBag = new Item(gp, "pearSeedBag", 2, "Seeds to grow pear trees.",4);
+        pineappleSeedBag = new Item(gp, "pineappleSeedBag", 2, "Seeds for growing tropical pineapple plants.",4);
+        pumpkinSeedBag = new Item(gp, "pumpkinSeedBag", 2, "Seeds for growing large orange gourds.",3);
+        radishSeedBag = new Item(gp, "radishSeedBag", 2, "Seeds for growing crisp white root vegetables.",6);
+        strawberrySeedBag = new Item(gp, "strawberrySeedBag", 2, "Seeds for growing sweet red berries.",5);
+        tomatoSeedBag = new Item(gp, "tomatoSeedBag", 2, "Seeds for growing juicy red vegetables.",4);
+        turnipSeedBag = new Item(gp, "turnipSeedBag", 2, "Seeds for growing purple and white root vegetables.",3);
+        watermelonSeedBag = new Item(gp, "watermelonSeedBag", 2, "Seeds for growing large, striped melons.",4);
+        zucchiniSeedBag = new Item(gp, "zucchiniSeedBag", 2, "Seeds for growing green summer squash.",5);
 
         // Type 3: Crops
         carrot = new Item(gp, "carrot", 3, "A crunchy orange root vegetable. Good for vision.");
@@ -57,7 +57,7 @@ public class ItemList {
         chili = new Item(gp, "chili", 3, "A small, spicy red pepper. Adds heat to any dish.");
         coffeeBean = new Item(gp, "coffeeBean", 3, "Aromatic beans used to brew coffee. Can be roasted.");
         grain = new Item(gp, "grain", 3, "Various cereal grains used for baking and cooking.");
-        grape = new Item(gp, "grape", 3, "Sweet purple fruit growing in clusters. Good fresh or as juice.");
+        grapes = new Item(gp, "grapes", 3, "Sweet purple fruit growing in clusters. Good fresh or as juice.");
         lettuce = new Item(gp, "lettuce", 3, "Leafy green vegetable, crisp and refreshing in salads.");
         onion = new Item(gp, "onion", 3, "Layered vegetable with a strong, pungent flavor. Essential for cooking.");
         pineapple = new Item(gp, "pineapple", 3, "Sweet tropical fruit with a spiky exterior and yellow flesh.");
@@ -80,7 +80,6 @@ public class ItemList {
         baguette = new Item(gp, "baguette", 4, "Long, crusty French bread. Perfect with cheese or on its own.");
         cheese = new Item(gp, "cheese", 4, "Dairy product made from fermented milk. Rich and flavorful.");
         chicken = new Item(gp, "chicken", 4, "Prepared poultry meat, ready to eat. High in protein.");
-        coffee = new Item(gp, "coffee", 4, "A hot, caffeinated beverage brewed from roasted coffee beans.");
         croissant = new Item(gp, "croissant", 4, "Buttery, flaky pastry of French origin. Delicious for breakfast.");
         egg = new Item(gp, "egg", 4, "Farm-fresh chicken egg. Versatile for cooking or baking.");
         rawChicken = new Item(gp, "rawChicken", 4, "Uncooked poultry meat. Must be cooked before consumption.");
@@ -96,7 +95,15 @@ public class ItemList {
         WhoolGray = new Item(gp, "WhoolGray", 6, "Thick gray sheep's wool. Good for warmer clothing and crafts.");
         WhoolWhite = new Item(gp, "WhoolWhite", 6, "Pure white sheep's wool. Premium quality for fine textiles.");
         WhoolYellow = new Item(gp, "WhoolYellow", 6, "Yellow-tinted sheep's wool. Unique color for specialty crafts.");
+    
+        item = new ArrayList<>(java.util.Arrays.asList(
+            apple, axe, baguette, banana, carrot, carrotSeedBag, cauliflower, cauliflowerSeedBag, cheese, chicken, chili, chiliSeedBag, coffeeBean, croissant, egg, emptySeedBag, fishRod, grain, grainSeedBag, grainSeedBag, grapes, grapesSeedBag, lemon, lettuce, lettuceSeedBag, milkBucket, onion, onionSeedBag, orange, peach, pear, pearSeedBag, pineapple, pineappleSeedBag, pumpkin, pumpkinSeedBag, radish, radishSeedBag, rawChicken, rawSteak, shear, shovel, steak, strawberry, strawberrySeedBag, tomato, tomatoSeedBag, toolsBag, oakTrunk, spruceTrunk, appleWoodTrunk, pineTrunk, turnip, turnipSeedBag, wateringCan, watermelon, watermelonSeedBag, WatermelonSlice, whoolBrown, WhoolGray, WhoolWhite, WhoolYellow, zucchini, zucchiniSeedBag
+        ));
+
+
+
     }
+
 
     static public Item getItem(String name){
             for(Item x : item){
@@ -106,5 +113,6 @@ public class ItemList {
             }
         return null;
     }
+    
 
 }

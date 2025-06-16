@@ -32,8 +32,8 @@ public class Crop {
     Crop(GamePanel gp){
         this.gp = gp;
 
+        lettuce = new OBJ_Crop(gp, "lettuce", 3); 
         berry = new OBJ_Crop(gp, "berry", 4); 
-        lettuce = new OBJ_Crop(gp, "lettuce", 3);
         carrot = new OBJ_Crop(gp, "carrot", 6);
         cauliflower = new OBJ_Crop(gp, "cauliflower", 4);
         chili = new OBJ_Crop(gp, "chili", 5);
@@ -59,14 +59,24 @@ public class Crop {
     }
 
 
-    static public OBJ_Crop getCrop(String name) {
+    static public OBJ_Crop getCrop(String name, int x,int y) {
         for (OBJ_Crop crop : cropList) {
             if (crop.name.equals(name)) {
-                return crop.clone(0, 0); // Clone with default position
+                return crop.clone(x, y); // Clone with default position
             }
         }
         return null; // Crop not found
     }
+
+        static public void setMaturetime(String name, int days) {
+        for (OBJ_Crop crop : cropList) {
+            if (crop.name.equals(name)) {
+                crop.daysToMature = days;
+                
+            }
+        }
+    }
+
 
 
 

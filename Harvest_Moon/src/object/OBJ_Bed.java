@@ -12,6 +12,7 @@ public class OBJ_Bed extends Entity {
     int playerTempX;
     int playerTempY;
 
+
     public OBJ_Bed(GamePanel gp, int type,int x, int y) {
 
 
@@ -91,6 +92,10 @@ public class OBJ_Bed extends Entity {
                     e.reset();
                 }
 
+                for(Entity e : gp.cropObj) {
+                    e.dayPassed();
+                }
+
                 //reset Energy
                 gp.player.energy = gp.player.maxEnergy; // Reset player's energy to maximum
             
@@ -112,7 +117,6 @@ public class OBJ_Bed extends Entity {
             gp.player.worldX = playerTempX; // Restore player's X position
             gp.player.worldY = playerTempY; // Restore player's Y position
             gp.player.duvetImage = null; // Reset duvet image
-
         }
     }
 

@@ -244,6 +244,78 @@ public class CollisionChecker {
     }
 
 
+        public int checkObjectcrop(int targetX, int targetY, Entity entity, boolean player) {
+        int index = 999;
+        Rectangle temp = new Rectangle();
+        temp.x = targetX;
+        temp.y = targetY;
+        temp.width = 48;
+        temp.height = 48;
+
+        for (int i = 0; i < gp.cropObj.size(); i++) {
+
+            gp.cropObj.get(i).solidArea.x = gp.cropObj.get(i).worldX + gp.cropObj.get(i).solidArea.x;
+            gp.cropObj.get(i).solidArea.y = gp.cropObj.get(i).worldY + gp.cropObj.get(i).solidArea.y;
+
+            switch (entity.direction) {
+                case "up":
+                    entity.solidArea.y -= entity.speed;
+                    if (temp.intersects(gp.cropObj.get(i).solidArea)) {
+                        if (gp.cropObj.get(i).collision == true) {
+                            entity.collisionOn = true;
+                        }
+                        if (player == true) {
+                            index = i;
+                        }
+                    }
+                    break;
+                case "down":
+                    entity.solidArea.y += entity.speed ;
+                    if (temp.intersects(gp.cropObj.get(i).solidArea)) {
+                        if (gp.cropObj.get(i).collision == true) {
+                            entity.collisionOn = true;
+                        }
+                        if (player == true) {
+                            index = i;
+                        }
+                    }
+                    break;
+                case "left":
+                    entity.solidArea.x -= entity.speed;
+                    if (temp.intersects(gp.cropObj.get(i).solidArea)) {
+                        if (gp.cropObj.get(i).collision == true) {
+                            entity.collisionOn = true;
+                        }
+                        if (player == true) {
+                            index = i;
+                        }
+                    }
+                    break;
+                case "right":
+                    entity.solidArea.x += entity.speed ;
+                    if (temp.intersects(gp.cropObj.get(i).solidArea)) {
+                        if (gp.cropObj.get(i).collision == true) {
+                            entity.collisionOn = true;
+                        }
+                        if (player == true) {
+                            index = i;
+                        }
+                    }
+                    break;
+            }
+
+            entity.solidArea.x = entity.solidAreaDefaultX;
+            entity.solidArea.y = entity.solidAreaDefaultY;
+            gp.cropObj.get(i).solidArea.x = gp.cropObj.get(i).solidAreaDefaultX;
+            gp.cropObj.get(i).solidArea.y = gp.cropObj.get(i).solidAreaDefaultY;
+        }
+
+        return index;
+
+    }
+
+
+
 
     // Helper method to check if a tile is collidable
     private boolean isTileCollidable(int col, int row) {

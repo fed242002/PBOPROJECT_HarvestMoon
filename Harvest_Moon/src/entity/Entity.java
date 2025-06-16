@@ -49,9 +49,9 @@ public class Entity extends SuperEntity implements Cloneable{
                     gp.eventHandler.handleMapTransition(4, 25, 25);
                 }
 
-                if(this instanceof OBJ_Market){
-                    gp.eventHandler.handleMapTransition(5, 25, 25);
-                }
+                // if(this instanceof OBJ_Market){
+                //     gp.eventHandler.handleMapTransition(5, 25, 25);
+                // }
 
                 objAnimationSpriteNum = 0;
                 objectAnimationOn = false; // Turn off the animation after it completes
@@ -121,9 +121,12 @@ public class Entity extends SuperEntity implements Cloneable{
     public final int type_material = 6;
     public final int type_furniture = 7;
     
+    public int multiplier = 1;
+    public String seedCrop = null; // Seed crop name, used for seeds that grow into crops
+    public int dayCount = 0;
+    public int wateredCount = 0;
 
-    public String seedCrop = ""; // Seed crop name, used for seeds that grow into crops
-
+    public void dayPassed(){}
 
     // animation
     Animation walk;
