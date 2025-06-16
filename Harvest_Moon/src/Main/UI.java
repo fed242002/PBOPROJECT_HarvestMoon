@@ -358,7 +358,7 @@ public class UI {
             frameY = 48;
             // frameWidth = gp.tileSize * 6;
             // frameHeight = gp.tileSize * 5;
-            frameWidth = 372;
+            frameWidth = 672;
             frameHeight = 336;
             slotCol = playerSlotCol; // inventory slot column
             slotRow = playerSlotRow; // inventory slot row
@@ -441,7 +441,7 @@ public class UI {
 
             if (itemIndex < entity.inventory.size()) {
 
-                drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
+                drawSubWindow(dFrameX, dFrameY + 10, dFrameWidth, dFrameHeight);
 
                 for (String line : entity.inventory.get(itemIndex).description.split("\n")) {
                     g2.drawString(line, textX, textY);
