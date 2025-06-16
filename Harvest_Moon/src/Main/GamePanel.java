@@ -52,7 +52,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
     //time
     public int hour = 8;
-    public int minute;
+    public int minute = 0;
     public int timeCounter = 0;
     public String month [] = {"Moonlit", "Sunlit", "Frostbloom", "Amberfall"};
     public int currentMonth = 0;
