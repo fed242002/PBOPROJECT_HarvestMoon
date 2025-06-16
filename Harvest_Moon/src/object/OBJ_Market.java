@@ -42,7 +42,7 @@ public class OBJ_Market extends Entity {
     @Override
     public void interact() {
 
-        if(gp.keyH.interactPressed && gp.player.worldX >= worldX + 215 && gp.player.worldX <= worldX + 260 && gp.player.worldY > worldY + 200) {
+        if(gp.keyH.interactPressed) {
             gp.keyH.interactPressed = false; // Reset the interact key
             objectAnimationOn = true; // Enable object animation
             gp.player.setAnimation("idle");

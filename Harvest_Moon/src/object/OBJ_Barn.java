@@ -13,14 +13,14 @@ public class OBJ_Barn extends Entity {
         collision = false; // gaiso dilewati
         worldX = x;
         worldY = y;
-        width = 288;
-        height = 240;
+        width = 720;
+        height = 816;
         isObj = true; // Set this entity as an object
 
-        this.solidArea.y = height / 2;
+        this.solidArea.y = 725 / 2;
         this.solidArea.x = 0;
         this.solidArea.width = width;
-        this.solidArea.height = height / 2;
+        this.solidArea.height = 720 / 2;
 
         this.solidAreaDefaultX = this.solidArea.x;
         this.solidAreaDefaultY = this.solidArea.y;
@@ -43,7 +43,7 @@ public class OBJ_Barn extends Entity {
     @Override
     public void interact() {
 
-        if(gp.keyH.interactPressed && gp.player.worldX >= worldX + 215 && gp.player.worldX <= worldX + 260 && gp.player.worldY > worldY + 200) {
+        if(gp.keyH.interactPressed) {
             gp.keyH.interactPressed = false; // Reset the interact key
             objectAnimationOn = true; // Enable object animation
             gp.player.setAnimation("idle");

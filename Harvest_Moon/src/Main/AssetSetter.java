@@ -16,8 +16,8 @@ public class AssetSetter {
         MapDB.mapList.get(0).obj.add(new OBJ_Tree(gp, 10 * gp.tileSize, 23 * gp.tileSize));
         MapDB.mapList.get(0).obj.add(new OBJ_WaterWell(gp, 5 * gp.tileSize, 15 * gp.tileSize));
         MapDB.mapList.get(3).obj.add(new OBJ_Bed(gp, 0, 15 * gp.tileSize, 10 * gp.tileSize));
-        MapDB.mapList.get(0).obj.add(new OBJ_Barn(gp ,31 * gp.tileSize, 7 * gp.tileSize ));
-        MapDB.mapList.get(2).obj.add(new OBJ_Market(gp ,24 * gp.tileSize, 18 * gp.tileSize));
+        MapDB.mapList.get(0).obj.add(new OBJ_Barn(gp ,3 * gp.tileSize, 2 * gp.tileSize ));
+        MapDB.mapList.get(2).obj.add(new OBJ_Market(gp ,4 * gp.tileSize, 17 * gp.tileSize));
 
         // Add more objects as needed
     }

@@ -159,6 +159,19 @@ public class EventHandler {
                 }
             }
 
+            case 4 -> { // Inside the Barn
+                if (gp.player.worldX >= gp.tileSize * 24 && gp.player.worldX <= gp.tileSize * 26 && 
+                    gp.player.worldY >= gp.tileSize * 29 && gp.player.worldY <= gp.tileSize * 34) {
+                    handleMapTransition(0, 10, 19);
+                }
+            }
+            
+            case 5 -> { // Inside the Market
+                if (gp.player.worldX >= gp.tileSize * 24 && gp.player.worldX <= gp.tileSize * 26 && 
+                    gp.player.worldY >= gp.tileSize * 19 && gp.player.worldY <= gp.tileSize * 26) {
+                    handleMapTransition(2, 8, 30);
+                }
+            }
 
         }
         
