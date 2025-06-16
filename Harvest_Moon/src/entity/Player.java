@@ -293,10 +293,11 @@ public class Player extends Entity {
 
         if (i != 999 && !gp.obj.get(i).pickUpAble)
         {
+            gp.obj.get(i).interact(); // Call the interact method of the object
             return;
         }
 
-         if (i != 999) {
+        if (i != 999) {
              if (canObtainItem(gp.obj.get(i)) == true) {
                  if(gp.obj.get(i).pickUpAble) {
                      text = "You picked up " + gp.obj.get(i).name + "!"; // Set the text to display
