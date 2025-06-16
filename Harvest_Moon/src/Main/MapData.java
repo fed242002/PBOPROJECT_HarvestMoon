@@ -16,6 +16,7 @@ public class MapData{
     static int totalMaps = 0;
     public ArrayList<Entity> obj = new ArrayList<>(); // List of objects in the game
     public ArrayList<Entity> farmObj = new ArrayList<>(); // List of objects in the game
+    public ArrayList<Entity> cropObj = new ArrayList<>(); // List of objects in the game
     public ArrayList<Entity> npcs = new ArrayList<>(); // List of NPCs in the game
     public ArrayList<Entity> entityList = new ArrayList<>(); // List of all entities in the game
     public int music = 0;

@@ -195,6 +195,7 @@ public class Player extends Entity {
 
         inventory.add(ItemList.apple.clone()); 
         inventory.add(ItemList.shovel.clone()); 
+        inventory.add(ItemList.wateringCan.clone()); 
         inventory.add(ItemList.axe.clone()); 
         inventory.add(ItemList.chiliSeedBag.clone()); 
         inventory.add(ItemList.lettuceSeedBag.clone()); 
@@ -448,7 +449,7 @@ public class Player extends Entity {
             }
             if(currentTools.equalsIgnoreCase("WateringCan")){
                 int objIndex = gp.cChecker.checkObjectFarm(targetWorldX,targetWorldY,this, true);
-                if(objIndex != 999 && gp.farmObj.get(objIndex) instanceof OBJ_soil) {
+                if(objIndex != 999 && (gp.farmObj.get(objIndex) instanceof OBJ_soil )) {
                     g2.setColor(new Color(0, 255, 0, 100));
                     g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
                 }else{
@@ -567,7 +568,7 @@ public class Player extends Entity {
 
 
         if(isPlanting){
-            gp.farmObj.add(Crop.getCrop(currentItem.name));
+            gp.aSetter.addCrop(Crop.getCrop(currentItem.seedCrop, x, y));
             resetAllAnimation();
             
             setAnimation("idle");

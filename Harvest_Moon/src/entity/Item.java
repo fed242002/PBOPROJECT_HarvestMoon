@@ -44,6 +44,16 @@ public class Item extends Entity {
             System.out.println("Image not found: " + path);
         }
 
+        if(type == type_seed){
+            if (name.endsWith("SeedBag")) {
+                seedCrop =  name.substring(0, name.length() - 7); // Removes "SeedBag" (7 characters)
+            }
+        }
+
+        System.out.println(seedCrop);
+
+
+
 
     }
 

@@ -59,10 +59,10 @@ public class Crop {
     }
 
 
-    static public OBJ_Crop getCrop(String name) {
+    static public OBJ_Crop getCrop(String name, int x,int y) {
         for (OBJ_Crop crop : cropList) {
             if (crop.name.equals(name)) {
-                return crop.clone(0, 0); // Clone with default position
+                return crop.clone(x, y); // Clone with default position
             }
         }
         return null; // Crop not found

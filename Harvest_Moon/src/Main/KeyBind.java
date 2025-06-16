@@ -36,8 +36,6 @@ public class KeyBind {
 
     // buat debugg
 
-    // equip nothing
-    public static int equipNothing = KeyEvent.VK_0;
     // equip shovel
     public static int equipShovel = KeyEvent.VK_1;
     // equip axe
@@ -46,4 +44,5 @@ public class KeyBind {
     public static int equipFishingRod = KeyEvent.VK_3;
     public static int equipWateringCan = KeyEvent.VK_4;
 
+    public static int unequipedAll = KeyEvent.VK_0;
 }
