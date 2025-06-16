@@ -75,7 +75,13 @@ public class Player extends Entity {
     public boolean isHarvesting = false;
 
 
+    
     public BufferedImage duvetImage = null; // Image for the duvet when sleeping
+
+
+    public String getSleepPath(){
+        return body + "-" + hair + "-";
+    }
 
     public Player(GamePanel gp, KeyHandler keyH) {
 
@@ -141,11 +147,11 @@ public class Player extends Entity {
         animationList.add(new Animation("FISHCAUGHT", 9, "/assets/player/FISH CAUGHT/" + getPath()));
         animationList.add(new Animation("FISHPULLED", 2, "/assets/player/FISH REEL IN/" + getPath()));
         animationList.add(new Animation("HARVEST", 9, "/assets/player/HARVEST/" + getPath()));
-        animationList.add(new Animation("lift", 14, "/assets/player/LIFT/" + getPath()));
-        animationList.add(new Animation("PickUp", 12, "/assets/player/PICK UP/" + getPath()));
+        // animationList.add(new Animation("lift", 14, "/assets/player/LIFT/" + getPath()));
+        // animationList.add(new Animation("PickUp", 12, "/assets/player/PICK UP/" + getPath()));
         animationList.add(new Animation("Sit", 6, "/assets/player/SIT 1/" + getPath()));
-        animationList.add(new Animation("sleep", 6, "/assets/player/SLEEP/" + getPath(), true));
-        animationList.add(new Animation("throw", 14, "/assets/player/THROW/" + getPath()));
+        animationList.add(new Animation("sleep", 6, "/assets/player/SLEEP/" + getSleepPath(), true));
+        // animationList.add(new Animation("throw", 14, "/assets/player/THROW/" + getPath()));
         animationList.add(new Animation("watering", 14, "/assets/player/WATERING/" + getPath(), 8));
 
     }

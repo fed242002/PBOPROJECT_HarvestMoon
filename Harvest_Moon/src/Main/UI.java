@@ -134,7 +134,7 @@ public class UI {
         BufferedImage playerIcon = null;
         try {
             playerIcon = ImageIO
-                    .read(getClass().getResourceAsStream("/assets/player/SLEEP/" + gp.player.getPath() + "0.png"));
+                    .read(getClass().getResourceAsStream("/assets/player/SLEEP/" + gp.player.getSleepPath() + "0.png"));
         } catch (IOException e) {
             System.out.println("Error loading player image UI: " + e.getMessage());
         }
