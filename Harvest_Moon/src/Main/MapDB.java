@@ -11,5 +11,6 @@ public class MapDB {
         mapList.add(new MapData("Town Hall", "/assets/map/Map_TownHall_Map", "/assets/map/Map_TownHall_TileData", "/assets/tile/TownHallTiles/",2));
         mapList.add(new MapData("Inside the House", "/assets/map/Inside_Home_Map", "/assets/map/Inside_Home_TileData", "/assets/tile/Interiors/",2));
         mapList.add(new MapData("Inside the Barn", "/assets/map/Inside_Barn_Map", "/assets/map/Inside_Barn_TileData", "/assets/tile/Barn_Tiles/",2));
+        mapList.add(new MapData("Inside the Market", "/assets/map/Inside_Market_Map", "/assets/map/Inside_Market_TileData", "/assets/tile/Market_Tiles/",2));
     }
 }
