@@ -98,8 +98,16 @@ public class Entity extends SuperEntity implements Cloneable{
     public String description = " "; // Description of the item
 
     // type item
-    public final int type_food = 8;
-    public final int type_light = 9;
+    // 0 = item, 1 = tool, 2 = seed, 3 = crop, 4 = food, 5 = fish, 6 = material, 7 = furniture
+    public int type_item = 0;   // type item nya
+    public final int type_tool = 1;
+    public final int type_seed = 2;
+    public final int type_crop = 3;
+    public final int type_food = 4;
+    public final int type_fish = 5;
+    public final int type_material = 6;
+    public final int type_furniture = 7;
+    
 
     // animation
     Animation walk;
