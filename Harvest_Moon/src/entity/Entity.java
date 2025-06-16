@@ -1,6 +1,6 @@
 package entity;
 
-import Main.*;
+import Main.GamePanel;
 import animation.*;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -8,7 +8,6 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import object.*;
-import Main.GamePanel;
 
 
 public class Entity extends SuperEntity implements Cloneable{
@@ -447,7 +446,7 @@ public class Entity extends SuperEntity implements Cloneable{
             {
                 int nextCol = gp.pFinder.pathList.get(0).col;
                 int nextRow = gp.pFinder.pathList.get(0).row;
-                if(nextCol == goalCol && nextRol == goalRow)
+                if(nextCol == goalCol && nextRow == goalRow)
                 {
                     onPath = false;
                 }
