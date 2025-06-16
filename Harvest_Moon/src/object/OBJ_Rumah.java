@@ -48,6 +48,8 @@ public class OBJ_Rumah extends Entity {
         if(gp.keyH.interactPressed && gp.player.worldX >= worldX + 215 && gp.player.worldX <= worldX + 260 && gp.player.worldY > worldY + 200) {
             gp.keyH.interactPressed = false; // Reset the interact key
             objectAnimationOn = true; // Enable object animation
+            gp.player.setAnimation("idle");
+            gp.player.moveDisabled = true; // Disable player movement
 
         }
 

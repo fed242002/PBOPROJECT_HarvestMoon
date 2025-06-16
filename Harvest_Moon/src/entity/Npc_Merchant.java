@@ -45,8 +45,8 @@ public class Npc_Merchant extends Entity {
         super.speak();
 
         gp.player.gold += 100;
-        gp.gameState = gp.tradeState;
-        gp.ui.npc = this;
+        // gp.gameState = gp.tradeState;
+        // gp.ui.npc = this;
     }
 
     public void sellItem(){ // ini nanti isi objek apa aja yang mau dijual nanti sama si tukang trade

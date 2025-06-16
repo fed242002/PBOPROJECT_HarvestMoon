@@ -69,6 +69,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public ArrayList<Entity> npcs = new ArrayList<>(MapDB.mapList.get(currentMap).npcs); // List of NPCs in the game
     public ArrayList<Entity> entityList = new ArrayList<>(MapDB.mapList.get(currentMap).entityList); // List of all entities in the game
     saveLoad saveLoad1 = new saveLoad(this);
+
+    Crop crop = new Crop(this); // Create a new Crop object
     
 
 
@@ -123,7 +125,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public boolean showGrid = false; // Toggle for showing the grid
 
     public GamePanel() {
-
+        
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true); // Double buffering to reduce flickering
@@ -135,6 +137,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     }
 
     public void setupGame() {
+        eventHandler = new EventHandler(this);
         aSetter.setObject();
         aSetter.setNPC();
         eManager.setup(); // ini untuk setting dalam kegelapan

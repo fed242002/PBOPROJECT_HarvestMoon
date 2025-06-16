@@ -10,11 +10,12 @@ import java.util.ArrayList;
 import object.*;
 
 
-public class Entity extends SuperEntity {
+public class Entity extends SuperEntity implements Cloneable{
 
     public void chop(){}
     public void reset(){}
     public void watering(){}
+    public void grow(){}
 
     //ini buat kalo misale obj ada banyak variasi gambar
     public ArrayList<String> imagePathList = new ArrayList<>(); // List of soil images
@@ -38,9 +39,9 @@ public class Entity extends SuperEntity {
             }
             if (objAnimationSpriteNum >= objAnimationSpriteTotal) {
                 if(this instanceof OBJ_Rumah){
-                    //ganti map disini
-    
+                    gp.eventHandler.handleMapTransition(3, 25, 25);
                 }
+
                 objAnimationSpriteNum = 0;
                 objectAnimationOn = false; // Turn off the animation after it completes
                 image = gp.setImage(path); // Reset the image to the default path
@@ -49,6 +50,8 @@ public class Entity extends SuperEntity {
             }
         }
     }
+
+
 
 
     int thinkSpriteNum = 0;
