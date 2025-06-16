@@ -6,11 +6,12 @@ import javax.imageio.ImageIO;
 import Main.GamePanel;
 import entity.Entity;
 
-public class OBJ_Rumah extends Entity {
+public class OBJ_Barn extends Entity {
 
-    public OBJ_Rumah(GamePanel gp, int x, int y) {
+    
+    public OBJ_Barn(GamePanel gp, int x, int y) {
         super(gp);
-        name = "home";
+        name = "barn";
         path = "/assets/object/barn.png"; // Path to the barn image
         collision = false; // gaiso dilewati
         worldX = x;
