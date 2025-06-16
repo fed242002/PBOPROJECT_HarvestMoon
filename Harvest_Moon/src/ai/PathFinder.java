@@ -1,9 +1,8 @@
 package  ai;
 
-import java.util.ArrayList;
-
 import Main.GamePanel;
 import entity.Entity;
+import java.util.ArrayList;
 
 public class PathFinder {
 
@@ -17,10 +16,10 @@ public class PathFinder {
 
     public PathFinder(GamePanel gp) {
         this.gp = gp;
-        instansiateNode();
+        instanstiateNodes(); //should be called explicitly after construction
     }
 
-    public void instansiateNode() {
+    public void instanstiateNodes() {
         node = new Node[gp.maxWorldCol][gp.maxWorldRow];
 
         int row = 0;
@@ -156,7 +155,7 @@ public class PathFinder {
                     }
                 }
             }
-            if(openList.size() == 0)
+            if(openList.isEmpty())
             {
                 break;
             }
