@@ -57,13 +57,13 @@ public class Item extends Entity implements Cloneable {
 
             int randomQuality = random.nextInt(1, 4); // Random quality between 1 and 3
             if(randomQuality == 1){
-                name += " (High Quality)";
+                this.name += " (High Quality)";
             }
             if(randomQuality == 2){
-                name += " (Medium Quality)";
+                this.name += " (Medium Quality)";
             }
             if(randomQuality == 3){
-                name += " (Low Quality)";
+                this.name += " (Low Quality)";
             }
             this.daysToMature = randomQuality * stages;
             this.description += "\nIt takes " + this.daysToMature + " days to mature.";
