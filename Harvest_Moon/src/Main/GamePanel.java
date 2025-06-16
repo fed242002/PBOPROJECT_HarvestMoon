@@ -51,7 +51,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     int FPS = 60; // Frames per second
 
     //time
-    public int hour = 18;
+    public int hour = 8;
     public int minute;
     public int timeCounter = 0;
     public String month [] = {"Moonlit", "Sunlit", "Frostbloom", "Amberfall"};

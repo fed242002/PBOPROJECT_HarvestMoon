@@ -129,7 +129,7 @@ public class Lighting {
             }
             }
             else{
-                filterAlpha = 0f; // No filter for other maps
+                filterAlpha = 0f; // map yang didalam auto terang
             }
             
         }
