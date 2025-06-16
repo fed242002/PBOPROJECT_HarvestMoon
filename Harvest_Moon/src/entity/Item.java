@@ -1,6 +1,5 @@
 package entity;
 
-import Main.Crop;
 import Main.GamePanel;
 
 public class Item extends Entity {
@@ -45,9 +44,9 @@ public class Item extends Entity {
             System.out.println("Image not found: " + path);
         }
 
-        if(type ==2){
-            Crop.getCrop(cropName).daysToMature = daysToMature; // Set the days to mature for the crop
-        }
+        // if(type ==2){
+        //     Crop.getCrop(cropName).daysToMature = daysToMature; // Set the days to mature for the crop
+        // }
     }
 
 

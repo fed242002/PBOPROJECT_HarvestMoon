@@ -1,9 +1,8 @@
 package entity;
 
-import java.util.Random;
-
 import Main.GamePanel;
 import animation.Animation;
+import java.util.Random;
 
 public class Npc extends Entity {
 
