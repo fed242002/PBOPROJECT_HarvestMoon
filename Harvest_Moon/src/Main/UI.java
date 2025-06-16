@@ -149,7 +149,7 @@ public class UI {
                 path2 = "/assets/Lighting/Dawn.png";
                 imageLighting = gp.setImage(path2);
             }
-        g2.drawImage(imageLighting, 690, 35,48,48,null);
+        g2.drawImage(imageLighting, 690, 25,48,48,null);
 
         // info Panel gold
         String gold = String.valueOf(gp.player.gold) + " G";
