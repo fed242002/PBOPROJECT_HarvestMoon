@@ -22,6 +22,8 @@ public class UI {
     public String currentDialogue = "";
     public String currentDialogueName = "";
     public int commandNum = 0; // 0: new game, 1: load game, 2: exit
+
+    public int tradeCommand = 0; // 0: buy, 1: sell, 2: leave
     public int titleScreenState = 0; // 0: title screen, 1: new Game(customize character)
     public int pauseScreenState = 0; // 0: pausedmenu , 1: resume, 2: settings, 3: exit
     public int optionState = 0; // 0: top, 1: music, 2: se, 3: control, 4: end game
@@ -133,12 +135,18 @@ public class UI {
         // ga pake yang sleep
         BufferedImage playerIcon = null;
         try {
-            playerIcon = ImageIO
-                    .read(getClass().getResourceAsStream("/assets/player/SLEEP/" + gp.player.getSleepPath() + "0.png"));
+            String path = "/assets/player/SLEEP/" + gp.player.getPath() + "0.png";
+            playerIcon = ImageIO.read(getClass().getResourceAsStream(path));
+            if (playerIcon == null) {
+                System.out.println("Failed to load player image UI. Path: " + path);
+            }
         } catch (IOException e) {
             System.out.println("Error loading player image UI: " + e.getMessage());
+            e.printStackTrace();
         }
-        g2.drawImage(playerIcon, 3, 8, gp.tileSize * 1 + 15, gp.tileSize * 2 + 15, null);
+        if (playerIcon != null) {
+            g2.drawImage(playerIcon, 3, 8, gp.tileSize * 1 + 15, gp.tileSize * 2 + 15, null);
+        }
         // energy bar and name
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
         g2.drawString(gp.player.name, 70, 40);
@@ -890,21 +898,79 @@ public class UI {
 
 
     public void trade_select() {
-
-        // gambar buy, sell, mbe leave button
-
-        BufferedImage buyBtn = gp.setImage("/assets/ui/buyBtn.png");
-
-        // Posisikan di atas nama NPC
-
-        g2.drawImage(buyBtn, 
-
-            getXforCenteredText(currentDialogueName, 73, 286), // X sama dengan posisi nama NPC
-
-            280, // Y di atas nama NPC
-
-            158, 50, null); // Width dan height yang disesuaikan
-
+        try {
+            // Load gambar button
+            BufferedImage buyBtn = ImageIO.read(getClass().getResourceAsStream("/assets/ui/buyBtn.png"));
+            BufferedImage sellBtn = ImageIO.read(getClass().getResourceAsStream("/assets/ui/sellBtn.png"));
+            BufferedImage leaveBtn = ImageIO.read(getClass().getResourceAsStream("/assets/ui/leaveBtn.png"));
+            
+            int startY = 280;
+            int spacing = 60;
+            int btnWidth = 158;
+            int btnHeight = 50;
+            
+            // Gambar semua button
+            int buyX = getXforCenteredText("BUY");
+            int sellX = getXforCenteredText("SELL");
+            int leaveX = getXforCenteredText("LEAVE");
+            
+            // Draw buttons with highlight for selected option
+            if(tradeCommand == 0) {
+                g2.drawImage(buyBtn, buyX - 20, startY - 40, btnWidth + 40, btnHeight + 10, null);
+            } else {
+                g2.drawImage(buyBtn, buyX, startY - 30, btnWidth, btnHeight, null);
+            }
+            
+            if(tradeCommand == 1) {
+                g2.drawImage(sellBtn, sellX - 20, startY + spacing - 40, btnWidth + 40, btnHeight + 10, null);
+            } else {
+                g2.drawImage(sellBtn, sellX, startY + spacing - 30, btnWidth, btnHeight, null);
+            }
+            
+            if(tradeCommand == 2) {
+                g2.drawImage(leaveBtn, leaveX - 20, startY + (spacing * 2) - 40, btnWidth + 40, btnHeight + 10, null);
+            } else {
+                g2.drawImage(leaveBtn, leaveX, startY + (spacing * 2) - 30, btnWidth, btnHeight, null);
+            }
+            
+            // Handle input
+            if(gp.keyH.upPressed == true) {
+                tradeCommand--;
+                if(tradeCommand < 0) {
+                    tradeCommand = 2;
+                }
+                gp.keyH.upPressed = false;
+            }
+            
+            if(gp.keyH.downPressed == true) {
+                tradeCommand++;
+                if(tradeCommand > 2) {
+                    tradeCommand = 0;
+                }
+                gp.keyH.downPressed = false;
+            }
+            
+            // Handle selection
+            if(gp.keyH.enterPressed == true) {
+                if(tradeCommand == 0) {
+                    // BUY
+                    subState = 1;
+                }
+                else if(tradeCommand == 1) {
+                    // SELL
+                    subState = 2;
+                }
+                else if(tradeCommand == 2) {
+                    // LEAVE
+                    gp.gameState = gp.dialogueState;
+                    currentDialogue = "Come again!";
+                }
+                gp.keyH.enterPressed = false;
+            }
+        } catch (IOException e) {
+            System.out.println("Error loading button images: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
 
