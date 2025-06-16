@@ -14,7 +14,7 @@ import tile.*;
 public class KeyHandler implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed, isSprint, undoToolsPressed,
-            useTool;
+            useTool, enterPressed;
     GamePanel gp;
 
     public KeyHandler(GamePanel gp) {

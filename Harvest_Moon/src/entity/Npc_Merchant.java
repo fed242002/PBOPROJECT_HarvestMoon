@@ -1,12 +1,15 @@
 package entity;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import Main.GamePanel;
 import animation.Animation;
+import java.util.ArrayList;
 
 public class Npc_Merchant extends Entity {
+    
+    public ArrayList<Entity> inventoryNPC;
+    public ArrayList<Integer> itemPrices;
+    public int selectedItem;
+    public boolean showInventory;
 
     public Npc_Merchant(GamePanel gp, String name, int x, int y) {
         super(gp);
@@ -15,22 +18,26 @@ public class Npc_Merchant extends Entity {
         this.worldX = x;
         this.worldY = y;
         this.solidArea.y = 48;
-        idle = new Animation("idle", 6, "/assets/npc/" + name + "/IDLE/");
+        
+        idle = new Animation("merchant", 6, "/assets/npc/" + name + "/IDLE/");
         animationList.add(idle);
-        currentAnimationIndex = 1; // default idle
-        // specialNpc = true;
-        final ArrayList<Entity> inventoryNPC = new ArrayList<>(); // inventory e punya npc
-
+        currentAnimationIndex = 0; // default idle
+        
         direction = "down";
-        setAnimation("walk");
-        speed = 1;
+        setAnimation("idle");
+        speed = 0; // Set speed to 0 to prevent movement
 
         this.solidAreaDefaultX = this.solidArea.x;
         this.solidAreaDefaultY = this.solidArea.y;
 
+        // Initialize trading system
+        inventoryNPC = new ArrayList<>();
+        itemPrices = new ArrayList<>();
+        selectedItem = 0;
+        showInventory = false;
+        
         // set dialog
         setDialogue();
-
     }
 
     public void setDialogue() {
@@ -43,16 +50,10 @@ public class Npc_Merchant extends Entity {
 
     public void speak() {
         super.speak();
-
-        gp.player.gold += 100;
-        // gp.gameState = gp.tradeState;
-        // gp.ui.npc = this;
     }
 
-    public void sellItem(){ // ini nanti isi objek apa aja yang mau dijual nanti sama si tukang trade
-        // inventory.add(new OBJ_Rumah(gp));
-        // inventory.add(new OBJ_soil(gp));
+    public void setAction() {
+        // Override parent setAction to make merchant stay in place
+        // No movement logic needed
     }
-
-
 }
