@@ -87,8 +87,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public boolean fullScreen = false; // Fullscreen mode toggle
 
     // entity and object
-    ItemList itemList = new ItemList(this); // Create a new ItemList object
     Crop crop = new Crop(this); // Create a new Crop object
+    ItemList itemList = new ItemList(this); // Create a new ItemList object
 
     public Player player = new Player(this, keyH); // Create a new Player object
     public ArrayList<Entity> obj = new ArrayList<>(MapDB.mapList.get(currentMap).obj); // List of objects in the game
