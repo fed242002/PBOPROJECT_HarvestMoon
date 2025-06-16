@@ -27,6 +27,8 @@ public class Crop {
 
     
     static OBJ_Crop cropList[];
+
+    
     Crop(GamePanel gp){
         this.gp = gp;
 
