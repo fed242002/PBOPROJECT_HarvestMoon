@@ -92,51 +92,42 @@ public class Lighting {
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastUpdate >= 1000) { // setiap 1 detik
             lastUpdate = currentTime;
-            if(gp.hour >= 6 && gp.hour < 13)  // Check if the hour is between 6 and 13
+            // Fixed day state logic
+            if(gp.hour >= 6 && gp.hour < 13)  // 6 AM to 1 PM
             {
-                dayState = day; // Change to day after 600 frames
+                dayState = day;
             }
-            else if(gp.hour >= 2 && gp.hour < 6) {
-                dayState = dawn; // Change to dawn after 600 frames
+            else if(gp.hour >= 13 && gp.hour < 18) // 1 PM to 6 PM
+            {
+                dayState = dusk;
             }
-            else if(gp.hour >= 13 && gp.hour < 18) {
-                dayState = dusk; // Change to dusk after 600 frames
+            else if (gp.hour >= 18 || gp.hour < 2) // 6 PM to 2 AM (spans midnight)
+            {
+                dayState = night;
+                filterAlpha = 1f; // Ensure filterAlpha is set to 1 for night transition
             }
-            else if (gp.hour >= 18 || gp.hour < 2) {
-                dayState = night; // Change to night after 600 frames
+            else if(gp.hour >= 2 && gp.hour < 6) // 2 AM to 6 AM
+            {
+                dayState = dawn;
             }
             
 
-            if (dayState == day) {
-                if(gp.hour >= 13)
-                {
-                    dayState = dusk; // Change to dusk after 600 frames
-                    filterAlpha = 0f; // Ensure filterAlpha starts at 0 for dusk transition
+            switch (dayState) {
+                case day -> filterAlpha = 0f; // No filter during day
+                case dusk -> {
+                    filterAlpha += 0.003f; // Gradually darken
+                    filterAlpha = Math.min(filterAlpha, 1f); // Clamp to max 1
                 }
-                    
-            } else if (dayState == dusk) {
-                filterAlpha += 0.003f; // Increase the increment for a more visible transition
-                if(gp.hour >= 18)
-                {   
-                    filterAlpha = 1f;
-                    dayState = night; // Change to night after reaching full darkness
+                case night -> filterAlpha = 1f; // Full darkness
+                case dawn -> {
+                    filterAlpha -= 0.004f; // Gradually lighten
+                    filterAlpha = Math.max(filterAlpha, 0f); // Clamp to min 0
                 }
-            } else if (dayState == night) {
-                filterAlpha = 1;
-                if (gp.hour >= 2) {
-                    dayState = dawn; // Change to dawn after 600 frames
-                    filterAlpha = 1f; // Ensure filterAlpha starts at 1 for dawn transition
-                }
-            } else if (dayState == dawn) {
-                filterAlpha -= 0.004f; // Increase the decrement for a more visible transition
-
-                if(gp.hour >= 6) {
-                    filterAlpha = 0f; // Reset filterAlpha to 0 for day transition
-                    dayState = day; // Change back to day after reaching full brightness
+                default -> {
                 }
             }
         }
-        }
+    }
 
     public void draw(Graphics2D g2) {
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, filterAlpha));
