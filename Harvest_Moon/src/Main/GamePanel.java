@@ -50,6 +50,11 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     // FPS
     int FPS = 60; // Frames per second
 
+    //time
+    int hour;
+    int minute;
+    int timeCounter = 0;
+
     // system
     public TileManager tileM = new TileManager(this); // Create a new TileManager object
     public KeyHandler keyH = new KeyHandler(this); // Create a new KeyHandler object
@@ -192,6 +197,22 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public void update() {
     
         MapData current = MapDB.mapList.get(currentMap);
+
+        if(minute > 59)
+        {
+            hour++;
+        }
+
+        timeCounter++;
+        if(timeCounter > 59)
+        {
+            timeCounter = 0;
+            minute++;
+        }
+        System.out.println("Time Counter : " + timeCounter );
+        System.out.println("Min Counter : " + minute );
+        System.out.println("Hour Counter : " + hour );
+
 
         if(justChangedMap|| current.needsRefresh) { // If the map has just changed
 
