@@ -547,15 +547,12 @@ public class Player extends Entity {
             moveDisabled = true; // Disable movement while undo digging
             gp.keyH.undoToolsPressed = false; // Reset the undo key
         }
-    
-    
+
     }
-}
 
-}
 
-    public void action(int x, int y) {
-
+    
+    public void action(int x, int y){
 
 
         if(isPlanting){
