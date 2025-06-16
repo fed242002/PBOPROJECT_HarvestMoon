@@ -44,6 +44,14 @@ public class Entity extends SuperEntity implements Cloneable{
                     gp.eventHandler.handleMapTransition(3, 25, 25);
                 }
 
+                if(this instanceof OBJ_Barn){
+                    gp.eventHandler.handleMapTransition(4, 25, 25);
+                }
+
+                if(this instanceof OBJ_Market){
+                    gp.eventHandler.handleMapTransition(5, 25, 25);
+                }
+
                 objAnimationSpriteNum = 0;
                 objectAnimationOn = false; // Turn off the animation after it completes
                 image = gp.setImage(path); // Reset the image to the default path
@@ -111,6 +119,7 @@ public class Entity extends SuperEntity implements Cloneable{
     
 
     public String seedCrop = ""; // Seed crop name, used for seeds that grow into crops
+
 
     // animation
     Animation walk;
