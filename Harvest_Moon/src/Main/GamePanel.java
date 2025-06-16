@@ -80,6 +80,19 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
 
     public void changeMap(int mapNum){
+
+        //balikin current obj ke mabDB
+        MapDB.mapList.get(currentMap).obj = new ArrayList<>(obj);
+        MapDB.mapList.get(currentMap).farmObj = new ArrayList<>(farmObj);
+        MapDB.mapList.get(currentMap).npcs = new ArrayList<>(npcs);
+        MapDB.mapList.get(currentMap).entityList = new ArrayList<>(entityList);
+        // Clear the current lists
+        obj.clear();
+        farmObj.clear();
+        npcs.clear();
+        entityList.clear();
+        
+
         player.setAnimation("idle");
         stopMusic(masterMusic);
         if(mapNum < 0 || mapNum >= MapDB.mapList.size()) {
@@ -89,6 +102,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         currentMap = mapNum;
 
         MapData current = MapDB.mapList.get(currentMap);
+        
 
 
         tileM.loadTileData(current.tileDataPath); // Load tile data from the specified file
