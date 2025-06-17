@@ -101,6 +101,7 @@ public class Entity extends SuperEntity implements Cloneable{
     public boolean stackable = false; // kalo mau item nya stackable declare di obj nya jadi true
     public int amount = 1; // Amount of the entity, used for stackable items
     public ArrayList<Entity> inventory = new ArrayList<>();
+    public ArrayList<Item> itemInventory = new ArrayList<>(); // Inventory for storing items
     public int type; // declare tipe nya sendiri2
     public boolean onPath = false;
 
@@ -454,4 +455,13 @@ public class Entity extends SuperEntity implements Cloneable{
         }
     }
 
+    // Item type constants
+    public static final int TYPE_ITEM = 0;
+    public static final int TYPE_TOOL = 1;
+    public static final int TYPE_SEED = 2;
+    public static final int TYPE_CROP = 3;
+    public static final int TYPE_FOOD = 4;
+    public static final int TYPE_FISH = 5;
+    public static final int TYPE_MATERIAL = 6;
+    public static final int TYPE_FURNITURE = 7;
 }

@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed, isSprint, undoToolsPressed,
-            useTool, enterPressed;
+            useTool, enterPressed, escPressed;
     GamePanel gp;
 
     public KeyHandler(GamePanel gp) {
@@ -19,8 +19,15 @@ public class KeyHandler implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-
         int code = e.getKeyCode();
+
+        // Handle general key states
+        if(code == KeyEvent.VK_ESCAPE) {
+            escPressed = true;
+        }
+        if(code == KeyBind.nextKey) {
+            enterPressed = true;
+        }
 
         // Check for W and S keys
         if(code == KeyBind.upKey) {
@@ -31,6 +38,27 @@ public class KeyHandler implements KeyListener {
         }
         if (code == KeyBind.hitbox) {
             gp.showDebugHitboxes = !gp.showDebugHitboxes;
+        }
+
+        // Handle dialog state with merchant
+        if(gp.gameState == gp.dialogueState) {
+            if(gp.ui.currentEntityDialogue != null && 
+               gp.ui.currentEntityDialogue.getClass().getSimpleName().equals("Npc_Merchant")) {
+                  if(code == KeyBind.upKey) {
+                    gp.playSFX(gp.sfx, 1);
+                    gp.ui.merchantChoice--;
+                    if(gp.ui.merchantChoice < 0) {
+                        gp.ui.merchantChoice = 2;
+                    }
+                }
+                if(code == KeyBind.downKey) {
+                    gp.playSFX(gp.sfx, 1);
+                    gp.ui.merchantChoice++;
+                    if(gp.ui.merchantChoice > 2) {
+                        gp.ui.merchantChoice = 0;
+                    }
+                }
+            }
         }
 
         if (gp.gameState == gp.titleState) {
@@ -362,7 +390,12 @@ public class KeyHandler implements KeyListener {
 
         else if (gp.gameState == gp.dialogueState) {
             if (code == KeyBind.nextKey) {
-                gp.gameState = gp.playState;
+                // Only switch to play state if we're not in a trade menu
+                if (gp.ui.currentEntityDialogue == null || 
+                    !gp.ui.currentEntityDialogue.getClass().getSimpleName().equals("Npc_Merchant") ||
+                    gp.ui.subState == 0) {
+                    gp.gameState = gp.playState;
+                }
             }
         }
 
@@ -385,9 +418,7 @@ public class KeyHandler implements KeyListener {
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
-
-        int code = e.getKeyCode();
+    public void keyReleased(KeyEvent e) {        int code = e.getKeyCode();
 
         if (code == KeyBind.upKey) {
             upPressed = false;
@@ -405,6 +436,12 @@ public class KeyHandler implements KeyListener {
             gp.player.speed = gp.player.normalSpeed; // Reset speed to normal when sprint key is released
             gp.player.spriteDraw = 10;
             isSprint = false;
+        }
+        if (code == KeyEvent.VK_ESCAPE) {
+            escPressed = false;
+        }
+        if (code == KeyBind.nextKey) {
+            enterPressed = false;
         }
 
     }

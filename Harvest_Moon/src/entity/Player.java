@@ -7,7 +7,9 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import object.*;
 
@@ -971,6 +973,32 @@ public class Player extends Entity {
                 System.out.println("Error: duvetImage is null in Player draw method");
             }
         }
-    }
+    }    public void addItemToInventory(Item item) {
+        if (itemInventory.size() < maxInventorySize) {
+            // Check if we already have this item type
+            boolean added = false;
+            for (Item existingItem : itemInventory) {
+                if (existingItem.name.equals(item.name) && 
+                    existingItem.type_item == item.type_item && 
+                    item.type_item != Entity.TYPE_TOOL) { // Don't stack tools
+                    existingItem.amount++;
+                    added = true;
+                    break;
+                }
+            }
+            
+            // If item wasn't stacked, add it as new item
+            if (!added) {
+                item.amount = 1;
+                itemInventory.add(item);
+            }
 
+            // Play success sound
+            gp.playSFX(gp.sfx, 2);
+        } else {
+            System.out.println("Inventory is full!");
+            // Play error sound
+            gp.playSFX(gp.sfx, 4);
+        }
+    }
 }

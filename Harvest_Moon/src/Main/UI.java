@@ -1,6 +1,7 @@
 package Main;
 
 import entity.Entity;
+import entity.Item;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -8,6 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 public class UI {
@@ -62,7 +64,6 @@ public class UI {
 
         if (gp.gameState == gp.playState) {
             drawGameUI();
-
         }
 
         if (gp.gameState == gp.pauseState) {
@@ -84,6 +85,11 @@ public class UI {
         if (gp.gameState == gp.dialogueState) {
             handleMerchantNavigation();
             drawDialogueScreen();
+            // Add this to draw trade screen when talking to merchant
+            if (currentEntityDialogue != null && 
+                currentEntityDialogue.getClass().getSimpleName().equals("Npc_Merchant")) {
+                drawTradeScreen();
+            }
         }
         if (gp.gameState == gp.eventFoundState) {
             drawDialogueScreenEvent();
@@ -655,13 +661,9 @@ public class UI {
         // curren person yang ngomong
 
         // Draw the NPC portrait
-
         if (currentEntityDialogue != null && currentEntityDialogue.specialNpc) {
-
             g2.drawImage(currentEntityDialogue.animationList.get(currentEntityDialogue.currentAnimationIndex).down[0], 
-
                 450, 25, gp.tileSize * 4, gp.tileSize * 8, null);
-
         }
 
         // window
@@ -691,87 +693,8 @@ public class UI {
         g2.drawString(currentDialogueName, getXforCenteredText(currentDialogueName, 73, 286), 350);
 
         int nameX = getXforCenteredText(currentDialogueName, 73, 286);
-
         int nameY = 350;
-
         g2.drawString(currentDialogueName, nameX, nameY);
-
-
-
-        // Jika NPC adalah merchant, tampilkan tombol buy, sell, dan leave
-
-        if (currentEntityDialogue != null && currentEntityDialogue.getClass().getSimpleName().equals("Npc_Merchant")) {
-
-            try {
-
-                // Properti umum untuk semua tombol
-
-                int buttonWidth = 158;
-
-                int buttonHeight = 50;
-
-                int buttonSpacing = 10; // Jarak antara tombol
-
-
-
-                // Load semua gambar tombol (normal dan aktif)
-
-                BufferedImage buyBtn = gp.setImage("/assets/ui/buy.png");
-                BufferedImage sellBtn = gp.setImage("/assets/ui/sell.png");
-                BufferedImage leaveBtn = gp.setImage("/assets/ui/leave.png");
-                BufferedImage buyBtnActive = gp.setImage("/assets/ui/buyActive.png");
-                BufferedImage sellBtnActive = gp.setImage("/assets/ui/sellActive.png");
-                BufferedImage leaveBtnActive = gp.setImage("/assets/ui/leaveActive.png");
-
-
-
-                // Gambar tombol Buy
-
-                if (buyBtn != null && buyBtnActive != null) {
-
-                    g2.drawImage(merchantChoice == 0 ? buyBtnActive : buyBtn, 
-
-                        nameX, nameY - 70 - (buttonHeight + buttonSpacing) * 2, 
-
-                        buttonWidth, buttonHeight, null);
-
-                }
-
-
-
-                // Gambar tombol Sell
-
-                if (sellBtn != null && sellBtnActive != null) {
-
-                    g2.drawImage(merchantChoice == 1 ? sellBtnActive : sellBtn,
-
-                        nameX, nameY - 70 - (buttonHeight + buttonSpacing), 
-
-                        buttonWidth, buttonHeight, null);
-
-                }
-
-
-
-                // Gambar tombol Leave
-
-                if (leaveBtn != null && leaveBtnActive != null) {
-
-                    g2.drawImage(merchantChoice == 2 ? leaveBtnActive : leaveBtn,
-
-                        nameX, nameY - 70, 
-
-                        buttonWidth, buttonHeight, null);
-
-                }
-
-            } catch (Exception e) {
-
-                System.out.println("Error loading merchant buttons: " + e.getMessage());
-
-            }
-
-        }
 
 
 
@@ -869,85 +792,191 @@ public class UI {
         g2.setColor(new Color(101, 67, 33));
         g2.setStroke(new BasicStroke(5));
         g2.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 25, 25);
-    }
-
-    public void drawTradeScreen(){
-
+    }    public void drawTradeScreen() {
+        // Draw the appropriate screen based on subState
         switch (subState) {
-
-            case 1: trade_select(); break;
-
-            case 2: trade_buy(); break;
-
-            case 3: trade_sell(); break;
-
+            case 1:
+                trade_select();
+                break;
+            case 2:
+                System.out.println("masuk case 2 trade buy");
+                trade_buy();
+                break;
+            case 3:
+                trade_sell();
+                break;
         }
-
-        gp.keyH.enterPressed = false; // reset enter pressed after drawing trade screen
-
-    }
-
-
+        gp.keyH.enterPressed = false;    }
 
     public void trade_select() {
+        int nameX = getXforCenteredText(currentDialogueName, 73, 286);
+        int baseY = 280;
+        int buttonWidth = 158;
+        int buttonHeight = 50;
+        int buttonSpacing = 10;
 
-        // gambar buy, sell, mbe leave button
+        // Load button images
+        BufferedImage buyBtn = gp.setImage("/assets/ui/buy.png");
+        BufferedImage sellBtn = gp.setImage("/assets/ui/sell.png");
+        BufferedImage leaveBtn = gp.setImage("/assets/ui/leave.png");
+        BufferedImage buyBtnActive = gp.setImage("/assets/ui/buyActive.png");
+        BufferedImage sellBtnActive = gp.setImage("/assets/ui/sellActive.png");
+        BufferedImage leaveBtnActive = gp.setImage("/assets/ui/leaveActive.png");
 
-        BufferedImage buyBtn = gp.setImage("/assets/ui/buyBtn.png");
+        // Draw buttons with active states
+        if(merchantChoice == 0) {
+            g2.drawImage(buyBtnActive, nameX, baseY, buttonWidth, buttonHeight, null);
+        } else {
+            g2.drawImage(buyBtn, nameX, baseY, buttonWidth, buttonHeight, null);
+        }
 
-        // Posisikan di atas nama NPC
+        if(merchantChoice == 1) {
+            g2.drawImage(sellBtnActive, nameX, baseY + buttonHeight + buttonSpacing, buttonWidth, buttonHeight, null);
+        } else {
+            g2.drawImage(sellBtn, nameX, baseY + buttonHeight + buttonSpacing, buttonWidth, buttonHeight, null);
+        }
 
-        g2.drawImage(buyBtn, 
+        if(merchantChoice == 2) {
+            g2.drawImage(leaveBtnActive, nameX, baseY + (buttonHeight + buttonSpacing) * 2, buttonWidth, buttonHeight, null);
+        } else {
+            g2.drawImage(leaveBtn, nameX, baseY + (buttonHeight + buttonSpacing) * 2, buttonWidth, buttonHeight, null);
+        }
 
-            getXforCenteredText(currentDialogueName, 73, 286), // X sama dengan posisi nama NPC
+        System.out.println("tssss");
 
-            280, // Y di atas nama NPC
-
-            158, 50, null); // Width dan height yang disesuaikan
-
+        // Handle button selection with enter key
+        if(gp.keyH.enterPressed) {
+            // debug
+            System.out.println("Merchant choice: " + merchantChoice);
+            gp.playSFX(gp.sfx, 2); // Play selection sound            
+            if(merchantChoice == 0) {
+                subState = 2; // Switch to buy menu
+                commandNum = 0; // Reset selection for buy menu
+            }
+            else if(merchantChoice == 1) {
+                subState = 3; // Switch to sell menu
+                commandNum = 0; // Reset selection for sell menu
+            }
+            else if(merchantChoice == 2) {
+                gp.gameState = gp.dialogueState;
+                currentDialogue = "Come again!";
+                subState = 0; // Reset menu state
+            }
+            gp.keyH.enterPressed = false;
+        }
     }
 
 
 
-    public void trade_buy() {
-
+    private ArrayList<Item> getShopItems() {
+        ArrayList<Item> shopItems = new ArrayList<>();
+        
+        // Add items with their prices
+        Item carrotSeed = new Item(gp, "carrotSeedBag", 2, "Seeds for growing carrots", 100);
+        Item waterCan = new Item(gp, "wateringCan", 1, "Used for watering plants", 500);
+        Item axeTool = new Item(gp, "axe", 1, "Used for chopping trees", 1000);
+        
+        shopItems.add(carrotSeed);
+        shopItems.add(waterCan);
+        shopItems.add(axeTool);
+        
+        return shopItems;
+    }
+      public void trade_buy() {
+        System.out.println("aaaaaaaaaaa");
         // Window
-
         int x = gp.tileSize * 2;
-
         int y = gp.tileSize;
-
         int width = gp.screenWidth - (gp.tileSize * 4);
-
         int height = gp.screenHeight - (gp.tileSize * 2);
-
         drawSubWindow(x, y, width, height);
 
-        
+        // Title
+        g2.setColor(new Color(94, 44, 19)); // Match dialog text color
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
+        String text = "Buy Items";
+        int textX = getXforCenteredText(text);
+        g2.drawString(text, textX, y + gp.tileSize);
 
-        // Teks
+        // Draw player's gold
+        g2.setFont(g2.getFont().deriveFont(24F));
+        g2.drawString("Your Gold: " + gp.player.gold + "G", x + 30, y + gp.tileSize * 2);
 
-        g2.setColor(Color.white);
+        // Get and display items
+        ArrayList<Item> shopItems = getShopItems();
+        int itemStartY = y + gp.tileSize * 3;
+        int itemSpacing = 40;
 
-        g2.setFont(g2.getFont().deriveFont(32F));
+        // Draw items with selection highlight
+        for(int i = 0; i < shopItems.size(); i++) {
+            Item item = shopItems.get(i);
+            
+            // Highlight selected item
+            if(i == commandNum) {
+                g2.setColor(new Color(249, 228, 183, 100)); // Light brown highlight
+                g2.fillRect(x + 20, itemStartY + (i * itemSpacing) - 20, width - 40, 40);
+            }
 
-        int textX = x + 20;
-
-        int textY = y + gp.tileSize;
-
-        g2.drawString("Buy Menu", textX, textY);
-
-        
-
-        // Kembali ke menu utama merchant
-
-        if (gp.keyH.interactPressed) {
-            gp.keyH.interactPressed = false;
-
-            subState = 1;
-
+            // Draw item details
+            drawItemBox(item.name, item.path, x + 30, itemStartY + (i * itemSpacing), item.price);
         }
 
+        // Draw selected item description
+        if(!shopItems.isEmpty() && commandNum < shopItems.size()) {
+            Item selectedItem = shopItems.get(commandNum);
+            g2.setColor(new Color(94, 44, 19));
+            g2.setFont(g2.getFont().deriveFont(24F));
+            int descY = y + height - gp.tileSize * 3;
+            g2.drawString(selectedItem.description, x + 30, descY);
+
+            // Draw purchase instructions
+            if(gp.player.gold >= selectedItem.price) {
+                g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+                g2.drawString("[ENTER] Buy   [ESC] Back", x + 30, descY + 40);
+            } else {
+                g2.setColor(Color.RED);
+                g2.drawString("Not enough gold!", x + 30, descY + 40);
+            }
+        }
+
+        // Handle item selection
+        if(gp.keyH.upPressed) {
+            commandNum--;
+            if(commandNum < 0) {
+                commandNum = shopItems.size() - 1;
+            }
+            gp.playSFX(gp.sfx, 1);
+            gp.keyH.upPressed = false;
+        }
+
+        if(gp.keyH.downPressed) {
+            commandNum++;
+            if(commandNum >= shopItems.size()) {
+                commandNum = 0;
+            }
+            gp.playSFX(gp.sfx, 1);
+            gp.keyH.downPressed = false;
+        }
+
+        // Handle purchase
+        if(gp.keyH.enterPressed) {
+            if(!shopItems.isEmpty() && commandNum < shopItems.size()) {
+                Item selectedItem = shopItems.get(commandNum);
+                if(gp.player.gold >= selectedItem.price) {
+                    gp.player.gold -= selectedItem.price;
+                    gp.player.addItemToInventory(selectedItem);
+                    gp.playSFX(gp.sfx, 2);
+                }
+            }
+            gp.keyH.enterPressed = false;
+        }
+
+        // Handle back
+        if(gp.keyH.escPressed) {
+            subState = 1; // Go back to trade select
+            commandNum = 0; // Reset selection
+            gp.keyH.escPressed = false;
+        }
     }
 
     public void trade_sell() {
@@ -990,88 +1019,17 @@ public class UI {
 
         }
 
-    }
-
-
-
-    public void handleMerchantNavigation() {
-
-        if (currentEntityDialogue != null && currentEntityDialogue.getClass().getSimpleName().equals("Npc_Merchant")) {
-
-            // Navigasi atas bawah
-
-            if (gp.keyH.upPressed) {
-
-                gp.keyH.upPressed = false;
-
-                gp.playSFX(gp.sfx, 1);
-
-                merchantChoice--;
-
-                if (merchantChoice < 0) {
-
-                    merchantChoice = 2; // Wrap around to bottom
-
-                }
-
-            }
-
+    }    public void handleMerchantNavigation() {
+        // Only handle navigation if we're talking to a merchant
+        if (currentEntityDialogue != null && 
+            currentEntityDialogue.getClass().getSimpleName().equals("Npc_Merchant")) {
             
-
-            if (gp.keyH.downPressed) {
-
-                gp.keyH.downPressed = false;
-
-                gp.playSFX(gp.sfx, 1);
-
-                merchantChoice++;
-
-                if (merchantChoice > 2) {
-
-                    merchantChoice = 0; // Wrap around to top
-
-                }
-
+            // Initialize merchant menu if not already initialized
+            if(subState == 0) {
+                subState = 1;
+                merchantChoice = 0;
             }
-
-
-
-            // Handle pilihan dengan enter
-
-            if (gp.keyH.enterPressed) {
-
-                gp.keyH.enterPressed = false;
-
-                gp.playSFX(gp.sfx, 1);
-
-                
-
-                switch(merchantChoice) {
-
-                    case 0: // Buy
-
-                        subState = 2; // Pindah ke state buy
-
-                        break;
-
-                    case 1: // Sell
-
-                        subState = 3; // Pindah ke state sell
-
-                        break;
-
-                    case 2: // Leave
-
-                        gp.gameState = gp.playState;
-
-                        break;
-
-                }
-
-            }
-
         }
-
     }
 
 
@@ -1101,5 +1059,96 @@ public class UI {
         }
         
         return result.toString();
+    }
+
+    // public void drawItemBox(String title, String imagePath, int x, int y, int price) {
+    //     final int BOX_WIDTH = 300;
+    //     final int BOX_HEIGHT = 35;
+        
+    //     // Draw the box background
+    //     g2.setColor(new Color(255, 250, 240)); // Cream/ivory color background
+    //     g2.fillRect(x, y, BOX_WIDTH, BOX_HEIGHT);
+        
+    //     // Draw border
+    //     g2.setColor(new Color(101, 67, 33)); // Dark brown border
+    //     g2.setStroke(new BasicStroke(1));
+    //     g2.drawRect(x, y, BOX_WIDTH, BOX_HEIGHT);
+        
+    //     // Draw item icon
+    //     if (imagePath != null) {
+    //         BufferedImage itemIcon = gp.setImage(imagePath);
+    //         if (itemIcon != null) {
+    //             g2.drawImage(itemIcon, x + 5, y + 2, 30, 30, null);
+    //         }
+    //     }
+        
+    //     // Draw title text
+    //     g2.setColor(Color.black);
+    //     g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 16F));
+    //     g2.drawString(title, x + 40, y + 22);
+        
+    //     // Draw price if greater than 0
+    //     if(price > 0) {
+    //         String priceText = String.format("%,d", price);
+            
+    //         // Draw G icon
+    //         BufferedImage gIcon = gp.setImage("/assets/ui/coinG.png");
+    //         if (gIcon != null) {
+    //             g2.drawImage(gIcon, x + BOX_WIDTH - 60, y + 7, 20, 20, null);
+    //         }
+            
+    //         // Draw price text aligned to the right
+    //         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 16F));
+    //         int textWidth = g2.getFontMetrics().stringWidth(priceText);
+    //         g2.drawString(priceText, x + BOX_WIDTH - textWidth - 10, y + 22);
+    //     }
+    // }
+
+    // Method untuk menampilkan list item
+    public void drawItemList(ArrayList<Item> items, String title, int startX, int startY) {
+        // Draw title first
+        g2.setColor(Color.black);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
+        g2.drawString(title, startX, startY - 10);
+        
+        // Draw items
+        final int SPACING = 40; // Less spacing between items
+        for(int i = 0; i < items.size(); i++) {
+            Item item = items.get(i);
+            drawItemBox(
+                item.name,
+                item.path,
+                startX,
+                startY + (i * SPACING),
+                item.price
+            );
+        }
+    }
+
+    public void startTrading(Entity merchant) {
+        currentEntityDialogue = merchant;
+        gp.gameState = gp.dialogueState;
+        if(merchant.getClass().getSimpleName().equals("Npc_Merchant")) {
+            subState = 1; // Start with trade select menu
+            commandNum = 0; // Reset selection
+        }
+    }
+
+    private void drawItemBox(String name, String imagePath, int x, int y, int price) {
+        // Draw item icon
+        BufferedImage itemImage = gp.setImage(imagePath);
+        if(itemImage != null) {
+            g2.drawImage(itemImage, x, y - 15, 32, 32, null);
+        }
+        
+        // Draw item name
+        g2.setColor(new Color(94, 44, 19));
+        g2.setFont(g2.getFont().deriveFont(24F));
+        g2.drawString(name, x + 40, y + 10);
+        
+        // Draw price with G for gold
+        String priceText = price + "G";
+        int priceWidth = (int)g2.getFontMetrics().getStringBounds(priceText, g2).getWidth();
+        g2.drawString(priceText, x + 300 - priceWidth, y + 10);
     }
 }

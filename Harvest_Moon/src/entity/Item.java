@@ -8,28 +8,33 @@ import object.OBJ_Crop;
 
 public class Item extends Entity implements Cloneable {
 
-
+    public int price;
     int stages;
     int type; // 0 = item, 1 = tool, 2 = seed, 3 = crop, 4 = food, 5 = fish, 6 = material, 7 = furniture
     public Item(GamePanel gp, String name, int type, String description) {
-        super(gp);
-        this.name = name;
-        this.gp = gp;
-        type_item = type;
-        this.description = description;
-
-        width = 32;
-        height = 32;
-
-        path = "/assets/item/" + name + ".png";
-        image = gp.setImage(path);
-
-        if(image == null) {
-            System.out.println("Image not found: " + path);
-        }
-
-
+        this(gp, name, type, description, 0);
     }
+    
+    // public Item(GamePanel gp, String name, int type, String description, int price) {
+    //     super(gp);
+    //     this.name = name;
+    //     this.gp = gp;
+    //     type_item = type;
+    //     this.description = description;
+    //     this.price = price;
+        
+    //     width = 32;
+    //     height = 32;
+        
+    //     path = "/assets/item/" + name + ".png";
+    //     image = gp.setImage(path);
+        
+    //     if(image == null) {
+    //         System.out.println("Image not found: " + path);
+    //     }
+
+
+    // }
 
 
     public Item(GamePanel gp, String name, int type, String description, int stages) {
