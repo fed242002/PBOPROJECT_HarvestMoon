@@ -321,6 +321,7 @@ public class Entity extends SuperEntity implements Cloneable{
         gp.cChecker.checkEntity(this, gp.npcs);
         boolean contactPlayer = gp.cChecker.checkPlayer1(this);
     }
+    int spriteCounterMax = 10;
 
     public void update() {
         setAction();
@@ -349,7 +350,7 @@ public class Entity extends SuperEntity implements Cloneable{
         }
 
         spriteCounter++;
-        if (spriteCounter > 10) {
+        if (spriteCounter > spriteCounterMax) {
             spriteNum++;
 
             if (spriteNum > animationList.get(currentAnimationIndex).spriteTotal - 1) // If the sprite number exceeds

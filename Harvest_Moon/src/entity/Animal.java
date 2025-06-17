@@ -8,6 +8,10 @@ public class Animal extends Entity{
     public int age = 0; // Age of the animal in days
     String hasil;
     boolean readyToHarverst = false;
+    int xStart, yStart;
+    int xEnd, yEnd;
+    boolean walkToDestination = true;
+    boolean walkBack = false;
 
     public Animal(GamePanel gp,String name ,int x, int y) {
         super(gp);
@@ -16,6 +20,11 @@ public class Animal extends Entity{
         this.worldY = y;
         this.name = name;
         this.speed = 1;
+        xStart = x;
+        yStart = y;
+        spriteCounterMax = 30;
+        xEnd = x ; // Example end position, adjust as needed
+        yEnd = y + 144; // Example end position, adjust as needed
         
         if(name.equalsIgnoreCase("cow")){
             
@@ -81,6 +90,24 @@ public class Animal extends Entity{
 
         // }
 
+    }
+
+    @Override
+    public void setAction() {
+        if(walkToDestination){
+            if(worldX >= xEnd && worldY >= yEnd){
+                walkToDestination = false; // Stop walking to destination
+                walkBack = true; // Start walking back
+                direction = "up"; // Set direction to up
+            }
+        }
+        if(walkBack){
+            if(worldX <= xStart && worldY <= yStart){
+                walkBack = false; // Stop walking back
+                walkToDestination = true; // Start walking to destination
+                direction = "down"; // Set direction to down
+            }
+        }
     }
     
 }
