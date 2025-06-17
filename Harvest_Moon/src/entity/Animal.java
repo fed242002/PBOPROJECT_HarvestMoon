@@ -82,32 +82,63 @@ public class Animal extends Entity{
         isAnimal = true;
     }
 
+
+    @Override
+    public void reset()
+    {
+        readyToHarverst = true;
+    }
+
     @Override
     public void interact() {
-        System.out.println("Interacting with "+name+" at (" + worldX + ", " + worldY + ")");
+        if(readyToHarverst)
+        {
+            if(name.equalsIgnoreCase("cow")){
+                hasil = "milkBucket";
+                readyToHarverst = false;
+                gp.player.inventory.add(ItemList.getItem(hasil));
+                System.out.println("You got " + hasil + " from " + name);
+            }
 
-        // if(name.equalsIgnosreCase("cow")){
-
-        // }
-
-    }
-
-    @Override
-    public void setAction() {
-        if(walkToDestination){
-            if(worldX >= xEnd && worldY >= yEnd){
-                walkToDestination = false; // Stop walking to destination
-                walkBack = true; // Start walking back
-                direction = "up"; // Set direction to up
+            else if(name.equalsIgnoreCase("chicken")){
+                hasil = "egg";
+                readyToHarverst = false;
+                gp.player.inventory.add(ItemList.getItem(hasil));
+                System.out.println("You got " + hasil + " from " + name);
+            }
+            else if(name.equalsIgnoreCase("brownsheep"))
+            {
+                hasil = "whoolBrown";
+                readyToHarverst = false;
+                gp.player.inventory.add(ItemList.getItem(hasil));
+                System.out.println("You got " + hasil + " from " + name);
+            }
+            else if(name.equalsIgnoreCase("graysheep"))
+            {
+                hasil = "whoolGray";
+                readyToHarverst = false;
+                gp.player.inventory.add(ItemList.getItem(hasil));
+                System.out.println("You got " + hasil + " from " + name);
+            }
+            else if(name.equalsIgnoreCase("whitesheep"))
+            {
+                hasil = "whoolWhite";
+                readyToHarverst = false;
+                gp.player.inventory.add(ItemList.getItem(hasil));
+                System.out.println("You got " + hasil + " from " + name);
+            }
+            else if(name.equalsIgnoreCase("yellowsheep"))
+            {
+                hasil = "whoolYellow";
+                readyToHarverst = false;
+                gp.player.inventory.add(ItemList.getItem(hasil));
+                System.out.println("You got " + hasil + " from " + name);
             }
         }
-        if(walkBack){
-            if(worldX <= xStart && worldY <= yStart){
-                walkBack = false; // Stop walking back
-                walkToDestination = true; // Start walking to destination
-                direction = "down"; // Set direction to down
-            }
+        else
+        {
+            System.out.println("You can't harvest " + name + " right now.");
         }
-    }
     
+}
 }
