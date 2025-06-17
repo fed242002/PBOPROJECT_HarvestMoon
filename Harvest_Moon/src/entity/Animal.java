@@ -106,28 +106,28 @@ public class Animal extends Entity{
                 gp.player.inventory.add(ItemList.getItem(hasil));
                 System.out.println("You got " + hasil + " from " + name);
             }
-            else if(name.equalsIgnoreCase("brownsheep"))
+            else if(name.equalsIgnoreCase("brownsheep") && gp.player.currentTools.equalsIgnoreCase("shear"))
             {
                 hasil = "whoolBrown";
                 readyToHarverst = false;
                 gp.player.inventory.add(ItemList.getItem(hasil));
                 System.out.println("You got " + hasil + " from " + name);
             }
-            else if(name.equalsIgnoreCase("graysheep"))
+            else if(name.equalsIgnoreCase("graysheep") && gp.player.currentTools.equalsIgnoreCase("shear"))
             {
                 hasil = "whoolGray";
                 readyToHarverst = false;
                 gp.player.inventory.add(ItemList.getItem(hasil));
                 System.out.println("You got " + hasil + " from " + name);
             }
-            else if(name.equalsIgnoreCase("whitesheep"))
+            else if(name.equalsIgnoreCase("whitesheep") && gp.player.currentTools.equalsIgnoreCase("shear"))
             {
                 hasil = "whoolWhite";
                 readyToHarverst = false;
                 gp.player.inventory.add(ItemList.getItem(hasil));
                 System.out.println("You got " + hasil + " from " + name);
             }
-            else if(name.equalsIgnoreCase("yellowsheep"))
+            else if(name.equalsIgnoreCase("yellowsheep") && gp.player.currentTools.equalsIgnoreCase("shears"))
             {
                 hasil = "whoolYellow";
                 readyToHarverst = false;
