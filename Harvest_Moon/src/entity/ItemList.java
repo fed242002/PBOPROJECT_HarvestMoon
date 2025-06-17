@@ -27,14 +27,14 @@ public class ItemList {
         // Type 0: Miscellaneous
         emptySeedBag = new Item(gp, "emptySeedBag", 0, "A plain cloth bag that once held seeds. Could be reused for storage.", 5, 2);
         boots = new Item(gp, "boots", 0, "Sturdy footwear for protecting your feet while working.", 120, 60);
+        shear = new Item(gp, "shear", 0, "Used for harvesting wool from sheep. Keep them sharp!", 150, 75);
+        milkBucket = new Item(gp, "milkBucket", 0, "Essential for collecting milk from your cows.", 200, 100);
 
         // Type 1: Tools
         axe = new Item(gp, "axe", 1, "A sturdy tool for chopping trees and collecting wood.", 250, 125);
         fishRod = new Item(gp, "fishRod", 1, "Used to catch fish from ponds, rivers, and the ocean.", 300, 150);
-        milkBucket = new Item(gp, "milkBucket", 1, "Essential for collecting milk from your cows.", 200, 100);
-        shear = new Item(gp, "shear", 1, "Used for harvesting wool from sheep. Keep them sharp!", 150, 75);
         shovel = new Item(gp, "shovel", 1, "A versatile tool for digging holes and tilling soil.", 200, 100);
-        toolsBag = new Item(gp, "toolsBag", 1, "A durable bag that can hold your essential farming tools.", 100, 50);
+        // toolsBag = new Item(gp, "toolsBag", 1, "A durable bag that can hold your essential farming tools.", 100, 50);
         wateringCan = new Item(gp, "wateringCan", 1, "Used to water crops. Remember to refill it regularly!", 180, 90);
 
         // Type 2: Seeds (Quality 1)
