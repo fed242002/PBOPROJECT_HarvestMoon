@@ -29,6 +29,13 @@ public class OBJ_Crop extends Entity{
         dayToGrow = daysToMature / stages; // Days to grow per stage
 
 
+        solidArea.x = 0;
+        solidArea.y = 0;
+        solidArea.width = 48;
+        solidArea.height = 48;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+
     }
 
     public OBJ_Crop clone(int x, int y) {

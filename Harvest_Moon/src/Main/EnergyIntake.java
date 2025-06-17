@@ -6,4 +6,5 @@ public class EnergyIntake {
     static public int axe = 5;
     static public int watering = 5;
     static public int takingWater = 2;
+    static public int harvest = 2;
 }

@@ -137,6 +137,15 @@ public class Entity extends SuperEntity implements Cloneable{
     public ArrayList<String> dialogues = new ArrayList<>();
     int dialogueIndex = 0; // Index for the current dialogue
 
+
+
+    public boolean isMatured = false;
+    ;
+
+
+
+    public boolean isRotten = false;;
+
     public void speak() {
         if (dialogues.size() - 1 < dialogueIndex) {
             dialogueIndex = 0;

@@ -386,6 +386,133 @@ public class Player extends Entity {
         gp.keyH.interactPressed = false; // Reset the interact key
     }
 
+
+    public void harvest(Graphics2D g2){               
+         // hitbox player di world posisi
+            int hitboxCenterWorldX = worldX + solidArea.x + (solidArea.width / 2);
+            int hitboxCenterWorldY = worldY + solidArea.y + (solidArea.height / 2);
+
+            targetWorldX = hitboxCenterWorldX;
+            targetWorldY = hitboxCenterWorldY;
+
+            switch (direction) {
+                case "up":
+                    targetWorldY -= gp.tileSize;
+                    break;
+                case "down":
+                    targetWorldY += gp.tileSize;
+                    break;
+                case "left":
+                    targetWorldX -= gp.tileSize;
+                    break;
+                case "right":
+                    targetWorldX += gp.tileSize;
+                    break;
+            }
+
+            // jadiin tile trus balekin ke px balek
+            targetWorldX = (targetWorldX / gp.tileSize) * gp.tileSize;
+            targetWorldY = (targetWorldY / gp.tileSize) * gp.tileSize;
+
+            // ini versi row col nya
+            targetTileCol = targetWorldX / gp.tileSize;
+            targetTileRow = targetWorldY / gp.tileSize;
+
+        // ini buat pas print nya
+        int targetScreenX = targetWorldX - worldX + screenX;
+        int targetScreenY = targetWorldY - worldY + screenY;
+        
+
+        
+        
+        
+        
+        // Load cursor imagedui
+        BufferedImage cursor = null;
+        try {
+            cursor = ImageIO.read(getClass().getResourceAsStream("/assets/ui/target1Block.png"));
+        } catch (IOException e) {
+            System.out.println("Error loading drawFrontBlock cursor image: " + e.getMessage());
+        }
+
+        if(gp.cropObj.size() == 0){
+            g2.setColor(new Color(255, 0, 0, 100));
+            g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+            g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);  //ini jangan lupa kalo ada red soalnya ak lgsng return hehe
+            return;
+        }
+
+        int xCrop, yCrop;
+        int objIndex = gp.cChecker.checkObjectFarm(targetWorldX,targetWorldY,this, true);
+
+        if(objIndex != 999) {
+            xCrop = gp.farmObj.get(objIndex).worldX;
+            yCrop = gp.farmObj.get(objIndex).worldY;
+        
+
+        
+        for(Entity s : gp.cropObj) {
+            if (s instanceof OBJ_Crop && s.worldX == xCrop && s.worldY == yCrop) {
+                objIndex = gp.cropObj.indexOf(s); // Get the index of the crop object
+                break; 
+            }
+        }
+        // System.out.println("obj size " + gp.cropObj.size());
+        // System.out.println("checking obj: " + gp.cropObj.get(objIndex).name);
+        // System.out.println("checking is it harvestable : " + gp.cropObj.get(objIndex).harvestable);
+        // System.out.println("checking is it rotten : " + gp.cropObj.get(objIndex).isRotten);
+        }
+
+        if(objIndex != 999 && (gp.cropObj.get(objIndex).harvestable || gp.cropObj.get(objIndex).isRotten)) {
+            g2.setColor(new Color(0, 255, 0, 100));
+            g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+            g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);  //ini jangan lupa kalo ada red soalnya ak lgsng return hehe
+        }else{
+            g2.setColor(new Color(255, 0, 0, 100));
+            g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+            g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);  //ini jangan lupa kalo ada red soalnya ak lgsng return hehe
+            return;
+        }
+
+
+        if(gp.keyH.interactPressed ) {
+            // Reset the interact key
+            gp.keyH.interactPressed = false;
+
+            if (objIndex != 999 && (gp.cropObj.get(objIndex).harvestable || gp.cropObj.get(objIndex).isRotten)) {
+                isHarvesting = true;
+                moveDisabled = true; // Disable movement while harvesting
+            } 
+
+        }
+
+
+        if(isHarvesting) {
+            setAnimation("harvest");
+            animation(3);
+
+            if (animationDone == 1) {
+                energy -= EnergyIntake.harvest;
+                animationDone = 0;
+                resetAllAnimation();
+                setAnimation("idle");
+                moveDisabled = false; // Enable movement after harvesting
+
+                // Add the harvested crop to the inventory
+                Entity harvestedCrop = gp.cropObj.get(objIndex);
+
+                if(!harvestedCrop.isRotten)
+                    inventory.add(ItemList.getItem(harvestedCrop.name)); // Clone the crop to add to inventory
+
+                gp.cropObj.remove(objIndex); // Remove the crop from the game world
+            }
+        }
+
+
+        
+
+    }
+
     public void drawFrontBlock(Graphics2D g2) {
 
 
@@ -903,6 +1030,7 @@ public class Player extends Entity {
     
 
     public void draw(Graphics2D g2) {
+        
 
 
         if (emoteOn) {
@@ -922,6 +1050,10 @@ public class Player extends Entity {
             else if(currentItem!=null && gp.keyH.useTool && currentItem.type_item == type_seed){
                 drawFrontBlock(g2);
             }
+        }
+
+        if(currentTools == null && currentItem == null && gp.keyH.useTool) {
+            harvest(g2);
         }
 
         if (currentTools != null) {
