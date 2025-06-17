@@ -935,7 +935,7 @@ public class UI {
 
             
             // Draw item details
-            drawItemBox(item.name, item.path, x + 30, itemStartY + (i * itemSpacing), item.buyPrice);
+            drawItemBox(item.name, item.path, x + 30, listStartY + (i * itemSpacing), item.buyPrice);
         }
 
         // Draw selected item details on the right
