@@ -28,7 +28,7 @@ public class Entity extends SuperEntity implements Cloneable{
     public int objAnimationSpriteNum = 0;
     public int objAnimationSpriteTotal = 0;
     public boolean objectAnimationOn = false; // Flag to check if the object animation is on
-
+    public boolean harvestable = false; // Flag to check if the entity is harvestable
 
     public void objAnimationUpdate() {
         if (objectAnimationOn) {
@@ -453,6 +453,10 @@ public class Entity extends SuperEntity implements Cloneable{
                 }
             }
         }
+    }
+    public BufferedImage getImage() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getImage'");
     }
 
     // Item type constants
