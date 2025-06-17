@@ -649,7 +649,11 @@ public class Player extends Entity {
             gp.keyH.interactPressed = false;
 
             if (currentTools != null) {
-                            if (currentTools.equalsIgnoreCase("shovel")) {
+                if (currentTools.equalsIgnoreCase("shovel")) {
+                if(energy < EnergyIntake.shovel) {
+                    System.out.println("energy not enough");
+                    return;
+                }
                 isDigging = true;
                 moveDisabled = true; // Disable movement while digging
             }
@@ -658,6 +662,11 @@ public class Player extends Entity {
                 int objIndex = gp.cChecker.checkObject(this, true);
                 if (objIndex != 999 && gp.obj.get(objIndex) instanceof OBJ_Tree) {
                     if (gp.obj.get(objIndex).isChopped == false) {
+                        if(energy < EnergyIntake.axe) {
+                            System.out.println("energy not enough");
+                            return;
+                        }
+
                         isChopping = true;
                         moveDisabled = true;
 
@@ -669,6 +678,10 @@ public class Player extends Entity {
                 int objIndex = gp.cChecker.checkObjectFarm(targetWorldX, targetWorldY, this, true);
 
                 if (objIndex != 999 && gp.farmObj.get(objIndex) instanceof OBJ_soil) {
+                    if(energy < EnergyIntake.watering) {
+                    System.out.println("energy not enough");
+                    return;
+                    }
                     isWatering = true;
                     moveDisabled = true; // Disable movement while watering
                 }
@@ -676,6 +689,10 @@ public class Player extends Entity {
 
             if (currentTools.equalsIgnoreCase("fishRod")) {
                 if (gp.tileM.mapTileNum[targetTileCol][targetTileRow] >= 25 && gp.tileM.mapTileNum[targetTileCol][targetTileRow] <= 48) {
+                    if(energy < EnergyIntake.fishing) {
+                    System.out.println("energy not enough");
+                    return;
+                    }
                     isCasting = true;
                     moveDisabled = true;
                 }
