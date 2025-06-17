@@ -379,6 +379,10 @@ public class Player extends Entity {
     public void interactNPC(int i) {
         if (i != 999) {
             if (gp.keyH.interactPressed == true) {
+                if( gp.npcs.get(i).isAnimal) {
+                    gp.npcs.get(i).interact(); // Call the interact method of the animal
+                    return; // Exit the method if it's an animal
+                }
                 gp.gameState = gp.dialogueState; // Set the game state to dialogue
                 setAnimation("idle");
                 gp.gameState = gp.dialogueState; // Set the game state to dialogue

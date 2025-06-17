@@ -571,7 +571,6 @@ public class UI {
                 options_fullScreenNotification(frameX, frameY);
                 break;
             case 2:
-                gp.gameState = gp.playState;
                 break;
         }
         // gp.keyH.enterPressed = false; // reset enter pressed after drawing options
@@ -866,7 +865,7 @@ public class UI {
                 commandNum = 0; // Reset selection for sell menu
             }
             else if(merchantChoice == 2) {
-                gp.gameState = gp.dialogueState;
+                gp.gameState = gp.playState;
                 currentDialogue = "Come again!";
                 subState = 0; // Reset menu state
             }

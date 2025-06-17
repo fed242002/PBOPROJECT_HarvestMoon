@@ -136,6 +136,8 @@ public class Entity extends SuperEntity implements Cloneable{
     public ArrayList<Animation> animationList = new ArrayList<>(); // 0: walk, 1:idle
     public ArrayList<ToolsAnimation> toolsAnimationList = new ArrayList<>();
 
+    public boolean isAnimal = false; // Flag to check if the entity is an animal
+    
     // dialogue
     public ArrayList<String> dialogues = new ArrayList<>();
     int dialogueIndex = 0; // Index for the current dialogue
