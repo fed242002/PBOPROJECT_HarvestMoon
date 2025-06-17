@@ -266,11 +266,12 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
             hour = 0;
             currDay++;
             currDate++;
-            for(int i = 0; i < gp.npcs.size(); i++) {
-                    if(gp.npcs.get(i) instanceof Animal) {
-                        gp.npcs.get(i).reset(); // Reset all animals
+            for(int i = 0; i < npcs.size(); i++) {
+                    if(npcs.get(i) instanceof Animal) {
+                        npcs.get(i).reset(); // Reset all animals
                 }
         }
+     }
 
         if(minute > 59)
         {
@@ -317,6 +318,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         if (gameState == pauseState) { // If the game is paused
             // Handle pause state updates here if needed
         }
+    
 
     }
 
