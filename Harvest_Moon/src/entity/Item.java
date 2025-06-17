@@ -120,7 +120,7 @@ public class Item extends Entity implements Cloneable {
 
         
 
-        System.out.println("Item created: " + name + ", Type: " + type_item + ", Description: " + description);
+        // System.out.println("Item created: " + name + ", Type: " + type_item + ", Description: " + description);
         
         
     }

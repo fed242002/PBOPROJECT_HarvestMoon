@@ -94,6 +94,7 @@ package entity;
 
         if(name.equalsIgnoreCase("brownsheep")||name.equalsIgnoreCase("graysheep")
         ||name.equalsIgnoreCase("whitesheep")||name.equalsIgnoreCase("yellowsheep")){
+            spriteNum = 0;
             animationList.remove(idle);
             idle = new Animation("idle", 6, "/assets/animal/" + name + "/IDLE/",false,true);
             animationList.add(idle);
@@ -126,6 +127,7 @@ package entity;
                 gp.player.inventory.add(ItemList.whoolBrown.clone());
                 System.out.println("You got " + hasil + " from " + name);
                 animationList.remove(idle);
+                spriteNum = 0;
                 idle = new Animation("idle", 6, "/assets/animal/" + name+"Sheared" + "/IDLE/",false,true);
                 animationList.add(idle);
                 
@@ -138,6 +140,7 @@ package entity;
                 gp.player.inventory.add(ItemList.WhoolGray.clone());
                 System.out.println("You got " + hasil + " from " + name);
                 animationList.remove(idle);
+                spriteNum = 0;
                 idle = new Animation("idle", 6, "/assets/animal/" + name+"Sheared" + "/IDLE/",false,true);
                 animationList.add(idle);
             }}
@@ -149,6 +152,7 @@ package entity;
                 gp.player.inventory.add(ItemList.WhoolWhite.clone());
                 System.out.println("You got " + hasil + " from " + name);
                 animationList.remove(idle);
+                spriteNum = 0;
                 idle = new Animation("idle", 6, "/assets/animal/" + name+"Sheared" + "/IDLE/",false,true);
                 animationList.add(idle);
             }}
@@ -161,6 +165,7 @@ package entity;
                     gp.player.inventory.add(ItemList.WhoolYellow.clone());
                     System.out.println("You got " + hasil + " from " + name);
                     animationList.remove(idle);
+                    spriteNum = 0;
                     idle = new Animation("idle", 6, "/assets/animal/" + name+"Sheared" + "/IDLE/",false,true);
                     animationList.add(idle);
                 }
