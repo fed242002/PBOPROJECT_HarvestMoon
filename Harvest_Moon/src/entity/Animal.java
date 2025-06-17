@@ -14,7 +14,20 @@ public class Animal extends Entity{
         this.gp = gp;
         this.worldX = x;
         this.worldY = y;
-        this.solidArea.y = 48; // Adjust solid area for animal
+        width = 144;
+        height = 144;
+
+        if(name.equalsIgnoreCase("cow")){
+
+            this.solidArea.width = 48; // Adjust solid area for animal
+            this.solidArea.height = 96; // Adjust solid area for animal
+            
+            this.solidArea.x = 14; // Adjust solid area for animal
+            this.solidArea.y = 15; // Adjust solid area for animal
+            this.solidAreaDefaultX = this.solidArea.x;
+            this.solidAreaDefaultY = this.solidArea.y;
+        }
+
         walk = new Animation("walk", 6, "/assets/animal/" + name + "/WALK/",false,true);
         animationList.add(walk);
         currentAnimationIndex = 0; // default walk
@@ -25,6 +38,11 @@ public class Animal extends Entity{
 
         this.solidAreaDefaultX = this.solidArea.x;
         this.solidAreaDefaultY = this.solidArea.y;
+    }
+
+    @Override
+    public void interact() {
+        System.out.println("Interacting with animal at (" + worldX + ", " + worldY + ")");
     }
     
 }

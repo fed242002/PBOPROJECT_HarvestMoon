@@ -21,6 +21,8 @@ public class Entity extends SuperEntity implements Cloneable{
     public ArrayList<String> imagePathList = new ArrayList<>(); // List of soil images
     
 
+    
+
 
     public boolean pickUpAble = false; // Flag to check if the entity is pickable
     public ArrayList<BufferedImage> objAnimation = new ArrayList<>(); // List of tool images
@@ -138,7 +140,9 @@ public class Entity extends SuperEntity implements Cloneable{
     public ArrayList<String> dialogues = new ArrayList<>();
     int dialogueIndex = 0; // Index for the current dialogue
 
-
+    public int quality = 0; // Quality of the item, used for crops and seeds
+    public int buyPrice = 0; // Price of the item
+    public int sellPrice = 0; // Price of the item
 
     public boolean isMatured = false;
     ;
@@ -189,10 +193,11 @@ public class Entity extends SuperEntity implements Cloneable{
         solidArea.x = 0;
         solidArea.y = 0; // Adjust based on your NPC sprites
         solidArea.width = 48;
-        solidArea.height = 48;
+        solidArea.height = 48; // Adjust based on your NPC sprites
 
         this.solidAreaDefaultX = this.solidArea.x;
         this.solidAreaDefaultY = this.solidArea.y;
+
 
 
 
@@ -288,7 +293,7 @@ public class Entity extends SuperEntity implements Cloneable{
                     g2.setColor(Color.RED);
                     g2.fillRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
                 }
-                g2.drawImage(image, screenX, screenY, gp.playerSizeX, gp.playerSizeY, null);
+                g2.drawImage(image, screenX, screenY, width, height, null);
 
             }
         } else {

@@ -8,6 +8,9 @@ public class Npc extends Entity {
 
     public Npc(GamePanel gp, String name, int x, int y) {
         super(gp);
+        width = gp.playerSizeX;
+        height = gp.playerSizeY; // Adjust based on your NPC sprites
+
         this.name = name;
         this.gp = gp;
         this.worldX = x;
@@ -43,7 +46,6 @@ public class Npc extends Entity {
     public void speak() {
         super.speak();
 
-        gp.player.gold += 100;
         onPath = true; // di path
     }
 

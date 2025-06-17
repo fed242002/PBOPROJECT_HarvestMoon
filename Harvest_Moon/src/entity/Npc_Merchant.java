@@ -14,11 +14,14 @@ public class Npc_Merchant extends Entity {
     public Npc_Merchant(GamePanel gp, String name, int x, int y) {
         super(gp);
         this.name = name;
+        width = gp.playerSizeX;
+        height = gp.playerSizeY; // Adjust based on your NPC sprites
+
         this.gp = gp;
         this.worldX = x;
         this.worldY = y;
         this.solidArea.y = 48;
-        
+
         idle = new Animation("idle", 6, "/assets/npc/" + name + "/IDLE/");
         animationList.add(idle);
         currentAnimationIndex = 0; // default idle
