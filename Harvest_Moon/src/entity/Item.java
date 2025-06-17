@@ -19,7 +19,7 @@ public class Item extends Entity implements Cloneable {
         this.description = description;
         this.buyPrice = buy; // Price to buy
         this.sellPrice = sell; // Price to sell
-
+        
         width = 32;
         height = 32;
 
@@ -45,13 +45,14 @@ public class Item extends Entity implements Cloneable {
         width = 32;
         height = 32;
 
-        path = "/assets/item/" + name + ".png";
+        path = "/assets/item/" + name + ".png";    
         image = gp.setImage(path);
 
         if(image == null) {
             System.out.println("Image not found: " + path);
         }
-
+        
+        // System.out.println("Item created: " + name + ", Type: " + type_item + ", Description: " + description);
     }
 
     
@@ -119,18 +120,19 @@ public class Item extends Entity implements Cloneable {
 
         
 
-       
-
+        System.out.println("Item created: " + name + ", Type: " + type_item + ", Description: " + description);
+        
+        
     }
 
 
-
-
-
-    
-        
     
 
+    
+    
+    
+    
+    
     @Override
     public void interact() {
     }

@@ -123,7 +123,7 @@ package entity;
                 if(gp.player.currentItem.name.equalsIgnoreCase("shear")){
                 hasil = "whoolBrown";
                 readyToHarverst = false;
-                gp.player.inventory.add(ItemList.getItem(hasil));
+                gp.player.inventory.add(ItemList.whoolBrown.clone());
                 System.out.println("You got " + hasil + " from " + name);
                 animationList.remove(idle);
                 idle = new Animation("idle", 6, "/assets/animal/" + name+"Sheared" + "/IDLE/",false,true);
@@ -133,9 +133,9 @@ package entity;
             else if(name.equalsIgnoreCase("graysheep") && gp.player.currentItem.name!=null)
             {
                 if(gp.player.currentItem.name.equalsIgnoreCase("shear")){
-                hasil = "whoolGray";
+                hasil = "WhoolGray";
                 readyToHarverst = false;
-                gp.player.inventory.add(ItemList.getItem(hasil));
+                gp.player.inventory.add(ItemList.WhoolGray.clone());
                 System.out.println("You got " + hasil + " from " + name);
                 animationList.remove(idle);
                 idle = new Animation("idle", 6, "/assets/animal/" + name+"Sheared" + "/IDLE/",false,true);
@@ -144,9 +144,9 @@ package entity;
             else if(name.equalsIgnoreCase("whitesheep") && gp.player.currentItem.name!=null)
             {
                 if(gp.player.currentItem.name.equalsIgnoreCase("shear")){
-                hasil = "whoolWhite";
+                hasil = "WhoolWhite";
                 readyToHarverst = false;
-                gp.player.inventory.add(ItemList.getItem(hasil));
+                gp.player.inventory.add(ItemList.WhoolWhite.clone());
                 System.out.println("You got " + hasil + " from " + name);
                 animationList.remove(idle);
                 idle = new Animation("idle", 6, "/assets/animal/" + name+"Sheared" + "/IDLE/",false,true);
@@ -156,9 +156,9 @@ package entity;
             {
                 if(gp.player.currentItem.name.equalsIgnoreCase("shear")){
 
-                    hasil = "whoolYellow";
+                    hasil = "WhoolYellow";
                     readyToHarverst = false;
-                    gp.player.inventory.add(ItemList.getItem(hasil));
+                    gp.player.inventory.add(ItemList.WhoolYellow.clone());
                     System.out.println("You got " + hasil + " from " + name);
                     animationList.remove(idle);
                     idle = new Animation("idle", 6, "/assets/animal/" + name+"Sheared" + "/IDLE/",false,true);
