@@ -191,8 +191,9 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         playMusic(masterMusic, MapDB.mapList.get(currentMap).music);
 
         gameState = titleState;
-        // gameState = playState; // Set the game state to play
+        //gameState = playState; // Set the game state to play
         // changeMap(1);
+
 
     }
 
