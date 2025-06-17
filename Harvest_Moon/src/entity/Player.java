@@ -90,6 +90,8 @@ public class Player extends Entity {
     public Player(GamePanel gp, KeyHandler keyH) {
 
         super(gp);
+        width = gp.playerSizeX;
+        height = gp.playerSizeY; // Adjust based on your NPC sprites
 
 
 

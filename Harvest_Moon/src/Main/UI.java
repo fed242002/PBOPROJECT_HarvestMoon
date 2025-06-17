@@ -2,6 +2,8 @@ package Main;
 
 import entity.Entity;
 import entity.Item;
+import entity.ItemList;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -872,13 +874,19 @@ public class UI {
         ArrayList<Item> shopItems = new ArrayList<>();
         
         // Add items with their prices
-        Item carrotSeed = new Item(gp, "carrotSeedBag", 2, "Seeds for growing carrots", 100);
-        Item waterCan = new Item(gp, "wateringCan", 1, "Used for watering plants", 500);
-        Item axeTool = new Item(gp, "axe", 1, "Used for chopping trees", 1000);
-        
+        Item carrotSeed = ItemList.getItem("carrotSeed");
+        Item waterCan = ItemList.getItem("wateringCan");
+        Item axeTool = ItemList.getItem("axe");
+        Item axeTool1 = ItemList.getItem("axe");
+        Item axeTool2 = ItemList.getItem("axe");
+        Item axeTool3 = ItemList.getItem("axe");
+
         shopItems.add(carrotSeed);
         shopItems.add(waterCan);
         shopItems.add(axeTool);
+        shopItems.add(axeTool1);
+        shopItems.add(axeTool2);
+        shopItems.add(axeTool3);
         
         return shopItems;
     }
@@ -1114,13 +1122,13 @@ public class UI {
         // Draw items
         final int SPACING = 40; // Less spacing between items
         for(int i = 0; i < items.size(); i++) {
-            Item item = items.get(i);
+            Item item = ItemList.getItem(items.get(i).name); // Get item by name from ItemList
             drawItemBox(
                 item.name,
                 item.path,
                 startX,
                 startY + (i * SPACING),
-                item.price
+                item.buyPrice
             );
         }
     }
