@@ -27,6 +27,7 @@ package entity;
         spriteCounterMax = 30;
         xEnd = x ; // Example end position, adjust as needed
         yEnd = y + 144; // Example end position, adjust as needed
+        this.name = name;
         
         if(name.equalsIgnoreCase("cow")){
             
@@ -117,8 +118,9 @@ package entity;
                 gp.player.inventory.add(ItemList.getItem(hasil));
                 System.out.println("You got " + hasil + " from " + name);
             }
-            else if(name.equalsIgnoreCase("brownsheep") && gp.player.currentItem.name.equalsIgnoreCase("shear"))
+            else if(name.equalsIgnoreCase("brownsheep") && gp.player.currentItem.name!=null)
             {
+                if(gp.player.currentItem.name.equalsIgnoreCase("shear")){
                 hasil = "whoolBrown";
                 readyToHarverst = false;
                 gp.player.inventory.add(ItemList.getItem(hasil));
@@ -127,9 +129,10 @@ package entity;
                 idle = new Animation("idle", 6, "/assets/animal/" + name+"Sheared" + "/IDLE/",false,true);
                 animationList.add(idle);
                 
-            }
-            else if(name.equalsIgnoreCase("graysheep") && gp.player.currentItem.name.equalsIgnoreCase("shear"))
+            }}
+            else if(name.equalsIgnoreCase("graysheep") && gp.player.currentItem.name!=null)
             {
+                if(gp.player.currentItem.name.equalsIgnoreCase("shear")){
                 hasil = "whoolGray";
                 readyToHarverst = false;
                 gp.player.inventory.add(ItemList.getItem(hasil));
@@ -137,9 +140,10 @@ package entity;
                 animationList.remove(idle);
                 idle = new Animation("idle", 6, "/assets/animal/" + name+"Sheared" + "/IDLE/",false,true);
                 animationList.add(idle);
-            }
-            else if(name.equalsIgnoreCase("whitesheep") && gp.player.currentItem.name.equalsIgnoreCase("shear"))
+            }}
+            else if(name.equalsIgnoreCase("whitesheep") && gp.player.currentItem.name!=null)
             {
+                if(gp.player.currentItem.name.equalsIgnoreCase("shear")){
                 hasil = "whoolWhite";
                 readyToHarverst = false;
                 gp.player.inventory.add(ItemList.getItem(hasil));
@@ -147,16 +151,19 @@ package entity;
                 animationList.remove(idle);
                 idle = new Animation("idle", 6, "/assets/animal/" + name+"Sheared" + "/IDLE/",false,true);
                 animationList.add(idle);
-            }
-            else if(name.equalsIgnoreCase("yellowsheep") && gp.player.currentTools.equalsIgnoreCase("shears"))
+            }}
+            else if(name.equalsIgnoreCase("yellowsheep") && gp.player.currentItem.name!=null)
             {
-                hasil = "whoolYellow";
-                readyToHarverst = false;
-                gp.player.inventory.add(ItemList.getItem(hasil));
-                System.out.println("You got " + hasil + " from " + name);
-                animationList.remove(idle);
-                idle = new Animation("idle", 6, "/assets/animal/" + name+"Sheared" + "/IDLE/",false,true);
-                animationList.add(idle);
+                if(gp.player.currentItem.name.equalsIgnoreCase("shear")){
+
+                    hasil = "whoolYellow";
+                    readyToHarverst = false;
+                    gp.player.inventory.add(ItemList.getItem(hasil));
+                    System.out.println("You got " + hasil + " from " + name);
+                    animationList.remove(idle);
+                    idle = new Animation("idle", 6, "/assets/animal/" + name+"Sheared" + "/IDLE/",false,true);
+                    animationList.add(idle);
+                }
             }
         }
         else
