@@ -15,7 +15,7 @@ public class Animal extends Entity{
         this.worldX = x;
         this.worldY = y;
         this.name = name;
-        
+        this.speed = 1;
         
         if(name.equalsIgnoreCase("cow")){
             
@@ -36,7 +36,7 @@ public class Animal extends Entity{
             
             width = 96;
             height = 96;
-            this.solidArea.width = 45; // Adjust solid area for ani||mal
+            this.solidArea.width = 45; // Adjust solid area for animal
             this.solidArea.height = 60; // Adjust solid area for animal
             
             this.solidArea.x = 25; // Adjust solid area for animal
