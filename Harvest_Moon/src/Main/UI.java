@@ -563,6 +563,7 @@ public class UI {
                 options_fullScreenNotification(frameX, frameY);
                 break;
             case 2:
+                gp.gameState = gp.playState;
                 break;
         }
         // gp.keyH.enterPressed = false; // reset enter pressed after drawing options
@@ -874,19 +875,12 @@ public class UI {
         ArrayList<Item> shopItems = new ArrayList<>();
         
         // Add items with their prices
-        Item carrotSeed = ItemList.getItem("carrotSeed");
-        Item waterCan = ItemList.getItem("wateringCan");
-        Item axeTool = ItemList.getItem("axe");
-        Item axeTool1 = ItemList.getItem("axe");
-        Item axeTool2 = ItemList.getItem("axe");
-        Item axeTool3 = ItemList.getItem("axe");
-
+        Item carrotSeed = new Item(gp, "carrotSeedBag", 2, "Contains seeds for growing orange root vegetables.", 6, 1, 20, 10);
+        Item waterCan = new Item(gp, "wateringCan", 1, "Used to water crops. Remember to refill it regularly!", 180, 90);
+        Item axeTool = new Item(gp, "axe", 1, "A sturdy tool for chopping trees and collecting wood.", 250, 125);
         shopItems.add(carrotSeed);
         shopItems.add(waterCan);
         shopItems.add(axeTool);
-        shopItems.add(axeTool1);
-        shopItems.add(axeTool2);
-        shopItems.add(axeTool3);
         
         return shopItems;
     }
@@ -925,8 +919,9 @@ public class UI {
                 g2.fillRect(x + 20, itemStartY + (i * itemSpacing) - 20, width - 40, 40);
             }
 
+            
             // Draw item details
-            drawItemBox(item.name, item.path, x + 30, itemStartY + (i * itemSpacing), item.price);
+            drawItemBox(item.name, item.path, x + 30, itemStartY + (i * itemSpacing), item.buyPrice);
         }
 
         // Draw selected item description
@@ -935,10 +930,17 @@ public class UI {
             g2.setColor(new Color(94, 44, 19));
             g2.setFont(g2.getFont().deriveFont(24F));
             int descY = y + height - gp.tileSize * 3;
-            g2.drawString(selectedItem.description, x + 30, descY);
+            String tem = formatDialogText(selectedItem.description, width - 60);
+            for (String line : tem.split("\n")) {
+                g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 25F));
+                g2.drawString(line, x + 10, descY);
+                descY += 32;
+            }
+
+            // g2.drawString(tem, x + 30, descY);
 
             // Draw purchase instructions
-            if(gp.player.gold >= selectedItem.price) {
+            if(gp.player.gold >= selectedItem.buyPrice) {
                 g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
                 g2.drawString("[ENTER] Buy   [ESC] Back", x + 30, descY + 40);
             } else {
@@ -970,8 +972,8 @@ public class UI {
         if(gp.keyH.enterPressed) {
             if(!shopItems.isEmpty() && commandNum < shopItems.size()) {
                 Item selectedItem = shopItems.get(commandNum);
-                if(gp.player.gold >= selectedItem.price) {
-                    gp.player.gold -= selectedItem.price;
+                if(gp.player.gold >= selectedItem.buyPrice) {
+                    gp.player.gold -= selectedItem.buyPrice;
                     gp.player.addItemToInventory(selectedItem);
                     gp.playSFX(gp.sfx, 2);
                 }
@@ -1113,7 +1115,7 @@ public class UI {
     // }
 
     // Method untuk menampilkan list item
-    public void drawItemList(ArrayList<Item> items, String title, int startX, int startY) {
+    public void drawItemList(ArrayList<Item> items, String title, int startX, int startY, boolean buy) {
         // Draw title first
         g2.setColor(Color.black);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
@@ -1123,12 +1125,18 @@ public class UI {
         final int SPACING = 40; // Less spacing between items
         for(int i = 0; i < items.size(); i++) {
             Item item = ItemList.getItem(items.get(i).name); // Get item by name from ItemList
+            
+            int price = item.buyPrice;
+            if(buy)
+                price = item.buyPrice;
+
             drawItemBox(
                 item.name,
                 item.path,
                 startX,
                 startY + (i * SPACING),
-                item.buyPrice
+                price
+
             );
         }
     }
@@ -1157,6 +1165,6 @@ public class UI {
         // Draw price with G for gold
         String priceText = price + "G";
         int priceWidth = (int)g2.getFontMetrics().getStringBounds(priceText, g2).getWidth();
-        g2.drawString(priceText, x + 300 - priceWidth, y + 10);
+        g2.drawString(priceText, x + 450 - priceWidth, y + 10);
     }
 }
