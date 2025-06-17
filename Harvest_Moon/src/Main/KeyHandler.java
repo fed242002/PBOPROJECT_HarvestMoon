@@ -390,6 +390,10 @@ public class KeyHandler implements KeyListener {
             if(code == KeyBind.nextKey) {
                 if(gp.ui.commandNum == 0) {
                     //kalo makan
+                    gp.player.energy += gp.player.currentItem.energyGiven; // Add energy from held food
+                    System.out.println("Player ate food: " + gp.player.currentItem.name + " and gained " + gp.player.currentItem.energyGiven + " energy.");
+                    gp.player.inventory.remove(gp.player.currentItem); // Remove food from inventory
+                    gp.player.currentItem = null; // Clear current item
                     gp.gameState = gp.playState;
                 } else if(gp.ui.commandNum == 1) {
                     //kalo hold makanan

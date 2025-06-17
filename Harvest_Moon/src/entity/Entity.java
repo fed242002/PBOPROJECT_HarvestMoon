@@ -140,6 +140,7 @@ public class Entity extends SuperEntity implements Cloneable{
     public ArrayList<String> dialogues = new ArrayList<>();
     int dialogueIndex = 0; // Index for the current dialogue
 
+    public int energyGiven = 0; // Energy given by the item, used for food and drinks
     public int quality = 0; // Quality of the item, used for crops and seeds
     public int buyPrice = 0; // Price of the item
     public int sellPrice = 0; // Price of the item

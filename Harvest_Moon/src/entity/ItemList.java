@@ -111,22 +111,22 @@ public class ItemList {
         zucchini = new Item(gp, "zucchini", 3, "Green summer squash that's versatile for cooking.", 50, 38);
         pear = new Item(gp, "pear", 3, "A sweet fruit with a distinctive bell shape and grainy texture.", 70, 55);
         
-        // Type 4: Food
-        apple = new Item(gp, "apple", 4, "A crisp, juicy red fruit. Good for eating or cooking.", 30, 20);
-        banana = new Item(gp, "banana", 4, "A sweet yellow fruit with a curved shape. Rich in potassium.", 35, 25);
-        lemon = new Item(gp, "lemon", 4, "A sour citrus fruit with bright yellow skin. Used in cooking and beverages.", 40, 30);
-        orange = new Item(gp, "orange", 4, "A juicy citrus fruit high in vitamin C. Sweet with a hint of tartness.", 35, 25);
-        peach = new Item(gp, "peach", 4, "A soft, fuzzy fruit with sweet pink flesh. Popular in summer.", 45, 35);
-        WatermelonSlice = new Item(gp, "WatermelonSlice", 4, "A refreshing slice of watermelon. Sweet, juicy, and perfect for hot days.", 25, 15);
-        baguette = new Item(gp, "baguette", 4, "Long, crusty French bread. Perfect with cheese or on its own.", 70, 50);
-        cheese = new Item(gp, "cheese", 4, "Dairy product made from fermented milk. Rich and flavorful.", 150, 120);
-        chicken = new Item(gp, "chicken", 4, "Prepared poultry meat, ready to eat. High in protein.", 250, 180);
-        croissant = new Item(gp, "croissant", 4, "Buttery, flaky pastry of French origin. Delicious for breakfast.", 60, 45);
-        egg = new Item(gp, "egg", 4, "Farm-fresh chicken egg. Versatile for cooking or baking.", 40, 30);
-        rawChicken = new Item(gp, "rawChicken", 4, "Uncooked poultry meat. Must be cooked before consumption.", 80, 60);
-        rawSteak = new Item(gp, "rawSteak", 4, "Uncooked beef cut. Needs to be grilled or cooked.", 120, 90);
-        steak = new Item(gp, "steak", 4, "Cooked beef cut. Juicy and protein-rich.", 180, 135);
-
+        // Type 4: Food - with energy restoration values
+        apple = new Item(gp, "apple", 4, "A crisp, juicy red fruit. Good for eating or cooking.", 30, 20, 15);
+        banana = new Item(gp, "banana", 4, "A sweet yellow fruit with a curved shape. Rich in potassium.", 35, 25, 20);
+        lemon = new Item(gp, "lemon", 4, "A sour citrus fruit with bright yellow skin. Used in cooking and beverages.", 40, 30, 10);
+        orange = new Item(gp, "orange", 4, "A juicy citrus fruit high in vitamin C. Sweet with a hint of tartness.", 35, 25, 18);
+        peach = new Item(gp, "peach", 4, "A soft, fuzzy fruit with sweet pink flesh. Popular in summer.", 45, 35, 25);
+        WatermelonSlice = new Item(gp, "WatermelonSlice", 4, "A refreshing slice of watermelon. Sweet, juicy, and perfect for hot days.", 25, 15, 12);
+        baguette = new Item(gp, "baguette", 4, "Long, crusty French bread. Perfect with cheese or on its own.", 70, 50, 35);
+        cheese = new Item(gp, "cheese", 4, "Dairy product made from fermented milk. Rich and flavorful.", 150, 120, 30);
+        chicken = new Item(gp, "chicken", 4, "Prepared poultry meat, ready to eat. High in protein.", 250, 180, 60);
+        croissant = new Item(gp, "croissant", 4, "Buttery, flaky pastry of French origin. Delicious for breakfast.", 60, 45, 25);
+        egg = new Item(gp, "egg", 4, "Farm-fresh chicken egg. Versatile for cooking or baking.", 40, 30, 15);
+        rawChicken = new Item(gp, "rawChicken", 4, "Uncooked poultry meat. Must be cooked before consumption.", 80, 60, 5); // Raw food: low energy, risk of sickness
+        rawSteak = new Item(gp, "rawSteak", 4, "Uncooked beef cut. Needs to be grilled or cooked.", 120, 90, 8); // Raw food: low energy, risk of sickness
+        steak = new Item(gp, "steak", 4, "Cooked beef cut. Juicy and protein-rich.", 180, 135, 75);
+       
         // Type 6: Materials
         oakTrunk = new Item(gp, "oakTrunk", 6, "Sturdy wood harvested from oak trees. Good for building.", 40, 30);
         spruceTrunk = new Item(gp, "spruceTrunk", 6, "Lightweight wood from spruce trees. Useful for crafting.", 50, 40);

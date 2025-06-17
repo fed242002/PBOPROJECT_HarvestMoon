@@ -31,6 +31,29 @@ public class Item extends Entity implements Cloneable {
         }
 
     }
+
+        public Item(GamePanel gp, String name, int type, String description, int buy, int sell,  int energyGiven) {
+        super(gp);
+        this.name = name;
+        this.gp = gp;
+        type_item = type;
+        this.description = description;
+        this.buyPrice = buy; // Price to buy
+        this.sellPrice = sell; // Price to sell
+        this.energyGiven = energyGiven; // Energy given by the food
+
+        width = 32;
+        height = 32;
+
+        path = "/assets/item/" + name + ".png";
+        image = gp.setImage(path);
+
+        if(image == null) {
+            System.out.println("Image not found: " + path);
+        }
+
+    }
+
     
     // public Item(GamePanel gp, String name, int type, String description, int price) {
     //     super(gp);
