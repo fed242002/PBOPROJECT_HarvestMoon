@@ -44,8 +44,9 @@ public class OBJ_Crop extends Entity{
 
     @Override
     public void grow() {
-        if(isRotten)
+        if(isRotten){
             return; // If the crop is rotten, it cannot grow
+        }
 
         if (currentStage < stages-1) {
             currentStage++;
@@ -53,7 +54,7 @@ public class OBJ_Crop extends Entity{
             image = gp.setImage(path);
         }else if(currentStage == stages-1){
             // ada chances buat crop gagal tumbuh
-                if(rand.nextInt(100) < 5){ // 5% chances crop gagal tumbuh
+                if(rand.nextInt(100) < 5 ||fixRotten){ // 5% chances crop gagal tumbuh
                     path = "/assets/crop/" + name + "/rotten.png";
                     image = gp.setImage(path);
                     isRotten = true; // tandai crop sebagai busuk
@@ -65,7 +66,7 @@ public class OBJ_Crop extends Entity{
                 }
 
         } else {
-            // Crop is fully grown, you can add logic for harvesting here
+            harvestable = true; // Set crop as harvestable when it reaches the last stage
         }
     }
 

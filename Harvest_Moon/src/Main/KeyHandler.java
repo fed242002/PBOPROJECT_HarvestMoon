@@ -3,6 +3,8 @@ package Main;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import entity.Entity;
+
 public class KeyHandler implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed, isSprint, undoToolsPressed,
@@ -173,6 +175,16 @@ public class KeyHandler implements KeyListener {
         }
 
         if (gp.gameState == gp.playState) {
+            
+            if (code == KeyEvent.VK_O) {
+                for(Entity x : gp.farmObj) {
+                    x.reset();
+                }
+                    for(Entity crop : gp.cropObj) {
+                    crop.dayPassed();
+                }
+
+            }
             if (code == KeyBind.upKey) {
                 upPressed = true;
             }

@@ -25,6 +25,8 @@ public class Player extends Entity {
     public Random random = new Random();
     public boolean pickCounterOn;
     public int pickCounter;
+    public Entity currentHarvest = null;
+
 
 
     public String name = "Fedrian";
@@ -565,10 +567,14 @@ public class Player extends Entity {
             
         }
 
+        if(currentItem != null){
             if(currentItem.type_item == type_seed){
                 isPlanting = true;
                 moveDisabled = true; // Disable movement while planting
             }
+
+            
+        }    
 
         }
                 
@@ -589,6 +595,8 @@ public class Player extends Entity {
 
         if(isPlanting){
             gp.aSetter.addCrop(Crop.getCrop(currentItem.seedCrop, x, y), currentItem.daysToMature);
+            inventory.remove(currentItem); // Remove the seed from the inventory
+            currentItem = null; // Reset the current item
             resetAllAnimation();
             
             setAnimation("idle");
