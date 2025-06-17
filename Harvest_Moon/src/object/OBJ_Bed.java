@@ -131,3 +131,4 @@ public class OBJ_Bed extends Entity {
     }
 
 }
+}
