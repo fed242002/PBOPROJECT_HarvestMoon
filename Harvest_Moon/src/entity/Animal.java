@@ -1,13 +1,13 @@
 package entity;
 
-import Main.GamePanel;
-import animation.Animation;
+    import Main.GamePanel;
+    import animation.Animation;
 
-public class Animal extends Entity{
-    GamePanel gp;
-    public int age = 0; // Age of the animal in days
-    String hasil;
-    boolean readyToHarverst = false;
+    public class Animal extends Entity{
+        GamePanel gp;
+        public int age = 0; // Age of the animal in days
+        String hasil;
+        boolean readyToHarverst = true;
     int xStart, yStart;
     int xEnd, yEnd;
     boolean walkToDestination = true;
