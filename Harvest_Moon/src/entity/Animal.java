@@ -158,7 +158,7 @@ package entity;
 
                     hasil = "whoolYellow";
                     readyToHarverst = false;
-                    gp.player.inventory.add(ItemList.getItem(hasil));
+                    // gp.player.inventory.add(ItemList.getItem(hasil));
                     System.out.println("You got " + hasil + " from " + name);
                     animationList.remove(idle);
                     idle = new Animation("idle", 6, "/assets/animal/" + name+"Sheared" + "/IDLE/",false,true);
