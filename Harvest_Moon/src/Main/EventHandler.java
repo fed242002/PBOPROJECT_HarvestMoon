@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class EventHandler {
+
     GamePanel gp;
     EventRect eventRect[][];
     int eventRectDefaultX = 0;
@@ -12,7 +13,7 @@ public class EventHandler {
     int worldX, worldY;
     int previousEventX, previousEventY;
     boolean canTouchEvent = true;
-    
+
     // Transition animation variables
     private float alpha = 0f;
     private boolean transitioning = false;
@@ -77,12 +78,12 @@ public class EventHandler {
         if (transitioning && alpha > 0) {
             // Save the original composite
             AlphaComposite originalComposite = (AlphaComposite) g2.getComposite();
-            
+
             // Set alpha composite for transparency
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
             g2.setColor(Color.BLACK);
             g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
-            
+
             // Restore original composite
             g2.setComposite(originalComposite);
         }
@@ -104,7 +105,7 @@ public class EventHandler {
         gp.changeMap(pendingTargetMap);
         gp.player.worldX = gp.tileSize * pendingX;
         gp.player.worldY = gp.tileSize * pendingY;
-        
+
         // Reset pending values
         pendingTargetMap = -1;
         pendingX = -1;
@@ -117,7 +118,7 @@ public class EventHandler {
     }
 
     public void checkEvent() {
-        
+
         if (!canTouchEvent) {
             int distance = Math.abs(gp.player.worldX - previousEventX) + Math.abs(gp.player.worldY - previousEventY);
             if (distance > gp.tileSize * 2) {
@@ -125,56 +126,55 @@ public class EventHandler {
             }
         }
 
-        if (!canTouchEvent || transitioning) return; // Don't check events during transition
-
+        if (!canTouchEvent || transitioning) {
+            return; // Don't check events during transition
+        }
         // Map transition events
         switch (gp.currentMap) {
-            case 0 -> { // Home
-                if (gp.player.worldY >= gp.tileSize * 47 && gp.player.worldY <= gp.tileSize * 48 &&
-                    gp.player.worldX >= gp.tileSize * 22 && gp.player.worldX <= gp.tileSize * 26) {
-                    handleMapTransition(1, 25, 2);
-                }
-            }
+            // case 0 -> { // Home
+            //     if (gp.player.worldY >= gp.tileSize * 47 && gp.player.worldY <= gp.tileSize * 48 &&
+            //         gp.player.worldX >= gp.tileSize * 22 && gp.player.worldX <= gp.tileSize * 26) {
+            //         handleMapTransition(1, 25, 2);
+            //     }
+            // }
             case 1 -> { // Forest
-                if (gp.player.worldX >= gp.tileSize * 24 && gp.player.worldX <= gp.tileSize * 26 && 
-                    gp.player.worldY >= gp.tileSize * 0 && gp.player.worldY <= gp.tileSize * 1) {
+                if (gp.player.worldX >= gp.tileSize * 24 && gp.player.worldX <= gp.tileSize * 26
+                        && gp.player.worldY >= gp.tileSize * 0 && gp.player.worldY <= gp.tileSize * 1) {
                     handleMapTransition(0, 24, 46);
-                }
-                
-                else if (gp.player.worldX >= gp.tileSize * 47 && gp.player.worldX <= gp.tileSize * 48 && 
-                    gp.player.worldY >= gp.tileSize * 23 && gp.player.worldY <= gp.tileSize * 27) {
+                } else if (gp.player.worldX >= gp.tileSize * 47 && gp.player.worldX <= gp.tileSize * 48
+                        && gp.player.worldY >= gp.tileSize * 23 && gp.player.worldY <= gp.tileSize * 27) {
                     handleMapTransition(2, 4, 37);
                 }
             }
             case 2 -> { // Town Hall
-                if (gp.player.worldX >= gp.tileSize * 0 && gp.player.worldX <= gp.tileSize * 1 && 
-                    gp.player.worldY >= gp.tileSize * 35 && gp.player.worldY <= gp.tileSize * 39) {
+                if (gp.player.worldX >= gp.tileSize * 0 && gp.player.worldX <= gp.tileSize * 1
+                        && gp.player.worldY >= gp.tileSize * 35 && gp.player.worldY <= gp.tileSize * 39) {
                     handleMapTransition(1, 46, 25);
                 }
             }
             case 3 -> { // Inside the House
-                if (gp.player.worldX >= gp.tileSize * 24 && gp.player.worldX <= gp.tileSize * 26 && 
-                    gp.player.worldY >= gp.tileSize * 27 && gp.player.worldY <= gp.tileSize * 28) {
+                if (gp.player.worldX >= gp.tileSize * 24 && gp.player.worldX <= gp.tileSize * 26
+                        && gp.player.worldY >= gp.tileSize * 27 && gp.player.worldY <= gp.tileSize * 28) {
                     handleMapTransition(0, 37, 17);
                 }
             }
 
             case 4 -> { // Inside the Barn
-                if (gp.player.worldX >= gp.tileSize * 23 && gp.player.worldX <= gp.tileSize * 27 && 
-                    gp.player.worldY >= gp.tileSize * 29 && gp.player.worldY <= gp.tileSize * 31) {
+                if (gp.player.worldX >= gp.tileSize * 23 && gp.player.worldX <= gp.tileSize * 27
+                        && gp.player.worldY >= gp.tileSize * 29 && gp.player.worldY <= gp.tileSize * 31) {
                     handleMapTransition(0, 10, 19);
                 }
             }
-            
+
             case 5 -> { // Inside the Market
-                if (gp.player.worldX >= gp.tileSize * 24 && gp.player.worldX <= gp.tileSize * 26 && 
-                    gp.player.worldY >= gp.tileSize * 19 && gp.player.worldY <= gp.tileSize * 26) {
+                if (gp.player.worldX >= gp.tileSize * 24 && gp.player.worldX <= gp.tileSize * 26
+                        && gp.player.worldY >= gp.tileSize * 19 && gp.player.worldY <= gp.tileSize * 26) {
                     handleMapTransition(2, 8, 30);
                 }
             }
 
         }
-        
+
         int xDistance = Math.abs(gp.player.worldX - previousEventX);
         int yDistance = Math.abs(gp.player.worldY - previousEventY);
         int distance = Math.max(xDistance, yDistance);
