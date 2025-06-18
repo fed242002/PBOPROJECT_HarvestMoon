@@ -12,5 +12,8 @@ public class MapDB {
         mapList.add(new MapData("Inside the House", "/assets/map/Inside_Home_Map", "/assets/map/Inside_Home_TileData", "/assets/tile/Interiors/",3));
         mapList.add(new MapData("Inside the Barn", "/assets/map/Inside_Barn_Map", "/assets/map/Inside_Barn_TileData", "/assets/tile/Interior_Barn/",4));
         mapList.add(new MapData("Inside the Market", "/assets/map/Inside_TownHall_Market_Map", "/assets/map/Inside_TownHall_Market_TileData", "/assets/tile/Interiors_TownHall_Office/",5));
+        mapList.add(new MapData("Inside the Post Office", "/assets/map/Inside_TownHall_Map", "/assets/map/Inside_TownHall_Office_TileData", "/assets/tile/TownHallTiles/",6));
+
+    
     }
 }

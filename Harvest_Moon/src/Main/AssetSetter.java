@@ -62,7 +62,8 @@ public class AssetSetter {
 
     public void setNPC(){
         MapDB.mapList.get(0).npcs.add(new Npc(gp, "Eddy", 21 * gp.tileSize, 23 * gp.tileSize));
-        MapDB.mapList.get(0).npcs.add(new Npc_Merchant(gp, "tes", 20 * gp.tileSize, 20 * gp.tileSize));
+        MapDB.mapList.get(5).npcs.add(new Npc_Merchant(gp, "tes", 23 * gp.tileSize, 14
+         * gp.tileSize));
         MapDB.mapList.get(4).npcs.add(new Animal(gp, "yellowsheep", 1004, 1017));
         MapDB.mapList.get(4).npcs.add(new Animal(gp, "cow", 1392, 1120));
         MapDB.mapList.get(4).npcs.add(new Animal(gp, "chicken", 1027, 1301));

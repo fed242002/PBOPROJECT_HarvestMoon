@@ -53,6 +53,9 @@ public class Entity extends SuperEntity implements Cloneable{
                 if(this instanceof OBJ_Market){
                     gp.eventHandler.handleMapTransition(5, 25, 18);
                 }
+                if(this instanceof OBJ_PostOffice){
+                    gp.eventHandler.handleMapTransition(6, 25, 18);
+                }
 
                 if(this instanceof OBJ_Transition){
                     gp.eventHandler.handleMapTransition(1, 25, 2);
