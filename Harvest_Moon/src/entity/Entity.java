@@ -53,6 +53,9 @@ public class Entity extends SuperEntity implements Cloneable{
                 if(this instanceof OBJ_Market){
                     gp.eventHandler.handleMapTransition(5, 25, 18);
                 }
+                if(this instanceof OBJ_PostOffice){
+                    gp.eventHandler.handleMapTransition(6, 25, 18);
+                }
 
                 objAnimationSpriteNum = 0;
                 objectAnimationOn = false; // Turn off the animation after it completes
