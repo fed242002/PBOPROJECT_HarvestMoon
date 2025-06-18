@@ -7,7 +7,9 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import object.*;
 
@@ -25,6 +27,8 @@ public class Player extends Entity {
     public Random random = new Random();
     public boolean pickCounterOn;
     public int pickCounter;
+    public Entity currentHarvest = null;
+
 
 
     public String name = "Fedrian";
@@ -86,6 +90,8 @@ public class Player extends Entity {
     public Player(GamePanel gp, KeyHandler keyH) {
 
         super(gp);
+        width = gp.playerSizeX;
+        height = gp.playerSizeY; // Adjust based on your NPC sprites
 
 
 
@@ -206,6 +212,7 @@ public class Player extends Entity {
         inventory.add(ItemList.axe.clone()); 
         inventory.add(ItemList.chiliSeedBag.clone()); 
         inventory.add(ItemList.lettuceSeedBag.clone()); 
+        inventory.add(ItemList.shear.clone()); 
         
     }
 
@@ -373,6 +380,10 @@ public class Player extends Entity {
     public void interactNPC(int i) {
         if (i != 999) {
             if (gp.keyH.interactPressed == true) {
+                if( gp.npcs.get(i).isAnimal) {
+                    gp.npcs.get(i).interact(); // Call the interact method of the animal
+                    return; // Exit the method if it's an animal
+                }
                 gp.gameState = gp.dialogueState; // Set the game state to dialogue
                 setAnimation("idle");
                 gp.gameState = gp.dialogueState; // Set the game state to dialogue
@@ -382,6 +393,133 @@ public class Player extends Entity {
             }
         }
         gp.keyH.interactPressed = false; // Reset the interact key
+    }
+
+
+    public void harvest(Graphics2D g2){               
+         // hitbox player di world posisi
+            int hitboxCenterWorldX = worldX + solidArea.x + (solidArea.width / 2);
+            int hitboxCenterWorldY = worldY + solidArea.y + (solidArea.height / 2);
+
+            targetWorldX = hitboxCenterWorldX;
+            targetWorldY = hitboxCenterWorldY;
+
+            switch (direction) {
+                case "up":
+                    targetWorldY -= gp.tileSize;
+                    break;
+                case "down":
+                    targetWorldY += gp.tileSize;
+                    break;
+                case "left":
+                    targetWorldX -= gp.tileSize;
+                    break;
+                case "right":
+                    targetWorldX += gp.tileSize;
+                    break;
+            }
+
+            // jadiin tile trus balekin ke px balek
+            targetWorldX = (targetWorldX / gp.tileSize) * gp.tileSize;
+            targetWorldY = (targetWorldY / gp.tileSize) * gp.tileSize;
+
+            // ini versi row col nya
+            targetTileCol = targetWorldX / gp.tileSize;
+            targetTileRow = targetWorldY / gp.tileSize;
+
+        // ini buat pas print nya
+        int targetScreenX = targetWorldX - worldX + screenX;
+        int targetScreenY = targetWorldY - worldY + screenY;
+        
+
+        
+        
+        
+        
+        // Load cursor imagedui
+        BufferedImage cursor = null;
+        try {
+            cursor = ImageIO.read(getClass().getResourceAsStream("/assets/ui/target1Block.png"));
+        } catch (IOException e) {
+            System.out.println("Error loading drawFrontBlock cursor image: " + e.getMessage());
+        }
+
+        if(gp.cropObj.size() == 0){
+            g2.setColor(new Color(255, 0, 0, 100));
+            g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+            g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);  //ini jangan lupa kalo ada red soalnya ak lgsng return hehe
+            return;
+        }
+
+        int xCrop, yCrop;
+        int objIndex = gp.cChecker.checkObjectFarm(targetWorldX,targetWorldY,this, true);
+
+        if(objIndex != 999) {
+            xCrop = gp.farmObj.get(objIndex).worldX;
+            yCrop = gp.farmObj.get(objIndex).worldY;
+        
+
+        
+        for(Entity s : gp.cropObj) {
+            if (s instanceof OBJ_Crop && s.worldX == xCrop && s.worldY == yCrop) {
+                objIndex = gp.cropObj.indexOf(s); // Get the index of the crop object
+                break; 
+            }
+        }
+        // System.out.println("obj size " + gp.cropObj.size());
+        // System.out.println("checking obj: " + gp.cropObj.get(objIndex).name);
+        // System.out.println("checking is it harvestable : " + gp.cropObj.get(objIndex).harvestable);
+        // System.out.println("checking is it rotten : " + gp.cropObj.get(objIndex).isRotten);
+        }
+
+        if(objIndex != 999 && (gp.cropObj.get(objIndex).harvestable || gp.cropObj.get(objIndex).isRotten)) {
+            g2.setColor(new Color(0, 255, 0, 100));
+            g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+            g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);  //ini jangan lupa kalo ada red soalnya ak lgsng return hehe
+        }else{
+            g2.setColor(new Color(255, 0, 0, 100));
+            g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+            g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);  //ini jangan lupa kalo ada red soalnya ak lgsng return hehe
+            return;
+        }
+
+
+        if(gp.keyH.interactPressed ) {
+            // Reset the interact key
+            gp.keyH.interactPressed = false;
+
+            if (objIndex != 999 && (gp.cropObj.get(objIndex).harvestable || gp.cropObj.get(objIndex).isRotten)) {
+                isHarvesting = true;
+                moveDisabled = true; // Disable movement while harvesting
+            } 
+
+        }
+
+
+        if(isHarvesting) {
+            setAnimation("harvest");
+            animation(3);
+
+            if (animationDone == 1) {
+                energy -= EnergyIntake.harvest;
+                animationDone = 0;
+                resetAllAnimation();
+                setAnimation("idle");
+                moveDisabled = false; // Enable movement after harvesting
+
+                // Add the harvested crop to the inventory
+                Entity harvestedCrop = gp.cropObj.get(objIndex);
+
+                if(!harvestedCrop.isRotten)
+                    inventory.add(ItemList.getItem(harvestedCrop.name)); // Clone the crop to add to inventory
+
+                gp.cropObj.remove(objIndex); // Remove the crop from the game world
+            }
+        }
+
+
+        
+
     }
 
     public void drawFrontBlock(Graphics2D g2) {
@@ -512,7 +650,11 @@ public class Player extends Entity {
             gp.keyH.interactPressed = false;
 
             if (currentTools != null) {
-                            if (currentTools.equalsIgnoreCase("shovel")) {
+                if (currentTools.equalsIgnoreCase("shovel")) {
+                if(energy < EnergyIntake.shovel) {
+                    System.out.println("energy not enough");
+                    return;
+                }
                 isDigging = true;
                 moveDisabled = true; // Disable movement while digging
             }
@@ -521,6 +663,11 @@ public class Player extends Entity {
                 int objIndex = gp.cChecker.checkObject(this, true);
                 if (objIndex != 999 && gp.obj.get(objIndex) instanceof OBJ_Tree) {
                     if (gp.obj.get(objIndex).isChopped == false) {
+                        if(energy < EnergyIntake.axe) {
+                            System.out.println("energy not enough");
+                            return;
+                        }
+
                         isChopping = true;
                         moveDisabled = true;
 
@@ -532,6 +679,10 @@ public class Player extends Entity {
                 int objIndex = gp.cChecker.checkObjectFarm(targetWorldX, targetWorldY, this, true);
 
                 if (objIndex != 999 && gp.farmObj.get(objIndex) instanceof OBJ_soil) {
+                    if(energy < EnergyIntake.watering) {
+                    System.out.println("energy not enough");
+                    return;
+                    }
                     isWatering = true;
                     moveDisabled = true; // Disable movement while watering
                 }
@@ -539,6 +690,10 @@ public class Player extends Entity {
 
             if (currentTools.equalsIgnoreCase("fishRod")) {
                 if (gp.tileM.mapTileNum[targetTileCol][targetTileRow] >= 25 && gp.tileM.mapTileNum[targetTileCol][targetTileRow] <= 48) {
+                    if(energy < EnergyIntake.fishing) {
+                    System.out.println("energy not enough");
+                    return;
+                    }
                     isCasting = true;
                     moveDisabled = true;
                 }
@@ -565,10 +720,14 @@ public class Player extends Entity {
             
         }
 
+        if(currentItem != null){
             if(currentItem.type_item == type_seed){
                 isPlanting = true;
                 moveDisabled = true; // Disable movement while planting
             }
+
+            
+        }    
 
         }
                 
@@ -589,6 +748,8 @@ public class Player extends Entity {
 
         if(isPlanting){
             gp.aSetter.addCrop(Crop.getCrop(currentItem.seedCrop, x, y), currentItem.daysToMature);
+            inventory.remove(currentItem); // Remove the seed from the inventory
+            currentItem = null; // Reset the current item
             resetAllAnimation();
             
             setAnimation("idle");
@@ -895,6 +1056,7 @@ public class Player extends Entity {
     
 
     public void draw(Graphics2D g2) {
+        
 
 
         if (emoteOn) {
@@ -914,6 +1076,10 @@ public class Player extends Entity {
             else if(currentItem!=null && gp.keyH.useTool && currentItem.type_item == type_seed){
                 drawFrontBlock(g2);
             }
+        }
+
+        if(currentTools == null && currentItem == null && gp.keyH.useTool) {
+            harvest(g2);
         }
 
         if (currentTools != null) {
@@ -971,6 +1137,32 @@ public class Player extends Entity {
                 System.out.println("Error: duvetImage is null in Player draw method");
             }
         }
-    }
+    }    public void addItemToInventory(Item item) {
+        if (itemInventory.size() < maxInventorySize) {
+            // Check if we already have this item type
+            boolean added = false;
+            for (Item existingItem : itemInventory) {
+                if (existingItem.name.equals(item.name) && 
+                    existingItem.type_item == item.type_item && 
+                    item.type_item != Entity.TYPE_TOOL) { // Don't stack tools
+                    existingItem.amount++;
+                    added = true;
+                    break;
+                }
+            }
+            
+            // If item wasn't stacked, add it as new item
+            if (!added) {
+                item.amount = 1;
+                itemInventory.add(item);
+            }
 
+            // Play success sound
+            gp.playSFX(gp.sfx, 2);
+        } else {
+            System.out.println("Inventory is full!");
+            // Play error sound
+            gp.playSFX(gp.sfx, 4);
+        }
+    }
 }

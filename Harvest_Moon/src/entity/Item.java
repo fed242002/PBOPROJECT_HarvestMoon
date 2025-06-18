@@ -8,16 +8,18 @@ import object.OBJ_Crop;
 
 public class Item extends Entity implements Cloneable {
 
-
+    public int price;
     int stages;
     int type; // 0 = item, 1 = tool, 2 = seed, 3 = crop, 4 = food, 5 = fish, 6 = material, 7 = furniture
-    public Item(GamePanel gp, String name, int type, String description) {
+    public Item(GamePanel gp, String name, int type, String description, int buy, int sell) {
         super(gp);
         this.name = name;
         this.gp = gp;
         type_item = type;
         this.description = description;
-
+        this.buyPrice = buy; // Price to buy
+        this.sellPrice = sell; // Price to sell
+        
         width = 32;
         height = 32;
 
@@ -28,17 +30,64 @@ public class Item extends Entity implements Cloneable {
             System.out.println("Image not found: " + path);
         }
 
-
     }
 
+        public Item(GamePanel gp, String name, int type, String description, int buy, int sell,  int energyGiven) {
+        super(gp);
+        this.name = name;
+        this.gp = gp;
+        type_item = type;
+        this.description = description;
+        this.buyPrice = buy; // Price to buy
+        this.sellPrice = sell; // Price to sell
+        this.energyGiven = energyGiven; // Energy given by the food
 
-    public Item(GamePanel gp, String name, int type, String description, int stages) {
+        width = 32;
+        height = 32;
+
+        path = "/assets/item/" + name + ".png";    
+        image = gp.setImage(path);
+
+        if(image == null) {
+            System.out.println("Image not found: " + path);
+        }
+        
+        // System.out.println("Item created: " + name + ", Type: " + type_item + ", Description: " + description);
+    }
+
+    
+    // public Item(GamePanel gp, String name, int type, String description, int price) {
+    //     super(gp);
+    //     this.name = name;
+    //     this.gp = gp;
+    //     type_item = type;
+    //     this.description = description;
+    //     this.price = price;
+        
+    //     width = 32;
+    //     height = 32;
+        
+    //     path = "/assets/item/" + name + ".png";
+    //     image = gp.setImage(path);
+        
+    //     if(image == null) {
+    //         System.out.println("Image not found: " + path);
+    //     }
+
+
+    // }
+
+
+    public Item(GamePanel gp, String name, int type, String description, int stages, int quality, int buy, int sell) {
         super(gp);
         this.name = name;
         this.gp = gp;
         type_item = type;
         this.description = description;
         this.stages = stages;
+        this.quality = quality;
+        this.buyPrice = buy; // Price to buy
+        this.sellPrice = sell; // Price to sell
 
 
         width = 32;
@@ -55,35 +104,35 @@ public class Item extends Entity implements Cloneable {
             Random random = new Random();
             seedCrop = name.substring(0, name.length() - 7); // Removes "SeedBag" (7 characters)
 
-            int randomQuality = random.nextInt(1, 4); // Random quality between 1 and 3
-            if(randomQuality == 1){
+            if(quality == 1){
                 this.name += " (High Quality)";
             }
-            if(randomQuality == 2){
+            if(quality == 2){
                 this.name += " (Medium Quality)";
             }
-            if(randomQuality == 3){
+            if(quality == 3){
                 this.name += " (Low Quality)";
             }
-            this.daysToMature = randomQuality * stages;
+            this.daysToMature = quality * stages;
             this.description += "\nIt takes " + this.daysToMature + " days to mature.";
 
         }
 
         
 
-       
-
+        // System.out.println("Item created: " + name + ", Type: " + type_item + ", Description: " + description);
+        
+        
     }
 
 
-
-
-
-    
-        
     
 
+    
+    
+    
+    
+    
     @Override
     public void interact() {
     }

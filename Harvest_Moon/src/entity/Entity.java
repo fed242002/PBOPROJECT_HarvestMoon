@@ -21,6 +21,8 @@ public class Entity extends SuperEntity implements Cloneable{
     public ArrayList<String> imagePathList = new ArrayList<>(); // List of soil images
     
 
+    
+
 
     public boolean pickUpAble = false; // Flag to check if the entity is pickable
     public ArrayList<BufferedImage> objAnimation = new ArrayList<>(); // List of tool images
@@ -28,7 +30,7 @@ public class Entity extends SuperEntity implements Cloneable{
     public int objAnimationSpriteNum = 0;
     public int objAnimationSpriteTotal = 0;
     public boolean objectAnimationOn = false; // Flag to check if the object animation is on
-
+    public boolean harvestable = false; // Flag to check if the entity is harvestable
 
     public void objAnimationUpdate() {
         if (objectAnimationOn) {
@@ -101,6 +103,7 @@ public class Entity extends SuperEntity implements Cloneable{
     public boolean stackable = false; // kalo mau item nya stackable declare di obj nya jadi true
     public int amount = 1; // Amount of the entity, used for stackable items
     public ArrayList<Entity> inventory = new ArrayList<>();
+    public ArrayList<Item> itemInventory = new ArrayList<>(); // Inventory for storing items
     public int type; // declare tipe nya sendiri2
     public boolean onPath = false;
 
@@ -133,9 +136,23 @@ public class Entity extends SuperEntity implements Cloneable{
     public ArrayList<Animation> animationList = new ArrayList<>(); // 0: walk, 1:idle
     public ArrayList<ToolsAnimation> toolsAnimationList = new ArrayList<>();
 
+    public boolean isAnimal = false; // Flag to check if the entity is an animal
+    
     // dialogue
     public ArrayList<String> dialogues = new ArrayList<>();
     int dialogueIndex = 0; // Index for the current dialogue
+
+    public int energyGiven = 0; // Energy given by the item, used for food and drinks
+    public int quality = 0; // Quality of the item, used for crops and seeds
+    public int buyPrice = 0; // Price of the item
+    public int sellPrice = 0; // Price of the item
+
+    public boolean isMatured = false;
+    ;
+
+
+
+    public boolean isRotten = false;;
 
     public void speak() {
         if (dialogues.size() - 1 < dialogueIndex) {
@@ -179,10 +196,11 @@ public class Entity extends SuperEntity implements Cloneable{
         solidArea.x = 0;
         solidArea.y = 0; // Adjust based on your NPC sprites
         solidArea.width = 48;
-        solidArea.height = 48;
+        solidArea.height = 48; // Adjust based on your NPC sprites
 
         this.solidAreaDefaultX = this.solidArea.x;
         this.solidAreaDefaultY = this.solidArea.y;
+
 
 
 
@@ -278,7 +296,7 @@ public class Entity extends SuperEntity implements Cloneable{
                     g2.setColor(Color.RED);
                     g2.fillRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
                 }
-                g2.drawImage(image, screenX, screenY, gp.playerSizeX, gp.playerSizeY, null);
+                g2.drawImage(image, screenX, screenY, width, height, null);
 
             }
         } else {
@@ -303,6 +321,7 @@ public class Entity extends SuperEntity implements Cloneable{
         gp.cChecker.checkEntity(this, gp.npcs);
         boolean contactPlayer = gp.cChecker.checkPlayer1(this);
     }
+    int spriteCounterMax = 10;
 
     public void update() {
         setAction();
@@ -331,7 +350,7 @@ public class Entity extends SuperEntity implements Cloneable{
         }
 
         spriteCounter++;
-        if (spriteCounter > 10) {
+        if (spriteCounter > spriteCounterMax) {
             spriteNum++;
 
             if (spriteNum > animationList.get(currentAnimationIndex).spriteTotal - 1) // If the sprite number exceeds
@@ -453,5 +472,18 @@ public class Entity extends SuperEntity implements Cloneable{
             }
         }
     }
+    public BufferedImage getImage() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getImage'");
+    }
 
+    // Item type constants
+    public static final int TYPE_ITEM = 0;
+    public static final int TYPE_TOOL = 1;
+    public static final int TYPE_SEED = 2;
+    public static final int TYPE_CROP = 3;
+    public static final int TYPE_FOOD = 4;
+    public static final int TYPE_FISH = 5;
+    public static final int TYPE_MATERIAL = 6;
+    public static final int TYPE_FURNITURE = 7;
 }

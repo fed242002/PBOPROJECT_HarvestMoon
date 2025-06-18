@@ -1,6 +1,7 @@
 package object;
 
 import Main.GamePanel;
+import entity.Animal;
 import entity.Entity;
 
 public class OBJ_Bed extends Entity {
@@ -82,11 +83,7 @@ public class OBJ_Bed extends Entity {
 
 
             //reset semua pas ganti hari
-                gp.hour = 8; // Reset hour to 8 AM
-                gp.minute = 0; // Reset minute to 0
-                gp.timeCounter = 0; // Reset time counter to 0
-                gp.currDay++;
-                gp.currDate++;
+                resetBed();
                 //reset semua Entity farm, wet soil -> not wet, pohon -> not cut, etc.
                 for(Entity e : gp.farmObj) {
                     e.reset();
@@ -120,4 +117,18 @@ public class OBJ_Bed extends Entity {
         }
     }
 
+    public void resetBed()
+    {
+        gp.hour = 8; // Reset hour to 8 AM
+                gp.minute = 0; // Reset minute to 0
+                gp.timeCounter = 0; // Reset time counter to 0
+                gp.currDay++;
+                gp.currDate++;
+                for(int i = 0; i < gp.npcs.size(); i++) {
+                    if(gp.npcs.get(i) instanceof Animal) {
+                        gp.npcs.get(i).reset(); // Reset all animals
+                }
+    }
+
+}
 }
