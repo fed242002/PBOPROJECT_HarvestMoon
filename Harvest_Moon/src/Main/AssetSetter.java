@@ -21,6 +21,13 @@ public class AssetSetter {
         MapDB.mapList.get(4).obj.add(new OBJ_HayManger(gp, 23 * gp.tileSize, 28 * gp.tileSize));
         MapDB.mapList.get(4).obj.add(new OBJ_HayManger(gp, 23 * gp.tileSize, 22 * gp.tileSize));
         MapDB.mapList.get(4).obj.add(new OBJ_HayManger(gp, 27 * gp.tileSize, 25 * gp.tileSize));
+
+        // transition objects
+
+        //  map 0 to map 1
+        MapDB.mapList.get(0).obj.add(new OBJ_Transition(gp, 24 * gp.tileSize, 47 * gp.tileSize)); 
+        // MapDB.mapList.get(1).obj.add(new OBJ_Transition(gp, 23 * gp.tileSize, 47 * gp.tileSize)); 
+        // MapDB.mapList.get(2).obj.add(new OBJ_Transition(gp, 25 * gp.tileSize, 47 * gp.tileSize)); 
     }
 
     public void addSoil(OBJ_soil soil) {

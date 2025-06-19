@@ -57,6 +57,10 @@ public class Entity extends SuperEntity implements Cloneable{
                     gp.eventHandler.handleMapTransition(6, 25, 18);
                 }
 
+                if(this instanceof OBJ_Transition){
+                    gp.eventHandler.handleMapTransition(1, 25, 2);
+                }
+
                 objAnimationSpriteNum = 0;
                 objectAnimationOn = false; // Turn off the animation after it completes
                 image = gp.setImage(path); // Reset the image to the default path
