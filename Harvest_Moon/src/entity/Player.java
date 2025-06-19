@@ -57,9 +57,9 @@ public class Player extends Entity {
 
     // ini buat sprite animation -> info2
     public String body = listBody[bodyIndex];
-    String eye = listEye[eyeIndex];
-    String outfit = listOutfit[outfitIndex];
-    String hair = listHair[hairIndex];
+    public String eye = listEye[eyeIndex];
+    public String outfit = listOutfit[outfitIndex];
+    public String hair = listHair[hairIndex];
 
     public boolean moveDisabled = false;
     public boolean isDigging = false;
@@ -137,28 +137,24 @@ public class Player extends Entity {
         toolsAnimationList.add(new ToolsAnimation(gp, "WateringCan", "WALK", 6));
         toolsAnimationList.add(new ToolsAnimation(gp, "WateringCan", "WATERING", 14));
 
+
+
+    }
+
+    public void preview(){
+        animationList.clear();
+        gp.ui.bodyPreview = gp.setImage("/assets/player/common/body/" + body + "/IDLE/down/0.png");
+        gp.ui.eyePreview = gp.setImage("/assets/player/common/eye/" + eye + "/IDLE/down/0.png");
+        gp.ui.hairPreview = gp.setImage("/assets/player/common/hair/" + hair + "/IDLE/down/0.png");
+        gp.ui.outfitPreview = gp.setImage("/assets/player/common/outfit/" + outfit + "/IDLE/down/0.png");
+
+
     }
 
     public void redeclareAnimation() {
-        animationList.clear();
 
-        // declare animation
-        // animationList.add(new Animation("walk", 6, "/assets/player/WALK/" + getPath(), 0));
-        // animationList.add(new Animation("idle", 6, "/assets/player/IDLE/" + getPath()));
-        // animationList.add(new Animation("chop", 10, "/assets/player/AXE CHOP/" + getPath(), 6));
-        // animationList.add(new Animation("dig", 9, "/assets/player/DIG/" + getPath(), 5));
-        // animationList.add(new Animation("cast", 9, "/assets/player/FISH CAST LINE/" + getPath(), 7));
-        // animationList.add(new Animation("FISHIDLE", 6, "/assets/player/FISH IDLE/" + getPath()));
-        // animationList.add(new Animation("FISHIDLE1", 6, "/assets/player/FISH IDLE/" + getPath()));
-        // animationList.add(new Animation("FISHCAUGHT", 9, "/assets/player/FISH CAUGHT/" + getPath()));
-        // animationList.add(new Animation("FISHPULLED", 2, "/assets/player/FISH REEL IN/" + getPath()));
-        // animationList.add(new Animation("HARVEST", 9, "/assets/player/HARVEST/" + getPath()));
-        // // animationList.add(new Animation("lift", 14, "/assets/player/LIFT/" + getPath()));
-        // // animationList.add(new Animation("PickUp", 12, "/assets/player/PICK UP/" + getPath()));
-        // animationList.add(new Animation("Sit", 6, "/assets/player/SIT 1/" + getPath()));
-        // animationList.add(new Animation("sleep", 6, "/assets/player/SLEEP/" + getSleepPath(), true));
-        // // animationList.add(new Animation("throw", 14, "/assets/player/THROW/" + getPath()));
-        // animationList.add(new Animation("watering", 14, "/assets/player/WATERING/" + getPath(), 8));
+        
+        animationList.clear();
 
 
         animationList.add(new Animation("IDLE", 6, "/assets/player/common/", body, eye, hair, outfit));
@@ -870,7 +866,7 @@ public class Player extends Entity {
 
         // chopping tree
         if (isChopping) {
-            setAnimation("chop");
+            setAnimation("AXECHOP");
             animation(3);
 
             if (animationDone == 3) {

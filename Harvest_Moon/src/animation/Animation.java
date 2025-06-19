@@ -83,7 +83,7 @@ public class Animation {
         public void setSpritePlayer(){
         try{
             for (int i = 0; i < spriteTotal; i++) {
-                if(!name.equalsIgnoreCase("sit")||!name.equalsIgnoreCase("sit2")){
+                if(!name.equalsIgnoreCase("sit")&&!name.equalsIgnoreCase("sit2")){
 
                     body_up[i] = ImageIO.read(getClass().getResourceAsStream(path + "body/"+body+"/"+ name+"/up/" + i + ".png"));
                     body_down[i] = ImageIO.read(getClass().getResourceAsStream(path + "body/"+body+"/"+ name+"/down/" + i + ".png"));
@@ -120,7 +120,7 @@ public class Animation {
                 }
 
             }
-            System.out.println("setSprite("+path+") di class Animation berhasil");
+            System.out.println("setSprite("+path+name+") di class Animation berhasil");
         } catch (IOException e) {
             e.printStackTrace();
         }
