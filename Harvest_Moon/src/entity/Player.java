@@ -143,22 +143,53 @@ public class Player extends Entity {
         animationList.clear();
 
         // declare animation
-        animationList.add(new Animation("walk", 6, "/assets/player/WALK/" + getPath(), 0));
-        animationList.add(new Animation("idle", 6, "/assets/player/IDLE/" + getPath()));
-        animationList.add(new Animation("chop", 10, "/assets/player/AXE CHOP/" + getPath(), 6));
-        animationList.add(new Animation("dig", 9, "/assets/player/DIG/" + getPath(), 5));
-        animationList.add(new Animation("cast", 9, "/assets/player/FISH CAST LINE/" + getPath(), 7));
-        animationList.add(new Animation("FISHIDLE", 6, "/assets/player/FISH IDLE/" + getPath()));
-        animationList.add(new Animation("FISHIDLE1", 6, "/assets/player/FISH IDLE/" + getPath()));
-        animationList.add(new Animation("FISHCAUGHT", 9, "/assets/player/FISH CAUGHT/" + getPath()));
-        animationList.add(new Animation("FISHPULLED", 2, "/assets/player/FISH REEL IN/" + getPath()));
-        animationList.add(new Animation("HARVEST", 9, "/assets/player/HARVEST/" + getPath()));
-        // animationList.add(new Animation("lift", 14, "/assets/player/LIFT/" + getPath()));
-        // animationList.add(new Animation("PickUp", 12, "/assets/player/PICK UP/" + getPath()));
-        animationList.add(new Animation("Sit", 6, "/assets/player/SIT 1/" + getPath()));
-        animationList.add(new Animation("sleep", 6, "/assets/player/SLEEP/" + getSleepPath(), true));
-        // animationList.add(new Animation("throw", 14, "/assets/player/THROW/" + getPath()));
-        animationList.add(new Animation("watering", 14, "/assets/player/WATERING/" + getPath(), 8));
+        // animationList.add(new Animation("walk", 6, "/assets/player/WALK/" + getPath(), 0));
+        // animationList.add(new Animation("idle", 6, "/assets/player/IDLE/" + getPath()));
+        // animationList.add(new Animation("chop", 10, "/assets/player/AXE CHOP/" + getPath(), 6));
+        // animationList.add(new Animation("dig", 9, "/assets/player/DIG/" + getPath(), 5));
+        // animationList.add(new Animation("cast", 9, "/assets/player/FISH CAST LINE/" + getPath(), 7));
+        // animationList.add(new Animation("FISHIDLE", 6, "/assets/player/FISH IDLE/" + getPath()));
+        // animationList.add(new Animation("FISHIDLE1", 6, "/assets/player/FISH IDLE/" + getPath()));
+        // animationList.add(new Animation("FISHCAUGHT", 9, "/assets/player/FISH CAUGHT/" + getPath()));
+        // animationList.add(new Animation("FISHPULLED", 2, "/assets/player/FISH REEL IN/" + getPath()));
+        // animationList.add(new Animation("HARVEST", 9, "/assets/player/HARVEST/" + getPath()));
+        // // animationList.add(new Animation("lift", 14, "/assets/player/LIFT/" + getPath()));
+        // // animationList.add(new Animation("PickUp", 12, "/assets/player/PICK UP/" + getPath()));
+        // animationList.add(new Animation("Sit", 6, "/assets/player/SIT 1/" + getPath()));
+        // animationList.add(new Animation("sleep", 6, "/assets/player/SLEEP/" + getSleepPath(), true));
+        // // animationList.add(new Animation("throw", 14, "/assets/player/THROW/" + getPath()));
+        // animationList.add(new Animation("watering", 14, "/assets/player/WATERING/" + getPath(), 8));
+
+
+        animationList.add(new Animation("IDLE", 6, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("WALK", 6, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("SLEEP", 6, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("SIT", 6, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("SIT2", 6, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("PHONE", 12, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("BOOK", 12, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("PUSHCART", 6, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("PICKUP", 12, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("GIFT", 10, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("LIFT", 14, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("THROW", 14, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("HIT", 6, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("PUNCH", 6, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("STAB", 6, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("GRABGUN", 4, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("GUNIDLE", 6, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("SHOOT", 3, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("HURT", 3, "/assets/player/common/", body, eye, hair, outfit));
+        
+        
+        animationList.add(new Animation("HARVEST", 9, "/assets/player/farmer/", body, eye, hair, outfit));
+        animationList.add(new Animation("DIG", 9, "/assets/player/farmer/", body, eye, hair, outfit));
+        animationList.add(new Animation("WATERING", 14, "/assets/player/farmer/", body, eye, hair, outfit));
+        animationList.add(new Animation("AXECHOP", 10, "/assets/player/farmer/", body, eye, hair, outfit));
+        animationList.add(new Animation("CAST", 9, "/assets/player/farmer/", body, eye, hair, outfit));
+        animationList.add(new Animation("FISHIDLE", 6, "/assets/player/farmer/", body, eye, hair, outfit));
+        animationList.add(new Animation("PULLHOOK", 2, "/assets/player/farmer/", body, eye, hair, outfit));
+        animationList.add(new Animation("FISHCAUGHT", 9, "/assets/player/farmer/", body, eye, hair, outfit));
 
     }
 
