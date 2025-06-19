@@ -162,7 +162,7 @@ public class Entity extends SuperEntity implements Cloneable{
     public boolean isRotten = false;;
 
     public void speak() {
-        if (dialogues.size() - 1 < dialogueIndex) {
+        if (dialogueIndex >= dialogues.size()) {
             dialogueIndex = 0;
         }
         gp.ui.currentDialogue = dialogues.get(dialogueIndex);

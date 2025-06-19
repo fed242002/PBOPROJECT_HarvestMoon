@@ -664,14 +664,16 @@ public class UI {
         // curren person yang ngomong
 
         if(currentEntityDialogue != null) {
+            if (currentEntityDialogue.dialogueIndex >= currentEntityDialogue.dialogues.size()) {
+                    currentEntityDialogue.dialogueIndex = 0;
+                }
             char characters[] = currentEntityDialogue.dialogues.get(currentEntityDialogue.dialogueIndex).toCharArray();
-
 
                 if(charIndex < characters.length) {
                     String s = String.valueOf(characters[charIndex]);
                     combinedText = combinedText + s;
                     currentDialogue = combinedText;
-                    System.out.println(currentEntityDialogue.dialogues.get(currentEntityDialogue.dialogueIndex));
+                    System.out.println(currentEntityDialogue.dialogueIndex);
                     charIndex++;
                 }
         }
@@ -681,6 +683,7 @@ public class UI {
             g2.drawImage(currentEntityDialogue.animationList.get(currentEntityDialogue.currentAnimationIndex).down[0], 
                 450, 25, gp.tileSize * 4, gp.tileSize * 8, null);
         }
+
 
         // window
         int x = 0;
