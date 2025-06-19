@@ -249,6 +249,7 @@ public class Player extends Entity {
         inventory.add(ItemList.cauliflowerSeedBag.clone());
         inventory.add(ItemList.cauliflowerSeedBag2.clone());
         inventory.add(ItemList.cauliflowerSeedBag3.clone());
+        inventory.add(ItemList.knife.clone());
 
 
         

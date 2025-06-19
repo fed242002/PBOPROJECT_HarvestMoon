@@ -107,10 +107,19 @@ package entity;
         if(readyToHarverst)
         {
             if(name.equalsIgnoreCase("cow")){
-                hasil = "milkBucket";
-                readyToHarverst = false;
-                gp.player.inventory.add(ItemList.getItem(hasil));
-                System.out.println("You got " + hasil + " from " + name);
+                if(gp.player.currentItem.name.equalsIgnoreCase("knife")){
+                    hasil = "rawSteak";
+                    readyToHarverst = false;
+                    gp.player.inventory.add(ItemList.getItem(hasil));
+                    System.out.println("You got " + hasil + " from " + name);
+                    gp.npcs.remove(this);
+                }else{
+                
+                    hasil = "milkBucket";
+                    readyToHarverst = false;
+                    gp.player.inventory.add(ItemList.getItem(hasil));
+                    System.out.println("You got " + hasil + " from " + name);
+                }
             }
 
             else if(name.equalsIgnoreCase("chicken")){
