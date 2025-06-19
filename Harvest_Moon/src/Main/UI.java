@@ -997,50 +997,56 @@ public class UI {
     }
 
     public void trade_sell() {
+        System.out.println("masuk sell");
+    // Window
+    int x = gp.tileSize * 2;
+    int y = gp.tileSize;
+    int width = gp.screenWidth - (gp.tileSize * 4);
+    int height = gp.screenHeight - (gp.tileSize * 2);
+    drawSubWindow(x, y, width, height);
 
-        // Window
+    g2.setColor(Color.white);
+    g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
+    g2.drawString("Sell All Items", x + 20, y + gp.tileSize);
 
-        int x = gp.tileSize * 2;
+    // Calculate total sell price
+    int totalSell = 0;
+    for (Entity e : gp.player.inventory) {
+    if (e instanceof Item) {
+        Item item = (Item) e;
+        totalSell += item.sellPrice * item.amount;
+    }
+}
 
-        int y = gp.tileSize;
 
-        int width = gp.screenWidth - (gp.tileSize * 4);
+    g2.setFont(g2.getFont().deriveFont(24F));
+    g2.drawString("Total: " + totalSell + "G", x + 20, y + gp.tileSize * 2);
 
-        int height = gp.screenHeight - (gp.tileSize * 2);
+    g2.setFont(g2.getFont().deriveFont(20F));
+    g2.drawString("[ENTER] Sell All   [ESC] Cancel", x + 20, y + height - gp.tileSize);
 
-        drawSubWindow(x, y, width, height);
+    // Handle input
+    if (gp.keyH.enterPressed) {
+        // Add gold and clear inventory
+        gp.player.gold += totalSell;
+        gp.player.inventory.clear();
+        gp.playSFX(gp.sfx, 2);
+        showMessage("You sold everything for " + totalSell + "G!");
+        subState = 1; // go back to trade menu
+        gp.keyH.enterPressed = false;
+    }
 
-        
+    if (gp.keyH.escPressed) {
+        subState = 1; // go back to trade menu
+        gp.keyH.escPressed = false;
+    }
+}
 
-        // Teks
-
-        g2.setColor(Color.white);
-
-        g2.setFont(g2.getFont().deriveFont(32F));
-
-        int textX = x + 20;
-
-        int textY = y + gp.tileSize;
-
-        g2.drawString("Sell Menu", textX, textY);
-
-        
-
-        // Kembali ke menu utama merchant
-
-        if (gp.keyH.interactPressed) {
-
-            gp.keyH.interactPressed = false;
-
-            subState = 1;
-
-        }
-
-    }    public void handleMerchantNavigation() {
+    public void handleMerchantNavigation() {
         // Only handle navigation if we're talking to a merchant
         if (currentEntityDialogue != null && 
             currentEntityDialogue.getClass().getSimpleName().equals("Npc_Merchant")) {
-            
+    
             // Initialize merchant menu if not already initialized
             if(subState == 0) {
                 subState = 1;
