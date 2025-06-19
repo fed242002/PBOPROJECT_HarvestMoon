@@ -137,41 +137,41 @@ public class EventHandler {
             //         handleMapTransition(1, 25, 2);
             //     }
             // }
-            case 1 -> { // Forest
-                if (gp.player.worldX >= gp.tileSize * 24 && gp.player.worldX <= gp.tileSize * 26
-                        && gp.player.worldY >= gp.tileSize * 0 && gp.player.worldY <= gp.tileSize * 1) {
-                    handleMapTransition(0, 24, 46);
-                } else if (gp.player.worldX >= gp.tileSize * 47 && gp.player.worldX <= gp.tileSize * 48
-                        && gp.player.worldY >= gp.tileSize * 23 && gp.player.worldY <= gp.tileSize * 27) {
-                    handleMapTransition(2, 4, 37);
-                }
-            }
-            case 2 -> { // Town Hall
-                if (gp.player.worldX >= gp.tileSize * 0 && gp.player.worldX <= gp.tileSize * 1
-                        && gp.player.worldY >= gp.tileSize * 35 && gp.player.worldY <= gp.tileSize * 39) {
-                    handleMapTransition(1, 46, 25);
-                }
-            }
-            case 3 -> { // Inside the House
-                if (gp.player.worldX >= gp.tileSize * 24 && gp.player.worldX <= gp.tileSize * 26
-                        && gp.player.worldY >= gp.tileSize * 27 && gp.player.worldY <= gp.tileSize * 28) {
-                    handleMapTransition(0, 37, 17);
-                }
-            }
+            // case 1 -> { // Forest
+            //     if (gp.player.worldX >= gp.tileSize * 24 && gp.player.worldX <= gp.tileSize * 26
+            //             && gp.player.worldY >= gp.tileSize * 0 && gp.player.worldY <= gp.tileSize * 1) {
+            //         handleMapTransition(0, 24, 46);
+            //     } else if (gp.player.worldX >= gp.tileSize * 47 && gp.player.worldX <= gp.tileSize * 48
+            //             && gp.player.worldY >= gp.tileSize * 23 && gp.player.worldY <= gp.tileSize * 27) {
+            //         handleMapTransition(2, 4, 37);
+            //     }
+            // }
+            // case 2 -> { // Town Hall
+            //     if (gp.player.worldX >= gp.tileSize * 0 && gp.player.worldX <= gp.tileSize * 1
+            //             && gp.player.worldY >= gp.tileSize * 35 && gp.player.worldY <= gp.tileSize * 39) {
+            //         handleMapTransition(1, 46, 25);
+            //     }
+            // }
+            // case 3 -> { // Inside the House
+            //     if (gp.player.worldX >= gp.tileSize * 24 && gp.player.worldX <= gp.tileSize * 26
+            //             && gp.player.worldY >= gp.tileSize * 27 && gp.player.worldY <= gp.tileSize * 28) {
+            //         handleMapTransition(0, 37, 17);
+            //     }
+            // }
 
-            case 4 -> { // Inside the Barn
-                if (gp.player.worldX >= gp.tileSize * 23 && gp.player.worldX <= gp.tileSize * 27
-                        && gp.player.worldY >= gp.tileSize * 29 && gp.player.worldY <= gp.tileSize * 31) {
-                    handleMapTransition(0, 10, 19);
-                }
-            }
+            // case 4 -> { // Inside the Barn
+            //     if (gp.player.worldX >= gp.tileSize * 23 && gp.player.worldX <= gp.tileSize * 27
+            //             && gp.player.worldY >= gp.tileSize * 29 && gp.player.worldY <= gp.tileSize * 31) {
+            //         handleMapTransition(0, 10, 19);
+            //     }
+            // }
 
-            case 5 -> { // Inside the Market
-                if (gp.player.worldX >= gp.tileSize * 24 && gp.player.worldX <= gp.tileSize * 26
-                        && gp.player.worldY >= gp.tileSize * 19 && gp.player.worldY <= gp.tileSize * 26) {
-                    handleMapTransition(2, 8, 30);
-                }
-            }
+            // case 5 -> { // Inside the Market
+            //     if (gp.player.worldX >= gp.tileSize * 24 && gp.player.worldX <= gp.tileSize * 26
+            //             && gp.player.worldY >= gp.tileSize * 19 && gp.player.worldY <= gp.tileSize * 26) {
+            //         handleMapTransition(2, 8, 30);
+            //     }
+            // }
 
         }
 
