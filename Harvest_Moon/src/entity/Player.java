@@ -127,7 +127,7 @@ public class Player extends Entity {
         toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "CAST", 9, true));
         toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "FISHIDLE", 6, true));
         toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "FISHIDLE2", 6, true));
-        toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "FISHPULLED", 2, true));
+        toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "PULLHOOK", 2, true));
         toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "IDLE", 6));
         toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "WALK", 6));
         toolsAnimationList.add(new ToolsAnimation(gp, "shovel", "IDLE", 6));
@@ -748,7 +748,7 @@ public class Player extends Entity {
                 //ini nanti buat nambah ikan kalo misal ke tangkap
                 fishCaught = true;
                 resetAllAnimation();
-                setAnimation("fishpulled");
+                setAnimation("PULLHOOK");
                 fishpulled = true;
                 moveDisabled = true;
                 fishingTimeRandom = random.nextInt(5, 15); // Random value between 5 and 20
@@ -974,7 +974,7 @@ public class Player extends Entity {
             }
         }
         if (fishpulled) {
-            setAnimation("FISHPULLED");
+            setAnimation("PULLHOOK");
             animation(7);
 
             if (animationDone >= fishingTimeRandom) {
