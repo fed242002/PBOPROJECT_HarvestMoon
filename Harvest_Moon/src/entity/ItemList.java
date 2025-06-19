@@ -9,7 +9,7 @@ import Main.GamePanel;
 public class ItemList {
     // 0 = item, 1 = tool, 2 = seed, 3 = crop, 4 = food, 6 = material, 7 = furniture
    public static Item apple, axe, baguette, banana, carrot, carrotSeedBag, cauliflower, cauliflowerSeedBag, cheese, chicken, chili, chiliSeedBag, coffeeBean;
-    public static Item  blueFish, redFish, orangeFish, greenFish,boots,croissant, egg, emptySeedBag, fishRod, grain, grainSeedBag, grapes, grapesSeedBag, lemon, lettuce, lettuceSeedBag, milkBucket, onion, onionSeedBag, orange, peach, pear, pearSeedBag, pineapple, pineappleSeedBag, pumpkin, pumpkinSeedBag, radish, radishSeedBag, rawChicken, rawSteak, shear, shovel, steak, strawberry, strawberrySeedBag, tomato, tomatoSeedBag, toolsBag, oakTrunk, spruceTrunk, appleWoodTrunk, pineTrunk, turnip, turnipSeedBag, wateringCan, watermelon, watermelonSeedBag, WatermelonSlice, whoolBrown, WhoolGray, WhoolWhite, WhoolYellow, zucchini, zucchiniSeedBag;
+    public static Item hay, blueFish, redFish, orangeFish, greenFish,boots,croissant, egg, emptySeedBag, fishRod, grain, grainSeedBag, grapes, grapesSeedBag, lemon, lettuce, lettuceSeedBag, milkBucket, onion, onionSeedBag, orange, peach, pear, pearSeedBag, pineapple, pineappleSeedBag, pumpkin, pumpkinSeedBag, radish, radishSeedBag, rawChicken, rawSteak, shear, shovel, steak, strawberry, strawberrySeedBag, tomato, tomatoSeedBag, toolsBag, oakTrunk, spruceTrunk, appleWoodTrunk, pineTrunk, turnip, turnipSeedBag, wateringCan, watermelon, watermelonSeedBag, WatermelonSlice, whoolBrown, WhoolGray, WhoolWhite, WhoolYellow, zucchini, zucchiniSeedBag;
     GamePanel gp;
     static ArrayList<Item> item;
 
@@ -30,6 +30,7 @@ public class ItemList {
         shear = new Item(gp, "shear", 0, "Used for harvesting wool from sheep. Keep them sharp!", 150, 75);
         milkBucket = new Item(gp, "milkBucket", 0, "cow dairy product.", 200, 100);
         knife = new Item(gp, "knife", 0, "Essential for collecting meat from cows.", 200, 100);
+        hay = new Item(gp, "hay", 0, "Dried grass used for animal feed.", 100, 50);
 
         // Type 1: Tools
         axe = new Item(gp, "axe", 1, "A sturdy tool for chopping trees and collecting wood.", 250, 125);

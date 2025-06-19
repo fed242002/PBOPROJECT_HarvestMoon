@@ -1,6 +1,8 @@
 package object;
 
 import Main.GamePanel;
+import Main.MapDB;
+import Main.MapData;
 import entity.Animal;
 import entity.Entity;
 
@@ -81,17 +83,33 @@ public class OBJ_Bed extends Entity {
                 e.printStackTrace();
             } // Sleep for 1 second to simulate the sleeping process
 
+            resetBed();
 
             //reset semua pas ganti hari
-                resetBed();
                 //reset semua Entity farm, wet soil -> not wet, pohon -> not cut, etc.
-                for(Entity e : gp.farmObj) {
+            for(MapData map : MapDB.mapList) {
+                // Reset all entities in the map
+                for(Entity e : map.entityList) {
+                    e.reset();
+                }
+                for(Entity e : map.farmObj) {
+                    e.reset();
+                }
+                for(Entity e : map.obj) {
                     e.reset();
                 }
 
-                for(Entity e : gp.cropObj) {
+                for(Entity e : map.cropObj) {
                     e.dayPassed();
                 }
+                for(int i = 0; i < map.npcs.size(); i++) {
+                    if(map.npcs.get(i) instanceof Animal) {
+                        map.npcs.get(i).reset(); // Reset all animals
+                    }
+                }
+            }
+
+
 
                 //reset Energy
                 gp.player.energy = gp.player.maxEnergy; // Reset player's energy to maximum
@@ -124,11 +142,7 @@ public class OBJ_Bed extends Entity {
                 gp.timeCounter = 0; // Reset time counter to 0
                 gp.currDay++;
                 gp.currDate++;
-                for(int i = 0; i < gp.npcs.size(); i++) {
-                    if(gp.npcs.get(i) instanceof Animal) {
-                        gp.npcs.get(i).reset(); // Reset all animals
-                }
     }
 
 }
-}
+
