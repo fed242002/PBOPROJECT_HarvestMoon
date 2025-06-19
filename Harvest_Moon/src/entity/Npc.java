@@ -16,10 +16,10 @@ public class Npc extends Entity {
         this.worldX = x;
         this.worldY = y;
         this.solidArea.y = 48;
-        walk = new Animation("walk", 6, "/assets/npc/" + name + "/WALK/");
-        animationList.add(walk);
         idle = new Animation("idle", 6, "/assets/npc/" + name + "/IDLE/");
         animationList.add(idle);
+        walk = new Animation("walk", 6, "/assets/npc/" + name + "/WALK/");
+        animationList.add(walk);
         currentAnimationIndex = 1; // default idle
         // specialNpc = true;
 
@@ -45,8 +45,8 @@ public class Npc extends Entity {
 
     public void speak() {
         super.speak();
-        gp.player.gold +=100;
-        onPath = true; // di path
+        // gp.player.gold +=100;
+        // onPath = true; // di path
     }
 
     public void setAction() {

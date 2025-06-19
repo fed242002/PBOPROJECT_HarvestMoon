@@ -156,11 +156,12 @@ public class Entity extends SuperEntity implements Cloneable{
     public int sellPrice = 0; // Price of the item
 
     public boolean isMatured = false;
-    ;
+    
+    public boolean exitDialogueDisable = false;
 
 
 
-    public boolean isRotten = false;;
+    public boolean isRotten = false;
 
     public void speak() {
         if (dialogues.size() - 1 < dialogueIndex) {

@@ -46,26 +46,6 @@ public class KeyHandler implements KeyListener {
             gp.showDebugHitboxes = !gp.showDebugHitboxes;
         }
 
-        // Handle dialog state with merchant
-        if(gp.gameState == gp.dialogueState) {
-            if(gp.ui.currentEntityDialogue != null && 
-               gp.ui.currentEntityDialogue.getClass().getSimpleName().equals("Npc_Merchant")) {
-                  if(code == KeyBind.upKey) {
-                    gp.playSFX(gp.sfx, 1);
-                    gp.ui.merchantChoice--;
-                    if(gp.ui.merchantChoice < 0) {
-                        gp.ui.merchantChoice = 2;
-                    }
-                }
-                if(code == KeyBind.downKey) {
-                    gp.playSFX(gp.sfx, 1);
-                    gp.ui.merchantChoice++;
-                    if(gp.ui.merchantChoice > 2) {
-                        gp.ui.merchantChoice = 0;
-                    }
-                }
-            }
-        }
 
         else if (gp.gameState == gp.titleState) {
             // main menu
@@ -417,16 +397,50 @@ public class KeyHandler implements KeyListener {
         }
 
 
-        else if (gp.gameState == gp.dialogueState) {
-            if (code == KeyBind.nextKey) {
-                // Only switch to play state if we're not in a trade menu
-                if (gp.ui.currentEntityDialogue == null || 
-                    !gp.ui.currentEntityDialogue.getClass().getSimpleName().equals("Npc_Merchant") ||
-                    gp.ui.subState == 0) {
+        else if (gp.gameState == gp.dialogueState && gp.ui.currentEntityDialogue != null) {
+             if (!gp.ui.currentEntityDialogue.exitDialogueDisable) { //no tradeable
+                if (code == KeyBind.nextKey) {               
                     gp.gameState = gp.playState;
                 }
+           
+            }else{
+                if(gp.ui.currentEntityDialogue != null && 
+                gp.ui.currentEntityDialogue.getClass().getSimpleName().equals("Npc_Merchant")) {
+                    if(code == KeyBind.upKey) {
+                        gp.playSFX(gp.sfx, 1);
+                        gp.ui.merchantChoice--;
+                        if(gp.ui.merchantChoice < 0) {
+                            gp.ui.merchantChoice = 2;
+                        }
+                    }
+                    if(code == KeyBind.downKey) {
+                        gp.playSFX(gp.sfx, 1);
+                        gp.ui.merchantChoice++;
+                        if(gp.ui.merchantChoice > 2) {
+                            gp.ui.merchantChoice = 0;
+                        }
+                    }
+                }
+                if(gp.ui.currentEntityDialogue != null && 
+                gp.ui.currentEntityDialogue.getClass().getSimpleName().equals("Npc_Merchant")) {
+                    if(code == KeyBind.upKey) {
+                        gp.playSFX(gp.sfx, 1);
+                        gp.ui.merchantChoice--;
+                        if(gp.ui.merchantChoice < 0) {
+                            gp.ui.merchantChoice = 2;
+                        }
+                    }
+                    if(code == KeyBind.downKey) {
+                        gp.playSFX(gp.sfx, 1);
+                        gp.ui.merchantChoice++;
+                        if(gp.ui.merchantChoice > 2) {
+                            gp.ui.merchantChoice = 0;
+                        }
+                    }
+                }
+
             }
-        }
+    }
 
         else if (gp.gameState == gp.inventoryState) {
 
@@ -478,9 +492,9 @@ public class KeyHandler implements KeyListener {
         }
 
     }
-
     @Override
-    public void keyReleased(KeyEvent e) {        int code = e.getKeyCode();
+    public void keyReleased(KeyEvent e) {        
+        int code = e.getKeyCode();
 
         if (code == KeyBind.upKey) {
             upPressed = false;

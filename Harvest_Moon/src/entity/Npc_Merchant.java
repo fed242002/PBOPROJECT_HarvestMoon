@@ -21,6 +21,7 @@ public class Npc_Merchant extends Entity {
         this.worldX = x;
         this.worldY = y;
         this.solidArea.y = 48;
+        exitDialogueDisable =  true;
 
         idle = new Animation("idle", 6, "/assets/npc/" + name + "/IDLE/");
         animationList.add(idle);

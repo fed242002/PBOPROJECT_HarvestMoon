@@ -243,7 +243,6 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
     public void update() {
 
-
     
         MapData current = MapDB.mapList.get(currentMap);
 

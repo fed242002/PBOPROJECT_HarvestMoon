@@ -714,11 +714,10 @@ public class UI {
         g2.setColor(new Color(0, 0, 0, 150)); // semi-transparent black
         g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 
-        // curren person yang ngomong
 
         // Draw the NPC portrait
-        if (currentEntityDialogue != null && currentEntityDialogue.specialNpc) {
-            g2.drawImage(currentEntityDialogue.animationList.get(currentEntityDialogue.currentAnimationIndex).down[0], 
+        if (currentEntityDialogue != null ) {
+            g2.drawImage(currentEntityDialogue.animationList.get(0).down[0], 
                 450, 25, gp.tileSize * 4, gp.tileSize * 8, null);
         }
 
