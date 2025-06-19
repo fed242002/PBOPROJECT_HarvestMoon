@@ -37,8 +37,29 @@ public class UI {
     public int merchantChoice = 0;
     public BufferedImage imageLighting;
     public String path2 = "";
+<<<<<<< HEAD
     int charIndex = 0;
     public String combinedText = "";
+=======
+    public BufferedImage bodyPreview;
+    public BufferedImage eyePreview;
+    public BufferedImage hairPreview;
+    public BufferedImage outfitPreview;
+    
+    public boolean confirmation = false;
+    public boolean confirmationPageOn = false;
+    public String confirmationText = "";
+
+
+    public void showConfirmation(String text){
+        gp.gameState = gp.confirmationState;
+        confirmationText = text;
+        confirmationPageOn = true;
+        commandNum = 0;
+    }
+
+    
+>>>>>>> bc744e8d25eaae9768cfcfdc9a368f3db9625a66
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -48,7 +69,8 @@ public class UI {
 
     }
 
-  
+
+
 
     public void showMessage(String text) {
         message = text;
@@ -66,8 +88,13 @@ public class UI {
         }
 
         if (gp.gameState == gp.playState) {
-            drawGameUI();
+                drawGameUI();
+            
         }
+        if(gp.gameState == gp.confirmationState){
+            drawConfirmationPage();
+        }
+        
 
         if (gp.gameState == gp.pauseState) {
             if (pauseScreenState == 0) {
@@ -108,6 +135,32 @@ public class UI {
         }
     }
 
+    public void drawConfirmationPage(){
+
+        g2.setColor(new Color(0, 0, 0, 150)); // semi-transparent black
+        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+
+        BufferedImage yes = gp.setImage("/assets/ui/yes.png");
+        BufferedImage yesActive = gp.setImage("/assets/ui/yesActive.png");
+        BufferedImage no = gp.setImage("/assets/ui/no.png");
+        BufferedImage noActive = gp.setImage("/assets/ui/noActive.png");
+
+
+        g2.setColor(Color.WHITE);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 25F));
+        g2.drawString(confirmationText,getXforCenteredText(confirmationText) , gp.tileSize * 3 + 20);
+        if(commandNum == 0){
+            g2.drawImage(yesActive, gp.screenWidth / 2 - 288 / 2, gp.tileSize * 4, 288, 48, null);
+        }else{
+            g2.drawImage(yes, gp.screenWidth / 2 - 288 / 2, gp.tileSize * 4, 288, 48, null);
+        }
+        if(commandNum == 1){
+            g2.drawImage(noActive, gp.screenWidth / 2 - 288 / 2, gp.tileSize * 5 , 288, 48, null);
+        }else{
+            g2.drawImage(no, gp.screenWidth / 2 - 288 / 2, gp.tileSize * 5 , 288, 48, null);
+        }
+
+    }
 
     public void chooseFoodItem(){
         BufferedImage use = gp.setImage("/assets/ui/use.png");
@@ -140,14 +193,15 @@ public class UI {
 
         // ini aku mau nambain kalo dia energy > 50 pake haappy yang mata nya buka kalo
         // ga pake yang sleep
-        BufferedImage playerIcon = null;
-        try {
-            playerIcon = ImageIO
-                    .read(getClass().getResourceAsStream("/assets/player/SLEEP/" + gp.player.getSleepPath() + "0.png"));
-        } catch (IOException e) {
-            System.out.println("Error loading player image UI: " + e.getMessage());
-        }
-        g2.drawImage(playerIcon, 3, 8, gp.tileSize * 1 + 15, gp.tileSize * 2 + 15, null);
+        BufferedImage playerbody = null;
+        BufferedImage playereye = null;
+        BufferedImage playerhair = null;
+        playerbody = gp.player.animationList.get(2).body_down[0]; // get the body image from the animation list
+        playereye = gp.player.animationList.get(2).eye_down[0]; // get the eye image from the animation list
+        playerhair = gp.player.animationList.get(2).hair_down[0]; // get the hair image from the animation list
+        g2.drawImage(playerbody, 3, 8, gp.tileSize * 1 + 15, gp.tileSize * 2 + 15, null);
+        g2.drawImage(playereye, 3, 8, gp.tileSize * 1 + 15, gp.tileSize * 2 + 15, null);
+        g2.drawImage(playerhair, 3, 8, gp.tileSize * 1 + 15, gp.tileSize * 2 + 15, null);
         // energy bar and name
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
         g2.drawString(gp.player.name, 70, 40);
@@ -336,8 +390,11 @@ public class UI {
             }
 
             // preview player
-            g2.drawImage(gp.player.animationList.get(1).down[0], 150, 125, gp.playerSizeX * 2, gp.playerSizeY * 2,
-                    null);
+            g2.drawImage(bodyPreview, 150, 125, gp.playerSizeX * 2, gp.playerSizeY * 2,null);
+            g2.drawImage(eyePreview, 150, 125, gp.playerSizeX * 2, gp.playerSizeY * 2, null);
+            g2.drawImage(hairPreview, 150, 125, gp.playerSizeX * 2, gp.playerSizeY * 2, null);
+            g2.drawImage(outfitPreview, 150, 125, gp.playerSizeX * 2, gp.playerSizeY * 2, null);
+                   
 
         }
 
@@ -1006,50 +1063,56 @@ public class UI {
     }
 
     public void trade_sell() {
+        System.out.println("masuk sell");
+    // Window
+    int x = gp.tileSize * 2;
+    int y = gp.tileSize;
+    int width = gp.screenWidth - (gp.tileSize * 4);
+    int height = gp.screenHeight - (gp.tileSize * 2);
+    drawSubWindow(x, y, width, height);
 
-        // Window
+    g2.setColor(Color.white);
+    g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
+    g2.drawString("Sell All Items", x + 20, y + gp.tileSize);
 
-        int x = gp.tileSize * 2;
+    // Calculate total sell price
+    int totalSell = 0;
+    for (Entity e : gp.player.inventory) {
+    if (e instanceof Item) {
+        Item item = (Item) e;
+        totalSell += item.sellPrice * item.amount;
+    }
+}
 
-        int y = gp.tileSize;
 
-        int width = gp.screenWidth - (gp.tileSize * 4);
+    g2.setFont(g2.getFont().deriveFont(24F));
+    g2.drawString("Total: " + totalSell + "G", x + 20, y + gp.tileSize * 2);
 
-        int height = gp.screenHeight - (gp.tileSize * 2);
+    g2.setFont(g2.getFont().deriveFont(20F));
+    g2.drawString("[ENTER] Sell All   [ESC] Cancel", x + 20, y + height - gp.tileSize);
 
-        drawSubWindow(x, y, width, height);
+    // Handle input
+    if (gp.keyH.enterPressed) {
+        // Add gold and clear inventory
+        gp.player.gold += totalSell;
+        gp.player.inventory.clear();
+        gp.playSFX(gp.sfx, 2);
+        showMessage("You sold everything for " + totalSell + "G!");
+        subState = 1; // go back to trade menu
+        gp.keyH.enterPressed = false;
+    }
 
-        
+    if (gp.keyH.escPressed) {
+        subState = 1; // go back to trade menu
+        gp.keyH.escPressed = false;
+    }
+}
 
-        // Teks
-
-        g2.setColor(Color.white);
-
-        g2.setFont(g2.getFont().deriveFont(32F));
-
-        int textX = x + 20;
-
-        int textY = y + gp.tileSize;
-
-        g2.drawString("Sell Menu", textX, textY);
-
-        
-
-        // Kembali ke menu utama merchant
-
-        if (gp.keyH.interactPressed) {
-
-            gp.keyH.interactPressed = false;
-
-            subState = 1;
-
-        }
-
-    }    public void handleMerchantNavigation() {
+    public void handleMerchantNavigation() {
         // Only handle navigation if we're talking to a merchant
         if (currentEntityDialogue != null && 
             currentEntityDialogue.getClass().getSimpleName().equals("Npc_Merchant")) {
-            
+    
             // Initialize merchant menu if not already initialized
             if(subState == 0) {
                 subState = 1;

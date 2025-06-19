@@ -14,7 +14,7 @@ public class ItemList {
     static ArrayList<Item> item;
 
     public static Item carrotSeedBag2, cauliflowerSeedBag2, chiliSeedBag2, grainSeedBag2, grapesSeedBag2, lettuceSeedBag2, onionSeedBag2, pearSeedBag2, pineappleSeedBag2, pumpkinSeedBag2, radishSeedBag2, strawberrySeedBag2, tomatoSeedBag2, turnipSeedBag2, watermelonSeedBag2, zucchiniSeedBag2;
-    public static Item carrotSeedBag3, cauliflowerSeedBag3, chiliSeedBag3, grainSeedBag3, grapesSeedBag3, lettuceSeedBag3, onionSeedBag3, pearSeedBag3, pineappleSeedBag3, pumpkinSeedBag3, radishSeedBag3, strawberrySeedBag3, tomatoSeedBag3, turnipSeedBag3, watermelonSeedBag3, zucchiniSeedBag3;
+    public static Item knife, carrotSeedBag3, cauliflowerSeedBag3, chiliSeedBag3, grainSeedBag3, grapesSeedBag3, lettuceSeedBag3, onionSeedBag3, pearSeedBag3, pineappleSeedBag3, pumpkinSeedBag3, radishSeedBag3, strawberrySeedBag3, tomatoSeedBag3, turnipSeedBag3, watermelonSeedBag3, zucchiniSeedBag3;
 
 
     public ItemList(GamePanel gp) {
@@ -28,7 +28,8 @@ public class ItemList {
         emptySeedBag = new Item(gp, "emptySeedBag", 0, "A plain cloth bag that once held seeds. Could be reused for storage.", 5, 2);
         boots = new Item(gp, "boots", 0, "Sturdy footwear for protecting your feet while working.", 120, 60);
         shear = new Item(gp, "shear", 0, "Used for harvesting wool from sheep. Keep them sharp!", 150, 75);
-        milkBucket = new Item(gp, "milkBucket", 0, "Essential for collecting milk from your cows.", 200, 100);
+        milkBucket = new Item(gp, "milkBucket", 0, "cow dairy product.", 200, 100);
+        knife = new Item(gp, "knife", 0, "Essential for collecting meat from cows.", 200, 100);
 
         // Type 1: Tools
         axe = new Item(gp, "axe", 1, "A sturdy tool for chopping trees and collecting wood.", 250, 125);
@@ -143,7 +144,7 @@ public class ItemList {
         
 
         item = new ArrayList<>(java.util.Arrays.asList(
-            apple, axe, baguette, banana, carrot, carrotSeedBag, cauliflower, cauliflowerSeedBag, cheese, chicken, chili, chiliSeedBag, coffeeBean, croissant, egg, emptySeedBag, fishRod, grain, grainSeedBag, grainSeedBag, grapes, grapesSeedBag, lemon, lettuce, lettuceSeedBag, milkBucket, onion, onionSeedBag, orange, peach, pear, pearSeedBag, pineapple, pineappleSeedBag, pumpkin, pumpkinSeedBag, radish, radishSeedBag, rawChicken, rawSteak, shear, shovel, steak, strawberry, strawberrySeedBag, tomato, tomatoSeedBag, toolsBag, oakTrunk, spruceTrunk, appleWoodTrunk, pineTrunk, turnip, turnipSeedBag, wateringCan, watermelon, watermelonSeedBag, WatermelonSlice, whoolBrown, WhoolGray, WhoolWhite, WhoolYellow, zucchini, zucchiniSeedBag,
+            knife,apple, axe, baguette, banana, carrot, carrotSeedBag, cauliflower, cauliflowerSeedBag, cheese, chicken, chili, chiliSeedBag, coffeeBean, croissant, egg, emptySeedBag, fishRod, grain, grainSeedBag, grainSeedBag, grapes, grapesSeedBag, lemon, lettuce, lettuceSeedBag, milkBucket, onion, onionSeedBag, orange, peach, pear, pearSeedBag, pineapple, pineappleSeedBag, pumpkin, pumpkinSeedBag, radish, radishSeedBag, rawChicken, rawSteak, shear, shovel, steak, strawberry, strawberrySeedBag, tomato, tomatoSeedBag, toolsBag, oakTrunk, spruceTrunk, appleWoodTrunk, pineTrunk, turnip, turnipSeedBag, wateringCan, watermelon, watermelonSeedBag, WatermelonSlice, whoolBrown, WhoolGray, WhoolWhite, WhoolYellow, zucchini, zucchiniSeedBag,
             carrotSeedBag2, cauliflowerSeedBag2, chiliSeedBag2, grainSeedBag2, grapesSeedBag2, lettuceSeedBag2, onionSeedBag2, pearSeedBag2, pineappleSeedBag2, pumpkinSeedBag2, radishSeedBag2, strawberrySeedBag2, tomatoSeedBag2, turnipSeedBag2, watermelonSeedBag2, zucchiniSeedBag2,
             carrotSeedBag3, cauliflowerSeedBag3, chiliSeedBag3, grainSeedBag3, grapesSeedBag3, lettuceSeedBag3, onionSeedBag3, pearSeedBag3, pineappleSeedBag3, pumpkinSeedBag3, radishSeedBag3, strawberrySeedBag3, tomatoSeedBag3, turnipSeedBag3, watermelonSeedBag3, zucchiniSeedBag3
             ));
