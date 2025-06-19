@@ -373,6 +373,7 @@ public class Entity extends SuperEntity implements Cloneable{
     public void setAnimation(String animation) {
 
         int i = 0;
+        
         for (Animation x : animationList) {
             if (animation.equalsIgnoreCase(x.name)) {
                 if (this.currentAnimationIndex != i) {

@@ -23,6 +23,10 @@ public class KeyHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
+        if(code == KeyEvent.VK_X) {
+            gp.ui.showConfirmation("are u sure?");
+        }
+
         // Handle general key states
         if(code == KeyEvent.VK_ESCAPE) {
             escPressed = true;
@@ -63,7 +67,7 @@ public class KeyHandler implements KeyListener {
             }
         }
 
-        if (gp.gameState == gp.titleState) {
+        else if (gp.gameState == gp.titleState) {
             // main menu
             if (gp.ui.titleScreenState == 0) {
                 if (code == KeyBind.upKey) {
@@ -204,7 +208,7 @@ public class KeyHandler implements KeyListener {
 
         }
 
-        if (gp.gameState == gp.playState) {
+        else if (gp.gameState == gp.playState) {
             
             if (code == KeyEvent.VK_O) {
                 for(Entity x : gp.farmObj) {
@@ -369,6 +373,8 @@ public class KeyHandler implements KeyListener {
             playerInventory(code);
 
             if (code == KeyBind.nextKey) {
+                gp.playSFX(gp.sfx, 2);
+
                 gp.player.selectItem();
             }
 
@@ -378,18 +384,23 @@ public class KeyHandler implements KeyListener {
         }
         else if(gp.gameState == gp.foodItemChooseState){
             if(code == KeyBind.upKey) {
-               if(gp.ui.commandNum == 0)
-                    gp.ui.commandNum = 1;
+                gp.playSFX(gp.sfx, 1);
+                
+                if(gp.ui.commandNum == 0)
+                gp.ui.commandNum = 1;
                 else
-                    gp.ui.commandNum = 0;
+                gp.ui.commandNum = 0;
             }
             if(code == KeyBind.downKey) {
+                gp.playSFX(gp.sfx, 1);
                 if(gp.ui.commandNum ==0)
                     gp.ui.commandNum = 1;
                 else
                     gp.ui.commandNum = 0;
             }
             if(code == KeyBind.nextKey) {
+                gp.playSFX(gp.sfx, 2);
+
                 if(gp.ui.commandNum == 0) {
                     //kalo makan
                     gp.player.energy += gp.player.currentItem.energyGiven; // Add energy from held food
@@ -420,6 +431,8 @@ public class KeyHandler implements KeyListener {
         else if (gp.gameState == gp.inventoryState) {
 
             if (code == KeyBind.nextKey) {
+            gp.playSFX(gp.sfx, 2);
+
                 gp.gameState = gp.playState;
             }
         }
@@ -427,6 +440,37 @@ public class KeyHandler implements KeyListener {
         else if (gp.gameState == gp.eventFoundState) {
             if (code == KeyBind.nextKey) {
                 gp.gameState = gp.playState;
+            }
+        }
+        else if(gp.gameState == gp.confirmationState) {
+            if (code == KeyBind.upKey) {
+                gp.playSFX(gp.sfx, 1);
+                
+                if(gp.ui.commandNum == 0) {
+                    gp.ui.commandNum = 1;
+                } else {
+                    gp.ui.commandNum = 0;
+                }
+            }
+            if( code == KeyBind.downKey) {
+                gp.playSFX(gp.sfx, 1);
+                if(gp.ui.commandNum == 0) {
+                    gp.ui.commandNum = 1;
+                } else {
+                    gp.ui.commandNum = 0;
+                }
+            }
+            if (code == KeyBind.nextKey) {
+                gp.playSFX(gp.sfx, 2);
+                if (gp.ui.commandNum == 0) {
+                    gp.ui.confirmation = true;
+                    System.out.println("Confirmation accepted");
+                } else if (gp.ui.commandNum == 1)  {
+                    gp.ui.confirmation = false;
+                    System.out.println("Confirmation rejected");
+                }
+                gp.gameState = gp.playState; // Exit confirmation state
+                gp.ui.confirmationPageOn = false; // Reset confirmation page state
             }
         }
         else if (code == KeyBind.grid) {

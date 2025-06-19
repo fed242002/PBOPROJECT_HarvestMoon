@@ -73,13 +73,20 @@ public class Player extends Entity {
     public boolean fishpulled = false;
     public boolean fishCaught = false; // Flag to check if the fish is caught
     public boolean throwBack = false; // Flag to check if the fish is caught
+    public boolean isStabbing = false; // Flag to check if the fish is caught
 
     public boolean isWatering = false;
     public boolean isPlanting = false;
     public boolean isHarvesting = false;
 
+    public BufferedImage[] upKnife = new BufferedImage[6]; // Array to hold knife images for up direction
+    public BufferedImage[] downKnife = new BufferedImage[6]; // Array to hold knife images for down direction
+    public BufferedImage[] leftKnife = new BufferedImage[6]; // Array to hold knife images for left direction
+    public BufferedImage[] rightKnife = new BufferedImage[6]; // Array to hold knife images for right direction
 
-    
+    public boolean isSlaughtering = false; // Flag to check if the player is slaughtering an animal
+    public Entity slaughtered;
+
     public BufferedImage duvetImage = null; // Image for the duvet when sleeping
 
 
@@ -139,6 +146,13 @@ public class Player extends Entity {
 
 
 
+        for(int i=0;i<6;i++){
+            upKnife[i] = gp.setImage("/assets/player/TOOLS/KNIFE/up/" + i + ".png");
+            downKnife[i] = gp.setImage("/assets/player/TOOLS/KNIFE/down/" + i + ".png");
+            leftKnife[i] = gp.setImage("/assets/player/TOOLS/KNIFE/left/" + i + ".png");
+            rightKnife[i] = gp.setImage("/assets/player/TOOLS/KNIFE/right/" + i + ".png");
+        }
+
     }
 
     public void preview(){
@@ -157,25 +171,25 @@ public class Player extends Entity {
         animationList.clear();
 
 
-        animationList.add(new Animation("IDLE", 6, "/assets/player/common/", body, eye, hair, outfit));
-        animationList.add(new Animation("WALK", 6, "/assets/player/common/", body, eye, hair, outfit));
-        animationList.add(new Animation("SLEEP", 6, "/assets/player/common/", body, eye, hair, outfit));
-        animationList.add(new Animation("SIT", 6, "/assets/player/common/", body, eye, hair, outfit));
-        animationList.add(new Animation("SIT2", 6, "/assets/player/common/", body, eye, hair, outfit));
-        animationList.add(new Animation("PHONE", 12, "/assets/player/common/", body, eye, hair, outfit));
-        animationList.add(new Animation("BOOK", 12, "/assets/player/common/", body, eye, hair, outfit));
-        animationList.add(new Animation("PUSHCART", 6, "/assets/player/common/", body, eye, hair, outfit));
-        animationList.add(new Animation("PICKUP", 12, "/assets/player/common/", body, eye, hair, outfit));
-        animationList.add(new Animation("GIFT", 10, "/assets/player/common/", body, eye, hair, outfit));
-        animationList.add(new Animation("LIFT", 14, "/assets/player/common/", body, eye, hair, outfit));
-        animationList.add(new Animation("THROW", 14, "/assets/player/common/", body, eye, hair, outfit));
-        animationList.add(new Animation("HIT", 6, "/assets/player/common/", body, eye, hair, outfit));
-        animationList.add(new Animation("PUNCH", 6, "/assets/player/common/", body, eye, hair, outfit));
-        animationList.add(new Animation("STAB", 6, "/assets/player/common/", body, eye, hair, outfit));
-        animationList.add(new Animation("GRABGUN", 4, "/assets/player/common/", body, eye, hair, outfit));
-        animationList.add(new Animation("GUNIDLE", 6, "/assets/player/common/", body, eye, hair, outfit));
-        animationList.add(new Animation("SHOOT", 3, "/assets/player/common/", body, eye, hair, outfit));
-        animationList.add(new Animation("HURT", 3, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("IDLE", 6, "/assets/player/common/", body, eye, hair, outfit)); //0
+        animationList.add(new Animation("WALK", 6, "/assets/player/common/", body, eye, hair, outfit)); //1
+        animationList.add(new Animation("SLEEP", 6, "/assets/player/common/", body, eye, hair, outfit)); //2
+        animationList.add(new Animation("SIT", 6, "/assets/player/common/", body, eye, hair, outfit)); // 3
+        animationList.add(new Animation("SIT2", 6, "/assets/player/common/", body, eye, hair, outfit)); //4
+        animationList.add(new Animation("PHONE", 12, "/assets/player/common/", body, eye, hair, outfit)); //5 
+        animationList.add(new Animation("BOOK", 12, "/assets/player/common/", body, eye, hair, outfit)); //6
+        animationList.add(new Animation("PUSHCART", 6, "/assets/player/common/", body, eye, hair, outfit)); //7
+        animationList.add(new Animation("PICKUP", 12, "/assets/player/common/", body, eye, hair, outfit)); //8
+        animationList.add(new Animation("GIFT", 10, "/assets/player/common/", body, eye, hair, outfit)); //9
+        animationList.add(new Animation("LIFT", 14, "/assets/player/common/", body, eye, hair, outfit));//10
+        animationList.add(new Animation("THROW", 14, "/assets/player/common/", body, eye, hair, outfit));//11
+        animationList.add(new Animation("HIT", 6, "/assets/player/common/", body, eye, hair, outfit));//12
+        animationList.add(new Animation("PUNCH", 6, "/assets/player/common/", body, eye, hair, outfit));//13
+        animationList.add(new Animation("STAB", 6, "/assets/player/common/", body, eye, hair, outfit)); //14
+        animationList.add(new Animation("GRABGUN", 4, "/assets/player/common/", body, eye, hair, outfit));//15
+        animationList.add(new Animation("GUNIDLE", 6, "/assets/player/common/", body, eye, hair, outfit));//16
+        animationList.add(new Animation("SHOOT", 3, "/assets/player/common/", body, eye, hair, outfit));//17
+        animationList.add(new Animation("HURT", 3, "/assets/player/common/", body, eye, hair, outfit));//18
         
         
         animationList.add(new Animation("HARVEST", 9, "/assets/player/farmer/", body, eye, hair, outfit));
@@ -658,12 +672,12 @@ public class Player extends Entity {
     }
 
     if(currentItem!=null){
-        if(!currentItem.name.equalsIgnoreCase("fishrod")){
             if(currentItem.type_item == type_seed){
                 int objIndex = gp.cChecker.checkObjectFarm(targetWorldX,targetWorldY,this, true);
                 if(objIndex != 999 && gp.farmObj.get(objIndex) instanceof OBJ_soil) {
                     g2.setColor(new Color(0, 255, 0, 100));
                     g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
+                    g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);
                 }else{
                     g2.setColor(new Color(255, 0, 0, 100));
                     g2.fillRect(targetScreenX, targetScreenY, gp.tileSize, gp.tileSize);
@@ -673,13 +687,12 @@ public class Player extends Entity {
     
             }
     
-            g2.drawImage(cursor, targetScreenX, targetScreenY, gp.tileSize, gp.tileSize, null);
 
         }
 
     
 
-    }
+    
     
 
 
@@ -756,10 +769,17 @@ public class Player extends Entity {
                 turnOffEmote();
 
             }
+
             
         }
-
+        
         if(currentItem != null){
+            if(currentItem.name.equalsIgnoreCase("knife")){
+                System.out.println("stabbing");
+                isStabbing = true;
+                moveDisabled = true; // Disable movement while stabbing
+                setAnimation("STAB");
+            }
             if(currentItem.type_item == type_seed){
                 isPlanting = true;
                 moveDisabled = true; // Disable movement while planting
@@ -780,9 +800,65 @@ public class Player extends Entity {
 
     }
 
+    public void slaught(Entity x){
+        if(gp.ui.confirmation){
+            moveDisabled = true; // Disable movement while slaughtering
+            System.out.println("in slaughter confirmation");
+            setAnimation("STAB");
+            animation(4);
+    
+            if (animationDone == 1) {
+                System.out.println("slaughtering " + x.name);
+                System.out.println("slaughter done");
+            // energy -= EnergyIntake.knife;
+            animationDone = 0;
+            resetAllAnimation();
+            setAnimation("idle");
+            moveDisabled = false; // Enable movement after stabbing
+
+            String hasil = "rawSteak";
+            inventory.add(ItemList.getItem(hasil));
+            System.out.println("You got " + hasil + " from " + name);
+            gp.npcs.remove(slaughtered);
+
+            isSlaughtering = false;
+            gp.ui.confirmation = false; // Reset the confirmation UI
+
+    
+           
+            }
+        }
+
+    }
+
 
     
     public void action(int x, int y){
+
+        if(isStabbing){
+            setAnimation("STAB");
+            animation(4);
+
+            if (animationDone == 1) {
+                // energy -= EnergyIntake.knife;
+                animationDone = 0;
+                isStabbing = false;
+                setAnimation("idle");
+                moveDisabled = false; // Enable movement after stabbing
+                animationDone = 0;
+                spriteCounter = 0;
+                spriteNum = 0;
+
+
+                // Check if the player is stabbing a crop
+                // for (Entity s : gp.cropObj) {
+                //     if (s instanceof OBJ_Crop && s.worldX == x && s.worldY == y) {
+                //         gp.cropObj.remove(s); // Remove the crop object
+                //         break; // Exit the loop after removing the first matching crop object
+                //     }
+                // }
+            }
+        }
 
 
         if(isPlanting){
@@ -1004,6 +1080,7 @@ public class Player extends Entity {
     }
 
     void resetAllAnimation() {
+        isStabbing = false;
         isDigging = false;
         isUndoDigging = false;
         isChopping = false;
@@ -1095,6 +1172,10 @@ public class Player extends Entity {
     
 
     public void draw(Graphics2D g2) {
+
+        if(isSlaughtering){
+            slaught(slaughtered);
+        }
         
 
 
@@ -1112,7 +1193,12 @@ public class Player extends Entity {
                     drawFrontBlock(g2); // Draw the block in front of the player
                 }
             }
-            else if(currentItem!=null && gp.keyH.useTool && currentItem.type_item == type_seed){
+            else if(currentItem!=null && gp.keyH.useTool && currentItem.type_item == type_seed ){
+                drawFrontBlock(g2);
+
+
+            }
+            else if(currentItem!=null && currentItem.name.equalsIgnoreCase("knife")){
                 drawFrontBlock(g2);
             }
         }
@@ -1137,7 +1223,7 @@ public class Player extends Entity {
             }
         }
 
-
+        image1 = null;
         BufferedImage body = null;
         BufferedImage eye = null;
         BufferedImage hair = null;
@@ -1151,6 +1237,9 @@ public class Player extends Entity {
                 if (currentTool != null) {
                     image1 = currentTool.up[spriteNum]; // Get the tool up image
                 }
+                if(currentAnimationIndex == 14){
+                    image1 = upKnife[spriteNum]; // Get the knife up image
+                }
                 break;
             case "down":
                 body = animationList.get(currentAnimationIndex).body_down[spriteNum]; // Get the idle down image
@@ -1159,6 +1248,9 @@ public class Player extends Entity {
                 outfit = animationList.get(currentAnimationIndex).outfit_down[spriteNum]; // Get the idle down image
                 if (currentTool != null) {
                     image1 = currentTool.down[spriteNum]; // Get the tool down image
+                }
+                if(currentAnimationIndex == 14){
+                    image1 = downKnife[spriteNum]; // Get the knife down image
                 }
                 break;
             case "left":
@@ -1169,6 +1261,9 @@ public class Player extends Entity {
                 if (currentTool != null) {
                     image1 = currentTool.left[spriteNum]; // Get the tool left image
                 }
+                if(currentAnimationIndex == 14){
+                    image1 = leftKnife[spriteNum]; // Get the knife left image
+                }
                 break;
             case "right":
                 body = animationList.get(currentAnimationIndex).body_right[spriteNum]; // Get the idle right image
@@ -1178,16 +1273,22 @@ public class Player extends Entity {
                 if (currentTool != null) {
                     image1 = currentTool.right[spriteNum]; // Get the tool right image
                 }
+                if(currentAnimationIndex == 14){
+                    image1 = rightKnife[spriteNum]; // Get the knife right image
+                }
                 break;
         }
 
-        System.out.println("drawing player at screenX: " + screenX + ", screenY: " + screenY);
         g2.drawImage(body, screenX, screenY, gp.playerSizeX, gp.playerSizeY, null); // Draw player image
         g2.drawImage(eye, screenX, screenY, gp.playerSizeX, gp.playerSizeY, null); // Draw player image
         g2.drawImage(hair, screenX, screenY, gp.playerSizeX, gp.playerSizeY, null); // Draw player image
         g2.drawImage(outfit, screenX, screenY, gp.playerSizeX, gp.playerSizeY, null); // Draw player image
-        if (currentTool != null && image1 != null) {
-            g2.drawImage(image1, currentTool.x, currentTool.y, currentTool.width, currentTool.height, null); // Draw tool image
+        if (image1 != null) {
+            if(currentTool!=null){
+                g2.drawImage(image1, currentTool.x, currentTool.y, currentTool.width, currentTool.height, null); // Draw tool image
+            }
+            else if(currentItem.name.equalsIgnoreCase("knife"))
+            g2.drawImage(image1, screenX, screenY, 48, 96, null); // Draw tool image
         }
 
         if (currentAnimationIndex == 2) {

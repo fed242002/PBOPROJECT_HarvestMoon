@@ -153,7 +153,8 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
     public final int dialogueState = 3; // Dialog is being shown
     public final int eventFoundState = 4; // Event found is being shown
     public final int inventoryState = 5; // Inventory is being shown
-    public final int foodItemChooseState = 7; // Inventory is being shown
+    public final int foodItemChooseState = 7; // Food item choose dialog is being shown
+    public final int confirmationState = 8; // Food item choose dialog is being shown
 
     // UI
     public UI ui = new UI(this); // Create a new UI 
@@ -190,8 +191,9 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         eManager.setup(); // ini untuk setting dalam kegelapan
         playMusic(masterMusic, MapDB.mapList.get(currentMap).music);
 
-        gameState = titleState;
-        // gameState = playState; // Set the game state to play
+        // gameState = titleState;
+        gameState = playState; // Set the game state to play
+
         // changeMap(4);
 
 

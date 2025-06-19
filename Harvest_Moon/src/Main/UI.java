@@ -42,6 +42,20 @@ public class UI {
     public BufferedImage eyePreview;
     public BufferedImage hairPreview;
     public BufferedImage outfitPreview;
+    
+    public boolean confirmation = false;
+    public boolean confirmationPageOn = false;
+    public String confirmationText = "";
+
+
+    public void showConfirmation(String text){
+        gp.gameState = gp.confirmationState;
+        confirmationText = text;
+        confirmationPageOn = true;
+        commandNum = 0;
+    }
+
+    
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -51,7 +65,8 @@ public class UI {
 
     }
 
-  
+
+
 
     public void showMessage(String text) {
         message = text;
@@ -69,8 +84,13 @@ public class UI {
         }
 
         if (gp.gameState == gp.playState) {
-            drawGameUI();
+                drawGameUI();
+            
         }
+        if(gp.gameState == gp.confirmationState){
+            drawConfirmationPage();
+        }
+        
 
         if (gp.gameState == gp.pauseState) {
             if (pauseScreenState == 0) {
@@ -111,6 +131,32 @@ public class UI {
         }
     }
 
+    public void drawConfirmationPage(){
+
+        g2.setColor(new Color(0, 0, 0, 150)); // semi-transparent black
+        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+
+        BufferedImage yes = gp.setImage("/assets/ui/yes.png");
+        BufferedImage yesActive = gp.setImage("/assets/ui/yesActive.png");
+        BufferedImage no = gp.setImage("/assets/ui/no.png");
+        BufferedImage noActive = gp.setImage("/assets/ui/noActive.png");
+
+
+        g2.setColor(Color.WHITE);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 25F));
+        g2.drawString(confirmationText,getXforCenteredText(confirmationText) , gp.tileSize * 3 + 20);
+        if(commandNum == 0){
+            g2.drawImage(yesActive, gp.screenWidth / 2 - 288 / 2, gp.tileSize * 4, 288, 48, null);
+        }else{
+            g2.drawImage(yes, gp.screenWidth / 2 - 288 / 2, gp.tileSize * 4, 288, 48, null);
+        }
+        if(commandNum == 1){
+            g2.drawImage(noActive, gp.screenWidth / 2 - 288 / 2, gp.tileSize * 5 , 288, 48, null);
+        }else{
+            g2.drawImage(no, gp.screenWidth / 2 - 288 / 2, gp.tileSize * 5 , 288, 48, null);
+        }
+
+    }
 
     public void chooseFoodItem(){
         BufferedImage use = gp.setImage("/assets/ui/use.png");
