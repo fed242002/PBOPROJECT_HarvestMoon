@@ -32,7 +32,7 @@ public class ToolsAnimation {
         down = new BufferedImage[spriteTotal];
         left = new BufferedImage[spriteTotal];
         right = new BufferedImage[spriteTotal];
-        // System.out.println("trying to load sprite: " + tools +"/" + AnimationName);
+        System.out.println("trying to load sprite: " + tools +"/" + AnimationName);
         setSprite();
 
     }
@@ -52,10 +52,10 @@ public class ToolsAnimation {
         down = new BufferedImage[spriteTotal];
         left = new BufferedImage[spriteTotal];
         right = new BufferedImage[spriteTotal];
-        // System.out.println("trying to load sprite: " + tools +"/" + AnimationName);
+        System.out.println("trying to load sprite: " + tools +"/" + AnimationName);
 
         setSprite();
-        // System.out.println("loaded successfully: " + tools +"/" + AnimationName);
+        System.out.println("loaded successfully: " + tools +"/" + AnimationName);
     }
 
     void setSprite(){
@@ -66,7 +66,7 @@ public class ToolsAnimation {
                 left[i] = ImageIO.read(getClass().getResourceAsStream("/assets/player/TOOLS/"+ tools +"/" + AnimationName+ "/left/" + i + ".png"));
                 right[i] = ImageIO.read(getClass().getResourceAsStream("/assets/player/TOOLS/"+ tools +"/" + AnimationName+ "/right/" + i + ".png"));
             
-                // System.out.println("Loaded sprite: " + "/assets/player/TOOLS/"+ tools +"/" + AnimationName+ "/up/" + i + ".png");
+                System.out.println("Loaded sprite: " + "/assets/player/TOOLS/"+ tools +"/" + AnimationName+ "/up/" + i + ".png");
             } catch (IOException e) {
                 System.out.println("Error loading sprite: " + tools +"/" + AnimationName );
                 e.printStackTrace();

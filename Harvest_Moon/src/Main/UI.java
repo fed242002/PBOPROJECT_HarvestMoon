@@ -38,6 +38,10 @@ public class UI {
     public int merchantChoice = 0;
     public BufferedImage imageLighting;
     public String path2 = "";
+    public BufferedImage bodyPreview;
+    public BufferedImage eyePreview;
+    public BufferedImage hairPreview;
+    public BufferedImage outfitPreview;
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -139,14 +143,15 @@ public class UI {
 
         // ini aku mau nambain kalo dia energy > 50 pake haappy yang mata nya buka kalo
         // ga pake yang sleep
-        BufferedImage playerIcon = null;
-        try {
-            playerIcon = ImageIO
-                    .read(getClass().getResourceAsStream("/assets/player/SLEEP/" + gp.player.getSleepPath() + "0.png"));
-        } catch (IOException e) {
-            System.out.println("Error loading player image UI: " + e.getMessage());
-        }
-        g2.drawImage(playerIcon, 3, 8, gp.tileSize * 1 + 15, gp.tileSize * 2 + 15, null);
+        BufferedImage playerbody = null;
+        BufferedImage playereye = null;
+        BufferedImage playerhair = null;
+        playerbody = gp.player.animationList.get(2).body_down[0]; // get the body image from the animation list
+        playereye = gp.player.animationList.get(2).eye_down[0]; // get the eye image from the animation list
+        playerhair = gp.player.animationList.get(2).hair_down[0]; // get the hair image from the animation list
+        g2.drawImage(playerbody, 3, 8, gp.tileSize * 1 + 15, gp.tileSize * 2 + 15, null);
+        g2.drawImage(playereye, 3, 8, gp.tileSize * 1 + 15, gp.tileSize * 2 + 15, null);
+        g2.drawImage(playerhair, 3, 8, gp.tileSize * 1 + 15, gp.tileSize * 2 + 15, null);
         // energy bar and name
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
         g2.drawString(gp.player.name, 70, 40);
@@ -335,8 +340,11 @@ public class UI {
             }
 
             // preview player
-            g2.drawImage(gp.player.animationList.get(1).down[0], 150, 125, gp.playerSizeX * 2, gp.playerSizeY * 2,
-                    null);
+            g2.drawImage(bodyPreview, 150, 125, gp.playerSizeX * 2, gp.playerSizeY * 2,null);
+            g2.drawImage(eyePreview, 150, 125, gp.playerSizeX * 2, gp.playerSizeY * 2, null);
+            g2.drawImage(hairPreview, 150, 125, gp.playerSizeX * 2, gp.playerSizeY * 2, null);
+            g2.drawImage(outfitPreview, 150, 125, gp.playerSizeX * 2, gp.playerSizeY * 2, null);
+                   
 
         }
 

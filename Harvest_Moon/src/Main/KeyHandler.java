@@ -83,6 +83,7 @@ public class KeyHandler implements KeyListener {
                 if (code == KeyBind.nextKey) {
                     gp.playSFX(gp.sfx, 2);
                     if (gp.ui.commandNum == 0) {
+                        gp.player.preview();
                         gp.ui.titleScreenState = 1;
                     }
                     if (gp.ui.commandNum == 1) {
@@ -113,6 +114,7 @@ public class KeyHandler implements KeyListener {
 
                     if (gp.ui.customizeNum == 4) {
                         gp.playSFX(gp.sfx, 2);
+                        gp.player.redeclareAnimation();
                         gp.ui.titleScreenState = 0;
                         gp.gameState = gp.playState;
                         gp.player.setAnimation("idle");
@@ -155,7 +157,7 @@ public class KeyHandler implements KeyListener {
                             gp.player.changePath("outfit", gp.player.listOutfit[gp.player.outfitIndex]);
                         }
                     }
-                    updatePlayerPath();
+                    gp.player.preview();
                 } else if (code == KeyBind.leftKey) {
                     gp.playSFX(gp.sfx, 1);
 
@@ -193,7 +195,7 @@ public class KeyHandler implements KeyListener {
                         }
                     }
 
-                    updatePlayerPath();
+                    gp.player.preview();
                 }
 
             }

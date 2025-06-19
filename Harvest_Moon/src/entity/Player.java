@@ -57,9 +57,9 @@ public class Player extends Entity {
 
     // ini buat sprite animation -> info2
     public String body = listBody[bodyIndex];
-    String eye = listEye[eyeIndex];
-    String outfit = listOutfit[outfitIndex];
-    String hair = listHair[hairIndex];
+    public String eye = listEye[eyeIndex];
+    public String outfit = listOutfit[outfitIndex];
+    public String hair = listHair[hairIndex];
 
     public boolean moveDisabled = false;
     public boolean isDigging = false;
@@ -120,45 +120,73 @@ public class Player extends Entity {
         redeclareAnimation();
 
         //TOOLS ANIMATION -> ini nanti maw kak pindah ke gp aja soalnya sama aja di smua entity biar gausah ke declare banyak kali
-        toolsAnimationList.add(new ToolsAnimation(gp, "axe", "idle", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp, "axe", "walk", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp, "axe", "chop", 10));
+        toolsAnimationList.add(new ToolsAnimation(gp, "axe", "IDLE", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "axe", "WALK", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "axe", "AXECHOP", 10));
         toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "FISHCAUGHT", 9, true));
         toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "CAST", 9, true));
         toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "FISHIDLE", 6, true));
-        toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "FISHIDLE1", 6, true));
-        toolsAnimationList.add(new ToolsAnimation(gp, "fishRod", "fishpulled", 2, true));
-        toolsAnimationList.add(new ToolsAnimation(gp, "fishRod", "idle", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp, "fishRod", "walk", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp, "shovel", "idle", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp, "shovel", "walk", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp, "shovel", "dig", 9));
-        toolsAnimationList.add(new ToolsAnimation(gp, "WateringCan", "idle", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp, "WateringCan", "walk", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp, "WateringCan", "watering", 14));
+        toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "FISHIDLE2", 6, true));
+        toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "PULLHOOK", 2, true));
+        toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "IDLE", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "WALK", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "shovel", "IDLE", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "shovel", "WALK", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "shovel", "DIG", 9));
+        toolsAnimationList.add(new ToolsAnimation(gp, "WateringCan", "IDLE", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "WateringCan", "WALK", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "WateringCan", "WATERING", 14));
+
+
+
+    }
+
+    public void preview(){
+        animationList.clear();
+        gp.ui.bodyPreview = gp.setImage("/assets/player/common/body/" + body + "/IDLE/down/0.png");
+        gp.ui.eyePreview = gp.setImage("/assets/player/common/eye/" + eye + "/IDLE/down/0.png");
+        gp.ui.hairPreview = gp.setImage("/assets/player/common/hair/" + hair + "/IDLE/down/0.png");
+        gp.ui.outfitPreview = gp.setImage("/assets/player/common/outfit/" + outfit + "/IDLE/down/0.png");
+
 
     }
 
     public void redeclareAnimation() {
+
+        
         animationList.clear();
 
-        // declare animation
-        animationList.add(new Animation("walk", 6, "/assets/player/WALK/" + getPath(), 0));
-        animationList.add(new Animation("idle", 6, "/assets/player/IDLE/" + getPath()));
-        animationList.add(new Animation("chop", 10, "/assets/player/AXE CHOP/" + getPath(), 6));
-        animationList.add(new Animation("dig", 9, "/assets/player/DIG/" + getPath(), 5));
-        animationList.add(new Animation("cast", 9, "/assets/player/FISH CAST LINE/" + getPath(), 7));
-        animationList.add(new Animation("FISHIDLE", 6, "/assets/player/FISH IDLE/" + getPath()));
-        animationList.add(new Animation("FISHIDLE1", 6, "/assets/player/FISH IDLE/" + getPath()));
-        animationList.add(new Animation("FISHCAUGHT", 9, "/assets/player/FISH CAUGHT/" + getPath()));
-        animationList.add(new Animation("FISHPULLED", 2, "/assets/player/FISH REEL IN/" + getPath()));
-        animationList.add(new Animation("HARVEST", 9, "/assets/player/HARVEST/" + getPath()));
-        // animationList.add(new Animation("lift", 14, "/assets/player/LIFT/" + getPath()));
-        // animationList.add(new Animation("PickUp", 12, "/assets/player/PICK UP/" + getPath()));
-        animationList.add(new Animation("Sit", 6, "/assets/player/SIT 1/" + getPath()));
-        animationList.add(new Animation("sleep", 6, "/assets/player/SLEEP/" + getSleepPath(), true));
-        // animationList.add(new Animation("throw", 14, "/assets/player/THROW/" + getPath()));
-        animationList.add(new Animation("watering", 14, "/assets/player/WATERING/" + getPath(), 8));
+
+        animationList.add(new Animation("IDLE", 6, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("WALK", 6, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("SLEEP", 6, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("SIT", 6, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("SIT2", 6, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("PHONE", 12, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("BOOK", 12, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("PUSHCART", 6, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("PICKUP", 12, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("GIFT", 10, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("LIFT", 14, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("THROW", 14, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("HIT", 6, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("PUNCH", 6, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("STAB", 6, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("GRABGUN", 4, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("GUNIDLE", 6, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("SHOOT", 3, "/assets/player/common/", body, eye, hair, outfit));
+        animationList.add(new Animation("HURT", 3, "/assets/player/common/", body, eye, hair, outfit));
+        
+        
+        animationList.add(new Animation("HARVEST", 9, "/assets/player/farmer/", body, eye, hair, outfit));
+        animationList.add(new Animation("DIG", 9, "/assets/player/farmer/", body, eye, hair, outfit));
+        animationList.add(new Animation("WATERING", 14, "/assets/player/farmer/", body, eye, hair, outfit));
+        animationList.add(new Animation("AXECHOP", 10, "/assets/player/farmer/", body, eye, hair, outfit));
+        animationList.add(new Animation("CAST", 9, "/assets/player/farmer/", body, eye, hair, outfit));
+        animationList.add(new Animation("FISHIDLE", 6, "/assets/player/farmer/", body, eye, hair, outfit));
+        animationList.add(new Animation("FISHIDLE2", 6, "/assets/player/farmer/", body, eye, hair, outfit));
+        animationList.add(new Animation("PULLHOOK", 2, "/assets/player/farmer/", body, eye, hair, outfit));
+        animationList.add(new Animation("FISHCAUGHT", 9, "/assets/player/farmer/", body, eye, hair, outfit));
 
     }
 
@@ -166,15 +194,19 @@ public class Player extends Entity {
 
         if (bagian.equalsIgnoreCase("Body")) {
             this.body = nama;
+            bodyIndex = java.util.Arrays.asList(listBody).indexOf(nama); // Update bodyIndex based on the new body name
         }
         if (bagian.equalsIgnoreCase("eye")) {
             this.eye = nama;
+            eyeIndex = java.util.Arrays.asList(listEye).indexOf(nama); // Update eyeIndex based on the new eye name
         }
         if (bagian.equalsIgnoreCase("outfit")) {
             this.outfit = nama;
+            outfitIndex = java.util.Arrays.asList(listOutfit).indexOf(nama); // Update outfitIndex based on the new outfit name
         }
         if (bagian.equalsIgnoreCase("hair")) {
             this.hair = nama;
+            hairIndex = java.util.Arrays.asList(listHair).indexOf(nama); // Update hairIndex based on the new hair name
         }
 
     }
@@ -716,7 +748,7 @@ public class Player extends Entity {
                 //ini nanti buat nambah ikan kalo misal ke tangkap
                 fishCaught = true;
                 resetAllAnimation();
-                setAnimation("fishpulled");
+                setAnimation("PULLHOOK");
                 fishpulled = true;
                 moveDisabled = true;
                 fishingTimeRandom = random.nextInt(5, 15); // Random value between 5 and 20
@@ -834,7 +866,7 @@ public class Player extends Entity {
 
         // chopping tree
         if (isChopping) {
-            setAnimation("chop");
+            setAnimation("AXECHOP");
             animation(3);
 
             if (animationDone == 3) {
@@ -878,7 +910,7 @@ public class Player extends Entity {
             if (animationDone == fishingTimeRandom) {
                 animationDone = 0;
                 resetAllAnimation();
-                setAnimation("FISHIDLE1");
+                setAnimation("FISHIDLE2");
                 fishDetected = true;
                 emoteOn = true; // Show emote when fish is detected
                 moveDisabled = true;
@@ -887,7 +919,7 @@ public class Player extends Entity {
         }
 
         if (fishDetected) {
-            setAnimation("FISHIDLE1");
+            setAnimation("FISHIDLE2");
 
             animation(10);
 
@@ -942,7 +974,7 @@ public class Player extends Entity {
             }
         }
         if (fishpulled) {
-            setAnimation("FISHPULLED");
+            setAnimation("PULLHOOK");
             animation(7);
 
             if (animationDone >= fishingTimeRandom) {
@@ -1104,39 +1136,60 @@ public class Player extends Entity {
             }
         }
 
+
+        BufferedImage body = null;
+        BufferedImage eye = null;
+        BufferedImage hair = null;
+        BufferedImage outfit = null;
         switch (direction) {
             case "up":
-                image = animationList.get(currentAnimationIndex).up[spriteNum]; // Get the idle up image
+                body = animationList.get(currentAnimationIndex).body_up[spriteNum]; // Get the idle up image
+                eye = animationList.get(currentAnimationIndex).eye_up[spriteNum]; // Get the idle up image
+                hair = animationList.get(currentAnimationIndex).hair_up[spriteNum]; // Get the idle up image
+                outfit = animationList.get(currentAnimationIndex).outfit_up[spriteNum]; // Get the idle up image
                 if (currentTool != null) {
                     image1 = currentTool.up[spriteNum]; // Get the tool up image
                 }
                 break;
             case "down":
-                image = animationList.get(currentAnimationIndex).down[spriteNum]; // Get the idle down image
+                body = animationList.get(currentAnimationIndex).body_down[spriteNum]; // Get the idle down image
+                eye = animationList.get(currentAnimationIndex).eye_down[spriteNum]; // Get the idle down image
+                hair = animationList.get(currentAnimationIndex).hair_down[spriteNum]; // Get the idle down image
+                outfit = animationList.get(currentAnimationIndex).outfit_down[spriteNum]; // Get the idle down image
                 if (currentTool != null) {
                     image1 = currentTool.down[spriteNum]; // Get the tool down image
                 }
                 break;
             case "left":
-                image = animationList.get(currentAnimationIndex).left[spriteNum]; // Get the idle left image
+                body = animationList.get(currentAnimationIndex).body_left[spriteNum]; // Get the idle left image
+                eye = animationList.get(currentAnimationIndex).eye_left[spriteNum]; // Get the idle left image
+                hair = animationList.get(currentAnimationIndex).hair_left[spriteNum]; // Get the idle left image
+                outfit = animationList.get(currentAnimationIndex).outfit_left[spriteNum]; // Get the idle left image
                 if (currentTool != null) {
                     image1 = currentTool.left[spriteNum]; // Get the tool left image
                 }
                 break;
             case "right":
-                image = animationList.get(currentAnimationIndex).right[spriteNum]; // Get the idle right image
+                body = animationList.get(currentAnimationIndex).body_right[spriteNum]; // Get the idle right image
+                eye = animationList.get(currentAnimationIndex).eye_right[spriteNum]; // Get the idle right image
+                hair = animationList.get(currentAnimationIndex).hair_right[spriteNum]; // Get the idle right image
+                outfit = animationList.get(currentAnimationIndex).outfit_right[spriteNum]; // Get the idle right image
                 if (currentTool != null) {
                     image1 = currentTool.right[spriteNum]; // Get the tool right image
                 }
                 break;
         }
 
-        g2.drawImage(image, screenX, screenY, gp.playerSizeX, gp.playerSizeY, null); // Draw player image
+        System.out.println("drawing player at screenX: " + screenX + ", screenY: " + screenY);
+        g2.drawImage(body, screenX, screenY, gp.playerSizeX, gp.playerSizeY, null); // Draw player image
+        g2.drawImage(eye, screenX, screenY, gp.playerSizeX, gp.playerSizeY, null); // Draw player image
+        g2.drawImage(hair, screenX, screenY, gp.playerSizeX, gp.playerSizeY, null); // Draw player image
+        g2.drawImage(outfit, screenX, screenY, gp.playerSizeX, gp.playerSizeY, null); // Draw player image
         if (currentTool != null && image1 != null) {
             g2.drawImage(image1, currentTool.x, currentTool.y, currentTool.width, currentTool.height, null); // Draw tool image
         }
 
-        if (currentAnimationIndex == 13) {
+        if (currentAnimationIndex == 2) {
             if (duvetImage != null) {
                 g2.drawImage(duvetImage, screenX, screenY + 48, gp.playerSizeX, gp.playerSizeY, null);
             } else {
