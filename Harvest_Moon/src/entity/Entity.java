@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import object.*;
+import object.OBJ_Transition;
 
 
 public class Entity extends SuperEntity implements Cloneable{

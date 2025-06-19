@@ -365,7 +365,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
 
             // tambah entitiy to list
             //special buat animasi turu kalo misal turu digambar diatas bed
-            if(player.currentAnimationIndex != 13) { // Only add player to the list if not in animation
+            if(player.currentAnimationIndex != 2) { // Only add player to the list if not in animation
                 entityList.add(player); // Add player to the entity list    
             }
 
@@ -399,7 +399,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
             entityList.clear(); // Clear the entity list after drawing
             
             //draw player diatas smua entity k
-            if(player.currentAnimationIndex == 13) { // Only add player to the list if not in animation
+            if(player.currentAnimationIndex == 2) { // Only add player to the list if not in animation
                 player.draw(g2); // Draw player on top of all entities
             }
             

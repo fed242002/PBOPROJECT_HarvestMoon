@@ -2,6 +2,8 @@ package Main;
 
 import entity.*;
 import object.*;
+import object.OBJ_Transition;
+
 
 public class AssetSetter {
 
@@ -25,7 +27,7 @@ public class AssetSetter {
         // transition objects
 
         //  map 0 to map 1
-        MapDB.mapList.get(0).obj.add(new OBJ_Transition(gp, 24 * gp.tileSize, 47 * gp.tileSize)); 
+        // MapDB.mapList.get(0).obj.add(new OBJ_Transition(gp, 24 * gp.tileSize, 47 * gp.tileSize)); 
         // MapDB.mapList.get(1).obj.add(new OBJ_Transition(gp, 23 * gp.tileSize, 47 * gp.tileSize)); 
         // MapDB.mapList.get(2).obj.add(new OBJ_Transition(gp, 25 * gp.tileSize, 47 * gp.tileSize)); 
     }
