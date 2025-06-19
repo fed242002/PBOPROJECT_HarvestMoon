@@ -77,7 +77,7 @@ public class Animation {
         outfit_left = new BufferedImage[spriteTotal];
         outfit_right = new BufferedImage[spriteTotal];
 
-        
+        setSpritePlayer();
         }
 
         public void setSpritePlayer(){
@@ -85,37 +85,37 @@ public class Animation {
             for (int i = 0; i < spriteTotal; i++) {
                 if(!name.equalsIgnoreCase("sit")||!name.equalsIgnoreCase("sit2")){
 
-                    body_up[i] = ImageIO.read(getClass().getResourceAsStream(path + "body/"+name+"/up/" + i + ".png"));
-                    body_down[i] = ImageIO.read(getClass().getResourceAsStream(path + "body/"+name+"/down/" + i + ".png"));
-                    body_left[i] =ImageIO.read(getClass().getResourceAsStream(path + "body/"+name+"/left/" + i + ".png"));
-                    body_right[i] = ImageIO.read(getClass().getResourceAsStream(path + "body/"+name+"/right/" + i + ".png"));
+                    body_up[i] = ImageIO.read(getClass().getResourceAsStream(path + "body/"+body+"/"+ name+"/up/" + i + ".png"));
+                    body_down[i] = ImageIO.read(getClass().getResourceAsStream(path + "body/"+body+"/"+ name+"/down/" + i + ".png"));
+                    body_left[i] =ImageIO.read(getClass().getResourceAsStream(path + "body/"+body+"/"+ name+"/left/" + i + ".png"));
+                    body_right[i] = ImageIO.read(getClass().getResourceAsStream(path + "body/"+body+"/"+ name+"/right/" + i + ".png"));
     
-                    eye_up[i] = ImageIO.read(getClass().getResourceAsStream(path + "eye/"+name+"/up/" + i + ".png"));
-                    eye_down[i] = ImageIO.read(getClass().getResourceAsStream(path + "eye/"+name+"/down/" + i + ".png"));
-                    eye_left[i] =ImageIO.read(getClass().getResourceAsStream(path + "eye/"+name+"/left/" + i + ".png"));
-                    eye_right[i] = ImageIO.read(getClass().getResourceAsStream(path + "eye/"+name+"/right/" + i + ".png"));
+                    eye_up[i] = ImageIO.read(getClass().getResourceAsStream(path + "eye/"+eye+"/"+ name+"/up/" + i + ".png"));
+                    eye_down[i] = ImageIO.read(getClass().getResourceAsStream(path + "eye/"+eye+"/"+ name+"/down/" + i + ".png"));
+                    eye_left[i] =ImageIO.read(getClass().getResourceAsStream(path + "eye/"+eye+"/"+ name+"/left/" + i + ".png"));
+                    eye_right[i] = ImageIO.read(getClass().getResourceAsStream(path + "eye/"+eye+"/"+ name+"/right/" + i + ".png"));
     
-                    hair_up[i] = ImageIO.read(getClass().getResourceAsStream(path + "hair/"+name+"/up/" + i + ".png"));
-                    hair_down[i] = ImageIO.read(getClass().getResourceAsStream(path + "hair/"+name+"/down/" + i + ".png"));
-                    hair_left[i] =ImageIO.read(getClass().getResourceAsStream(path + "hair/"+name+"/left/" + i + ".png"));
-                    hair_right[i] = ImageIO.read(getClass().getResourceAsStream(path + "hair/"+name+"/right/" + i + ".png"));
-    
-                    outfit_up[i] = ImageIO.read(getClass().getResourceAsStream(path + "outfit/"+name+"/up/" + i + ".png"));
-                    outfit_down[i] = ImageIO.read(getClass().getResourceAsStream(path + "outfit/"+name+"/down/" + i + ".png"));
-                    outfit_left[i] =ImageIO.read(getClass().getResourceAsStream(path + "outfit/"+name+"/left/" + i + ".png"));
-                    outfit_right[i] = ImageIO.read(getClass().getResourceAsStream(path + "outfit/"+name+"/right/" + i + ".png"));
+                    hair_up[i] = ImageIO.read(getClass().getResourceAsStream(path + "hair/"+hair+"/"+ name+"/up/" + i + ".png"));
+                    hair_down[i] = ImageIO.read(getClass().getResourceAsStream(path + "hair/"+hair+"/"+ name+"/down/" + i + ".png"));
+                    hair_left[i] =ImageIO.read(getClass().getResourceAsStream(path + "hair/"+hair+"/"+ name+"/left/" + i + ".png"));
+                    hair_right[i] = ImageIO.read(getClass().getResourceAsStream(path + "hair/"+hair+"/"+ name+"/right/" + i + ".png"));
+
+                    outfit_up[i] = ImageIO.read(getClass().getResourceAsStream(path + "outfit/"+outfit+"/"+ name+"/up/" + i + ".png"));
+                    outfit_down[i] = ImageIO.read(getClass().getResourceAsStream(path + "outfit/"+outfit+"/"+ name+"/down/" + i + ".png"));
+                    outfit_left[i] =ImageIO.read(getClass().getResourceAsStream(path + "outfit/"+outfit+"/"+ name+"/left/" + i + ".png"));
+                    outfit_right[i] = ImageIO.read(getClass().getResourceAsStream(path + "outfit/"+outfit+"/"+ name+"/right/" + i + ".png"));
                 }else{
-                    body_left[i] =ImageIO.read(getClass().getResourceAsStream(path + "body/"+name+"/left/" + i + ".png"));
-                    body_right[i] = ImageIO.read(getClass().getResourceAsStream(path + "body/"+name+"/right/" + i + ".png"));
+                    body_left[i] =ImageIO.read(getClass().getResourceAsStream(path + "body/"+body+"/"+ name+"/left/" + i + ".png"));
+                    body_right[i] = ImageIO.read(getClass().getResourceAsStream(path + "body/"+body+"/"+ name+"/right/" + i + ".png"));
     
-                    eye_left[i] =ImageIO.read(getClass().getResourceAsStream(path + "eye/"+name+"/left/" + i + ".png"));
-                    eye_right[i] = ImageIO.read(getClass().getResourceAsStream(path + "eye/"+name+"/right/" + i + ".png"));
+                    eye_left[i] =ImageIO.read(getClass().getResourceAsStream(path + "eye/"+eye+"/"+ name+"/left/" + i + ".png"));
+                    eye_right[i] = ImageIO.read(getClass().getResourceAsStream(path + "eye/"+eye+"/"+ name+"/right/" + i + ".png"));
     
-                    hair_left[i] =ImageIO.read(getClass().getResourceAsStream(path + "hair/"+name+"/left/" + i + ".png"));
-                    hair_right[i] = ImageIO.read(getClass().getResourceAsStream(path + "hair/"+name+"/right/" + i + ".png"));
-    
-                    outfit_left[i] =ImageIO.read(getClass().getResourceAsStream(path + "outfit/"+name+"/left/" + i + ".png"));
-                    outfit_right[i] = ImageIO.read(getClass().getResourceAsStream(path + "outfit/"+name+"/right/" + i + ".png"));
+                    hair_left[i] =ImageIO.read(getClass().getResourceAsStream(path + "hair/"+hair+"/"+ name+"/left/" + i + ".png"));
+                    hair_right[i] = ImageIO.read(getClass().getResourceAsStream(path + "hair/"+hair+"/"+ name+"/right/" + i + ".png"));
+
+                    outfit_left[i] =ImageIO.read(getClass().getResourceAsStream(path + "outfit/"+outfit+"/"+ name+"/left/" + i + ".png"));
+                    outfit_right[i] = ImageIO.read(getClass().getResourceAsStream(path + "outfit/"+outfit+"/"+ name+"/right/" + i + ".png"));
 
                 }
 

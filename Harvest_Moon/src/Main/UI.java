@@ -139,14 +139,22 @@ public class UI {
 
         // ini aku mau nambain kalo dia energy > 50 pake haappy yang mata nya buka kalo
         // ga pake yang sleep
-        BufferedImage playerIcon = null;
-        try {
-            playerIcon = ImageIO
-                    .read(getClass().getResourceAsStream("/assets/player/SLEEP/" + gp.player.getSleepPath() + "0.png"));
-        } catch (IOException e) {
-            System.out.println("Error loading player image UI: " + e.getMessage());
-        }
-        g2.drawImage(playerIcon, 3, 8, gp.tileSize * 1 + 15, gp.tileSize * 2 + 15, null);
+        BufferedImage playerbody = null;
+        BufferedImage playereye = null;
+        BufferedImage playerhair = null;
+        // try {
+        //     playerbody = ImageIO.read(getClass().getResourceAsStream(
+        //             "/assets/player/common/body/" + gp.player.listBody[gp.player.bodyIndex] + "/0.png"));
+        //     playereye = ImageIO.read(getClass().getResourceAsStream(
+        //             "/assets/player/common/eye/" + gp.player.listEye[gp.player.eyeIndex] + "/0.png"));
+        //     playerhair = ImageIO.read(getClass().getResourceAsStream(
+        //             "/assets/player/common/hair/" + gp.player.listHair[gp.player.hairIndex] + "/0.png"));
+        // } catch (IOException e) {
+        //     System.out.println("Error loading player image UI: " + e.getMessage());
+        // }
+        // g2.drawImage(playerbody, 3, 8, gp.tileSize * 1 + 15, gp.tileSize * 2 + 15, null);
+        // g2.drawImage(playereye, 3, 8, gp.tileSize * 1 + 15, gp.tileSize * 2 + 15, null);
+        // g2.drawImage(playerhair, 3, 8, gp.tileSize * 1 + 15, gp.tileSize * 2 + 15, null);
         // energy bar and name
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
         g2.drawString(gp.player.name, 70, 40);

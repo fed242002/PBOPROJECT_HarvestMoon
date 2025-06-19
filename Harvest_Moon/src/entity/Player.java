@@ -120,22 +120,22 @@ public class Player extends Entity {
         redeclareAnimation();
 
         //TOOLS ANIMATION -> ini nanti maw kak pindah ke gp aja soalnya sama aja di smua entity biar gausah ke declare banyak kali
-        toolsAnimationList.add(new ToolsAnimation(gp, "axe", "idle", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp, "axe", "walk", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp, "axe", "chop", 10));
+        toolsAnimationList.add(new ToolsAnimation(gp, "axe", "IDLE", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "axe", "WALK", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "axe", "AXECHOP", 10));
         toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "FISHCAUGHT", 9, true));
         toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "CAST", 9, true));
         toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "FISHIDLE", 6, true));
-        toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "FISHIDLE1", 6, true));
-        toolsAnimationList.add(new ToolsAnimation(gp, "fishRod", "fishpulled", 2, true));
-        toolsAnimationList.add(new ToolsAnimation(gp, "fishRod", "idle", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp, "fishRod", "walk", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp, "shovel", "idle", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp, "shovel", "walk", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp, "shovel", "dig", 9));
-        toolsAnimationList.add(new ToolsAnimation(gp, "WateringCan", "idle", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp, "WateringCan", "walk", 6));
-        toolsAnimationList.add(new ToolsAnimation(gp, "WateringCan", "watering", 14));
+        toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "FISHIDLE2", 6, true));
+        toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "FISHPULLED", 2, true));
+        toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "IDLE", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "FISHROD", "WALK", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "shovel", "IDLE", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "shovel", "WALK", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "shovel", "DIG", 9));
+        toolsAnimationList.add(new ToolsAnimation(gp, "WateringCan", "IDLE", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "WateringCan", "WALK", 6));
+        toolsAnimationList.add(new ToolsAnimation(gp, "WateringCan", "WATERING", 14));
 
     }
 
@@ -188,6 +188,7 @@ public class Player extends Entity {
         animationList.add(new Animation("AXECHOP", 10, "/assets/player/farmer/", body, eye, hair, outfit));
         animationList.add(new Animation("CAST", 9, "/assets/player/farmer/", body, eye, hair, outfit));
         animationList.add(new Animation("FISHIDLE", 6, "/assets/player/farmer/", body, eye, hair, outfit));
+        animationList.add(new Animation("FISHIDLE2", 6, "/assets/player/farmer/", body, eye, hair, outfit));
         animationList.add(new Animation("PULLHOOK", 2, "/assets/player/farmer/", body, eye, hair, outfit));
         animationList.add(new Animation("FISHCAUGHT", 9, "/assets/player/farmer/", body, eye, hair, outfit));
 
@@ -197,15 +198,19 @@ public class Player extends Entity {
 
         if (bagian.equalsIgnoreCase("Body")) {
             this.body = nama;
+            bodyIndex = java.util.Arrays.asList(listBody).indexOf(nama); // Update bodyIndex based on the new body name
         }
         if (bagian.equalsIgnoreCase("eye")) {
             this.eye = nama;
+            eyeIndex = java.util.Arrays.asList(listEye).indexOf(nama); // Update eyeIndex based on the new eye name
         }
         if (bagian.equalsIgnoreCase("outfit")) {
             this.outfit = nama;
+            outfitIndex = java.util.Arrays.asList(listOutfit).indexOf(nama); // Update outfitIndex based on the new outfit name
         }
         if (bagian.equalsIgnoreCase("hair")) {
             this.hair = nama;
+            hairIndex = java.util.Arrays.asList(listHair).indexOf(nama); // Update hairIndex based on the new hair name
         }
 
     }
@@ -909,7 +914,7 @@ public class Player extends Entity {
             if (animationDone == fishingTimeRandom) {
                 animationDone = 0;
                 resetAllAnimation();
-                setAnimation("FISHIDLE1");
+                setAnimation("FISHIDLE2");
                 fishDetected = true;
                 emoteOn = true; // Show emote when fish is detected
                 moveDisabled = true;
@@ -918,7 +923,7 @@ public class Player extends Entity {
         }
 
         if (fishDetected) {
-            setAnimation("FISHIDLE1");
+            setAnimation("FISHIDLE2");
 
             animation(10);
 
@@ -1135,39 +1140,60 @@ public class Player extends Entity {
             }
         }
 
+
+        BufferedImage body = null;
+        BufferedImage eye = null;
+        BufferedImage hair = null;
+        BufferedImage outfit = null;
         switch (direction) {
             case "up":
-                image = animationList.get(currentAnimationIndex).up[spriteNum]; // Get the idle up image
+                body = animationList.get(currentAnimationIndex).body_up[spriteNum]; // Get the idle up image
+                eye = animationList.get(currentAnimationIndex).eye_up[spriteNum]; // Get the idle up image
+                hair = animationList.get(currentAnimationIndex).hair_up[spriteNum]; // Get the idle up image
+                outfit = animationList.get(currentAnimationIndex).outfit_up[spriteNum]; // Get the idle up image
                 if (currentTool != null) {
                     image1 = currentTool.up[spriteNum]; // Get the tool up image
                 }
                 break;
             case "down":
-                image = animationList.get(currentAnimationIndex).down[spriteNum]; // Get the idle down image
+                body = animationList.get(currentAnimationIndex).body_down[spriteNum]; // Get the idle down image
+                eye = animationList.get(currentAnimationIndex).eye_down[spriteNum]; // Get the idle down image
+                hair = animationList.get(currentAnimationIndex).hair_down[spriteNum]; // Get the idle down image
+                outfit = animationList.get(currentAnimationIndex).outfit_down[spriteNum]; // Get the idle down image
                 if (currentTool != null) {
                     image1 = currentTool.down[spriteNum]; // Get the tool down image
                 }
                 break;
             case "left":
-                image = animationList.get(currentAnimationIndex).left[spriteNum]; // Get the idle left image
+                body = animationList.get(currentAnimationIndex).body_left[spriteNum]; // Get the idle left image
+                eye = animationList.get(currentAnimationIndex).eye_left[spriteNum]; // Get the idle left image
+                hair = animationList.get(currentAnimationIndex).hair_left[spriteNum]; // Get the idle left image
+                outfit = animationList.get(currentAnimationIndex).outfit_left[spriteNum]; // Get the idle left image
                 if (currentTool != null) {
                     image1 = currentTool.left[spriteNum]; // Get the tool left image
                 }
                 break;
             case "right":
-                image = animationList.get(currentAnimationIndex).right[spriteNum]; // Get the idle right image
+                body = animationList.get(currentAnimationIndex).body_right[spriteNum]; // Get the idle right image
+                eye = animationList.get(currentAnimationIndex).eye_right[spriteNum]; // Get the idle right image
+                hair = animationList.get(currentAnimationIndex).hair_right[spriteNum]; // Get the idle right image
+                outfit = animationList.get(currentAnimationIndex).outfit_right[spriteNum]; // Get the idle right image
                 if (currentTool != null) {
                     image1 = currentTool.right[spriteNum]; // Get the tool right image
                 }
                 break;
         }
 
-        g2.drawImage(image, screenX, screenY, gp.playerSizeX, gp.playerSizeY, null); // Draw player image
+        System.out.println("drawing player at screenX: " + screenX + ", screenY: " + screenY);
+        g2.drawImage(body, screenX, screenY, gp.playerSizeX, gp.playerSizeY, null); // Draw player image
+        g2.drawImage(eye, screenX, screenY, gp.playerSizeX, gp.playerSizeY, null); // Draw player image
+        g2.drawImage(hair, screenX, screenY, gp.playerSizeX, gp.playerSizeY, null); // Draw player image
+        g2.drawImage(outfit, screenX, screenY, gp.playerSizeX, gp.playerSizeY, null); // Draw player image
         if (currentTool != null && image1 != null) {
             g2.drawImage(image1, currentTool.x, currentTool.y, currentTool.width, currentTool.height, null); // Draw tool image
         }
 
-        if (currentAnimationIndex == 13) {
+        if (currentAnimationIndex == 2) {
             if (duvetImage != null) {
                 g2.drawImage(duvetImage, screenX, screenY + 48, gp.playerSizeX, gp.playerSizeY, null);
             } else {
