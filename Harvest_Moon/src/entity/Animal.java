@@ -106,7 +106,7 @@ package entity;
     public void interact() {
 
           
-        
+
 
         
         if(name.equalsIgnoreCase("cow")){
@@ -117,16 +117,6 @@ package entity;
                         gp.player.isSlaughtering = true;
                         gp.player.slaughtered = this;
 
-                        while(gp.ui.confirmationPageOn){
-                            try {
-                                Thread.sleep(16);
-                                gp.repaint();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        
-                        System.out.println("this is the end of animal interaction");
                         return;
 
 
