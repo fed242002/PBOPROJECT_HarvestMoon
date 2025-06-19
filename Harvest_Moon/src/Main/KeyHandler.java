@@ -1,9 +1,8 @@
 package Main;
 
+import entity.Entity;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
-import entity.Entity;
 
 public class KeyHandler implements KeyListener {
 
@@ -411,6 +410,13 @@ public class KeyHandler implements KeyListener {
                     !gp.ui.currentEntityDialogue.getClass().getSimpleName().equals("Npc_Merchant") ||
                     gp.ui.subState == 0) {
                     gp.gameState = gp.playState;
+                    gp.ui.charIndex = 0; // Reset character index for dialogue
+                    gp.ui.combinedText = ""; // Reset combined text for dialogue
+                }
+                else
+                {
+                    gp.ui.charIndex = 0; // Reset character index for dialogue
+                    gp.ui.combinedText = ""; // Reset combined text for dialogue
                 }
             }
         }

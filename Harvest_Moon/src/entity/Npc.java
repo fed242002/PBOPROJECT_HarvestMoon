@@ -46,7 +46,7 @@ public class Npc extends Entity {
     public void speak() {
         super.speak();
 
-        onPath = true; // di path
+        //onPath = true; // di path
     }
 
     public void setAction() {

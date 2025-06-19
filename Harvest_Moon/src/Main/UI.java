@@ -3,7 +3,6 @@ package Main;
 import entity.Entity;
 import entity.Item;
 import entity.ItemList;
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -39,6 +38,8 @@ public class UI {
     public int merchantChoice = 0;
     public BufferedImage imageLighting;
     public String path2 = "";
+    int charIndex = 0;
+    public String combinedText = "";
 
     // UI box images
     private BufferedImage uiBoxLeft;
@@ -589,7 +590,7 @@ public class UI {
         // full screen on/off
         textX = frameX + gp.tileSize;
         textY += gp.tileSize * 2;
-        g2.drawString("Full Screen ", textX, textY);
+        //g2.drawString("Full Screen ", textX, textY);
         if (commandNum == 0) {
             g2.drawString(">", textX - 25, textY);
             // //if (gp.keyH.enterPressed == true) {
@@ -638,11 +639,11 @@ public class UI {
         int checkBoxX = textX + checkBoxOffset;
         int checkBoxY = textY - checkBoxSize + 8; // align vertically with text
 
-        g2.setStroke(new BasicStroke(3));
-        g2.drawRect(checkBoxX, checkBoxY, checkBoxSize, checkBoxSize);
-        if (gp.fullScreen) {
-            g2.fillRect(checkBoxX, checkBoxY, checkBoxSize, checkBoxSize);
-        }
+        // g2.setStroke(new BasicStroke(3));
+        // g2.drawRect(checkBoxX, checkBoxY, checkBoxSize, checkBoxSize);
+        // if (gp.fullScreen) {
+        //     g2.fillRect(checkBoxX, checkBoxY, checkBoxSize, checkBoxSize);
+        // }
 
         // Music volume bar
         textY += gp.tileSize * 2;
@@ -669,6 +670,19 @@ public class UI {
         g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 
         // curren person yang ngomong
+
+        if(currentEntityDialogue != null) {
+            char characters[] = currentEntityDialogue.dialogues.get(currentEntityDialogue.dialogueIndex).toCharArray();
+
+
+                if(charIndex < characters.length) {
+                    String s = String.valueOf(characters[charIndex]);
+                    combinedText = combinedText + s;
+                    currentDialogue = combinedText;
+                    System.out.println(currentEntityDialogue.dialogues.get(currentEntityDialogue.dialogueIndex));
+                    charIndex++;
+                }
+        }
 
         // Draw the NPC portrait
         if (currentEntityDialogue != null && currentEntityDialogue.specialNpc) {
