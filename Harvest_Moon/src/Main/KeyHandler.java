@@ -1,9 +1,8 @@
 package Main;
 
+import entity.Entity;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
-import entity.Entity;
 
 public class KeyHandler implements KeyListener {
 
@@ -401,6 +400,13 @@ public class KeyHandler implements KeyListener {
              if (!gp.ui.currentEntityDialogue.exitDialogueDisable) { //no tradeable
                 if (code == KeyBind.nextKey) {               
                     gp.gameState = gp.playState;
+                    gp.ui.charIndex = 0; // Reset character index for dialogue
+                    gp.ui.combinedText = ""; // Reset combined text for dialogue
+                }
+                else
+                {
+                    gp.ui.charIndex = 0; // Reset character index for dialogue
+                    gp.ui.combinedText = ""; // Reset combined text for dialogue
                 }
            
             }else{
