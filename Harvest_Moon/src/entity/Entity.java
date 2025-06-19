@@ -147,7 +147,7 @@ public class Entity extends SuperEntity implements Cloneable{
     public boolean isAnimal = false; // Flag to check if the entity is an animal
     
     // dialogue
-    public ArrayList<String> dialogues = new ArrayList<>();
+    public ArrayList<ArrayList<String>> dialogues = new ArrayList<>();
     public int dialogueIndex = 0; // Index for the current dialogue
 
     public int energyGiven = 0; // Energy given by the item, used for food and drinks
@@ -159,18 +159,28 @@ public class Entity extends SuperEntity implements Cloneable{
     
     public boolean exitDialogueDisable = false;
 
+    public boolean dialogueDone = false;
+
 
 
     public boolean isRotten = false;
 
     public void speak() {
+
+
+        gp.ui.charIndex = 0; // Reset character index for dialogue
+        gp.ui.combinedText = ""; // Reset combined text for dialogu
+
+        dialogueDone = false; // Set dialogueDone to false when speaking
+
         if (dialogueIndex >= dialogues.size()) {
             dialogueIndex = 0;
         }
-        gp.ui.currentDialogue = dialogues.get(dialogueIndex);
+        gp.ui.dialogueList = dialogues.get(dialogueIndex);
         gp.ui.currentDialogueName = this.name;
         gp.ui.currentEntityDialogue = this;
-        dialogueIndex++;
+        
+        // dialogueIndex++;
 
         // biar npc pas ngomong hadap player
         switch (gp.player.direction) {

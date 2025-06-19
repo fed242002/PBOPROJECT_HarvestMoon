@@ -45,11 +45,16 @@ public class Npc_Merchant extends Entity {
     }
 
     public void setDialogue() {
-        dialogues.add("He he, so you found me. \n I have some good stuff. \n Do you want to trade?");
-        dialogues.add("How are you?");
-        dialogues.add("Nice to meet you!");
-        dialogues.add("Have a great day!");
-        dialogues.add("See you later!");
+        ArrayList<String> temp = new ArrayList<>();
+        ArrayList<String> temp1 = new ArrayList<>();
+        ArrayList<String> temp2 = new ArrayList<>();
+        temp.add("He he, so you found me. \n I have some good stuff. \n Do you want to trade?");
+        temp1.add("How are you?");
+        temp2.add("Nice to meet you!");
+        
+        dialogues.add(temp);
+        dialogues.add(temp1);
+        dialogues.add(temp2);
     }
 
     public void speak() {

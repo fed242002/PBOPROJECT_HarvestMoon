@@ -345,7 +345,7 @@ public class GamePanel extends JPanel implements Runnable, MouseMotionListener {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-
+      
         if (gameState == titleState) {
             ui.draw(g2);
         } else {

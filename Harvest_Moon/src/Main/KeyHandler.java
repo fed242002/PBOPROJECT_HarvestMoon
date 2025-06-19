@@ -398,35 +398,23 @@ public class KeyHandler implements KeyListener {
 
         else if (gp.gameState == gp.dialogueState && gp.ui.currentEntityDialogue != null) {
              if (!gp.ui.currentEntityDialogue.exitDialogueDisable) { //no tradeable
-                if (code == KeyBind.nextKey) {               
-                    gp.gameState = gp.playState;
-                    gp.ui.charIndex = 0; // Reset character index for dialogue
-                    gp.ui.combinedText = ""; // Reset combined text for dialogue
-                }
-                else
-                {
-                    gp.ui.charIndex = 0; // Reset character index for dialogue
-                    gp.ui.combinedText = ""; // Reset combined text for dialogue
-                }
-           
+                if (code == KeyBind.nextKey) {    
+                    if(!gp.player.dialogueDone){
+                            gp.ui.dialoguePage++;
+                        
+                        gp.ui.charIndex = 0; // Reset character index for dialogue
+                        gp.ui.combinedText = ""; // Reset combined text for dialogu
+                    }else{
+                        gp.ui.charIndex = 0; // Reset character index for dialogue
+                        gp.ui.combinedText = ""; // Reset combined text for dialogu
+                        gp.ui.currentEntityDialogue.dialogueIndex++;
+                        gp.ui.dialoguePage = 0;
+                        gp.gameState = gp.playState;
+                        gp.player.dialogueDone = false; // Reset dialogue done state
+
+                    }
+                }           
             }else{
-                if(gp.ui.currentEntityDialogue != null && 
-                gp.ui.currentEntityDialogue.getClass().getSimpleName().equals("Npc_Merchant")) {
-                    if(code == KeyBind.upKey) {
-                        gp.playSFX(gp.sfx, 1);
-                        gp.ui.merchantChoice--;
-                        if(gp.ui.merchantChoice < 0) {
-                            gp.ui.merchantChoice = 2;
-                        }
-                    }
-                    if(code == KeyBind.downKey) {
-                        gp.playSFX(gp.sfx, 1);
-                        gp.ui.merchantChoice++;
-                        if(gp.ui.merchantChoice > 2) {
-                            gp.ui.merchantChoice = 0;
-                        }
-                    }
-                }
                 if(gp.ui.currentEntityDialogue != null && 
                 gp.ui.currentEntityDialogue.getClass().getSimpleName().equals("Npc_Merchant")) {
                     if(code == KeyBind.upKey) {

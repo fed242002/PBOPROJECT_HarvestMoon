@@ -2,6 +2,8 @@ package entity;
 
 import Main.GamePanel;
 import animation.Animation;
+
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Npc extends Entity {
@@ -36,11 +38,21 @@ public class Npc extends Entity {
     }
 
     public void setDialogue() {
-        dialogues.add("Hello, I'm " + name + "!");
-        dialogues.add("How are you?");
-        dialogues.add("Nice to meet you!");
-        dialogues.add("Have a great day!");
-        dialogues.add("See you later!");
+        ArrayList<String> temp = new ArrayList<>();
+        temp.add("Hello, I'm " + name + "!");
+        temp.add("How are you?");
+        temp.add("Nice to meet you!");
+        temp.add("Have a great day!");
+        temp.add("See you later!");
+        temp.add("nuub");
+        temp.add("im not eddy");
+        temp.add("idiot");
+    
+        dialogues.add(temp);
+        ArrayList<String> temp1 = new ArrayList<>();
+        temp1.add("I am a simple NPC, \n I don't have much to say.");
+        temp1.add("I can help you with some basic tasks.");
+        dialogues.add(temp1);
     }
 
     public void speak() {

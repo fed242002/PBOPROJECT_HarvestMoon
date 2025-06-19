@@ -37,7 +37,7 @@ public class UI {
     public int merchantChoice = 0;
     public BufferedImage imageLighting;
     public String path2 = "";
-    int charIndex = 0;
+    public int charIndex = 0;
     public String combinedText = "";
     public BufferedImage bodyPreview;
     public BufferedImage eyePreview;
@@ -48,6 +48,9 @@ public class UI {
     public boolean confirmationPageOn = false;
     public String confirmationText = "";
 
+
+    public ArrayList<String> dialogueList;
+    public int dialoguePage = 0;
 
     public void showConfirmation(String text){
         gp.gameState = gp.confirmationState;
@@ -717,16 +720,23 @@ public class UI {
 
 
         if(currentEntityDialogue != null) {
-            if (currentEntityDialogue.dialogueIndex >= currentEntityDialogue.dialogues.size()) {
-                    currentEntityDialogue.dialogueIndex = 0;
-                }
-            char characters[] = currentEntityDialogue.dialogues.get(currentEntityDialogue.dialogueIndex).toCharArray();
+
+            
+
+            if(dialoguePage >= dialogueList.size()-1) {
+                System.out.println("current Dialogue: " + dialoguePage);
+                System.out.println("dialogueList size: " + dialogueList.size());
+                System.out.println("dialogueDone : " + gp.player.dialogueDone);
+                gp.player.dialogueDone = true;               
+            }
+
+            char characters[] = dialogueList.get(dialoguePage).toCharArray();
 
                 if(charIndex < characters.length) {
                     String s = String.valueOf(characters[charIndex]);
                     combinedText = combinedText + s;
                     currentDialogue = combinedText;
-                    System.out.println(currentEntityDialogue.dialogueIndex);
+                    // System.out.println(currentEntityDialogue.dialogueIndex);
                     charIndex++;
                 }
         }
@@ -745,11 +755,13 @@ public class UI {
         int height = gp.screenHeight;
         BufferedImage dialogueWindow = null;
         try {
+            
+            dialogueWindow = ImageIO.read(getClass().getResourceAsStream("/assets/ui/dialogBox.png"));
+            
+            if(currentEntityDialogue != null) {
             if (currentEntityDialogue.specialNpc) {
                 dialogueWindow = ImageIO.read(getClass().getResourceAsStream("/assets/ui/dialogBoxSpecial.png"));
-            } else {
-                dialogueWindow = ImageIO.read(getClass().getResourceAsStream("/assets/ui/dialogBox.png"));
-            }
+            }}
         } catch (IOException e) {
             System.out.println("Error loading dialogue window image: " + e.getMessage());
         }

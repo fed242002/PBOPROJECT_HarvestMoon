@@ -183,11 +183,11 @@ public class EventHandler {
             canTouchEvent = true;
         }
 
-        if (canTouchEvent) {
-            if (hit(27, 14, null) == true && eventRect[27][14].eventDone == false) {
-                damagePit(27, 14, gp.eventFoundState);
-            }
-        }
+        // if (canTouchEvent) {
+        //     if (hit(27, 14, null) == true && eventRect[27][14].eventDone == false) {
+        //         damagePit(27, 14, gp.eventFoundState);
+        //     }
+        // }
     }
 
     public boolean hit(int eventCol, int eventRow, String reqDirection) {
@@ -217,7 +217,7 @@ public class EventHandler {
 
     public void damagePit(int col, int row, int gameState) {
         gp.gameState = gameState;
-        gp.ui.currentDialogue = "You fell into a pit!";
+        // gp.ui.currentDialogue = "You fell into a pit!";
         eventRect[col][row].eventDone = true;
         canTouchEvent = false;
     }
