@@ -1299,7 +1299,13 @@ public class Player extends Entity {
                 System.out.println("Error: duvetImage is null in Player draw method");
             }
         }
-    }    public void addItemToInventory(Item item) {
+    }    
+    
+    public void addItemToInventory(Item item) {
+        if (item != null) {
+            inventory.add(item); // ⬅️ Harus aman karena Item adalah subclass dari Entity
+        }
+        
         if (itemInventory.size() < maxInventorySize) {
             // Check if we already have this item type
             boolean added = false;

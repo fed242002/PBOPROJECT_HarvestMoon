@@ -2,7 +2,6 @@ package Main;
 
 import entity.*;
 import object.*;
-import object.OBJ_Transition;
 
 
 public class AssetSetter {
@@ -26,7 +25,30 @@ public class AssetSetter {
 
         // transition objects
 
-        //  map 0 to map 1
+        // map 0 to map 1
+        MapDB.mapList.get(0).obj.add(new OBJ_Transition01(gp, 23 * gp.tileSize, 48 * gp.tileSize)); 
+
+        // map 1 to map 0
+        MapDB.mapList.get(1).obj.add(new OBJ_Transition10(gp, 24 * gp.tileSize, 0 * gp.tileSize));
+
+        // map 1 to map 2
+        MapDB.mapList.get(1).obj.add(new OBJ_Transition12(gp, 48 * gp.tileSize, 24 * gp.tileSize));
+
+        // map 2 to map 1
+        MapDB.mapList.get(2).obj.add(new OBJ_Transition21(gp, 1 * gp.tileSize, 36 * gp.tileSize));
+
+        // get out of house transition 3-0
+        MapDB.mapList.get(3).obj.add(new OBJ_Transition30(gp, 24 * gp.tileSize, 27 * gp.tileSize));
+
+        // get out of barn
+        MapDB.mapList.get(4).obj.add(new OBJ_Transition40(gp, 24 * gp.tileSize, 31 * gp.tileSize));
+
+        // get out of market transition
+        MapDB.mapList.get(5).obj.add(new OBJ_Transition52(gp, 24 * gp.tileSize, 20 * gp.tileSize));
+    
+        // get out of market transition
+        MapDB.mapList.get(6).obj.add(new OBJ_Transition62(gp, 0 * gp.tileSize, 15 * gp.tileSize));
+
         // MapDB.mapList.get(0).obj.add(new OBJ_Transition(gp, 24 * gp.tileSize, 47 * gp.tileSize)); 
         // MapDB.mapList.get(1).obj.add(new OBJ_Transition(gp, 23 * gp.tileSize, 47 * gp.tileSize)); 
         // MapDB.mapList.get(2).obj.add(new OBJ_Transition(gp, 25 * gp.tileSize, 47 * gp.tileSize)); 

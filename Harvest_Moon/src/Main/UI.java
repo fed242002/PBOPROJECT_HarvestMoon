@@ -579,7 +579,7 @@ public class UI {
     }
 
     public int getItemIndexOnSlot(int slotCol, int slotRow) {
-        int itemIndex = slotCol + (slotRow * 5); // 5 items per row
+        int itemIndex = slotCol + (slotRow * 12); // 12 items per row
         return itemIndex;
     }
 
