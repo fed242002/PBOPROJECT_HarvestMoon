@@ -724,9 +724,6 @@ public class UI {
             
 
             if(dialoguePage >= dialogueList.size()-1) {
-                System.out.println("current Dialogue: " + dialoguePage);
-                System.out.println("dialogueList size: " + dialogueList.size());
-                System.out.println("dialogueDone : " + gp.player.dialogueDone);
                 gp.player.dialogueDone = true;               
             }
 

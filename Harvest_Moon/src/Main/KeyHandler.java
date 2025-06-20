@@ -22,9 +22,7 @@ public class KeyHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
-        if(code == KeyEvent.VK_X) {
-            gp.ui.showConfirmation("are u sure?");
-        }
+
 
         // Handle general key states
         if(code == KeyEvent.VK_ESCAPE) {
