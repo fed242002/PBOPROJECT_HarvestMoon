@@ -314,6 +314,7 @@ public class KeyHandler implements KeyListener {
                     }
                     if (gp.ui.commandNum == 3) {
                         gp.ui.commandNum = 0; // Reset command number
+                        gp.ui.titleScreenState = 0;
                         gp.gameState = gp.titleState; // Return to title screen
                     }
                 }
