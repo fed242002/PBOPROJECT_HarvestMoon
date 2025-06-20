@@ -25,6 +25,7 @@ public class saveLoad {
                 ds.hour = gp.hour;
                 ds.minute = gp.minute;
                 ds.timeCounter = gp.timeCounter;
+                ds.nama = gp.player.name;
                 
 
                 // write datastorage obj
@@ -50,6 +51,7 @@ public class saveLoad {
                 gp.hour =  ds.hour;
                 gp.minute = ds.minute; 
                 gp.timeCounter = ds.timeCounter;
+                gp.player.name = ds.nama;
             }
 
         } catch (Exception e) {

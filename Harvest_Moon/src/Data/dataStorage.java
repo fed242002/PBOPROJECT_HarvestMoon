@@ -10,5 +10,6 @@ public class dataStorage implements Serializable {
     int hour;
     int minute;
     int timeCounter;
+    String nama;
 
 }
