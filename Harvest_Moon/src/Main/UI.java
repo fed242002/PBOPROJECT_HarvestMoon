@@ -911,7 +911,9 @@ public class UI {
         g2.setColor(new Color(101, 67, 33));
         g2.setStroke(new BasicStroke(5));
         g2.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 25, 25);
-    }    public void drawTradeScreen() {
+    }    
+    
+    public void drawTradeScreen() {
         // Draw the appropriate screen based on subState
         switch (subState) {
             case 1:
@@ -922,10 +924,147 @@ public class UI {
                 trade_buy();
                 break;
             case 3:
-                trade_sell();
+                drawInventorySellMode(); // <- tidak dipakai lagi
+                break;
+            case 4:
+                drawInventorySellMode(); // ✅ tambahkan ini
                 break;
         }
-        gp.keyH.enterPressed = false;    }
+        gp.keyH.enterPressed = false;
+    }
+
+    public void drawInventorySellMode() {
+        // Window
+        int x = gp.tileSize * 2;
+        int y = gp.tileSize;
+        int width = gp.screenWidth - (gp.tileSize * 4);
+        int height = gp.screenHeight - (gp.tileSize * 2);
+        drawSubWindow(x, y, width, height);
+
+        // Judul
+        g2.setColor(new Color(94, 44, 19));
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
+        g2.drawString("Sell Inventory", x + 30, y + gp.tileSize);
+
+        // Slot grid config
+        int slotXStart = x + 30;
+        int slotYStart = y + gp.tileSize * 2;
+        int slotSize = gp.tileSize + 10;
+        int slotPadding = 10;
+        int maxCol = 5;
+
+        // Ambil inventory
+        ArrayList<Item> items = new ArrayList<>();
+        for (Entity e : gp.player.inventory) {
+            if (e instanceof Item) {
+                items.add((Item) e);
+            }
+        }
+
+        // Gambar kotak dan ikon
+        for (int i = 0; i < items.size(); i++) {
+            int col = i % maxCol;
+            int row = i / maxCol;
+
+            int slotX = slotXStart + (slotSize + slotPadding) * col;
+            int slotY = slotYStart + (slotSize + slotPadding) * row;
+
+            // Highlight jika dipilih
+            if (col == playerSlotCol && row == playerSlotRow) {
+                g2.setColor(new Color(255, 255, 0, 128));
+                g2.fillRoundRect(slotX, slotY, slotSize, slotSize, 10, 10);
+            }
+
+            // Gambar ikon
+            BufferedImage icon = items.get(i).image;
+            g2.drawImage(icon, slotX + 8, slotY + 8, gp.tileSize - 4, gp.tileSize - 4, null);
+
+            // Gambar jumlah
+            g2.setColor(Color.white);
+            g2.setFont(g2.getFont().deriveFont(20f));
+            g2.drawString("x" + items.get(i).amount, slotX + 2, slotY + slotSize - 4);
+        }
+
+        // Info item yang dipilih
+        int index = playerSlotRow * maxCol + playerSlotCol;
+        if (index >= 0 && index < items.size()) {
+            Item selectedItem = items.get(index);
+            g2.setColor(new Color(94, 44, 19));
+            g2.setFont(g2.getFont().deriveFont(20f));
+            g2.drawString("Name: " + selectedItem.name, x + 30, y + height - 60);
+            g2.drawString("Sell Price: " + selectedItem.sellPrice + "G", x + 30, y + height - 30);
+        }
+
+        // Navigasi
+        if (gp.keyH.upPressed) {
+            if (playerSlotRow > 0) playerSlotRow--;
+            gp.keyH.upPressed = false;
+        }
+        if (gp.keyH.downPressed) {
+            if ((playerSlotRow + 1) * maxCol + playerSlotCol < items.size()) playerSlotRow++;
+            gp.keyH.downPressed = false;
+        }
+        // if (gp.keyH.leftPressed) {
+        //     if (playerSlotCol > 0) playerSlotCol--;
+        //     gp.keyH.leftPressed = false;
+        // }
+        // if (gp.keyH.rightPressed) {
+        //     if (playerSlotCol < maxCol - 1 && playerSlotRow * maxCol + (playerSlotCol + 1) < items.size()) playerSlotCol++;
+        //     gp.keyH.rightPressed = false;
+        // }
+        // Navigasi kiri-kanan A / D
+        if (gp.keyH.leftPressed) {
+            if (playerSlotCol > 0) {
+                playerSlotCol--;
+            }
+            gp.keyH.leftPressed = false;
+        }
+
+        // Navigasi ke kanan (D / panah kanan)
+        if (gp.keyH.rightPressed) {
+            if (playerSlotCol < maxCol - 1 &&
+                playerSlotRow * maxCol + (playerSlotCol + 1) < items.size()) {
+                playerSlotCol++;
+            }
+            gp.keyH.rightPressed = false;
+        }
+
+
+        // Jual saat ENTER
+        if (gp.keyH.enterPressed) {
+            int indexSell = playerSlotRow * maxCol + playerSlotCol;
+            if (indexSell >= 0 && indexSell < items.size()) {
+                Item item = items.get(indexSell);
+                gp.player.gold += item.sellPrice;
+                item.amount--;
+                if (item.amount <= 0) {
+                    gp.player.inventory.remove(item);
+
+                    // Hitung ulang total item dan batasi index agar tidak out of bounds
+                    int totalItem = gp.player.inventory.size();
+                    int newIndex = playerSlotRow * 5 + playerSlotCol;
+                    if (newIndex >= totalItem) {
+                        playerSlotCol = 0;
+                        playerSlotRow = 0;
+                    }
+                }
+
+                showMessage("Sold 1x " + item.name + " for " + item.sellPrice + "G");
+            }
+            gp.keyH.enterPressed = false;
+        }
+
+        // ESC untuk kembali
+        if (gp.keyH.escPressed) {
+            subState = 0;
+            playerSlotCol = 0;
+            playerSlotRow = 0;
+            gp.keyH.escPressed = false;
+        }
+    }
+
+
+
 
     public void trade_select() {
         int nameX = getXforCenteredText(currentDialogueName, 73, 286);
