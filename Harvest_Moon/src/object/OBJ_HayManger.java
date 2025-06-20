@@ -19,10 +19,10 @@ public class OBJ_HayManger extends Entity{
         isObj = true; 
         image = gp.setImage(path);
 
-        this.solidArea.y = height / 2;
+        this.solidArea.y = height;
         this.solidArea.x = 0;
-        this.solidArea.width = 49;
-        this.solidArea.height = height / 2;
+        this.solidArea.width = 48;
+        this.solidArea.height = height;
 
         solidAreaDefaultY = this.solidArea.y;
         solidAreaDefaultX = this.solidArea.x;
