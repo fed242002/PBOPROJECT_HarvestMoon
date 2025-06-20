@@ -96,8 +96,7 @@ public class KeyHandler implements KeyListener {
                     if (gp.ui.customizeNum == 4) {
                         gp.playSFX(gp.sfx, 2);
                         gp.player.redeclareAnimation();
-                        gp.ui.titleScreenState = 0;
-                        gp.gameState = gp.playState;
+                        gp.ui.titleScreenState = 2;
                         gp.player.setAnimation("idle");
                     }
                 }
@@ -180,6 +179,28 @@ public class KeyHandler implements KeyListener {
                 }
 
             }
+
+            else if (gp.ui.titleScreenState == 2)
+            {
+                if (code >= KeyEvent.VK_A && code <= KeyEvent.VK_Z) {
+                if (gp.ui.name == null) gp.ui.name = "";
+                if (gp.ui.name.length() < 12) { // limit name length
+                    char c = (char) code;
+                    if (!e.isShiftDown()) c = Character.toLowerCase(c);
+                    gp.ui.name += c;
+                }
+            }
+                // ngapus nama
+            if (code == KeyEvent.VK_BACK_SPACE && gp.ui.name != null && gp.ui.name.length() > 0) {
+                gp.ui.name = gp.ui.name.substring(0, gp.ui.name.length() - 1);
+            }
+            // enter auto save + masuk game
+            if (code == KeyBind.nextKey && gp.ui.name != null && !gp.ui.name.isEmpty()) {
+                    gp.player.name = gp.ui.name; // Save to player
+                    gp.gameState = gp.playState;
+                }
+            }
+            
 
             // new game
 

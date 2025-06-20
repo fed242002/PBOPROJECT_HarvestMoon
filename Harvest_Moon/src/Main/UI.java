@@ -43,6 +43,7 @@ public class UI {
     public BufferedImage eyePreview;
     public BufferedImage hairPreview;
     public BufferedImage outfitPreview;
+    public String name;
     
     public boolean confirmation = false;
     public boolean confirmationPageOn = false;
@@ -348,6 +349,8 @@ public class UI {
                         "/assets/ui/customizeCharacter/body/" + gp.player.listBody[gp.player.bodyIndex] + ".png"));
                 confirm = ImageIO.read(getClass().getResourceAsStream("/assets/ui/customizeCharacter/confirm.png"));
 
+                
+
                 eyeActive = ImageIO.read(getClass().getResourceAsStream(
                         "/assets/ui/customizeCharacter/eye/" + gp.player.listEye[gp.player.eyeIndex] + "Active.png"));
                 hairActive = ImageIO.read(getClass().getResourceAsStream("/assets/ui/customizeCharacter/hair/"
@@ -396,6 +399,41 @@ public class UI {
             g2.drawImage(outfitPreview, 150, 125, gp.playerSizeX * 2, gp.playerSizeY * 2, null);
                    
 
+        }
+
+        if (titleScreenState == 2) {
+            // background ireng
+            g2.setColor(new Color(0, 0, 0, 180));
+            g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+
+            // kotak
+            int boxWidth = 400;
+            int boxHeight = 120;
+            int boxX = gp.screenWidth / 2 - boxWidth / 2;
+            int boxY = gp.screenHeight / 2 - boxHeight / 2;
+            g2.setColor(new Color(255, 255, 255, 230));
+            g2.fillRoundRect(boxX, boxY, boxWidth, boxHeight, 30, 30);
+            g2.setColor(new Color(101, 67, 33));
+            g2.setStroke(new BasicStroke(4));
+            g2.drawRoundRect(boxX, boxY, boxWidth, boxHeight, 30, 30);
+
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+            String prompt = "Enter your name:";
+            int promptX = getXforCenteredText(prompt);
+            g2.drawString(prompt, promptX, boxY + 40);
+
+            // gambar namanya
+            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 26F));
+            String displayName = name != null ? name : "";
+            String cursor = (System.currentTimeMillis() / 500) % 2 == 0 ? "|" : "";
+            String nameWithCursor = displayName + cursor;
+            int nameX = getXforCenteredText(nameWithCursor);
+            g2.drawString(nameWithCursor, nameX, boxY + 80);
+
+            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 18F));
+            String instr = "Press ENTER to confirm";
+            int instrX = getXforCenteredText(instr);
+            g2.drawString(instr, instrX, boxY + boxHeight - 10);
         }
 
     }
