@@ -141,60 +141,95 @@ public class Animation {
         setSprite();
         }
 
-        
-        public Animation(String name1,int spriteTotal, String path, boolean oneD) {
-        this.name = name1.toUpperCase();
-        this.spriteTotal = spriteTotal;
-        this.path = path;
-        up = new BufferedImage[spriteTotal];
-        down = new BufferedImage[spriteTotal];
-        left = new BufferedImage[spriteTotal];
-        right = new BufferedImage[spriteTotal];
-
-        this.oneD = oneD;
+        public Animation(String name1,int spriteTotal, String path, String body, String eye, String hair, String outfit, int soundFX) {
+            this.name = name1.toUpperCase();
+            this.spriteTotal = spriteTotal;
+            this.path = path;
+            this.body = body;
+            this.eye = eye;
+            this.hair = hair;
+            this.outfit = outfit;
+            this.soundFX = soundFX;
 
 
-        if(!oneD)
-            setSprite();
-        else
-            setSpriteAllD();
-           
+            //body
+            body_up = new BufferedImage[spriteTotal];
+            body_down = new BufferedImage[spriteTotal];
+            body_left = new BufferedImage[spriteTotal];
+            body_right = new BufferedImage[spriteTotal];
+            //eye
+            eye_up = new BufferedImage[spriteTotal];
+            eye_down = new BufferedImage[spriteTotal];
+            eye_left = new BufferedImage[spriteTotal];
+            eye_right = new BufferedImage[spriteTotal];
+            //hair
+            hair_up = new BufferedImage[spriteTotal];
+            hair_down = new BufferedImage[spriteTotal];
+            hair_left = new BufferedImage[spriteTotal];
+            hair_right = new BufferedImage[spriteTotal];
+            //outfit
+            outfit_up = new BufferedImage[spriteTotal];
+            outfit_down = new BufferedImage[spriteTotal];
+            outfit_left = new BufferedImage[spriteTotal];
+            outfit_right = new BufferedImage[spriteTotal];
+
+            setSpritePlayer();
+            }
+
             
-        }
+            public Animation(String name1,int spriteTotal, String path, boolean oneD) {
+            this.name = name1.toUpperCase();
+            this.spriteTotal = spriteTotal;
+            this.path = path;
+            up = new BufferedImage[spriteTotal];
+            down = new BufferedImage[spriteTotal];
+            left = new BufferedImage[spriteTotal];
+            right = new BufferedImage[spriteTotal];
 
-        public Animation(String name1,int spriteTotal, String path, boolean oneD, int soundFX) {
-        this.name = name1.toUpperCase();
-        this.spriteTotal = spriteTotal;
-        this.path = path;
-        up = new BufferedImage[spriteTotal];
-        down = new BufferedImage[spriteTotal];
-        left = new BufferedImage[spriteTotal];
-        right = new BufferedImage[spriteTotal];
-        this.oneD = oneD;
-        this.soundFX = soundFX;
+            this.oneD = oneD;
 
-      
-        
 
-        if(!oneD)
-            setSprite();
-        else
-            setSpriteAllD();
-           
+            if(!oneD)
+                setSprite();
+            else
+                setSpriteAllD();
             
-        }
+                
+            }
 
-        public Animation(String name1,int spriteTotal, String path, boolean oneD,boolean isAnimal) {
-        this.name = name1.toUpperCase();
-        this.spriteTotal = spriteTotal;
-        this.path = path;
-        up = new BufferedImage[spriteTotal];
-        down = new BufferedImage[spriteTotal];
-        left = new BufferedImage[spriteTotal];
-        right = new BufferedImage[spriteTotal];
+            public Animation(String name1,int spriteTotal, String path, boolean oneD, int soundFX) {
+            this.name = name1.toUpperCase();
+            this.spriteTotal = spriteTotal;
+            this.path = path;
+            up = new BufferedImage[spriteTotal];
+            down = new BufferedImage[spriteTotal];
+            left = new BufferedImage[spriteTotal];
+            right = new BufferedImage[spriteTotal];
+            this.oneD = oneD;
+            this.soundFX = soundFX;
 
-        setSprit1();
-           
+        
+            
+
+            if(!oneD)
+                setSprite();
+            else
+                setSpriteAllD();
+            
+                
+            }
+
+            public Animation(String name1,int spriteTotal, String path, boolean oneD,boolean isAnimal) {
+            this.name = name1.toUpperCase();
+            this.spriteTotal = spriteTotal;
+            this.path = path;
+            up = new BufferedImage[spriteTotal];
+            down = new BufferedImage[spriteTotal];
+            left = new BufferedImage[spriteTotal];
+            right = new BufferedImage[spriteTotal];
+
+            setSprit1();
+            
             
         }
 

@@ -172,7 +172,7 @@ public class Player extends Entity {
 
 
         animationList.add(new Animation("IDLE", 6, "/assets/player/common/", body, eye, hair, outfit)); //0
-        animationList.add(new Animation("WALK", 6, "/assets/player/common/", body, eye, hair, outfit)); //1
+        animationList.add(new Animation("WALK", 6, "/assets/player/common/", body, eye, hair, outfit,0)); //1
         animationList.add(new Animation("SLEEP", 6, "/assets/player/common/", body, eye, hair, outfit)); //2
         animationList.add(new Animation("SIT", 6, "/assets/player/common/", body, eye, hair, outfit)); // 3
         animationList.add(new Animation("SIT2", 6, "/assets/player/common/", body, eye, hair, outfit)); //4
@@ -193,8 +193,8 @@ public class Player extends Entity {
         
         
         animationList.add(new Animation("HARVEST", 9, "/assets/player/farmer/", body, eye, hair, outfit));
-        animationList.add(new Animation("DIG", 9, "/assets/player/farmer/", body, eye, hair, outfit));
-        animationList.add(new Animation("WATERING", 14, "/assets/player/farmer/", body, eye, hair, outfit));
+        animationList.add(new Animation("DIG", 9, "/assets/player/farmer/", body, eye, hair, outfit,5));
+        animationList.add(new Animation("WATERING", 14, "/assets/player/farmer/", body, eye, hair, outfit,8));
         animationList.add(new Animation("AXECHOP", 10, "/assets/player/farmer/", body, eye, hair, outfit));
         animationList.add(new Animation("CAST", 9, "/assets/player/farmer/", body, eye, hair, outfit));
         animationList.add(new Animation("FISHIDLE", 6, "/assets/player/farmer/", body, eye, hair, outfit));
