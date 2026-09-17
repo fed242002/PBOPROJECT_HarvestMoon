@@ -79,12 +79,12 @@ The entire game engine is driven by [`GamePanel.java`](src/Main/GamePanel.java),
 ```mermaid
 graph LR
     subgraph "Thread Execution Cycle (60 Hz)"
-        A[Calculate Nano Delta] --> B{Delta >= 1.0?}
-        B -- Yes --> C[update()]
-        C --> D[repaint()]
-        D --> E[delta--]
+        A["Calculate Nano Delta"] --> B{"Delta >= 1.0?"}
+        B -- Yes --> C["update()"]
+        C --> D["repaint()"]
+        D --> E["delta--"]
         E --> B
-        B -- No --> F[Sleep / Yield]
+        B -- No --> F["Sleep / Yield"]
         F --> A
     end
 ```
